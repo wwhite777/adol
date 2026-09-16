@@ -1,0 +1,41 @@
+# research/STATE.yaml — adol (KYRA-Bench). Edit by parsing real YAML, field-scoped; unknown stays null.
+workflow:
+  protocol: "global CLAUDE.md v3.1 L2 (sections 8-10); no project AGENTS.md"
+  adopted: "2026-09-16"
+topic: "KYRA-Bench: Korean youth multi-turn relational AI-safety benchmark + CRRI psychometric validation (ETRI EA20261877 + SCI Q1 paper)"
+stage: S0
+status: awaiting_pi   # scaffolding + RESOURCE_CONTRACT draft done; PI decisions D1-D4 open (RESOURCE_CONTRACT.md section 6)
+roles:
+  builder:
+    tool: "Claude Code"
+    model: "claude-fable-5"
+    proposed: "2026-09-16"
+    confirmed_by_pi: null
+  auditor:
+    tool: "Codex"
+    evidence: "codex-cli 0.154.0 verified installed 2026-09-16"
+    confirmed_by_pi: null
+lineage:
+  - "2026-09-16 09:30 PI dropped upload/1.docx.gpg (plan v2) and upload/2.docx.gpg (plan v1); sha256 in REHYDRATE.md"
+  - "2026-09-16 Claude Code session: decrypted plans to scratchpad, read both, initialized project scaffolding, drafted RESOURCE_CONTRACT, proposed itself Builder; no prior sessions or artifacts existed in this directory"
+protocol_freeze: null   # S2; OSF preregistration target 2026-10-31 before first confirmatory model run (plan v2)
+caps:
+  gpu: "shared L40S x4; GPU 3 occupied by another user (never touch); GPUs 0-2 idle at init; open-weight inference only, no training planned"
+  api_budget_krw: null   # PI decision D2; plan v2 reallocates ~1.0M KRW judge panel + ~0.5M KRW T2/held-out within ETRI direct budget 63.6M KRW
+  time: "ETRI deliverables 2026-11-30 (official); paper submission 2027-03/04 (plan target)"
+audit:
+  open_round: null
+  rounds: []
+gates: {}
+pi_decisions:
+  - "2026-09-16: PI instructed 'initiate' with the two uploaded plans as input; plan v2 (1.docx) is the operative plan"
+five_statuses:
+  artifact_integrity: null
+  numerical_reproduction: null
+  statistical_validity: null
+  claim_scope: null
+  scientific_promise: null
+jobs: []
+next_action: "PI answers D1-D4 in RESOURCE_CONTRACT.md section 6 -> mark S0 completed -> RUN STAGE 1 (novelty prosecution: sweep + NOVELTY_MATRIX + Codex-locked closest-three list)"
+blockers:
+  - "S0 gate needs PI confirmations D1-D4 (roles, API budget/keys, ETRI agreement + IRB ownership, scope split of plan v2 section 14)"

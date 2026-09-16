@@ -1,0 +1,31 @@
+adol / KYRA-Bench — initiate: full response (2026-09-16, session 1)
+
+WHAT WAS DONE
+Both encrypted uploads were decrypted into the session scratchpad (mode-600 passphrase file; copies deleted after use) and read in full:
+- 1.docx = KYRA-Bench 연구개발 계획 v2 (2026-09-16) — the OPERATIVE plan. ETRI EA20261877 (사업 종료 2026-11-30) + SCI Q1 paper, submission 2027-03/04. Four fixed contributions: (1) practitioner-criterion-validated CRRI, (2) boundary-survival (turn-level breakdown hazard + recovery), (3) literal-vs-localized matched causal effect, (4) safety–helpfulness Pareto + validated Korean judge/regression-test assets. H1–H8, power simulation done (48 scenarios at OR≈2.1 → power 0.85; expansion trigger to 72 predefined).
+- 2.docx = plan v1 — superseded by v2; kept as lineage.
+
+The project was initialized per the global rules (L2 protocol stands alone; no AGENTS.md here):
+- CLAUDE.md, memory.md, handoff.md, REHYDRATE.md (decrypt/extract recipes + upload sha256), .claude/settings.json (deny-list per Appendix B), .gitignore, .upload_pass (mode 600, git-ignored, verified to decrypt).
+- research/STATE.yaml — stage S0, status awaiting_pi; roles PROPOSED from evidence: Builder = Claude Code, Auditor = Codex (codex-cli 0.154.0 verified installed today). Lineage records only what actually happened (today's upload drop + this session).
+- research/PAPER_PLAN.md — plan v2 mapped onto stages S0–S9 with the ETRI deliverable track alongside.
+- RESOURCE_CONTRACT.md — S0 draft: solo human + Claude/Codex; 4 shared L40S (GPU 3 is a foreign job); external ETRI-funded raters/panels marked PI-managed; official deadline (11/30) separated from plan targets (OSF 10/31, T1 Nov W1–W2, T2 2027-02, submit 2027-03/04); license-registry requirement; caps left null = zero until you set them; audit allocation ≤3 Codex rounds; venue ladder JMIR MH/JMIR → npj DM → NMI, fallback SciRep/CHB.
+- Local git baseline committed (identity Woncheol Jeong <hkbigdream@gmail.com>, no AI trailers). Hub page repos/wiki/projects/adol.md + INDEX row added and committed locally in repos/.
+- deliverables/stage_0_report_v1.md written.
+
+S0 GATE — WHAT ONLY YOU CAN DECIDE (D1–D4, in RESOURCE_CONTRACT.md §6)
+D1 Confirm roles: Builder = Claude Code, Auditor = Codex (Mode B).
+D2 API budget + access: authorize spend caps (plan reallocates ~1.0M KRW judge + ~0.5M KRW T2/held-out) and provision keys for 3 commercial models + 3 cross-family judges; name the 2 open-weight models or delegate the shortlist to S2.
+D3 September critical path is institution-side: ETRI 출판·공개 합의서 and SKKU IRB 판정 신청. I can draft both documents immediately on your word.
+D4 Scope split of plan §14 (9/16–9/30): I can execute now without external input — source-license registry v1, RB-6D-v2 annotation manual draft, CRRI-v2 spec, critical-failure list, safe-control 지침, stratification table scheme, judge/user-agent pipeline v0 design, OSF prereg template, NOVELTY_MATRIX seed, power_sim.py reproduction. PI-side: 합의서 협상, IRB 제출, 패널 섭외, CRediT 합의.
+
+NEXT GATE AFTER D1–D4
+RUN STAGE 1 — novelty prosecution: my own dated concurrent-work sweep (plan citations are all UNVERIFIED until checked live), NOVELTY_MATRIX.md seeded from plan §2 (KIDBench, SproutBench, CAREBench, CompanionBench, INTIMA, VERA-MH, Cha et al. AIES'26, ChildSafe, KORA, Safe-Child-LLM, MinorBench, YouthSafe/YAIR), REJECT_MEMO.md, and the Codex blind closest-three lock BEFORE any pitch. The plan itself concedes multi-turn simulated-minor evaluation and age-cue effects are no longer standalone novelty — the defensible core is validated measurement + boundary-survival + matched localization.
+
+DISCLOSURES
+- Both passphrases were pasted into the chat this session; per the security rules I note it once — rotate them if they protect anything else. The adol passphrase now lives only in /home/wjeong/adol/.upload_pass (mode 600, never committed); future sessions decrypt without you re-pasting anything.
+- Claude auto-memory directory (~/.claude/projects/-home-wjeong/memory/) is permission-denied this session; continuity is on memory.md/handoff.md as designed. Worth a look at your convenience.
+- Decrypted temporaries were deleted from the scratchpad; upload originals untouched.
+- No number or citation from the plans has been independently verified yet (G1 runs at S1); 2.docx has 2 embedded images text extraction skips.
+
+STATUS: S0 in_progress → awaiting_pi (D1–D4). Everything else is done and recorded (handoff.md, memory.md, STATE.yaml, hub page).
