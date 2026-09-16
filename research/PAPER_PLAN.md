@@ -30,5 +30,5 @@ ETRI direct ≈ 63.6M KRW total (PI-managed). Claude-relevant caps: API judge ~1
 ## Decisions so far
 2026-09-16 PI: "initiate" from the two uploads; plan v2 operative. Standing (2026-09-11): Korean domestic journals need no cross-family audit.
 
-## Next action
-PI answers D1–D4 (RESOURCE_CONTRACT.md §6) → S0 completed → RUN STAGE 1.
+## Next action (updated 2026-09-16 end of session 2)
+S0 completed (D1–D4 approved). S1 executed and audited: VERDICT r001 = AWAITING_PI. Next: PI takes the five decisions in audit/r001/out/VERDICT.md → builder reconciles the three omitted localization comparators (ROK-FORTRESS 2605.14152, Culturally-Adapted Red-Teaming 2606.09178, CultureConverse 2608.28405), qualifies the matrix rows, rewrites the pitch per F-r001-3/4 → S1 closes → S2 claim contract + freeze (OSF by 10-31).

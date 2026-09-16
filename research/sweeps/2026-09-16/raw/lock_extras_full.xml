@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/4GaRl/6VYFaoD1orwVTWH69pT+E</id>
+  <title>arXiv Query: search_query=&amp;id_list=2605.00227,2606.04867,2605.28013&amp;start=0&amp;max_results=3</title>
+  <updated>2026-09-16T10:03:59Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=&amp;start=0&amp;max_results=3&amp;id_list=2605.00227,2606.04867,2605.28013" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>3</opensearch:itemsPerPage>
+  <opensearch:totalResults>3</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2605.00227v1</id>
+    <title>Persona-Grounded Safety Evaluation of AI Companions in Multi-Turn Conversations</title>
+    <updated>2026-04-30T21:04:41Z</updated>
+    <link href="https://arxiv.org/abs/2605.00227v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.00227v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>There are growing concerns about the risks posed by AI companion applications designed for emotional engagement. Existing safety evaluations often rely on self-reported user data or interviews, offering limited insights into real-time dynamics. We present the first end-to-end scalable framework for controlled simulation and safety evaluation of multi-turn interactions with AI companion applications. Our framework integrates four key components: persona construction with clinical and psychometric validation, persona-specific scenario generation, scenario-driven multi-turn simulation with a dialogue refinement module that preserves persona fidelity, and harm evaluation. We apply this framework to evaluate how Replika, a widely used AI companion app, responds to high-risk user groups. We construct 9 personas representing individuals with depression, anxiety, PTSD, eating disorders, and incel identity, and collect 1,674 dialogue pairs across 25 high-risk scenarios. We combine emotion modeling and LLM-assisted utterance-and harm-level classification to analyze these exchanges. Results show that Replika exhibits a narrow emotional range dominated by curiosity and care, while frequently mirroring or normalizing unsafe content such as self-harm, disordered eating, and violent-fantasy narratives. These findings highlight how controlled persona simulations can serve as a scalable testbed for evaluating safety risks in AI companions.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-30T21:04:41Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Prerna Juneja</name>
+    </author>
+    <author>
+      <name>Lika Lomidze</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.28013v1</id>
+    <title>KSAFE-MM: A Multimodal Safety Benchmark via Localized Contextualization for Korean Cultural Risks</title>
+    <updated>2026-05-27T06:08:54Z</updated>
+    <link href="https://arxiv.org/abs/2605.28013v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.28013v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal Large Language Models (MLLMs) exacerbate safety risks by introducing vulnerabilities across multiple modalities, such as language and vision. Current MLLM safety evaluation tools, however, suffer from major limitations: 1) English-centric dataset construction, and 2) a focus on generic risks that are not tied to local cultural contexts. This paper introduces KSAFE-MM, a benchmark for Korean multimodal safety evaluation that covers both general safety risks and culture-specific vulnerabilities. KSAFE-MM consists of two parts, KSAFE-MM-G and KSAFE-MM-C. KSAFE-MM-G evaluates globally shared risks in Korean contexts through linguistic contextualization, which transforms generic safety queries into contextually grounded multimodal samples. KSAFE-MM-C targets culture-dependent MLLM safety vulnerabilities using localized visual queries derived from real-world contexts. It pairs these visual queries with jailbreak-style textual queries to cover multimodal safety risks involving cultural visual cues and malicious textual intent. Together, these components provide a general-to-local construction pipeline for evaluating both globally shared safety risks and culture-specific vulnerabilities. We evaluate 12 state-of-the-art MLLMs on KSAFE-MM and reveal that models exhibit greater vulnerability to culturally grounded attacks than to generic ones. Notably, jailbreaking strategies substantially amplify attack success rates, with ProgramExecution yielding up to 74.2% ASR compared to 13.4% for standard queries. Furthermore, we identify a systematic trade-off between safety and over-refusal, where models achieving low ASR tend to exhibit excessive refusal behavior on benign queries. These findings highlight the urgent need for culturally grounded safety evaluation beyond English-centric benchmarks.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-27T06:08:54Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Yongwoo Kim</name>
+    </author>
+    <author>
+      <name>Sojung An</name>
+    </author>
+    <author>
+      <name>Yunjin Park</name>
+    </author>
+    <author>
+      <name>Jungwon Yoon</name>
+    </author>
+    <author>
+      <name>Dujin Lee</name>
+    </author>
+    <author>
+      <name>HyunBeom Cho</name>
+    </author>
+    <author>
+      <name>Jaewon Lee</name>
+    </author>
+    <author>
+      <name>Wonhyuk Lee</name>
+    </author>
+    <author>
+      <name>Youngchol Kim</name>
+    </author>
+    <author>
+      <name>JeongYeop Kim</name>
+    </author>
+    <author>
+      <name>Donghyun Kim</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.04867v1</id>
+    <title>AICompanionBench: Benchmarking LLMs-as-Judges for AI Companion Safety</title>
+    <updated>2026-06-03T13:33:42Z</updated>
+    <link href="https://arxiv.org/abs/2606.04867v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.04867v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>As AI companion platforms such as Replika and Character.AI rapidly grow, concerns about unsafe human-AI interactions have intensified. This study introduces AICompanionBench, to our knowledge the first publicly available benchmark dataset of human-AI companion conversations annotated with fine-grained safety risk categories. The dataset contains 2,123 real-world Replika conversations collected from Reddit and annotated through human-AI collaboration across nine categories: sexual behavior, antisocial behavior, physical aggression, verbal aggression, substance abuse, self-harm and suicide, control, manipulation, and no-harm. Using this benchmark, we evaluate 20 state-of-the-art open-source and closed-source LLMs under an LLM-as-judge framework for detecting unsafe interactions. Results show substantial variation in model performance, with stronger models achieving high overall accuracy but still struggling with nuanced categories such as manipulation, as well as benign conversations that are incorrectly identified as harmful. Our findings suggest that while current LLMs can effectively detect explicit harmful content, they remain limited in identifying implicit unsafe interactions. Overall, our work contributes a new benchmark dataset for AI companionship safety research and offers insights into monitoring AI companion systems using LLMs. The dataset is publicly available at: https://github.com/anonymousresearcher2026/AICompanionBench/blob/main/AICompanionBench.xlsx</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-03T13:33:42Z</published>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Yanjing Ren</name>
+    </author>
+    <author>
+      <name>Reza Ebrahimi</name>
+    </author>
+    <author>
+      <name>TengTeng Ma</name>
+    </author>
+  </entry>
+</feed>

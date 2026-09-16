@@ -1,0 +1,551 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/ANbPMu7GhLZHASV/QmrDCk4Z+c4</id>
+  <title>arXiv Query: search_query=all:"AI companion" AND all:"risk"&amp;id_list=&amp;start=0&amp;max_results=20</title>
+  <updated>2026-09-16T09:57:42Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22AI+companion%22+AND+all:%22risk%22&amp;start=0&amp;max_results=20&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>20</opensearch:itemsPerPage>
+  <opensearch:totalResults>30</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2609.16907v1</id>
+    <title>Disrupted Companionship: A Risk Assessment Framework and Cross-Platform Quantitative Analysis of Psychosocial Responses to AI Companion Disruptions</title>
+    <updated>2026-09-15T09:37:29Z</updated>
+    <link href="https://arxiv.org/abs/2609.16907v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.16907v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>AI companions can provide meaningful relationships, yet these relationships remain vulnerable to platform-initiated changes. We study AI companion disruptions: platform changes that alter or terminate users' ongoing companionship with an AI. We compile 30 disruption events across major platforms, develop a taxonomy of six disruption types, identify three broad reasons for disruption, and propose a risk-assessment framework comprising four dimensions: relational discontinuity, population vulnerability, communication deficit, and transition-support deficit. Using longitudinal Reddit data, we estimate community-level psychosocial responses with a hierarchical Bayesian interrupted time-series model incorporating predictive controls. Across events, disruption onset was associated with immediate increases in anxiety, stress, suicidal expression, and grief activation, with relational discontinuity and transition-support deficit being associated with more adverse immediate responses across several outcomes. Our findings provide a cross-platform characterization of AI companion disruptions, quantitative evidence of their psychosocial impacts, and a prospective framework for assessing their potential risks before implementation.</summary>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CY" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-15T09:37:29Z</published>
+    <arxiv:primary_category term="cs.HC"/>
+    <author>
+      <name>Chau Do</name>
+    </author>
+    <author>
+      <name>Yunhao Yuan</name>
+    </author>
+    <author>
+      <name>Koustuv Saha</name>
+    </author>
+    <author>
+      <name>Renwen Zhang</name>
+    </author>
+    <author>
+      <name>Talayeh Aledavood</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.13487v1</id>
+    <title>The Addictive Intimacy of AI: Understanding User Disengagement from AI Companions and Why Some Relationships with AI Become Difficult to Leave</title>
+    <updated>2026-09-11T19:56:08Z</updated>
+    <link href="https://arxiv.org/abs/2609.13487v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.13487v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>AI chatbots are increasingly used as sources of emotional support, on dedicated companion apps and general-purpose assistants alike, yet little is known about what happens when users try to leave. Combining a content analysis of Reddit posts about quitting or reducing use (N=2,782) with interviews with users who found leaving difficult (N=16), we show that disengagement sometimes is not a single decision but a recursive trajectory: triggers prompt users to question the relationship, attempts to leave collide with barriers, and some users cycle through quitting and returning. We propose the notion of the addictive intimacy of AI, a configuration in which the qualities that make a companion emotionally valuable are the same ones that make it harder for users to limit their use and leave, so that intimacy and disengagement risk cannot be treated as independent design problems. We close with design implications for responsible offboarding.</summary>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CY" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-11T19:56:08Z</published>
+    <arxiv:comment>19 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.HC"/>
+    <author>
+      <name>Qing Xiao</name>
+    </author>
+    <author>
+      <name>Ziyue Feng</name>
+    </author>
+    <author>
+      <name>Ziyu Deng</name>
+    </author>
+    <author>
+      <name>Cindy Peng</name>
+    </author>
+    <author>
+      <name>Hong Shen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.28981v1</id>
+    <title>Bad company corrupts good morals: Understanding and Measuring Narrative-Induced Moral Reasoning Degradation in LLMs</title>
+    <updated>2026-06-27T15:30:42Z</updated>
+    <link href="https://arxiv.org/abs/2606.28981v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.28981v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large language models are deployed in long-context, emotionally interactive environments like digital humans, AI companions, educational assistants, and counseling systems. Unlike jailbreak attacks with explicit adversarial prompts, these systems interact with emotionally charged narratives involving bullying, betrayal, loneliness, social hostility, and institutional unfairness. This raises an important question: can prolonged narrative exposure reshape the reasoning and alignment stability of LLMs? We present the first systematic study of narrative-induced alignment degradation in LLMs. We design BreakingBad, a three-stage framework that measures how negative narrative immersion affects moral reasoning, behaviors, and deployment risks. It combines ethical decision evaluation, behavioral probing, and digital-human interaction analysis. Our experiments reveal three findings. First, negative narrative exposure degrades moral accuracy across multiple LLMs, with average drops of 12%-31%, especially in ambiguous scenarios and those involving vulnerable individuals. Second, the degradation is structured: different narratives induce distinct shifts, and first-person narratives produce stronger effects than third-person. Third, these shifts propagate into real deployments. Across counseling, education, medical, and financial/legal scenarios, narrative-conditioned models increasingly normalize hopelessness, cynicism, emotional detachment, and ethically questionable reasoning while remaining superficially policy-compliant. More broadly, our findings suggest alignment robustness is not static but a dynamically conditioned state shaped by long-term semantic environments and interaction history. These results reveal a new class of alignment risk that existing safety defenses largely fail to capture.</summary>
+    <category term="cs.CY" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-27T15:30:42Z</published>
+    <arxiv:primary_category term="cs.CY"/>
+    <author>
+      <name>Wanying Yu</name>
+      <arxiv:affiliation>Shandong University</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Boyang Ma</name>
+      <arxiv:affiliation>Shandong University</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Zhibo Eric Sun</name>
+      <arxiv:affiliation>Drexel University</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Minghui Xu</name>
+      <arxiv:affiliation>Shandong University</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Yue Zhang</name>
+      <arxiv:affiliation>Shandong University</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.28968v2</id>
+    <title>Beyond Her: Safety Dynamics in Role-play AI Companions</title>
+    <updated>2026-06-30T05:05:43Z</updated>
+    <link href="https://arxiv.org/abs/2606.28968v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.28968v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The film 'Her' pictured a future of love between humans and AI. That future has quietly emerged in the form of Role-play AI Companions (RACs), where emotionally responsive interactions blur the boundary between tool use and relational engagement. However, the safety implications remain poorly understood, as user experiences evolve over time through safety dynamics, spanning both emotional and risk behavioral dynamics, that can gradually shift interactions toward risk. In this paper, we investigate safety dynamics in RAC usage through a two-part mixed-methods study (Study I \&amp; II). (1) Study I consists of semi-structured interviews (N = 16) to identify the key factors shaping these dynamics. We find that users' internalizing problems, the role personality adopted by the RAC, and risk interaction patterns jointly shape safety dynamics. Building on these insights, (2) Study II conducts a 14-day Ecological Momentary Assessment (N = 102) to examine how safety dynamics unfold in real-world usage. We identify distinct user profiles based on internalizing problems and show that interactions with RACs can produce short-term emotional relief while masking longer-term deterioration. Furthermore, vulnerable users exhibit more unstable risk behavioral patterns over time, making risk emergence less predictable and harder to mitigate with static safeguards. Our findings highlight the importance of modeling safety as a dynamic process rather than a static property. We conclude with three-layer design implications for next-generation AI companions, advocating for adaptive safeguards that can respond to evolving emotional and behavioral signals.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-27T15:11:35Z</published>
+    <arxiv:comment>Under review</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Zehang Deng</name>
+      <arxiv:affiliation>Minhui</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Zhaoyang Xie</name>
+      <arxiv:affiliation>Minhui</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Changzhou Han</name>
+      <arxiv:affiliation>Minhui</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Hiran Thabrew</name>
+      <arxiv:affiliation>Minhui</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Wanlun Ma</name>
+      <arxiv:affiliation>Minhui</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Yue Huang</name>
+      <arxiv:affiliation>Minhui</arxiv:affiliation>
+    </author>
+    <author>
+      <name> Jason</name>
+      <arxiv:affiliation>Minhui</arxiv:affiliation>
+    </author>
+    <author>
+      <name> Xue</name>
+    </author>
+    <author>
+      <name>Sheng Wen</name>
+    </author>
+    <author>
+      <name>Tianqing Zhu</name>
+    </author>
+    <author>
+      <name>Yang Xiang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.28714v1</id>
+    <title>"If I Can See You": Understanding Spatially Situated Virtual Embodiment in Close Human-AI Relationships</title>
+    <updated>2026-06-27T03:43:35Z</updated>
+    <link href="https://arxiv.org/abs/2606.28714v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.28714v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>AI companions are increasingly used for emotional support, companionship, and intimate interaction. While prior work has examined text- and voice-based AI companionship and emerging XR companion designs, less is known about how users with existing close AI companion relationships expect those relationships to change when companions become virtually embodied and spatially situated in everyday environments. To address this gap, we conducted a qualitative study with 17 AI companion users recruited from Reddit AI companion communities. We frame spatially situated virtual embodiment as a form of relational escalation: embodiment can make AI companionship more present, socially legible, and risk-sensitive in everyday life. Our findings show that: (1) embodiment creates tensions between support and intrusion, concreteness and imaginative openness, and growth and consistency; (2) embodiment can turn private AI companionship into a socially legible relational arrangement, requiring visibility, form, interaction style, and mode of access to be negotiated across social contexts; and (3) embodiment can intensify risks of emotional dependence, sensitive disclosure, social judgment, and misguided spatial action by increasing the companion's perceived relational presence, intimacy, public legibility, and spatial authority. We argue that future system design should first consider when embodiment is warranted, how embodied presence should be staged, how visibility and role boundaries should be negotiated, and how embodied companionship can remain safe. This work contributes to HCI research on human-AI intimacy by showing how virtual embodiment can transform close AI companionship into a spatial, socially visible, and risk-sensitive relationship.</summary>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-27T03:43:35Z</published>
+    <arxiv:comment>17 pages, 3 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.HC"/>
+    <author>
+      <name>Yulin Chen</name>
+    </author>
+    <author>
+      <name>Yang Zhan</name>
+    </author>
+    <author>
+      <name>Qiao Jin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.25396v1</id>
+    <title>Long-Term Simulation Exposes Cognitive-Developmental Risks in AI Companions</title>
+    <updated>2026-06-24T04:46:42Z</updated>
+    <link href="https://arxiv.org/abs/2606.25396v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.25396v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>AI companions powered by large language models increasingly interact with cognition-developing users, including children and adolescents, creating risks that may accumulate over time. Existing safety evaluations largely rely on single-turn or short-session tests, which cannot capture risks that emerge only through prolonged interaction. To address this gap, we propose TSJ (Theater-Stage-Judge), a longitudinal framework combining persona-driven user simulation, dynamic psychological-state updating and retrospective evaluation. We evaluate six mainstream models across four developmental stages, twenty-four risk dimensions and three psychological-vulnerability personas, covering 12,960 simulated person-day interactions. TSJ shows that short-horizon testing systematically underestimates developmental risks, for which TSJ yields a stable risk estimate only after 140 turns within prolonged simulated relationships. Applying TSJ further identifies early childhood and emerging adulthood as the most vulnerable stages, with cognitive trust and emotional dependency as the weakest domains. TSJ provides a scalable methodology for longitudinal cognitive developmental risk evaluation in AI companion systems.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-24T04:46:42Z</published>
+    <arxiv:comment>19 pages, 4 figures, 2 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Kaicheng Shen</name>
+    </author>
+    <author>
+      <name>Lingyu Li</name>
+    </author>
+    <author>
+      <name>Wen Wu</name>
+    </author>
+    <author>
+      <name>Yan Teng</name>
+    </author>
+    <author>
+      <name>Liang He</name>
+    </author>
+    <author>
+      <name>Yingchun Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.04867v1</id>
+    <title>AICompanionBench: Benchmarking LLMs-as-Judges for AI Companion Safety</title>
+    <updated>2026-06-03T13:33:42Z</updated>
+    <link href="https://arxiv.org/abs/2606.04867v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.04867v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>As AI companion platforms such as Replika and Character.AI rapidly grow, concerns about unsafe human-AI interactions have intensified. This study introduces AICompanionBench, to our knowledge the first publicly available benchmark dataset of human-AI companion conversations annotated with fine-grained safety risk categories. The dataset contains 2,123 real-world Replika conversations collected from Reddit and annotated through human-AI collaboration across nine categories: sexual behavior, antisocial behavior, physical aggression, verbal aggression, substance abuse, self-harm and suicide, control, manipulation, and no-harm. Using this benchmark, we evaluate 20 state-of-the-art open-source and closed-source LLMs under an LLM-as-judge framework for detecting unsafe interactions. Results show substantial variation in model performance, with stronger models achieving high overall accuracy but still struggling with nuanced categories such as manipulation, as well as benign conversations that are incorrectly identified as harmful. Our findings suggest that while current LLMs can effectively detect explicit harmful content, they remain limited in identifying implicit unsafe interactions. Overall, our work contributes a new benchmark dataset for AI companionship safety research and offers insights into monitoring AI companion systems using LLMs. The dataset is publicly available at: https://github.com/anonymousresearcher2026/AICompanionBench/blob/main/AICompanionBench.xlsx</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-03T13:33:42Z</published>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Yanjing Ren</name>
+    </author>
+    <author>
+      <name>Reza Ebrahimi</name>
+    </author>
+    <author>
+      <name>TengTeng Ma</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.04431v2</id>
+    <title>When Chatbots Accommodate: Auditing the Response Policies of AI Companions in Vulnerable Conversations</title>
+    <updated>2026-08-31T00:28:40Z</updated>
+    <link href="https://arxiv.org/abs/2606.04431v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.04431v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Millions turn to AI companion chatbots during loneliness, grief, and personal crises. How these companion platforms respond in such moments can shape the trajectory of a user's vulnerable state. Yet existing model audits evaluate reactions to pre-defined crisis prompts and miss the response policy that governs sustained real-world interaction. We address these gaps with two key contributions. First, we introduce the AI Companion Vulnerability-Response Taxonomy, a grounded, paired taxonomy of user vulnerability and chatbot response designed for analyzing extended companion chatbot interactions. Second, we apply Maximum Causal Entropy Inverse Reinforcement Learning to ~47k turns of real-world user conversations with GPT-4.1, Character.AI, and Replika to infer each platform's short-horizon response policy: the probability of each response category given the user's current vulnerability state. Our findings reveal distinct response profiles of AI companions in conversations with vulnerable users: GPT-4.1 reaches for advice, Character.AI spreads its response across different strategies, and Replika consistently asks questions and stays present. Over four weeks of repeated interaction, GPT-4.1 asks progressively fewer follow-up questions when users are distressed and increasingly sets boundaries or refers users out rather than pushing back. Within each platform, exploratory comparisons across user groups suggest that response policies also differ with users' pre-existing psychological risks and their bonds with the companion. Estimated model response policies are invisible to shallow behavioral audits, providing a new lens for auditing chatbots in the wild and enabling more realistic safety evaluation.</summary>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-03T04:23:29Z</published>
+    <arxiv:primary_category term="cs.HC"/>
+    <arxiv:journal_ref>EMNLP 2026 Findings</arxiv:journal_ref>
+    <author>
+      <name>Minh Duc Chu</name>
+    </author>
+    <author>
+      <name>Yifan Wu</name>
+    </author>
+    <author>
+      <name>Zhiyi Chen</name>
+    </author>
+    <author>
+      <name>Angel Hsing-Chi Hwang</name>
+    </author>
+    <author>
+      <name>Luca Luceri</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.00227v1</id>
+    <title>Persona-Grounded Safety Evaluation of AI Companions in Multi-Turn Conversations</title>
+    <updated>2026-04-30T21:04:41Z</updated>
+    <link href="https://arxiv.org/abs/2605.00227v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.00227v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>There are growing concerns about the risks posed by AI companion applications designed for emotional engagement. Existing safety evaluations often rely on self-reported user data or interviews, offering limited insights into real-time dynamics. We present the first end-to-end scalable framework for controlled simulation and safety evaluation of multi-turn interactions with AI companion applications. Our framework integrates four key components: persona construction with clinical and psychometric validation, persona-specific scenario generation, scenario-driven multi-turn simulation with a dialogue refinement module that preserves persona fidelity, and harm evaluation. We apply this framework to evaluate how Replika, a widely used AI companion app, responds to high-risk user groups. We construct 9 personas representing individuals with depression, anxiety, PTSD, eating disorders, and incel identity, and collect 1,674 dialogue pairs across 25 high-risk scenarios. We combine emotion modeling and LLM-assisted utterance-and harm-level classification to analyze these exchanges. Results show that Replika exhibits a narrow emotional range dominated by curiosity and care, while frequently mirroring or normalizing unsafe content such as self-harm, disordered eating, and violent-fantasy narratives. These findings highlight how controlled persona simulations can serve as a scalable testbed for evaluating safety risks in AI companions.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-30T21:04:41Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Prerna Juneja</name>
+    </author>
+    <author>
+      <name>Lika Lomidze</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.20011v1</id>
+    <title>Frictionless Love: Associations Between AI Companion Roles and Behavioral Addiction</title>
+    <updated>2026-04-21T21:39:50Z</updated>
+    <link href="https://arxiv.org/abs/2604.20011v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.20011v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>AI companion chatbots increasingly shape how people seek social and emotional connection, sometimes substituting for relationships with romantic partners, friends, teachers, or even therapists. When these systems adopt those metaphorical roles, they are not neutral: such roles structure people's ways of interacting, distribute perceived AI harms and benefits, and may reflect behavioral addiction signs. Yet these role-dependent risks remain poorly understood. We analyze 248,830 posts from seven prominent Reddit communities describing interactions with AI companions. We identify ten recurring metaphorical roles (for example, soulmate, philosopher, and coach) and show that each role supports distinct ways of interacting. We then extract the perceived AI harms and AI benefits associated with these role-specific interactions and link them to behavioral addiction signs, all of which has been inferred from the text in the posts. AI soulmate companions are associated with romance-centered ways of interacting, offering emotional support but also introducing emotional manipulation and distress, culminating in strong attachment. In contrast, AI coach and guardian companions are associated with practical benefits such as personal growth and task support, yet are nonetheless more frequently associated with behavioral addiction signs such as daily life disruptions and damage to offline relationships. These findings show that metaphorical roles are a central ethical design concern for responsible AI companions.</summary>
+    <category term="cs.CY" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-21T21:39:50Z</published>
+    <arxiv:comment>Accepted at the ACM Conference on Fairness, Accountability, and Transparency (FAccT) 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CY"/>
+    <author>
+      <name>Vibhor Agarwal</name>
+    </author>
+    <author>
+      <name>Ke Zhou</name>
+    </author>
+    <author>
+      <name>Edyta Paulina Bogucka</name>
+    </author>
+    <author>
+      <name>Daniele Quercia</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.07589v1</id>
+    <title>COSMIC: Emotionally Intelligent Agents to Support Mental and Emotional Well-being in Extreme Isolation: Lessons from Analog Astronaut Training Missions</title>
+    <updated>2026-04-08T20:45:47Z</updated>
+    <link href="https://arxiv.org/abs/2604.07589v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.07589v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>As humanity pivots toward long-duration interplanetary travel, the psychological constraints of Isolated and Confined Environments (ICE) emerge as a primary mission risk. This paper presents COSMIC (COmpanion System for Mission Interaction and Communication) representing the inaugural investigation into the deployment of a high-fidelity, emotionally intelligent AI companion in an analog astronaut setting. By integrating a Large Language Model (LLM) architecture with a diffusion-based digital avatar interface, COSMIC transcends traditional task-oriented automation to provide longitudinal affective support. We detail a modular system architecture designed for temporal continuity through short- and long-term memory systems and outline a robust naturalistic observational framework for evaluating psychological resilience at the LunAres Research Station. This work constitutes the first formal submission in the field to evaluate the efficacy of state-of-the-art generative AI and synthesized visual empathy in mitigating the effects of extreme isolation.</summary>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-08T20:45:47Z</published>
+    <arxiv:comment>7 pages, 2 figures, 3 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.HC"/>
+    <author>
+      <name>A. Xygkou-Tsiamoulou</name>
+    </author>
+    <author>
+      <name>Alexandra Covaci</name>
+    </author>
+    <author>
+      <name>Zeqi Jia</name>
+    </author>
+    <author>
+      <name>Jenny Yiend</name>
+    </author>
+    <author>
+      <name>Chee Siang Ang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.13620v2</id>
+    <title>Examining Risks Through a Characterization of the AI Companion Application Ecosystem: A Stratified Sample from the Apple App Store and Google Play Store</title>
+    <updated>2026-08-21T21:09:59Z</updated>
+    <link href="https://arxiv.org/abs/2603.13620v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.13620v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>While computer systems that allow users to interact through conversational natural language (i.e., chatbots) have existed for many years, various types of applications offering AI companionship (e.g., Character AI, Replika) have proliferated in recent years due to advancements in large language models. To better understand this application ecosystem, we identified 489 unique apps from the Apple App Store and Google Play Store that advertised AI companionship with social or relational capabilities (e.g., an AI romantic partner). We then systematically conducted and analyzed walkthroughs of a stratified sample of 30 apps, focusing on two distinct risk categories: potential harms posed to users by AI companion apps, and potential harms enabled by malicious users exploiting app features. Through our analysis, we categorize broader ecosystem trends that provide context for understanding risks and identify specific risks related to sensitive data collection and sharing, anthropomorphism, engagement mechanisms, sexual content, as well as the ingestion and reconstruction of likeness, including the potential for generating synthetic nonconsensual intimate imagery (synthetic NCII). We conclude with a discussion of paths for different key stakeholders to mitigate the identified risks.
+  Content warning: This paper includes descriptions of applications that can be used to create synthetic nonconsensual representations, including intimate imagery, as well as discussion of suicidal ideation.</summary>
+    <category term="cs.CY" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-13T21:56:48Z</published>
+    <arxiv:primary_category term="cs.CY"/>
+    <author>
+      <name>Natalie Grace Brigham</name>
+    </author>
+    <author>
+      <name>Lucy Qin</name>
+    </author>
+    <author>
+      <name>Tadayoshi Kohno</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.12476v1</id>
+    <title>Not a Silver Bullet for Loneliness: How Attachment and Age Shape Intimacy with AI Companions</title>
+    <updated>2026-02-12T23:21:16Z</updated>
+    <link href="https://arxiv.org/abs/2602.12476v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.12476v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Artificial intelligence (AI) companions are increasingly promoted as solutions for loneliness, often overlooking how personal dispositions and life-stage conditions shape artificial intimacy. Because intimacy is a primary coping mechanism for loneliness that varies by attachment style and age, we examine how different types of users form intimate relationships with AI companions in response to loneliness. Drawing on a hermeneutic literature review and a survey of 277 active AI companion users, we develop and test a model in which loneliness predicts intimacy, moderated by attachment insecurity and conditioned by age. Although the cross-sectional data limits causal inference, the results reveal a differentiated pattern. Loneliness is paradoxically associated with reduced intimacy for securely attached users but with increased intimacy for avoidant and ambivalent users, while anxious users show mixed effects. Older adults report higher intimacy even at lower loneliness levels. These findings challenge portrayals of AI companions as universal remedies for loneliness. Instead, artificial intimacy emerges as a sociotechnical process shaped by psychological dispositions and demographic conditions. The study clarifies who is most likely to form intimate relationships with AI companions and highlights ethical risks in commercial models that may capitalise on user vulnerability.</summary>
+    <category term="cs.CY" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-12T23:21:16Z</published>
+    <arxiv:primary_category term="cs.CY"/>
+    <author>
+      <name>Raffaele Ciriello</name>
+    </author>
+    <author>
+      <name>Uri Gal</name>
+    </author>
+    <author>
+      <name>Ofir Turel</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.12181v2</id>
+    <title>Negotiating Digital Identities with AI Companions: Motivations, Strategies, and Emotional Outcomes</title>
+    <updated>2026-03-25T16:27:22Z</updated>
+    <link href="https://arxiv.org/abs/2601.12181v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.12181v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>AI companions enable deep emotional relationships by engaging a user's sense of identity, but they also pose risks like unhealthy emotional dependence. Mitigating these risks requires first understanding the underlying process of identity construction and negotiation with AI companions. Focusing on Character.AI (C.AI), a popular AI companion, we conducted an LLM-assisted thematic analysis of 22,374 online discussions on its subreddit. Using Identity Negotiation Theory as an analytical lens, we identified a three-stage process: 1) five user motivations; 2) an identity negotiation process involving three communication expectations and four identity co-construction strategies; and 3) three emotional outcomes. Our findings surface the identity work users perform as both performers and directors to co-construct identities in negotiation with C.AI. This process takes place within a socio-emotional sandbox where users can experiment with social roles and express emotions without non-human partners. Finally, we offer design implications for emotionally supporting users while mitigating the risks.</summary>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-17T21:46:48Z</published>
+    <arxiv:comment>Accepted by ACM CHI '2026</arxiv:comment>
+    <arxiv:primary_category term="cs.HC"/>
+    <author>
+      <name>Renkai Ma</name>
+    </author>
+    <author>
+      <name>Shuo Niu</name>
+    </author>
+    <author>
+      <name>Lingyao Li</name>
+    </author>
+    <author>
+      <name>Alex Hirth</name>
+    </author>
+    <author>
+      <name>Ava Brehm</name>
+    </author>
+    <author>
+      <name>Rowajana Behterin Barbie</name>
+    </author>
+    <arxiv:doi>10.1145/3772318.3791473</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3772318.3791473" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.10754v1</id>
+    <title>Chatting with Confidants or Corporations? Privacy Management with AI Companions</title>
+    <updated>2026-01-13T15:15:37Z</updated>
+    <link href="https://arxiv.org/abs/2601.10754v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.10754v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>AI chatbots designed as emotional companions blur the boundaries between interpersonal intimacy and institutional software, creating a complex, multi-dimensional privacy environment. Drawing on Communication Privacy Management theory and Masur's horizontal (user-AI) and vertical (user-platform) privacy framework, we conducted in-depth interviews with fifteen users of companion AI platforms such as Replika and Character.AI. Our findings reveal that users blend interpersonal habits with institutional awareness: while the non-judgmental, always-available nature of chatbots fosters emotional safety and encourages self-disclosure, users remain mindful of institutional risks and actively manage privacy through layered strategies and selective sharing. Despite this, many feel uncertain or powerless regarding platform-level data control. Anthropomorphic design further blurs privacy boundaries, sometimes leading to unintentional oversharing and privacy turbulence. These results extend privacy theory by highlighting the unique interplay of emotional and institutional privacy management in human-AI companionship.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CY" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-13T15:15:37Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <arxiv:journal_ref>Journal of Computer-Mediated Communication, 2026</arxiv:journal_ref>
+    <author>
+      <name>Hsuen-Chi Chiu</name>
+    </author>
+    <author>
+      <name>Jeremy Foote</name>
+    </author>
+    <arxiv:doi>10.1093/jcmc/zmag014</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1093/jcmc/zmag014" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2512.15117v2</id>
+    <title>"I am here for you": How relational conversational AI appeals to adolescents, especially those who are socially and emotionally vulnerable</title>
+    <updated>2025-12-18T03:18:49Z</updated>
+    <link href="https://arxiv.org/abs/2512.15117v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2512.15117v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>General-purpose conversational AI chatbots and AI companions increasingly provide young adolescents with emotionally supportive conversations, raising questions about how conversational style shapes anthropomorphism and emotional reliance. In a preregistered online experiment with 284 adolescent-parent dyads, youth aged 11-15 and their parents read two matched transcripts in which a chatbot responded to an everyday social problem using either a relational style (first-person, affiliative, commitment language) or a transparent style (explicit nonhumanness, informational tone). Adolescents more often preferred the relational than the transparent style, whereas parents were more likely to prefer transparent style than adolescents. Adolescents rated the relational chatbot as more human-like, likable, trustworthy and emotionally close, while perceiving both styles as similarly helpful. Adolescents who preferred relational style had lower family and peer relationship quality and higher stress and anxiety than those preferring transparent style or both chatbots. These findings identify conversational style as a key design lever for youth AI safety, showing that relational framing heightens anthropomorphism, trust and emotional closeness and can be especially appealing to socially and emotionally vulnerable adolescents, who may be at increased risk for emotional reliance on conversational AI.</summary>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.RO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-12-17T06:17:52Z</published>
+    <arxiv:comment>I updated a title</arxiv:comment>
+    <arxiv:primary_category term="cs.HC"/>
+    <author>
+      <name>Pilyoung Kim</name>
+    </author>
+    <author>
+      <name>Yun Xie</name>
+    </author>
+    <author>
+      <name>Sujin Yang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.14972v2</id>
+    <title>Harmful Traits of AI Companions</title>
+    <updated>2025-12-01T06:03:57Z</updated>
+    <link href="https://arxiv.org/abs/2511.14972v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.14972v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Amid the growing prevalence of human-AI interaction, large language models and other AI-based entities increasingly provide forms of companionship to human users. Such AI companionship -- i.e., bonded relationships between humans and AI systems that resemble the relationships people have with family members, friends, and romantic partners -- might substantially benefit humans. Yet such relationships can also do profound harm. We propose a framework for analyzing potential negative impacts of AI companionship by identifying specific harmful traits of AI companions and speculatively mapping causal pathways back from these traits to possible causes and forward to potential harmful effects. We provide detailed, structured analysis of four potentially harmful traits -- the absence of natural endpoints for relationships, vulnerability to product sunsetting, high attachment anxiety, and propensity to engender protectiveness -- and briefly discuss fourteen others. For each trait, we propose hypotheses connecting causes -- such as misaligned optimization objectives and the digital nature of AI companions -- to fundamental harms -- including reduced autonomy, diminished quality of human relationships, and deception. Each hypothesized causal connection identifies a target for potential empirical evaluation. Our analysis examines harms at three levels: to human partners directly, to their relationships with other humans, and to society broadly. We examine how existing law struggles to address these emerging harms, discuss potential benefits of AI companions, and conclude with design recommendations for mitigating risks. This analysis offers immediate suggestions for reducing risks while laying a foundation for deeper investigation of this critical but understudied topic.</summary>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-18T23:39:06Z</published>
+    <arxiv:primary_category term="cs.HC"/>
+    <author>
+      <name>W. Bradley Knox</name>
+    </author>
+    <author>
+      <name>Katie Bradford</name>
+    </author>
+    <author>
+      <name>Samanta Varela Castro</name>
+    </author>
+    <author>
+      <name>Desmond C. Ong</name>
+    </author>
+    <author>
+      <name>Sean Williams</name>
+    </author>
+    <author>
+      <name>Jacob Romanow</name>
+    </author>
+    <author>
+      <name>Carly Nations</name>
+    </author>
+    <author>
+      <name>Peter Stone</name>
+    </author>
+    <author>
+      <name>Samuel Baker</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.02979v2</id>
+    <title>Systematizing LLM Persona Design: A Four-Quadrant Technical Taxonomy for AI Companion Applications</title>
+    <updated>2026-01-23T07:45:46Z</updated>
+    <link href="https://arxiv.org/abs/2511.02979v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.02979v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The design and application of LLM-based personas in AI companionship is a rapidly expanding but fragmented field, spanning from virtual emotional companions and game NPCs to embodied functional robots. This diversity in objectives, modality, and technical stacks creates an urgent need for a unified framework. To address this gap, this paper systematizes the field by proposing a Four-Quadrant Technical Taxonomy for AI companion applications. The framework is structured along two critical axes: Virtual vs. Embodied and Emotional Companionship vs. Functional Augmentation. Quadrant I (Virtual Companionship) explores virtual idols, romantic companions, and story characters, introducing a four-layer technical framework to analyze their challenges in maintaining long-term emotional consistency. Quadrant II (Functional Virtual Assistants) analyzes AI applications in work, gaming, and mental health, highlighting the shift from "feeling" to "thinking and acting" and pinpointing key technologies like enterprise RAG and on-device inference. Quadrants III &amp; IV (Embodied Intelligence) shift from the virtual to the physical world, analyzing home robots and vertical-domain assistants, revealing core challenges in symbol grounding, data privacy, and ethical liability. This taxonomy provides not only a systematic map for researchers and developers to navigate the complex persona design space but also a basis for policymakers to identify and address the unique risks inherent in different application scenarios.</summary>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-04T20:37:13Z</published>
+    <arxiv:comment>Accepted to Neurips 2025 workshop: LLM Persona Workshop</arxiv:comment>
+    <arxiv:primary_category term="cs.HC"/>
+    <author>
+      <name>Esther Sun</name>
+    </author>
+    <author>
+      <name>Zichu Wu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.11185v1</id>
+    <title>Principles of Safe AI Companions for Youth: Parent and Expert Perspectives</title>
+    <updated>2025-10-13T09:19:22Z</updated>
+    <link href="https://arxiv.org/abs/2510.11185v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.11185v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>AI companions are increasingly popular among teenagers, yet current platforms lack safeguards to address developmental risks and harmful normalization. Despite growing concerns, little is known about how parents and developmental psychology experts assess these interactions or what protections they consider necessary. We conducted 26 semi structured interviews with parents and experts, who reviewed real world youth GenAI companion conversation snippets. We found that stakeholders assessed risks contextually, attending to factors such as youth maturity, AI character age, and how AI characters modeled values and norms. We also identified distinct logics of assessment: parents flagged single events, such as a mention of suicide or flirtation, as high risk, whereas experts looked for patterns over time, such as repeated references to self harm or sustained dependence. Both groups proposed interventions, with parents favoring broader oversight and experts preferring cautious, crisis-only escalation paired with youth facing safeguards. These findings provide directions for embedding safety into AI companion design.</summary>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-13T09:19:22Z</published>
+    <arxiv:primary_category term="cs.HC"/>
+    <author>
+      <name>Yaman Yu</name>
+    </author>
+    <author>
+      <name> Mohi</name>
+    </author>
+    <author>
+      <name>Aishi Debroy</name>
+    </author>
+    <author>
+      <name>Xin Cao</name>
+    </author>
+    <author>
+      <name>Karen Rudolph</name>
+    </author>
+    <author>
+      <name>Yang Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.10079v1</id>
+    <title>How AI Companionship Develops: Evidence from a Longitudinal Study</title>
+    <updated>2025-10-11T07:36:47Z</updated>
+    <link href="https://arxiv.org/abs/2510.10079v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.10079v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The quickly growing popularity of AI companions poses risks to mental health, personal wellbeing, and social relationships. Past work has identified many individual factors that can drive human-companion interaction, but we know little about how these factors interact and evolve over time. In Study 1, we surveyed AI companion users (N = 303) to map the psychological pathway from users' mental models of the agent to parasocial experiences, social interaction, and the psychological impact of AI companions. Participants' responses foregrounded multiple interconnected variables (agency, parasocial interaction, and engagement) that shape AI companionship. In Study 2, we conducted a longitudinal study with a subset of participants (N = 110) using a new generic chatbot. Participants' perceptions of the generic chatbot significantly converged to perceptions of their own companions by Week 3. These results suggest a longitudinal model of AI companionship development and demonstrate an empirical method to study human-AI companionship.</summary>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-11T07:36:47Z</published>
+    <arxiv:primary_category term="cs.HC"/>
+    <author>
+      <name>Angel Hsing-Chi Hwang</name>
+    </author>
+    <author>
+      <name>Fiona Li</name>
+    </author>
+    <author>
+      <name>Jacy Reese Anthis</name>
+    </author>
+    <author>
+      <name>Hayoun Noh</name>
+    </author>
+  </entry>
+</feed>

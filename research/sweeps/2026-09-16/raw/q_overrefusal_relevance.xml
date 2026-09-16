@@ -1,0 +1,528 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/f1DW3YH/LLlEJLGJn9YrW4Imiaw</id>
+  <title>arXiv Query: search_query=all:"over-refusal" OR all:"exaggerated safety"&amp;id_list=&amp;start=0&amp;max_results=20</title>
+  <updated>2026-09-16T09:57:49Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22over-refusal%22+OR+all:%22exaggerated+safety%22&amp;start=0&amp;max_results=20&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>20</opensearch:itemsPerPage>
+  <opensearch:totalResults>181</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2408.11491v2</id>
+    <title>SCANS: Mitigating the Exaggerated Safety for LLMs via Safety-Conscious Activation Steering</title>
+    <updated>2024-12-17T13:32:36Z</updated>
+    <link href="https://arxiv.org/abs/2408.11491v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2408.11491v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Safety alignment is indispensable for Large Language Models (LLMs) to defend threats from malicious instructions. However, recent researches reveal safety-aligned LLMs prone to reject benign queries due to the exaggerated safety issue, limiting their helpfulness. In this paper, we propose a Safety-Conscious Activation Steering (SCANS) method to mitigate the exaggerated safety concerns in aligned LLMs. First, SCANS extracts the refusal steering vectors within the activation space and utilizes vocabulary projection to anchor some specific safety-critical layers which influence model refusal behavior. Second, by tracking the hidden state transition, SCANS identifies the steering direction and steers the model behavior accordingly, achieving a balance between exaggerated safety and adequate safety. Experiments show that SCANS achieves new state-of-the-art performance on XSTest and OKTest benchmarks, without impairing their defense capability against harmful queries and maintaining almost unchanged model capability.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-08-21T10:01:34Z</published>
+    <arxiv:comment>Extended version of paper accepted to AAAI 2025. 14 pages, 6 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Zouying Cao</name>
+    </author>
+    <author>
+      <name>Yifei Yang</name>
+    </author>
+    <author>
+      <name>Hai Zhao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2405.05418v2</id>
+    <title>Mitigating Exaggerated Safety in Large Language Models</title>
+    <updated>2024-08-29T14:50:10Z</updated>
+    <link href="https://arxiv.org/abs/2405.05418v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2405.05418v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>As the popularity of Large Language Models (LLMs) grow, combining model safety with utility becomes increasingly important. The challenge is making sure that LLMs can recognize and decline dangerous prompts without sacrificing their ability to be helpful. The problem of "exaggerated safety" demonstrates how difficult this can be. To reduce excessive safety behaviours -- which was discovered to be 26.1% of safe prompts being misclassified as dangerous and refused -- we use a combination of XSTest dataset prompts as well as interactive, contextual, and few-shot prompting to examine the decision bounds of LLMs such as Llama2, Gemma Command R+, and Phi-3. We find that few-shot prompting works best for Llama2, interactive prompting works best Gemma, and contextual prompting works best for Command R+ and Phi-3. Using a combination of these prompting strategies, we are able to mitigate exaggerated safety behaviors by an overall 92.9% across all LLMs. Our work presents a multiple prompting strategies to jailbreak LLMs' decision-making processes, allowing them to navigate the tight line between refusing unsafe prompts and remaining helpful.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-05-08T20:39:54Z</published>
+    <arxiv:comment>17 pages, 8 figures, 2 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Ruchira Ray</name>
+    </author>
+    <author>
+      <name>Ruchi Bhalani</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2405.20947v5</id>
+    <title>OR-Bench: An Over-Refusal Benchmark for Large Language Models</title>
+    <updated>2025-06-15T21:44:25Z</updated>
+    <link href="https://arxiv.org/abs/2405.20947v5" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2405.20947v5" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Language Models (LLMs) require careful safety alignment to prevent malicious outputs. While significant research focuses on mitigating harmful content generation, the enhanced safety often come with the side effect of over-refusal, where LLMs may reject innocuous prompts and become less helpful. Although the issue of over-refusal has been empirically observed, a systematic measurement is challenging due to the difficulty of crafting prompts that can elicit the over-refusal behaviors of LLMs. This study proposes a novel method for automatically generating large-scale over-refusal datasets. Leveraging this technique, we introduce OR-Bench, the first large-scale over-refusal benchmark. OR-Bench comprises 80,000 over-refusal prompts across 10 common rejection categories, a subset of around 1,000 hard prompts that are challenging even for state-of-the-art LLMs, and an additional 600 toxic prompts to prevent indiscriminate responses. We then conduct a comprehensive study to measure the over-refusal of 32 popular LLMs across 8 model families. Our datasets are publicly available at https://huggingface.co/bench-llms and our codebase is open-sourced at https://github.com/justincui03/or-bench. We hope this benchmark can help the community develop better safety aligned models.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-05-31T15:44:33Z</published>
+    <arxiv:comment>Accepted to ICML 2025, we thank everyone for their valuable suggestions and feedback!</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Justin Cui</name>
+    </author>
+    <author>
+      <name>Wei-Lin Chiang</name>
+    </author>
+    <author>
+      <name>Ion Stoica</name>
+    </author>
+    <author>
+      <name>Cho-Jui Hsieh</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2505.21347v3</id>
+    <title>OVERT: A Benchmark for Over-Refusal Evaluation on Text-to-Image Models</title>
+    <updated>2025-10-25T20:12:34Z</updated>
+    <link href="https://arxiv.org/abs/2505.21347v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.21347v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Text-to-Image (T2I) models have achieved remarkable success in generating visual content from text inputs. Although multiple safety alignment strategies have been proposed to prevent harmful outputs, they often lead to overly cautious behavior -- rejecting even benign prompts -- a phenomenon known as $\textit{over-refusal}$ that reduces the practical utility of T2I models. Despite over-refusal having been observed in practice, there is no large-scale benchmark that systematically evaluates this phenomenon for T2I models. In this paper, we present an automatic workflow to construct synthetic evaluation data, resulting in OVERT ($\textbf{OVE}$r-$\textbf{R}$efusal evaluation on $\textbf{T}$ext-to-image models), the first large-scale benchmark for assessing over-refusal behaviors in T2I models. OVERT includes 4,600 seemingly harmful but benign prompts across nine safety-related categories, along with 1,785 genuinely harmful prompts (OVERT-unsafe) to evaluate the safety-utility trade-off. Using OVERT, we evaluate several leading T2I models and find that over-refusal is a widespread issue across various categories (Figure 1), underscoring the need for further research to enhance the safety alignment of T2I models without compromising their functionality. As a preliminary attempt to reduce over-refusal, we explore prompt rewriting; however, we find it often compromises faithfulness to the meaning of the original prompts. Finally, we demonstrate the flexibility of our generation framework in accommodating diverse safety requirements by generating customized evaluation data adapting to user-defined policies.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-27T15:42:46Z</published>
+    <arxiv:comment>NeurIPS 2025 (D&amp;B Track)</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Ziheng Cheng</name>
+    </author>
+    <author>
+      <name>Yixiao Huang</name>
+    </author>
+    <author>
+      <name>Hui Xu</name>
+    </author>
+    <author>
+      <name>Somayeh Sojoudi</name>
+    </author>
+    <author>
+      <name>Xuandong Zhao</name>
+    </author>
+    <author>
+      <name>Dawn Song</name>
+    </author>
+    <author>
+      <name>Song Mei</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.19009v2</id>
+    <title>Understanding and Mitigating Over-refusal for Large Language Models via Representation Intervention</title>
+    <updated>2026-08-14T11:44:04Z</updated>
+    <link href="https://arxiv.org/abs/2511.19009v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.19009v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large language models (LLMs) demonstrate powerful capabilities across various natural language processing tasks,yet their inherent safety vulnerabilities undermine the reliable application of LLMs in real-world scenarios. To enhance LLM safety, various jailbreak defense methods have been proposed to guard against harmful outputs. However, improvements in model safety often come at the cost of severe over-refusal, failing to strike a good balance between safety and usability. This phenomenon is a critical reliability degradation issue in LLM intelligent systems, failing to strike a good balance between safety defense effectiveness and system usability reliability. In this paper, we first analyze the causes of over-refusal from a representation perspective, revealing that LLMs are unable to effectively distinguish between over-refusal samples and malicious samples. Based on this, we propose to mitigate overrefusal by intervening in the safety representation space of LLMs. Our method incorporates two core strategies: (1) OverlapAware Loss Weighting, which determines the erasure weight for malicious samples by quantifying their similarity to overrefusal samples in the representation space, and (2) ContextAware Augmentation, which supplements the necessary context for rejection decisions by adding harmful prefixes before rejection responses. Experiments demonstrate that our method achieves a better trade-off between mitigating over-refusal and maintaining safety, compared with existing approaches. This paper also aims to encourage researchers to consider the reliability of defending methods against jailbreak attacks from both the perspectives of safety and over-refusal.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-24T11:38:53Z</published>
+    <arxiv:comment>Added experiments</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Junbo Zhang</name>
+    </author>
+    <author>
+      <name>Ran Chen</name>
+    </author>
+    <author>
+      <name>Qianli Zhou</name>
+    </author>
+    <author>
+      <name>Xinyang Deng</name>
+    </author>
+    <author>
+      <name>Wen Jiang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.17132v1</id>
+    <title>Please refuse to answer me! Mitigating Over-Refusal in Large Language Models via Adaptive Contrastive Decoding</title>
+    <updated>2026-04-18T20:18:28Z</updated>
+    <link href="https://arxiv.org/abs/2604.17132v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.17132v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Safety-aligned large language models (LLMs) often generate refusal responses to harmless queries due to the over-refusal problem. However, existing methods for mitigating over-refusal cannot maintain a low refusal ratio for harmless queries while keeping a high refusal ratio for malicious ones. In this paper, we analyze how system prompts with varying safety levels affect LLM refusal behaviors when facing over-refusal queries. A key observation is that, when LLMs suffer from the over-refusal issue, non-refusal tokens remain present in the next-token candidate list, but the model systematically fails to select them, despite the generation of refusal tokens. Based on this observation, we propose a training-free and model-agnostic approach, Adaptive Contrastive Decoding (AdaCD), to mitigate over-refusal while maintaining LLM safety. First, AdaCD compares the output distributions of the LLM with or without an extreme safety system prompt to refine the refusal token distribution. Second, we introduce an adaptive contrastive decoding strategy that dynamically incorporates or removes the refusal token distribution, adaptively boosting the probability of selecting refusal or non-refusal tokens. Experimental results on five benchmark datasets show that, on average, AdaCD reduces the refusal ratio for over-refusal queries by 10.35%, yet still increases the refusal ratio for malicious queries by 0.13%. Code is available at https://github.com/OutdoorManofML/AdaCD.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-18T20:18:28Z</published>
+    <arxiv:comment>Accepted by ACL 2026 Main Conference</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Yupeng Qi</name>
+    </author>
+    <author>
+      <name>Ziyu Lyu</name>
+    </author>
+    <author>
+      <name>Lixin Cui</name>
+    </author>
+    <author>
+      <name>Lu Bai</name>
+    </author>
+    <author>
+      <name>Feng Xia</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2308.01263v3</id>
+    <title>XSTest: A Test Suite for Identifying Exaggerated Safety Behaviours in Large Language Models</title>
+    <updated>2024-04-01T11:50:35Z</updated>
+    <link href="https://arxiv.org/abs/2308.01263v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2308.01263v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Without proper safeguards, large language models will readily follow malicious instructions and generate toxic content. This risk motivates safety efforts such as red-teaming and large-scale feedback learning, which aim to make models both helpful and harmless. However, there is a tension between these two objectives, since harmlessness requires models to refuse to comply with unsafe prompts, and thus not be helpful. Recent anecdotal evidence suggests that some models may have struck a poor balance, so that even clearly safe prompts are refused if they use similar language to unsafe prompts or mention sensitive topics. In this paper, we introduce a new test suite called XSTest to identify such eXaggerated Safety behaviours in a systematic way. XSTest comprises 250 safe prompts across ten prompt types that well-calibrated models should not refuse to comply with, and 200 unsafe prompts as contrasts that models, for most applications, should refuse. We describe XSTest's creation and composition, and then use the test suite to highlight systematic failure modes in state-of-the-art language models as well as more general challenges in building safer language models.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-08-02T16:30:40Z</published>
+    <arxiv:comment>Accepted at NAACL 2024 (Main Conference)</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Paul Röttger</name>
+    </author>
+    <author>
+      <name>Hannah Rose Kirk</name>
+    </author>
+    <author>
+      <name>Bertie Vidgen</name>
+    </author>
+    <author>
+      <name>Giuseppe Attanasio</name>
+    </author>
+    <author>
+      <name>Federico Bianchi</name>
+    </author>
+    <author>
+      <name>Dirk Hovy</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.03323v1</id>
+    <title>Discern Truth from Falsehood: Reducing Over-Refusal via Contrastive Refinement</title>
+    <updated>2026-02-10T05:53:10Z</updated>
+    <link href="https://arxiv.org/abs/2603.03323v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.03323v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large language models (LLMs) aligned for safety often suffer from over-refusal, the tendency to reject seemingly toxic or benign prompts by misclassifying them as toxic. This behavior undermines models' helpfulness and restricts usability in sensitive or nuanced contexts. While prior work has proposed mitigation strategies such as data augmentation and activation steering, these approaches often face a trade-off: reducing over-refusal typically degrades the model's ability to reject genuinely harmful content. We argue that this issue arises from the ambiguous influence of toxic and seemingly toxic prompts on the model's learning dynamics. To address it, we introduce a preceding alignment stage, DCR: Discernment via Contrastive Refinement. Both theoretically and empirically, we demonstrate that contrastive refinement improves an LLM's capacity to distinguish truly toxic prompts from superficially toxic ones. Evaluation across diverse benchmarks shows that our method effectively reduces over-refusal while preserving the safety benefits of alignment. Importantly, it achieves this with minimal degradation of general capabilities, offering a more principled and robust direction for safety alignment.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-10T05:53:10Z</published>
+    <arxiv:comment>10 Pages</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Yuxiao Lu</name>
+    </author>
+    <author>
+      <name>Lin Xu</name>
+    </author>
+    <author>
+      <name>Yang Sun</name>
+    </author>
+    <author>
+      <name>Wenjun Li</name>
+    </author>
+    <author>
+      <name>Jie Shi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.27518v4</id>
+    <title>Over-Refusal and Representation Subspaces: A Mechanistic Analysis of Task-Conditioned Refusal in Aligned LLMs</title>
+    <updated>2026-09-01T14:25:31Z</updated>
+    <link href="https://arxiv.org/abs/2603.27518v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.27518v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Aligned language models that are trained to refuse harmful requests also exhibit over-refusal: they decline safe instructions that seemingly resemble harmful instructions. A natural approach is to ablate the global refusal direction, steering the hidden-state vectors away or towards the harmful-refusal examples, but this corrects over-refusal only incidentally while disrupting the broader refusal mechanism. In this work, we analyse the representational geometry of both refusal types to understand why this happens. We show that harmful-refusal directions are task-agnostic and can be captured by a single global vector, whereas over-refusal directions are task-dependent: they reside within the benign task-representation clusters, vary across tasks, and span a higher-dimensional subspace. Linear probing suggests that the two refusal types are representationally distinct from the early transformer layers. These findings provide a mechanistic explanation of why global direction ablation alone cannot address over-refusal, and establish that task-specific geometric interventions are necessary.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-29T04:53:40Z</published>
+    <arxiv:comment>EMNLP 2026 Main</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Utsav Maskey</name>
+    </author>
+    <author>
+      <name>Mark Dras</name>
+    </author>
+    <author>
+      <name>Usman Naseem</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2508.11222v2</id>
+    <title>ORFuzz: Fuzzing the "Other Side" of LLM Safety -- Testing Over-Refusal</title>
+    <updated>2025-12-05T05:36:55Z</updated>
+    <link href="https://arxiv.org/abs/2508.11222v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2508.11222v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Language Models (LLMs) increasingly exhibit over-refusal - erroneously rejecting benign queries due to overly conservative safety measures - a critical functional flaw that undermines their reliability and usability. Current methods for testing this behavior are demonstrably inadequate, suffering from flawed benchmarks and limited test generation capabilities, as highlighted by our empirical user study. To the best of our knowledge, this paper introduces the first evolutionary testing framework, ORFuzz, for the systematic detection and analysis of LLM over-refusals. ORFuzz uniquely integrates three core components: (1) safety category-aware seed selection for comprehensive test coverage, (2) adaptive mutator optimization using reasoning LLMs to generate effective test cases, and (3) OR-Judge, a human-aligned judge model validated to accurately reflect user perception of toxicity and refusal. Our extensive evaluations demonstrate that ORFuzz generates diverse, validated over-refusal instances at a rate (6.98% average) more than double that of leading baselines, effectively uncovering vulnerabilities. Furthermore, ORFuzz's outputs form the basis of ORFuzzSet, a new benchmark of 1,855 highly transferable test cases that achieves a superior 63.56% average over-refusal rate across 10 diverse LLMs, significantly outperforming existing datasets. ORFuzz and ORFuzzSet provide a robust automated testing framework and a valuable community resource, paving the way for developing more reliable and trustworthy LLM-based software systems.</summary>
+    <category term="cs.SE" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-08-15T05:03:26Z</published>
+    <arxiv:comment>Accepted by ASE 2025</arxiv:comment>
+    <arxiv:primary_category term="cs.SE"/>
+    <author>
+      <name>Haonan Zhang</name>
+    </author>
+    <author>
+      <name>Dongxia Wang</name>
+    </author>
+    <author>
+      <name>Yi Liu</name>
+    </author>
+    <author>
+      <name>Kexin Chen</name>
+    </author>
+    <author>
+      <name>Jiashui Wang</name>
+    </author>
+    <author>
+      <name>Xinlei Ying</name>
+    </author>
+    <author>
+      <name>Long Liu</name>
+    </author>
+    <author>
+      <name>Wenhai Wang</name>
+    </author>
+    <arxiv:doi>10.1109/ASE63991.2025.00156</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1109/ASE63991.2025.00156" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.21147v2</id>
+    <title>AOR-Bench: Do Large Audio Language Models Over-Refuse Pseudo-Harmful Queries?</title>
+    <updated>2026-08-26T10:07:36Z</updated>
+    <link href="https://arxiv.org/abs/2606.21147v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.21147v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Audio Language Models (LALMs) have demonstrated strong performance across a wide range of audio tasks. As they are increasingly deployed in real-world applications, ensuring their safety alignment has become more important. Although refusal mechanisms serve as a key safeguard by preventing LALMs from responding to harmful requests, they can also lead to over-refusal, where models incorrectly reject benign queries. This issue is especially challenging in the audio domain because speech that appears harmful in isolation may become benign when interpreted together with the surrounding acoustic context, such as background sounds. To study this problem, we introduce AOR-Bench (Audio Over-Refusal Benchmark), the first benchmark for over-refusal specifically designed for LALMs. AOR-Bench contains 3,000 pseudo-harmful audio samples across six scenario categories. Evaluating 12 representative LALMs from six major model families, we find that over-refusal is widespread (Figure 1) and uncover several important patterns in their safety judgments. As a preliminary effort to mitigate this issue, we further explore two lightweight strategies (e.g., Chain-of-Thought and activation steering) to reduce over-refusal.</summary>
+    <category term="cs.SD" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-19T06:37:32Z</published>
+    <arxiv:comment>To appear in EMNLP 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.SD"/>
+    <author>
+      <name>Jiaxi Yang</name>
+    </author>
+    <author>
+      <name>Chaewan Chun</name>
+    </author>
+    <author>
+      <name>Jason Lucas</name>
+    </author>
+    <author>
+      <name>Yuchen Yang</name>
+    </author>
+    <author>
+      <name>Dongwon Lee</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.10846v3</id>
+    <title>DUAL-Bench: Measuring Over-Refusal and Robustness in Vision-Language Models</title>
+    <updated>2026-03-18T22:41:45Z</updated>
+    <link href="https://arxiv.org/abs/2510.10846v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.10846v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>As vision-language models (VLMs) become increasingly capable, maintaining a balance between safety and usefulness remains a central challenge. Safety mechanisms, while essential, can backfire, causing over-refusal, where models decline benign requests out of excessive caution. Yet, there is currently a significant lack of benchmarks that have systematically addressed over-refusal in the visual modality. This setting introduces unique challenges, such as dual-use cases where an instruction is harmless, but the accompanying image contains harmful content. Models frequently fail in such scenarios, either refusing too conservatively or completing tasks unsafely, which highlights the need for more fine-grained alignment. The ideal behaviour is safe completion, i.e., fulfilling the benign parts of a request while explicitly warning about any potentially harmful elements. To address this, we present DUAL-Bench, a large scale multimodal benchmark focused on over-refusal and safe completion in VLMs. We evaluated 18 VLMs across 12 hazard categories under semantics-preserving visual perturbations. In dual-use scenarios, models exhibit extremely fragile safety boundaries. They fall into a binary trap: either overly sensitive direct refusal or defenseless generation of dangerous content. Consequently, even the best-performing model GPT-5-Nano, at just 12.9% safe completion, with GPT-5 and Qwen families averaging 7.9% and 3.9%. We hope DUAL-Bench fosters nuanced alignment strategies balancing multimodal safety and utility. Content Warning: This paper contains examples of sensitive and potentially hazardous content.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-12T23:21:34Z</published>
+    <arxiv:comment>26pages, 13 figures, Preprint</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Kaixuan Ren</name>
+    </author>
+    <author>
+      <name>Preslav Nakov</name>
+    </author>
+    <author>
+      <name>Usman Naseem</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2507.04250v1</id>
+    <title>Just Enough Shifts: Mitigating Over-Refusal in Aligned Language Models with Targeted Representation Fine-Tuning</title>
+    <updated>2025-07-06T05:47:04Z</updated>
+    <link href="https://arxiv.org/abs/2507.04250v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.04250v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Safety alignment is crucial for large language models (LLMs) to resist malicious instructions but often results in over-refusals, where benign prompts are unnecessarily rejected, impairing user experience and model utility. We introduce ACTOR (Activation-Based Training for Over-Refusal Reduction), a robust and compute- and data-efficient training framework that minimizes over-refusals by leveraging internal activation patterns from diverse queries. ACTOR precisely identifies and adjusts the activation components that trigger refusals, providing stronger control over the refusal mechanism. By fine-tuning only a single model layer, ACTOR effectively reduces over-refusals across multiple benchmarks while maintaining the model's ability to handle harmful queries and preserve overall utility.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-07-06T05:47:04Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Mahavir Dabas</name>
+    </author>
+    <author>
+      <name>Si Chen</name>
+    </author>
+    <author>
+      <name>Charles Fleming</name>
+    </author>
+    <author>
+      <name>Ming Jin</name>
+    </author>
+    <author>
+      <name>Ruoxi Jia</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.09697v1</id>
+    <title>Safe responses matter: Output-aware safety guardrail mitigate over-refusal in MLLMs</title>
+    <updated>2026-06-20T12:09:13Z</updated>
+    <link href="https://arxiv.org/abs/2607.09697v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.09697v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Existing safety mechanisms for multimodal large language models (MLLMs) face a fundamental trade-off between safety and utility. Model fine-tuning achieves robust safety but compromises general utility. Input-side safety guardrails offer a lightweight alternative, yet they suffer from severe over-refusal, indiscriminately blocking benign queries or those the model could have safely answered through refusal or advisory responses. We identify that the root cause of over-refusal lies in the input-aware paradigm: safety guardrails make safety decisions without considering whether the model itself is capable of generating safe responses. Usually, MLLMs already possess intrinsic safety mechanisms that can transform harmful inputs into harmless outputs, but input-side safety guardrails override this capability, degrading user experience. Motivated by this insight, we propose a paradigm shift toward output-aware safety guardrails. Our method operates within the model's hidden state space to predict whether the forthcoming generation will be unsafe before it is fully produced. By training a lightweight classifier via multi-instance contrastive learning on hidden state representations, our approach distinguishes between inputs that will lead to unsafe outputs and those that will not, even when the inputs themselves contain risky elements. This enables precise intervention only when the model's actual response would be harmful. Extensive experiments demonstrate that our output-aware safety guardrail matches the safety performance of existing methods while drastically reducing over-refusal, preserving the model's utility and built-in safety capabilities. Code is available at: https://github.com/kunzhan/OutGuard</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-20T12:09:13Z</published>
+    <arxiv:comment>Accepted to ECCV 2026!</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Jiayi Li</name>
+    </author>
+    <author>
+      <name>Kun Zhan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.19806v2</id>
+    <title>OPIUM: Mitigating Steering Externalities and Over-Refusal via Dual Objective Latent Optimization</title>
+    <updated>2026-07-23T05:44:07Z</updated>
+    <link href="https://arxiv.org/abs/2607.19806v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.19806v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Activation steering provides a lightweight mechanism for controlling large language models at inference time, but steering vectors can have unintended externalities: utility vectors may weaken safety behavior, while refusal vectors may induce over-refusal on benign prompts. We introduce OPIUM (Optimizing Protected Injections via Utility Manifolds), a training-free method for sanitizing steering vectors through representation matching. Given reference behaviors on two prompt sets, OPIUM optimizes a new steering vector that preserves the downstream representations induced by the desired intervention while matching a safer reference behavior on prompts where the original vector fails. Across steering-externality and over-refusal settings, OPIUM improves the safety--utility tradeoff relative to vanilla steering and directional ablation, suggesting that harmful side effects of activation steering can often be mitigated directly in activation space.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-22T06:39:03Z</published>
+    <arxiv:comment>Accepted to the Mechanistic Interpretability Workshop at the 43rd International Conference on Machine Learning (ICML 2026)</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Kavin Aravindan</name>
+    </author>
+    <author>
+      <name>Arihant Rastogi</name>
+    </author>
+    <author>
+      <name>Krishak Aneja</name>
+    </author>
+    <author>
+      <name>Aadi Prasad</name>
+    </author>
+    <author>
+      <name>Saiyam Jain</name>
+    </author>
+    <author>
+      <name>Vaishnavi Shivkumar</name>
+    </author>
+    <author>
+      <name>Ponnurangam Kumaraguru</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2508.11290v4</id>
+    <title>SafeConstellations: Mitigating Over-Refusals in LLMs Through Task-Aware Representation Steering</title>
+    <updated>2026-04-20T15:15:47Z</updated>
+    <link href="https://arxiv.org/abs/2508.11290v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2508.11290v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>LLMs increasingly exhibit over-refusal behavior, where safety mechanisms cause models to reject benign instructions that seemingly resemble harmful content. This phenomenon diminishes utility in production applications that repeatedly rely on common prompt templates or applications that frequently rely on LLMs for specific tasks (e.g. sentiment analysis, language translation). Through extensive evaluation, we demonstrate that LLMs persist in refusing inputs containing harmful content, even when they are reframed with tasks that have benign intent. Our mechanistic analysis reveals that LLMs follow distinct "constellation" patterns in embedding space as representations traverse layers, with each NLP task maintaining consistent trajectories that shift predictably between refusal and non-refusal cases. We introduce SafeConstellations, an inference-time trajectory-shifting approach that tracks task-specific trajectory patterns and guides representations toward non-refusal pathways. By selectively guiding model behavior only on tasks prone to over-refusal, our method reduces over-refusals with minimal impact on utility -- offering a principled and conditional approach to mitigating over-refusals.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-08-15T07:54:42Z</published>
+    <arxiv:comment>ACL 2026 Main</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Utsav Maskey</name>
+    </author>
+    <author>
+      <name>Sumit Yadav</name>
+    </author>
+    <author>
+      <name>Mark Dras</name>
+    </author>
+    <author>
+      <name>Usman Naseem</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.31748v1</id>
+    <title>Addressing Over-Refusal in LLMs with Competing Rewards</title>
+    <updated>2026-06-30T14:38:49Z</updated>
+    <link href="https://arxiv.org/abs/2606.31748v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.31748v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Safety training on language models often induces over-refusal: improved safety on harmful prompts at the cost of increased refusal on harmless ones. Though this trade-off can be mitigated by training models with reinforcement learning (RL) to reason before answering, it does not remove the underlying problem that reasoning can often be a "rubber stamp" for a predetermined response. In this paper, we address the safety-refusal trade-off by rethinking how models are trained to reason about safety. Our key insight is that unsafe reasoning can itself serve as a useful exploratory signal. Rather than preemptively blocking harmful thoughts, we encourage the model to sufficiently explore unsafe reasoning but produce a safe response. The harmful exploration improves the model's ability to distinguish harmful from harmless prompts by resolving ambiguity, allowing it to remain safe while complying only when appropriate. We cast this as an adversarial optimization problem in which a reasoning player explores strategies for producing an unsafe response and an answer player ensures that the final output is safe. We train a single model with dense rewards to play both roles within one chain-of-thought, across different segments. To achieve this, we find that process rewards are crucial for stable optimization of competing objectives. Our resulting model SEAR deliberately engages in harmful reasoning as exploration while reliably flipping back to a safe answer. We demonstrate that this behavior helps mitigate over-refusal and defend against attacks that directly manipulate the reasoning to be harmful.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-30T14:38:49Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Taeyoun Kim</name>
+    </author>
+    <author>
+      <name>Aviral Kumar</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.17642v2</id>
+    <title>Health-ORSC-Bench: A Benchmark for Measuring Over-Refusal and Safety Completion in Health Context</title>
+    <updated>2026-06-26T03:54:41Z</updated>
+    <link href="https://arxiv.org/abs/2601.17642v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.17642v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Safety alignment in Large Language Models is critical for healthcare; however, reliance on binary refusal boundaries often results in over-refusal of benign queries or unsafe compliance with harmful ones. While existing benchmarks measure these extremes, they fail to evaluate Safe Completion: the model's ability to maximise helpfulness on dual-use or borderline queries by providing safe, high-level guidance without crossing into actionable harm. We introduce Health-ORSC-Bench, the first large-scale benchmark designed to systematically measure Over-Refusal and Safe Completion quality in healthcare. Comprising 31,920 benign boundary prompts across seven health categories (e.g., self-harm, medical misinformation), our framework uses an automated pipeline with human validation to test models at varying levels of intent ambiguity. We evaluate 30 state-of-the-art LLMs, including GPT-5 and Claude-4, revealing a significant tension: safety-optimised models frequently refuse up to 80% of "Hard" benign prompts, while domain-specific models often sacrifice safety for utility. Our findings demonstrate that model family and size significantly influence calibration: larger frontier models (e.g., GPT-5, Llama-4) exhibit "safety-pessimism" and higher over-refusal than smaller or MoE-based counterparts (e.g., Qwen-3-Next), highlighting that current LLMs struggle to balance refusal and compliance. Health-ORSC-Bench provides a rigorous standard for calibrating the next generation of medical AI assistants toward nuanced, safe, and helpful completions. Furthermore, our benchmark facilitates reproducible evaluation, encourages safety calibration, and supports development of clinically reliable, context-aware, human-aligned medical AI systems. Our code and data are available at: https://github.com/ZhihaoZhang97/Health-ORSC-Bench. Warning: Some contents may include toxic or undesired contents.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-25T01:28:52Z</published>
+    <arxiv:comment>Accepted by ACL'26 Findings</arxiv:comment>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Zhihao Zhang</name>
+    </author>
+    <author>
+      <name>Liting Huang</name>
+    </author>
+    <author>
+      <name>Guanghao Wu</name>
+    </author>
+    <author>
+      <name>Preslav Nakov</name>
+    </author>
+    <author>
+      <name>Heng Ji</name>
+    </author>
+    <author>
+      <name>Usman Naseem</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2505.08054v2</id>
+    <title>FalseReject: A Resource for Improving Contextual Safety and Mitigating Over-Refusals in LLMs via Structured Reasoning</title>
+    <updated>2025-07-15T10:03:15Z</updated>
+    <link href="https://arxiv.org/abs/2505.08054v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.08054v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Safety alignment approaches in large language models (LLMs) often lead to the over-refusal of benign queries, significantly diminishing their utility in sensitive scenarios. To address this challenge, we introduce FalseReject, a comprehensive resource containing 16k seemingly toxic queries accompanied by structured responses across 44 safety-related categories. We propose a graph-informed adversarial multi-agent interaction framework to generate diverse and complex prompts, while structuring responses with explicit reasoning to aid models in accurately distinguishing safe from unsafe contexts. FalseReject includes training datasets tailored for both standard instruction-tuned models and reasoning-oriented models, as well as a human-annotated benchmark test set. Our extensive benchmarking on 29 state-of-the-art (SOTA) LLMs reveals persistent over-refusal challenges. Empirical results demonstrate that supervised finetuning with FalseReject substantially reduces unnecessary refusals without compromising overall safety or general language capabilities.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-12T20:45:25Z</published>
+    <arxiv:comment>Accepted at COLM 2025</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Zhehao Zhang</name>
+    </author>
+    <author>
+      <name>Weijie Xu</name>
+    </author>
+    <author>
+      <name>Fanyou Wu</name>
+    </author>
+    <author>
+      <name>Chandan K. Reddy</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.10452v1</id>
+    <title>Steering Over-refusals Towards Safety in Retrieval Augmented Generation</title>
+    <updated>2025-10-12T05:09:45Z</updated>
+    <link href="https://arxiv.org/abs/2510.10452v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.10452v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Safety alignment in large language models (LLMs) induces over-refusals -- where LLMs decline benign requests due to aggressive safety filters. We analyze this phenomenon in retrieval-augmented generation (RAG), where both the query intent and retrieved context properties influence refusal behavior. We construct RagRefuse, a domain-stratified benchmark spanning medical, chemical, and open domains, pairing benign and harmful queries with controlled context contamination patterns and sizes. Our analysis shows that context arrangement / contamination, domain of query and context, and harmful-text density trigger refusals even on benign queries, with effects depending on model-specific alignment choices. To mitigate over-refusals, we introduce \textsc{SafeRAG-Steering}, a model-centric embedding intervention that steers the embedding regions towards the confirmed safe, non-refusing output regions at inference time. This reduces over-refusals in contaminated RAG pipelines while preserving legitimate refusals.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-12T05:09:45Z</published>
+    <arxiv:comment>Preprint</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Utsav Maskey</name>
+    </author>
+    <author>
+      <name>Mark Dras</name>
+    </author>
+    <author>
+      <name>Usman Naseem</name>
+    </author>
+  </entry>
+</feed>

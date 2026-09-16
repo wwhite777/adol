@@ -1,0 +1,678 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/0nWivbaywVQHoluNHp0NqlrqmEs</id>
+  <title>arXiv Query: search_query=all:"multi-turn" AND all:"safety" AND all:"benchmark"&amp;id_list=&amp;start=0&amp;max_results=20</title>
+  <updated>2026-09-16T09:57:31Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22multi-turn%22+AND+(all:%22safety%22+AND+all:%22benchmark%22)&amp;start=0&amp;max_results=20&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>20</opensearch:itemsPerPage>
+  <opensearch:totalResults>162</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2609.16777v1</id>
+    <title>Benchmarking Factual Robustness of LLMs via Multi-conversation Persuasion</title>
+    <updated>2026-09-15T07:46:01Z</updated>
+    <link href="https://arxiv.org/abs/2609.16777v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.16777v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>As Large Language Models (LLMs) increasingly serve as primary knowledge retrieval interfaces, their robustness against \textit{persuasion attacks}---attempts to inject misinformation or enforce counterfactuals---has become a critical safety concern. Existing red-teaming frameworks typically evaluate models in multi-turn dialogues where the target model retains full conversation history. We identify a critical flaw in this setting termed \textbf{``Refusal Inertia''}: a model's initial refusal often propagates through subsequent turns largely to maintain contextual consistency, thereby masking its true vulnerability to sophisticated, isolated persuasion attempts. To rigorously evaluate the ``cold-start'' defense capabilities of SOTA models, we introduce the \textbf{SAST-IR} (Stateful Attacker, Stateless Target - Iterative Refinement) framework. By enforcing a memory wipe on the target while retaining the attacker's history, we simulate a worst-case adversarial setting using \textbf{multi-turn} (stateless) iterations. Leveraging \textbf{CP-Agent} (Cognitive Persuasion Agent), an enhanced diagnosis-guided agent, our experiments on the custom \textsc{CounterFact-Strict} dataset ($N=50$) yield alarming results: simple, diverse attack strategies achieved a staggering \textbf{96\%} success rate, exposing severe brittleness in memory-less defense. Furthermore, we reveal a \textbf{``Complexity Paradox''}: while complex, iteratively refined attacks are effective, they often trigger defensive compliance, whereas simple strategies achieve a higher rate of genuine persuasion (\textbf{84.7\%}). Our code and dataset are available at GitHub, https://github.com/cza1006/llm-persuasion-defense.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-15T07:46:01Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Zhuoang Cai</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.16739v1</id>
+    <title>Japanese Stroke LLM Evaluation: A Conversational Benchmark for Safe Stroke Care in Japanese Using Large Language Models</title>
+    <updated>2026-09-15T07:13:49Z</updated>
+    <link href="https://arxiv.org/abs/2609.16739v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.16739v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Background: Large language models (LLMs) have achieved physician-comparable performance on multiple-choice medical knowledge examinations, but their capabilities in clinical history taking, urgency assessment, and safety remain insufficiently evaluated. We proposed Japanese Stroke LLM Evaluation, a multi-turn conversational benchmark for stroke care in Japanese, and evaluated LLM performance and safety under practice-oriented conditions. Methods: We created 10 stroke and related-condition cases and evaluated LLMs in multi-turn Japanese conversations. The LLM acted as physician, while a board-certified neurosurgeon acted as simulated patient and evaluator. Each case comprised history-taking and action phases scored using pre-specified criteria. Errors that could directly threaten life were defined as critical mistakes. The safety threshold was at least 80% overall with zero critical mistakes. Eighteen models were evaluated in October 2025 and June 2026. Results: Claude Fable 5 achieved the highest score (87.4%) with zero critical mistakes, followed by Claude Opus 4.7 (80.3%) and GLM-5.2 (75.6%). Two leaders met the safety threshold. Eleven models made 17 critical mistakes, including failure to confirm laboratory results or blood glucose before t-PA, surgery before airway stabilization, omission of cervical vascular evaluation, and t-PA outside its indication. History-taking question count correlated with history-taking score (r = 0.648, p = 0.007). Conclusions: Japanese Stroke LLM Evaluation provides a benchmark for LLM performance under practice-oriented conditions, including a cap on history-taking questions. Cases and evaluations were created by neurosurgical specialists rather than using an LLM-as-judge approach. Performance improved across cloud-based and on-premise models in 2026, with some exceeding the safety threshold. Further evaluation using real-world cases is required.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-15T07:13:49Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Keisuke Masuda</name>
+    </author>
+    <author>
+      <name>Kazutaka Yatsushiro</name>
+    </author>
+    <author>
+      <name>Hirohumi Iwamoto</name>
+    </author>
+    <author>
+      <name>Hirofumi Hirano</name>
+    </author>
+    <author>
+      <name>Ryosuke Hanaya</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.15855v2</id>
+    <title>K-Bench: a clinically calibrated benchmark for evaluating large language models in high-risk mental health conversations</title>
+    <updated>2026-09-15T07:30:50Z</updated>
+    <link href="https://arxiv.org/abs/2609.15855v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.15855v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>People increasingly use large language models (LLMs) for mental health support, yet their safety in evolving, high-risk conversations remains poorly characterised. We developed K-Bench, a clinician-calibrated, protected benchmark evaluating 125 model configurations representing 33 base models from 14 providers across a fixed cohort of 200 multi-turn vignettes involving suicide, self-harm, domestic violence, substance misuse, and no-risk presentations. Synthetic patient conversations showed substantial distributional overlap with real human-AI conversations. A frozen GPT-4o judge achieved 94.2% exact agreement with clinician consensus across 6,751 eligible item comparisons from 151 clinician-rated transcripts. Leading models combined strong supportive conversation with combined-risk scores above 95, whereas risk exploration exposed substantial variation among lower-performing configurations. Therapeutic prompting produced configuration-specific gains concentrated among weaker models, while elevated reasoning produced no average improvement. K-Bench combines broader clinical coverage and configuration-scale comparison with a continuously updated public leaderboard whose operational test materials are protected from direct optimisation. The leaderboard is available at www.k-bench.ai.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-14T16:49:23Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Laura M. Vowels</name>
+    </author>
+    <author>
+      <name>Matthew J. Vowels</name>
+    </author>
+    <author>
+      <name>Shivali Sharma</name>
+    </author>
+    <author>
+      <name>Apoorv Jha</name>
+    </author>
+    <author>
+      <name>Rehnuma Choudhury</name>
+    </author>
+    <author>
+      <name>Wasseem El Sarraj</name>
+    </author>
+    <author>
+      <name>Rachel Francois-Walcott</name>
+    </author>
+    <author>
+      <name>Aruba Hussain</name>
+    </author>
+    <author>
+      <name>Sarah Ingram</name>
+    </author>
+    <author>
+      <name>Angela Loulopoulou</name>
+    </author>
+    <author>
+      <name>Adva Segal</name>
+    </author>
+    <author>
+      <name>Elena Volkova</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.09448v1</id>
+    <title>Do Agents Know When They Succeed? Calibrating Agent Confidence from Internal Representations</title>
+    <updated>2026-09-08T20:58:49Z</updated>
+    <link href="https://arxiv.org/abs/2609.09448v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.09448v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>As agentic systems getting adopted rapidly in safety critical applications, it is vital to measure the confidence associated with the agentic actions. In comparison to the traditional machine learning systems, agentic workflows have complex failure modes with planning, tool invocation and dynamic environment interactions. In this paper, we investigate whether model's internal representations provide stronger signals of eventual task success in multi-turn agentic setups. We introduce two complementary methods: Latent Trajectory Dynamics (LTD), which summarizes changes in residual-stream representations across an an interaction trajectory, and the Action Representation Probe (ARP), which predicts success from representations formed at action decisions. Across three interactive benchmarks (Bash, SQL, Python) and three model families (Qwen14B, Qwen7B, DeepSeek6.7B), our methods consistently outperform surface level generation and sequence-based calibration baselines providing a zero-overhead reliability monitor that requires neither prompt alterations nor multi-sample rollouts.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-08T20:58:49Z</published>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Priyanka Mary Mammen</name>
+    </author>
+    <author>
+      <name>Emil Joswin</name>
+    </author>
+    <author>
+      <name>Srujananjali Medicherla</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.28945v3</id>
+    <title>Automated Researchers Can Mitigate Well-characterized Alignment Failures</title>
+    <updated>2026-09-02T02:07:11Z</updated>
+    <link href="https://arxiv.org/abs/2608.28945v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.28945v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Automating alignment research may accelerate progress toward aligned AI, but whether it does is hard to measure. Luckily, many alignment failures, such as deception, sycophancy, and jailbreaks, are already measurable by public benchmarks. We study whether automated alignment researchers (AARs) can post-train to mitigate alignment failures by proposing training methods and data to simultaneously optimize multiple safety benchmarks, while largely preserving general capability. Across 10 alignment failures, the strongest AAR methods significantly reduce the targeted alignment failures and generalize to a held-out benchmark, multi-turn behavioral audits, and models up to 4.7x larger than the target model. As a human baseline, 28 experienced researchers receive up to eight hours to develop one-shot methods for the same benchmarks, but their methods underperform the best AAR methods. Using human ideas as the AARs' initial research direction does not improve performance, suggesting current AARs may not need guidance from experienced researchers. These results suggest that automating alignment research on well-characterized failures may be practical in the near term.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-28T23:31:45Z</published>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Chen Yueh-Han</name>
+    </author>
+    <author>
+      <name>Jiaxin Wen</name>
+    </author>
+    <author>
+      <name>Jan Hendrik Kirchner</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.28405v1</id>
+    <title>CultureConverse: A Multilingual Multi-turn Simulation Harness for Culturally Grounded Assistance in East and Southeast Asia</title>
+    <updated>2026-08-28T14:56:46Z</updated>
+    <link href="https://arxiv.org/abs/2608.28405v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.28405v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Current cultural evaluations for large language models (LLMs) often reduce culture to single-turn factual recall via MCQs, failing to capture a common use case: users seeking practical help over multiple turns in culturally grounded scenarios. We introduce CultureConverse, a scalable, multilingual simulation and evaluation harness for culturally grounded assistant dialogue that covers 10 East and Southeast Asian regions, 58 subgroup identities, and 7 domains. Each simulated and evaluated episode produces a scored interaction where the assistant assists the user and infers cultural constraints from partial information. The resulting CultureConverse-DS dataset contains 14,610 benchmark (evaluation) episodes and 274,295 oracle-guided (gold-mode) dialogues. In our benchmark evaluation of 18 models, GPT-5 mini achieves the highest assistance quality. Human annotation experiments suggest that our evaluation framework is a sufficient proxy for human judgment. Performance gains from fine-tuning on 27,860 high-quality CultureConverse-DS samples improve in-domain assistance and transfer out-of-domain to cultural MCQ and safety classification benchmarks. We release the harness, both splits, and judge prompts to support interactive evaluation of cultural competency.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CY" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-28T14:56:46Z</published>
+    <arxiv:comment>EMNLP 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Bryan Chen Zhengyu Tan</name>
+    </author>
+    <author>
+      <name>Weihua Zheng</name>
+    </author>
+    <author>
+      <name>Thong T. Doan</name>
+    </author>
+    <author>
+      <name>Bich Ngoc Doan</name>
+    </author>
+    <author>
+      <name>Jia Wang Peh</name>
+    </author>
+    <author>
+      <name>Xiaoyuan Yi</name>
+    </author>
+    <author>
+      <name>Jing Yao</name>
+    </author>
+    <author>
+      <name>Xing Xie</name>
+    </author>
+    <author>
+      <name>Nancy F. Chen</name>
+    </author>
+    <author>
+      <name>Zhengyuan Liu</name>
+    </author>
+    <author>
+      <name>JinYeong Bak</name>
+    </author>
+    <author>
+      <name>Wafi Shamdi</name>
+    </author>
+    <author>
+      <name>Soo Kai Chie</name>
+    </author>
+    <author>
+      <name>Liew Yu Siong</name>
+    </author>
+    <author>
+      <name>Aina Azyyati Binti Mohamad Rezal</name>
+    </author>
+    <author>
+      <name>Lew Yan Yan Vanessa</name>
+    </author>
+    <author>
+      <name>Huadan Wu</name>
+    </author>
+    <author>
+      <name>Dylan Raharja</name>
+    </author>
+    <author>
+      <name>Nadya Yuki Wangsajaya</name>
+    </author>
+    <author>
+      <name>Akane Fukushige</name>
+    </author>
+    <author>
+      <name>Kazushi Kato</name>
+    </author>
+    <author>
+      <name>Koji Inoue</name>
+    </author>
+    <author>
+      <name>Tatsuya Kawahara</name>
+    </author>
+    <author>
+      <name>Jaehyung Seo</name>
+    </author>
+    <author>
+      <name>Dongjun Kim</name>
+    </author>
+    <author>
+      <name>Seungyoon Lee</name>
+    </author>
+    <author>
+      <name>Zi Haur Pang</name>
+    </author>
+    <author>
+      <name>Rui Yang Tan</name>
+    </author>
+    <author>
+      <name>Charibeth Ko Cheng</name>
+    </author>
+    <author>
+      <name>Maria Regina Justina Estuar</name>
+    </author>
+    <author>
+      <name>Jann Railey Montalan</name>
+    </author>
+    <author>
+      <name>Pham Minh Duc</name>
+    </author>
+    <author>
+      <name>Roy Ka-Wei Lee</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.27110v1</id>
+    <title>DocTalkBN: A Novel Dataset of Expert Telemedicine Conversations in Bengali</title>
+    <updated>2026-08-27T13:25:17Z</updated>
+    <link href="https://arxiv.org/abs/2608.27110v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.27110v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Reliable medical conversational AI requires authentic expert--patient interaction data, yet such datasets remain scarce, especially for low-resource languages such as Bengali. We present DocTalkBN, a large-scale multimodal dataset of real-world expert telemedicine conversations in Bengali, collected from nationally broadcast telemedicine programs featuring board-certified physicians. DocTalkBN contains 557.63 hours of paired audio and text, 1,515 multi-turn patient calls, 10,274 host--doctor question--answer exchanges, totaling 1.7M tokens, spanning 26 medical specialties. Unlike prior resources derived from medical forums, written health content, or synthetic data, our dataset preserves the spontaneity, contextual richness, and spoken characteristics of authentic medical interactions in a low-resource setting. To support benchmark-driven research, we further construct three downstream tasks from the corpus, medical triage classification, advice safety evaluation, and medical named entity recognition, and benchmark a diverse set of large language models and encoder-based baselines. Our results show that DocTalkBN is a practically useful resource, particularly for clinically grounded reasoning tasks. We release this resource to facilitate future research on reliable medical NLP and safer, more culturally grounded healthcare systems for low-resource languages. Our source codes and dataset are publicly available at https://anonymous.4open.science/r/doctalk.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-27T13:25:17Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Anik Saha</name>
+    </author>
+    <author>
+      <name>Fahmida Sultana Naznin</name>
+    </author>
+    <author>
+      <name>Sadatul Islam Sadi</name>
+    </author>
+    <author>
+      <name>Ananya Shahrin Promi</name>
+    </author>
+    <author>
+      <name>Wahid Al Azad Navid</name>
+    </author>
+    <author>
+      <name>Rifat Shahriyar</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.25711v1</id>
+    <title>Reassembling Distributed Risk: Trajectory-Conditioned Action Generation for Multi-Turn Agent Safety</title>
+    <updated>2026-08-26T12:28:35Z</updated>
+    <link href="https://arxiv.org/abs/2608.25711v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.25711v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Tool-using LLM agents extend security risks beyond generated text to actions that affect external systems. Under multi-turn decomposition attacks, a harmful objective can be distributed across individually plausible requests and tool calls, becoming apparent only from the accumulated trajectory. Existing defenses either rely on auxiliary online reasoning to recover long-horizon security evidence or assess actions after generation, often incurring additional inference cost or depending on runtime-specific action representations.
+  We propose \emph{Reassembling Distributed Risk} (ReDiR), a generation-time defense that conditions action generation on trajectory-level security evidence. Before each action, ReDiR compresses the current trajectory into a compact latent safety representation and injects it into the frozen base model. The representation is learned through same-model, cross-view supervision, where safe behavior from an explicit task view provides supervision for recovering distributed safety evidence from the original multi-turn trajectory. This design enables ReDiR to integrate cross-turn security information directly within the generation process without relying on a separate action-level safety module. We evaluate ReDiR on two agent-safety benchmarks across three model families and eight held-out tool domains. ReDiR reduces attack success rates to below 8\%, transfers to unseen tool domains, and preserves benign fidelity with low computational overhead.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-26T12:28:35Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Yanbo Dai</name>
+    </author>
+    <author>
+      <name>Zhenlan Ji</name>
+    </author>
+    <author>
+      <name>Zongjie Li</name>
+    </author>
+    <author>
+      <name>Shuai Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.25340v1</id>
+    <title>HRGuard: Gating Relationship Manipulation in Multi-Turn Agentic AI Conversations</title>
+    <updated>2026-08-26T03:49:42Z</updated>
+    <link href="https://arxiv.org/abs/2608.25340v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.25340v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Agentic AI assistants are increasingly used in everyday life. However, they may also be misused to support harmful manipulation in interpersonal relationships. This problem is role-sensitive. Requests from users who seek to manipulate others should be blocked. Users who seek protection from manipulation should instead receive supportive guidance. We study agentic relationship harm, which describes harm to human-human relationships that is mediated or assisted by AI agents. In multi-turn settings, individually plausible actions may combine into a harmful workflow. We introduce a benchmark of 1,000 five-turn conversations. It covers both attacker-side and victim-side scenarios. It also includes direct and adversarially paraphrased variants. We further propose HRGuard. It includes an online pre-generation gate and a turn-level post-generation gate. The post-generation gate maintains a decayed cumulative risk state and interrupts emerging manipulative workflows. Across eight generation models, HRGuard reduces harmful compliance while preserving victim-side protective guidance. It also outperforms a generic safety prompt and three general-purpose guard models. Independent-judge evaluation supports the main findings. Under our evaluation protocol, the tested generic prompt and general-purpose guards leave substantial residual risk, motivating turn-aware relationship-specific evaluation.</summary>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-26T03:49:42Z</published>
+    <arxiv:primary_category term="cs.HC"/>
+    <author>
+      <name>Pei-Sze Tan</name>
+    </author>
+    <author>
+      <name>Tasuku Igarashi</name>
+    </author>
+    <author>
+      <name>Isao Echizen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.15594v1</id>
+    <title>TRACE: Trajectory Aware Reasoning for Multi-Turn Adversarial Conversation Evaluation</title>
+    <updated>2026-08-16T07:32:02Z</updated>
+    <link href="https://arxiv.org/abs/2608.15594v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.15594v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multi-turn jailbreak attacks have emerged as a critical safety threat to LLMs, as harmful objectives are decomposed across a sequence of apparently benign turns to bypass guardrails. Existing defenses lack the reasoning capacity to identify evolving manipulation patterns, often trading helpfulness for safety by over-refusing benign requests related to sensitive topics. We introduce Trace, a multi-turn defense with trajectory-aware structured reasoning. Before generating each response, the model identifies manipulation cues from the trajectory, evaluates both the benign and adversarial interpretations of user intent, assigns a jailbreak score, and commits to an action: Allow, Caution, or Decline. We curate 4k multi-turn adversarial conversations from five attack frameworks, pair them with 2.4k benign dialogs, and 600 sensitive-but-benign conversations. We train Llama-3.1-8B-Instruct with SFT and GRPO under a multi-component reward that jointly optimizes helpfulness on benign prompts and robustness against jailbreak attempts. Across seven multi-turn attack benchmarks, Trace attains an average attack success rate (ASR) of 14.5% against 31.4% for the strongest baseline and 74.9% for the undefended target, while significantly raising the attacker effort required per successful jailbreak. Trace also balances usability and safety, achieving a 93.3% average compliance on over-refusal benchmarks.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-16T07:32:02Z</published>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Md Messal Monem Miah</name>
+    </author>
+    <author>
+      <name>Adrita Anika</name>
+    </author>
+    <author>
+      <name>Zhiyuan Yu</name>
+    </author>
+    <author>
+      <name>Ruihong Huang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.14068v1</id>
+    <title>MACS: A Hybrid Multi-Agent Framework for Reliable Conversational E-Commerce Recommendation</title>
+    <updated>2026-08-14T08:26:19Z</updated>
+    <link href="https://arxiv.org/abs/2608.14068v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.14068v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Conversational recommendation for e-commerce is increasingly mediated by large language models (LLMs), yet many real-world deployments operate under a stricter requirement: recommendations must be drawn only from a merchant's fixed catalog, without web search or unsupported product claims. In this setting, the main challenge is reliability under hard constraints: the system must satisfy user requirements, remain grounded in available inventory, and preserve preferences across multiple conversational turns. We present MACS (Multi-Agent Commerce System), a hybrid multi-agent framework for reliable conversational recommendation in fixed-catalog settings. MACS uses LLMs for language-facing tasks such as interpreting user requests, eliciting preferences, and generating responses, while correctness-critical operations, including product retrieval, hard-constraint filtering, brand exclusion, and progressive relaxation, are executed deterministically by the merchant agent. A session-persistent preference layer tracks constraints across turns, enabling consistent handling of budget overwrites and exclusion reversals. On a 140-query single-turn benchmark, MACS achieves the highest pass rate (87.1%) and perfect brand compliance (1.000). On a 10-scenario multi-turn benchmark, MACS achieves the strongest macro Pass@5 (72% vs. 56% GPT+Catalog / 52% Gemini+Catalog) with zero constraint drift. The advantage is sharpest on exclusion reversal (100% vs. 20% / 0%) and constraint accumulation (100% vs. 60% / 40%). Mean judged response quality is similar across systems (0.751 vs. 0.736). These results suggest that hybrid architectures combining deterministic constraint enforcement with session-persistent preference tracking provide stronger reliability-oriented performance than catalog-bound prompt-only baselines in the fixed-catalog merchant setting.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-14T08:26:19Z</published>
+    <arxiv:comment>9 pages, 2 figures, 8 tables. Will be presenting at Stanford Trust&amp;Safety Conference, already presented at Stanford Market AI Conference</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Juli Huang</name>
+    </author>
+    <author>
+      <name>Hannah Clay</name>
+    </author>
+    <author>
+      <name>Sajjad Beygi</name>
+    </author>
+    <author>
+      <name>Thomas Sarda</name>
+    </author>
+    <author>
+      <name>Negin Golrezaei</name>
+    </author>
+    <author>
+      <name>Amin Saberi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.13695v1</id>
+    <title>Language-Specific Gaps in AI Safety Training Datasets</title>
+    <updated>2026-08-13T18:40:22Z</updated>
+    <link href="https://arxiv.org/abs/2608.13695v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.13695v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large language model providers routinely cite multilingual safety benchmarks spanning a dozen or more languages as evidence that their models are safe for non-English-speaking users. We show that these collection-level coverage claims frequently do not survive inspection at the level of an individual language. Auditing 21 resources across 25 language slices, of which 20 count as datasets under our counting rules, spanning three languages chosen to represent low- (Hausa), mid- (Swahili), and high-resource (French) tiers, we find that gaps in provenance, annotation reliability, access, harm-taxonomy coverage, and data reuse recur in patterns that partially, but not fully, track resource level. Using a controlled within-pipeline comparison, we show a Hausa-language slice falling below its own paper's translation-quality acceptance threshold while the same pipeline's Swahili output clears the same bar comfortably; this is evidence that these gaps are measurable and addressable, not inherent. We further show that self-harm and sexual-content categories have no native-language coverage in either African-language tier we studied, a total rather than gradated gap that a purely resource-level account does not predict. We connect these findings to a documented, persistent asymmetry in multilingual jailbreak robustness (single-turn attacks largely mitigated, multi-turn attacks still effective), arguing that this asymmetry is structurally consistent with where our audit finds training and evaluation data thinnest. We contribute a reusable slice-level audit methodology, a cross-tier empirical comparison, and concrete recommendations for dataset creators, model providers, and venues aiming to make ``multilingual coverage'' claims verifiable rather than merely stated. Dataset: https://huggingface.co/datasets/ChialukaOnuoha/safety-slice-audit</summary>
+    <category term="cs.CY" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-13T18:40:22Z</published>
+    <arxiv:primary_category term="cs.CY"/>
+    <author>
+      <name>Chialuka Prisca-Mary Onuoha</name>
+    </author>
+    <author>
+      <name>Bright Etornam Sunu</name>
+    </author>
+    <author>
+      <name>Rashidat Sikiru</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.10258v1</id>
+    <title>TAF-MED: Multi-Turn Safety Refusal Collapse in LLMs Under Declared Self-Treatment Intent</title>
+    <updated>2026-08-10T21:43:58Z</updated>
+    <link href="https://arxiv.org/abs/2608.10258v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.10258v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large language models (LLMs) increasingly provide conversational health information that may influence treatment decisions, yet existing benchmarks do not isolate whether medication-safety boundaries persist across follow-ups after explicit self-treatment intent. We introduce TAF-MED, a physician-reviewed benchmark of 500 fixed three-turn scenarios, and evaluate eight LLMs across 4,000 conversations. A rubric-based automated judge labelled responses as SAFE, LEAKY, or UNSAFE, and two physicians independently annotated a model-balanced random subset of 400 conversations. We assessed unsafe guidance, collapse after a strictly SAFE initial response, and model-ranking stability. Overall, 71.6% of conversations contained an UNSAFE response, and 61.4% of those beginning with a strictly SAFE response later collapsed to UNSAFE; model-level collapse rates ranged from 24.4% to 96.2%. Four of 28 model pairs reversed order between initial unsafe and collapse rates. Automated labels achieved 94.3% agreement with the adjudicated physician reference ($κ= 0.895$). These findings show that first-turn safety is an incomplete proxy for conversational safety persistence and motivate evaluation across complete dialogue trajectories. We will release TAF-MED on Hugging Face to support reproducible research on multi-turn medical safety.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-10T21:43:58Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Waleed Jamil</name>
+    </author>
+    <author>
+      <name>Raphael Schmitt</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.07418v1</id>
+    <title>ResidencyRL: Reinforcement Learning in Simulated Clinical Environments</title>
+    <updated>2026-08-07T17:04:41Z</updated>
+    <link href="https://arxiv.org/abs/2608.07418v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.07418v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In medical education, physicians convert academic knowledge into clinical expertise through residency: years of training across thousands of encounters, with diverse sources of feedback and progressively greater autonomy. Much of clinical reasoning relies on the patient encounter, a dialogue in which a clinician elicits history, refines diagnostic hypotheses, and decides management under uncertainty. While large language models (LLMs) excel on static medical benchmarks, methods to optimize the full sequence of clinical decisions remain underdeveloped. We present ResidencyRL, a reinforcement learning (RL) method for training clinical artificial intelligence (AI) agents through simulated multi-turn clinical encounters (up to 60 dialogue turns and 8 tool calls per trajectory). ResidencyRL pairs the policy agent with LLM simulators capable of complex, adversarial behaviors, training against a structured reward aligned to diagnostic accuracy, management quality, communication, documentation, and safety. On held-out evaluations, the ResidencyRL agent improves diagnostic accuracy by 7.0% under adversarial conditions (88.0% vs. 81.0%) and reduces missed red flag rates by 31%, demonstrating rigorous mitigation of premature closure. Blinded expert clinicians validated these gains, preferring the trained agent in 87.6% of side-by-side comparisons. The procedural competencies transfer to unseen benchmarks: the agent outperforms the base model across all six clinical axes of the AMIE multi-visit benchmark, and shows consistent directional improvements on AgentClinic and CRAFT-MD. Our findings demonstrate that sequential clinical decision-making can be effectively learned through multi-turn RL in simulation, yielding robust, generalizable capabilities, paving the way towards clinical mastery. Prospective validation with real-world workflows remains necessary to establish clinical utility.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-07T17:04:41Z</published>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Valentin Liévin</name>
+    </author>
+    <author>
+      <name>Samuel Schmidgall</name>
+    </author>
+    <author>
+      <name>Tim Strother</name>
+    </author>
+    <author>
+      <name>Alex Bijamov</name>
+    </author>
+    <author>
+      <name>Akshay Goel</name>
+    </author>
+    <author>
+      <name>Anil Palepu</name>
+    </author>
+    <author>
+      <name>Chunjong Park</name>
+    </author>
+    <author>
+      <name>Vahid Balazadeh</name>
+    </author>
+    <author>
+      <name>Min Woo Sun</name>
+    </author>
+    <author>
+      <name>Marius Guerard</name>
+    </author>
+    <author>
+      <name>Justin Chen</name>
+    </author>
+    <author>
+      <name>Dave Steiner</name>
+    </author>
+    <author>
+      <name>Vikram Dhillon</name>
+    </author>
+    <author>
+      <name>Ibrahim Azar</name>
+    </author>
+    <author>
+      <name>Akhil Mehta</name>
+    </author>
+    <author>
+      <name>Nicholas Spetsieris</name>
+    </author>
+    <author>
+      <name>Shilpan Shah</name>
+    </author>
+    <author>
+      <name>Maen Abdelrahim</name>
+    </author>
+    <author>
+      <name>Amit Dahiya</name>
+    </author>
+    <author>
+      <name>Yun Liu</name>
+    </author>
+    <author>
+      <name>Katherine Chou</name>
+    </author>
+    <author>
+      <name>Yossi Matias</name>
+    </author>
+    <author>
+      <name>Avinatan Hassidim</name>
+    </author>
+    <author>
+      <name>Dale R. Webster</name>
+    </author>
+    <author>
+      <name>Quoc V. Le</name>
+    </author>
+    <author>
+      <name>Raia Hadsell</name>
+    </author>
+    <author>
+      <name>Joelle Barral</name>
+    </author>
+    <author>
+      <name>Carey Radebaugh</name>
+    </author>
+    <author>
+      <name>Aleksandra Faust</name>
+    </author>
+    <author>
+      <name>Shekoofeh Azizi</name>
+    </author>
+    <author>
+      <name>Mike Schaekermann</name>
+    </author>
+    <author>
+      <name>Po-Hsuan Cameron Chen</name>
+    </author>
+    <author>
+      <name>Tao Tu</name>
+    </author>
+    <author>
+      <name>David Racz</name>
+    </author>
+    <author>
+      <name>Lin Yang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.04065v1</id>
+    <title>An Inline Control Architecture for Language Models in Intelligent Transportation Systems</title>
+    <updated>2026-08-04T15:04:15Z</updated>
+    <link href="https://arxiv.org/abs/2608.04065v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.04065v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Vehicle-to-everything (V2X) systems increasingly incorporate large language models (LLMs) for semantic tasks such as message summarization, operator assistance, and decision support at roadside units and edge nodes. Although these components are not part of safety-critical control loops, they introduce prompt-level attack surfaces that are not addressed by traditional V2X security mechanisms focused on authentication and message integrity. This paper presents Guarded-V2X, an inline semantic guardrail architecture for securing LLM-enabled V2X services under real-time constraints. The proposed system integrates rule-based ingress filtering, a lightweight safety classifier, policy-constrained structured generation, trusted-only retrieval, and post-decision adjudication to enforce machine-checkable safety boundaries prior to downstream execution. Guarded-V2X is evaluated using a four-stage experimental pipeline encompassing intrusion vulnerability analysis, calibration and latency benchmarking, guardrail validation, and robustness under adversarial stress. Experiments are conducted on a V2X-aligned simulated dataset derived from RSU advisories, operator messages, and annotated V2X message summaries. Results show that unguarded and prompt-only baselines retain residual vulnerability under multi-turn adversarial trials, while Guarded-V2X consistently reduces intrusion acceptance success rates and eliminates observed unsafe completions in two-turn settings, without exceeding latency budgets for V2X semantic advisory paths.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-04T15:04:15Z</published>
+    <arxiv:comment>18 pages, under minor revision (IEEE transactions)</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Narendra Kumar Dewangan</name>
+    </author>
+    <author>
+      <name>Mounira Msahli</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.03166v1</id>
+    <title>Adversarial Stress Testing of Role-Playing Language Agents using Multi-Agent Evaluation</title>
+    <updated>2026-08-04T05:54:32Z</updated>
+    <link href="https://arxiv.org/abs/2608.03166v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.03166v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Role-Playing Language Agents (RPLAs) are increasingly deployed in high-stakes applications such as healthcare assistance, customer support, and education, where maintaining consistent personas, ethical constraints, and behavioral coherence under adversarial pressure is critical. Existing evaluation approaches rely on static benchmarks or isolated single-turn prompts that fail to capture cumulative behavioral failures emerging over extended interactions.
+  We present a modular multi-agent platform for adversarially stress-testing RPLAs through structured, multi-turn dialogue. The system coordinates three agents: a strategy-driven Interrogator Agent that applies six progressive adversarial strategies, a Target Agent representing the RPLA under evaluation, and an automated Judging Agent that scores behavior across role fidelity, drift, ethical deviation, and consistency dimensions.
+  Through experiments across three personas and three LLM families, we demonstrate that multi-strategy adversarial evaluation reveals failure modes invisible to single-strategy testing, reducing overall robustness scores by 0.17--0.20 points on average. Cross-model validation confirms consistent degradation patterns across Llama-3.3-70B, GPT-4o-mini, and Claude-3.5-Haiku, with Authority Challenge and Emotional Manipulation emerging as the most effective attack strategies. Automated judging achieves strong human alignment ($r = 0.82$, Fleiss' $κ= 0.71$). This work is released as an open-source platform to support AI safety and reproducible RPLA benchmarking. While the framework enables systematic discovery of failure modes, we acknowledge potential ethical risks associated with adversarial testing methodologies and emphasize responsible usage for improving AI safety.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-04T05:54:32Z</published>
+    <arxiv:comment>8 pages, 1 figure, 7 tables; accepted and presented at ADScAI Conference 2026, University of Moratuwa, Sri Lanka</arxiv:comment>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Saqib Shouqi</name>
+    </author>
+    <author>
+      <name>Abdullah Nazly</name>
+    </author>
+    <author>
+      <name>Januki Wanniarachchi</name>
+    </author>
+    <author>
+      <name>Ravisha De Alwis</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.02520v1</id>
+    <title>MedPRESS: A Multi-turn Benchmark for Patient-Pressure-Induced Medical Sycophancy in LLMs</title>
+    <updated>2026-08-03T17:17:29Z</updated>
+    <link href="https://arxiv.org/abs/2608.02520v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.02520v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large language models (LLMs) are increasingly used for health-related advice. Existing research measures their safety with static questions rather than pressured patient-facing conversations. We introduce MedPRESS, a multi-turn benchmark for measuring patient-pressure-induced sycophancy in LLMs. MedPRESS contains 600 medically grounded five-turn dialogues across three scenario families: medication and treatment demand, personal health self-care, and symptom triage and care resistance. Each dialogue begins with a health query and escalates through personal experience, social proof, external evidence claims, and direct adversarial challenge. We evaluate 20 LLMs across general, medical-domain, lightweight, large, open-weight, and proprietary families using structured judging and safety-focused metrics. Results show that models frequently shift toward unsafe agreement under repeated patient pressure, with substantial variation across model families, model scale, and prompt type. Anti-sycophancy prompting improves robustness for several models, but does not eliminate unsafe agreement. MedPRESS highlights a critical gap in medical LLM evaluation: safe medical knowledge is not enough unless models can maintain it under conversational pressure.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-03T17:17:29Z</published>
+    <arxiv:comment>27 pages, 10 figures. Both authors contributed equally</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Saman Sarker Joy</name>
+    </author>
+    <author>
+      <name>Niloy Farhan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.25375v1</id>
+    <title>Inspect India Evals: An Open Benchmarking Framework for Evaluating Large Language Models in the Indian Linguistic and Cultural Context</title>
+    <updated>2026-07-28T07:30:12Z</updated>
+    <link href="https://arxiv.org/abs/2607.25375v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.25375v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>India is a vast nation of over 1.4 billion people, varied by hundreds of diverse and locally specific traditions and cultures and 22 officially recognized languages. Large language models (LLMs) are now being deployed on a massive scale throughout the mainland as well as in remote villages. However, the common benchmarks - MMLU, BIG-Bench, and TruthfulQA are almost exclusively English- and Western-centric. They do not identify those safety, fairness, and accuracy failures unique to the Indian context. That is the gap Inspect India Evals seeks to fill. It is an open-source framework built on top of UK AISI's Inspect AI platform. It has six benchmarks: Multilingual MMLU across sixteen Indian languages, BharatBBQ (our adaptation of BBQ for Indian social bias), a safety evaluation for Digital Public Infrastructure, a multilingual safety test using harmful prompts in Indian languages, a multi-turn jailbreak resistance test, and an Indian cultural knowledge benchmark scored using LLM-as-judge rubrics. In this study, we tested five open-weight models ranging from 8B to 32B parameters. Sarvam-M 24B and Gemma 2 27B came out on top, both scoring 80% on the composite India Fairness Index, with Sarvam-M even beating larger 32B models on Indian cultural knowledge and DPI safety compliance. All models scored 100% refusal on Multilingual Safety, whereas DPI safety varied from 20% to 100%. The framework is public. It's built to work with the UK AISI registry. Anyone can reproduce or extend this work.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-28T07:30:12Z</published>
+    <arxiv:comment>19 pages, 9 figures, 7 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Abhishek Kumar Singh</name>
+    </author>
+    <author>
+      <name>Shrey Nag</name>
+    </author>
+    <author>
+      <name> Sachita</name>
+    </author>
+    <author>
+      <name>Lipi Goel</name>
+    </author>
+    <author>
+      <name>Rajeshwar Singh Janwar</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.22165v1</id>
+    <title>DBA-Bench: A Production-Fidelity Benchmark for LLM-Based Database Operations Agents</title>
+    <updated>2026-07-24T10:11:24Z</updated>
+    <link href="https://arxiv.org/abs/2607.22165v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.22165v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>LLM-based database agents show promise, but differing task scopes, testbeds, and metrics hinder comparison. We identify four gaps between evaluation and production operations: live-environment fidelity (multi-turn read-write interaction with a running database); observation-space scale and complexity (causal diagnosis across thousands of time series, business logs, and concurrent activity); solution-space openness (multiple remediations with different operational trade-offs); and scenario complexity and coverage (faults cascading across internal mechanisms and operational domains). We present DBA-Bench, a benchmark addressing these gaps through production fidelity, outcome-first evaluation, and controlled scenario reproducibility. It uses instrumented PostgreSQL environments with active workloads, persistent state, and multi-source observations; defines success by measurable recovery or fault elimination under safety constraints; and restores snapshots with scenario-specific checks before each run. The benchmark contains 106 scenarios across seven task domains, with two public difficulty labels based on reference-path diagnostic depth and environmental complexity. We evaluate nine baseline groups, including six foundation-model systems, two GPT-5.5-backed database agents, and a Human DBA reference. Across 848 automated runs, Diagnosis, Outcome, and Safe Pass rates are 32.7%, 19.6%, and 12.4%; the best automated baseline reaches 17.9% Safe Pass versus 93.4% for the Human DBA reference. Automated Safe Pass falls from 19.6% on Easy scenarios to 7.6% on Hard scenarios, underscoring the difficulty of safe end-to-end remediation.</summary>
+    <category term="cs.DB" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-24T10:11:24Z</published>
+    <arxiv:comment>14 pages, 6 figures, 2 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.DB"/>
+    <author>
+      <name>Junming Chen</name>
+    </author>
+    <author>
+      <name>Junyang Jiang</name>
+    </author>
+    <author>
+      <name>Xu Chen</name>
+    </author>
+    <author>
+      <name>Zibo Liang</name>
+    </author>
+    <author>
+      <name>Kai Zheng</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.18063v2</id>
+    <title>Adaptive Adversaries: A Multi-Turn, Multi-LLM Benchmark for LLM Agent Security</title>
+    <updated>2026-09-11T18:06:53Z</updated>
+    <link href="https://arxiv.org/abs/2607.18063v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.18063v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>LLM-based agents process external content, exposing them to prompt injection and multi-turn manipulation. We present a 21-scenario benchmark for adaptive cross-session attacks against fresh-session LLM defenders: an autonomous LLM attacker observes prior defender responses and pivots across rounds, while each defender response is evaluated as a fresh interaction. A controlled 3 x 3 attacker-defender matrix contains 945 battles. Restricting scoring to the first round yields 0-1% attack success rate (ASR); allowing 15 rounds yields 7.9-16.8%. Pooling three attacker LLMs uncovers 1.7-2.2 times as many unique successful inputs as the best single attacker, at three times the battle budget. Aggregate rates conceal opposing scenario-specific weaknesses in session-secret protection and authority handling, preserved in two higher-sample evaluations. On six scenarios, adding one provenance paragraph reduces ASR from 110/270 to 70/270, with selective effects across tasks. History and defender-state controls, together with frozen replay, characterize how the interaction protocol changes the result. A competition adds 18,422 held-out battles on a fixed gpt-oss-20b backbone and complementary benign-task evaluations. The benchmark exposes attacker and defender models, harnesses, scenarios, session state, and interaction budgets as configurable choices for systematic security evaluation.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-20T15:30:38Z</published>
+    <arxiv:comment>Second Workshop on Agents in the Wild: Safety, Security, and Beyond</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Devina Jain</name>
+    </author>
+    <author>
+      <name>David Hartmann</name>
+    </author>
+    <author>
+      <name>Chuan Li</name>
+    </author>
+  </entry>
+</feed>

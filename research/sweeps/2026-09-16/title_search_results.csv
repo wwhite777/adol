@@ -1,0 +1,5 @@
+target,rank,arxiv_id,title,first_author,published
+RedQueen,1,2409.17458v2,RED QUEEN: Safeguarding Large Language Models against Concealed Multi-Turn Jailbreaking,Yifan Jiang,2024-09-26
+XSTest,1,2308.01263v3,XSTest: A Test Suite for Identifying Exaggerated Safety Behaviours in Large Language Models,Paul Röttger,2023-08-02
+HarmBench,1,2602.12316v2,GT-HarmBench: Benchmarking AI Safety Risks Through the Lens of Game Theory,Pepijn Cobben,2026-02-12
+HarmBench,2,2402.04249v2,HarmBench: A Standardized Evaluation Framework for Automated Red Teaming and Robust Refusal,Mantas Mazeika,2024-02-06

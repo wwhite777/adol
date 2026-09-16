@@ -1,0 +1,693 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/0nWivbaywVQHoluNHp0NqlrqmEs</id>
+  <title>arXiv Query: search_query=all:"multi-turn" AND all:"safety" AND all:"benchmark"&amp;id_list=&amp;start=0&amp;max_results=20</title>
+  <updated>2026-09-16T09:57:27Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22multi-turn%22+AND+(all:%22safety%22+AND+all:%22benchmark%22)&amp;start=0&amp;max_results=20&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>20</opensearch:itemsPerPage>
+  <opensearch:totalResults>162</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2601.06757v1</id>
+    <title>MTMCS-Bench: Evaluating Contextual Safety of Multimodal Large Language Models in Multi-Turn Dialogues</title>
+    <updated>2026-01-11T03:10:56Z</updated>
+    <link href="https://arxiv.org/abs/2601.06757v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.06757v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal large language models (MLLMs) are increasingly deployed as assistants that interact through text and images, making it crucial to evaluate contextual safety when risk depends on both the visual scene and the evolving dialogue. Existing contextual safety benchmarks are mostly single-turn and often miss how malicious intent can emerge gradually or how the same scene can support both benign and exploitative goals. We introduce the Multi-Turn Multimodal Contextual Safety Benchmark (MTMCS-Bench), a benchmark of realistic images and multi-turn conversations that evaluates contextual safety in MLLMs under two complementary settings, escalation-based risk and context-switch risk. MTMCS-Bench offers paired safe and unsafe dialogues with structured evaluation. It contains over 30 thousand multimodal (image+text) and unimodal (text-only) samples, with metrics that separately measure contextual intent recognition, safety-awareness on unsafe cases, and helpfulness on benign ones. Across eight open-source and seven proprietary MLLMs, we observe persistent trade-offs between contextual safety and utility, with models tending to either miss gradual risks or over-refuse benign dialogues. Finally, we evaluate five current guardrails and find that they mitigate some failures but do not fully resolve multi-turn contextual risks.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-11T03:10:56Z</published>
+    <arxiv:comment>A benchmark of realistic images and multi-turn conversations that evaluates contextual safety in MLLMs under two complementary settings</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Zheyuan Liu</name>
+    </author>
+    <author>
+      <name>Dongwhi Kim</name>
+    </author>
+    <author>
+      <name>Yixin Wan</name>
+    </author>
+    <author>
+      <name>Xiangchi Yuan</name>
+    </author>
+    <author>
+      <name>Zhaoxuan Tan</name>
+    </author>
+    <author>
+      <name>Fengran Mo</name>
+    </author>
+    <author>
+      <name>Meng Jiang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.01687v1</id>
+    <title>MultiBreak: A Scalable and Diverse Multi-turn Jailbreak Benchmark for Evaluating LLM Safety</title>
+    <updated>2026-05-03T02:55:30Z</updated>
+    <link href="https://arxiv.org/abs/2605.01687v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.01687v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present MultiBreak, a scalable and diverse multi-turn jailbreak benchmark to evaluate large language model (LLM) safety. Multi-turn jailbreaks mimic natural conversational settings, making them easier to bypass safety-aligned LLM than single-turn jailbreaks. Existing multi-turn benchmarks are limited in size or rely heavily on templates, which restrict their diversity. To address this gap, we unify a wide range of harmful jailbreak intents, and introduce an active learning pipeline for expanding high-quality multi-turn adversarial prompts, where a generator is iteratively fine-tuned to produce stronger attack candidates, guided by uncertainty-based refinement. Our MultiBreak includes 10,389 multi-turn adversarial prompts, spans 2,665 distinct harmful intents, and covers the most diverse set of topics to date. Empirical evaluation shows that our benchmark achieves up to a 54.0 and 34.6 higher attack success rate (ASR)} than the second-best dataset on DeepSeek-R1-7B and GPT-4.1-mini, respectively. More importantly, safety evaluations suggest that diverse attack categories uncover fine-grained LLM vulnerabilities}, and categories that appear benign under single-turn can exhibit substantially higher adversarial effectiveness in multi-turn scenarios. These findings highlight persistent vulnerabilities of LLMs under realistic adversarial settings and establish MultiBreak as a scalable resource for advancing LLM safety.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-03T02:55:30Z</published>
+    <arxiv:comment>ICML 2026, 25 pages, 11 figures, 13 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Jialin Song</name>
+    </author>
+    <author>
+      <name>Xiaodong Liu</name>
+    </author>
+    <author>
+      <name>Weiwei Yang</name>
+    </author>
+    <author>
+      <name>Wuyang Chen</name>
+    </author>
+    <author>
+      <name>Mingqian Feng</name>
+    </author>
+    <author>
+      <name>Xuekai Zhu</name>
+    </author>
+    <author>
+      <name>Jianfeng Gao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.13379v2</id>
+    <title>Unsafer in Many Turns: Benchmarking and Defending Multi-Turn Safety Risks in Tool-Using Agents</title>
+    <updated>2026-06-10T21:28:47Z</updated>
+    <link href="https://arxiv.org/abs/2602.13379v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.13379v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>LLM-based agents are becoming increasingly capable, yet their safety lags behind. This creates a gap between what agents can do and should do. This gap widens as agents engage in multi-turn interactions and employ diverse tools, introducing new risks overlooked by existing benchmarks. To systematically scale safety testing into multi-turn, tool-realistic settings, we propose a principled taxonomy that transforms single-turn harmful tasks into multi-turn attack sequences. Using this taxonomy, we construct MT-AgentRisk (Multi-Turn Agent Risk Benchmark), the first benchmark to evaluate multi-turn tool-using agent safety. Our experiments reveal substantial safety degradation: the Attack Success Rate (ASR) increases by 16% on average across open and closed models in multi-turn settings. To close this gap, we propose ToolShield, a training-free, tool-agnostic, self-exploration defense: when encountering a new tool, the agent autonomously generates test cases, executes them to observe downstream effects, and distills safety experiences for deployment. Experiments show that ToolShield effectively reduces ASR by 30% on average in multi-turn interactions. Our code is available at https://github.com/CHATS-lab/ToolShield.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SE" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-13T18:38:18Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Xu Li</name>
+    </author>
+    <author>
+      <name>Simon Yu</name>
+    </author>
+    <author>
+      <name>Minzhou Pan</name>
+    </author>
+    <author>
+      <name>Yiyou Sun</name>
+    </author>
+    <author>
+      <name>Bo Li</name>
+    </author>
+    <author>
+      <name>Dawn Song</name>
+    </author>
+    <author>
+      <name>Xue Lin</name>
+    </author>
+    <author>
+      <name>Weiyan Shi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.01627v3</id>
+    <title>JMedEthicBench: A Multi-Turn Conversational Benchmark for Evaluating Medical Safety in Japanese Large Language Models</title>
+    <updated>2026-05-27T11:41:19Z</updated>
+    <link href="https://arxiv.org/abs/2601.01627v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.01627v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>As Large Language Models (LLMs) are increasingly deployed in healthcare field, it becomes essential to carefully evaluate their medical safety before clinical use. However, existing safety benchmarks remain predominantly English-centric, and test with only single-turn prompts despite multi-turn clinical consultations. To address these gaps, we introduce JMedEthicBench, the first multi-turn conversational benchmark for evaluating medical safety of LLMs for Japanese healthcare. Our benchmark is based on 67 guidelines from the Japan Medical Association and contains over 50,000 adversarial conversations generated using seven automatically discovered jailbreak strategies. Using a dual-LLM scoring protocol, we evaluate 27 models and find that commercial models maintain robust safety while medical-specialized models exhibit increased vulnerability. Furthermore, safety scores decline significantly across conversation turns (median: 9.5 to 5.0, $p &lt; 0.001$). Cross-lingual evaluation on both Japanese and English versions of our benchmark reveals that medical model vulnerabilities persist across languages, indicating inherent alignment limitations rather than language-specific factors. These findings suggest that domain-specific fine-tuning may accidentally weaken safety mechanisms and that multi-turn interactions represent a distinct threat surface requiring dedicated alignment strategies.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-04T18:18:18Z</published>
+    <arxiv:comment>12 pages, 6 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Junyu Liu</name>
+    </author>
+    <author>
+      <name>Zirui Li</name>
+    </author>
+    <author>
+      <name>Qian Niu</name>
+    </author>
+    <author>
+      <name>Zequn Zhang</name>
+    </author>
+    <author>
+      <name>Yue Xun</name>
+    </author>
+    <author>
+      <name>Wenlong Hou</name>
+    </author>
+    <author>
+      <name>Shujun Wang</name>
+    </author>
+    <author>
+      <name>Yusuke Iwasawa</name>
+    </author>
+    <author>
+      <name>Yutaka Matsuo</name>
+    </author>
+    <author>
+      <name>Kan Hatakeyama-Sato</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.12133v1</id>
+    <title>SafeMT: Multi-turn Safety for Multimodal Language Models</title>
+    <updated>2025-10-14T04:24:07Z</updated>
+    <link href="https://arxiv.org/abs/2510.12133v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.12133v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>With the widespread use of multi-modal Large Language models (MLLMs), safety issues have become a growing concern. Multi-turn dialogues, which are more common in everyday interactions, pose a greater risk than single prompts; however, existing benchmarks do not adequately consider this situation. To encourage the community to focus on the safety issues of these models in multi-turn dialogues, we introduce SafeMT, a benchmark that features dialogues of varying lengths generated from harmful queries accompanied by images. This benchmark consists of 10,000 samples in total, encompassing 17 different scenarios and four jailbreak methods. Additionally, we propose Safety Index (SI) to evaluate the general safety of MLLMs during conversations. We assess the safety of 17 models using this benchmark and discover that the risk of successful attacks on these models increases as the number of turns in harmful dialogues rises. This observation indicates that the safety mechanisms of these models are inadequate for recognizing the hazard in dialogue interactions. We propose a dialogue safety moderator capable of detecting malicious intent concealed within conversations and providing MLLMs with relevant safety policies. Experimental results from several open-source models indicate that this moderator is more effective in reducing multi-turn ASR compared to existed guard models.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-14T04:24:07Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Han Zhu</name>
+    </author>
+    <author>
+      <name>Juntao Dai</name>
+    </author>
+    <author>
+      <name>Jiaming Ji</name>
+    </author>
+    <author>
+      <name>Haoran Li</name>
+    </author>
+    <author>
+      <name>Chengkun Cai</name>
+    </author>
+    <author>
+      <name>Pengcheng Wen</name>
+    </author>
+    <author>
+      <name>Chi-Min Chan</name>
+    </author>
+    <author>
+      <name>Boyuan Chen</name>
+    </author>
+    <author>
+      <name>Yaodong Yang</name>
+    </author>
+    <author>
+      <name>Sirui Han</name>
+    </author>
+    <author>
+      <name>Yike Guo</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.22643v2</id>
+    <title>Boiling the Frog: A Multi-Turn Benchmark for Agentic Safety</title>
+    <updated>2026-05-22T14:53:30Z</updated>
+    <link href="https://arxiv.org/abs/2605.22643v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.22643v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Background. Traditional safety benchmarks for language models evaluate generated text: whether a model outputs toxic language, reproduces bias, or follows harmful instructions. When models are deployed as agents, the safety-relevant object shifts from what the system says to what it does within an environment, and evaluating model responses under prompting is no longer sufficient to address the safety challenges posed by artificial intelligence. Recent developments have seen the rise of benchmarks that evaluate large language models as agents. We contribute to this strand of research. Approach. We introduce Boiling the Frog, a benchmark that evaluates whether tool-using AI models deployed in corporate and office settings are susceptible to incremental attacks. Each scenario begins with benign workspace edits and later introduces a risk-bearing request. The benchmark focuses on stateful multi-turn evaluation: chains expose a persistent workspace, place the risk-bearing payload at controlled positions in the turn sequence, and score whether the resulting artifact state becomes unsafe. Scenarios are organized through a three-level operational risk taxonomy grounded in the Boiling the Frog risks, the AI Act Annex I and Annex III high-risk contexts, and EU AI Act's Code of Practice on General-Purpose AI (GPAI). Results. Across a nine-model panel, aggregate strict attack success rate (ASR) is 44.4%. Model-level ASR ranges from 20.5% for Claude Haiku 4.5 to 92.9% for Gemini 3.1 Flash Lite, with Seed 2.0 Lite also above 80%. Average chain category-level ASR reaches 93.3% for Code of Practice loss-of-control scenarios.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-21T15:50:18Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Piercosma Bisconti</name>
+    </author>
+    <author>
+      <name>Matteo Prandi</name>
+    </author>
+    <author>
+      <name>Federico Pierucci</name>
+    </author>
+    <author>
+      <name>Federico Sartore</name>
+    </author>
+    <author>
+      <name>Enrico Panai</name>
+    </author>
+    <author>
+      <name>Laura Caroli</name>
+    </author>
+    <author>
+      <name>Yue Zhu</name>
+    </author>
+    <author>
+      <name>Adam Leon Smith</name>
+    </author>
+    <author>
+      <name>Luca Nannini</name>
+    </author>
+    <author>
+      <name>Marcello Galisai</name>
+    </author>
+    <author>
+      <name>Susanna Cifani</name>
+    </author>
+    <author>
+      <name>Francesco Giarrusso</name>
+    </author>
+    <author>
+      <name>Marcantonio Bracale Syrnikov</name>
+    </author>
+    <author>
+      <name>Daniele Nardi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.20408v3</id>
+    <title>NRT-Bench: Benchmarking Multi-Turn Red-Teaming of LLM Operator Agents in Safety-Critical Control Rooms</title>
+    <updated>2026-07-06T00:51:15Z</updated>
+    <link href="https://arxiv.org/abs/2606.20408v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.20408v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large language model (LLM) agents are increasingly proposed as supervisory components for safety-critical systems, yet their robustness under sustained, adaptive adversarial pressure remains poorly characterized. We present NRT-Bench, a benchmark for multi-turn red-teaming of LLM agents acting as operators of a safety-critical system, instantiated in a simulated nuclear power plant control room. A five-role operator team, each backed by a configurable LLM, runs a plant governed by six critical safety functions (CSFs), while adversaries inject messages over four channels in bounded multi-turn sessions with per-turn feedback. Harm is an objective signal rather than LLM-judged text: a run terminates the moment any CSF is lost, attributed to the causing message. Evaluating four frontier operator models under a fixed-attack paired-replay protocol, we find that adaptive multi-turn attacks reliably push the operator team past a safety limit: across the four models, between 8.7% and 12.1% of attack sessions end with the plant losing a critical safety function. Although the four models look almost equally robust by this aggregate rate, their failures barely overlap: of $149$ sessions, none defeat all four models while a third defeat at least one, so vulnerabilities are nearly disjoint across models rather than nested. The effect of added defences is strongly model-dependent: the same guardrail stack or safety-advisor agent that lowers attack success for one model can raise it for another. We release the simulation venue, attack dataset, and replay tooling for reproducible safety evaluation of LLM agents.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-18T15:57:53Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Hanwool Lee</name>
+    </author>
+    <author>
+      <name>Dasol Choi</name>
+    </author>
+    <author>
+      <name>Bokyeong Kim</name>
+    </author>
+    <author>
+      <name>Haon Park</name>
+    </author>
+    <author>
+      <name>Seung Geun Kim</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2502.11090v4</id>
+    <title>SafeDialBench: A Fine-Grained Safety Evaluation Benchmark for Large Language Models in Multi-Turn Dialogues with Diverse Jailbreak Attacks</title>
+    <updated>2026-02-07T05:06:32Z</updated>
+    <link href="https://arxiv.org/abs/2502.11090v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2502.11090v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>With the rapid advancement of Large Language Models (LLMs), the safety of LLMs has been a critical concern requiring precise assessment. Current benchmarks primarily concentrate on single-turn dialogues or a single jailbreak attack method to assess the safety. Additionally, these benchmarks have not taken into account the LLM's capability of identifying and handling unsafe information in detail. To address these issues, we propose a fine-grained benchmark SafeDialBench for evaluating the safety of LLMs across various jailbreak attacks in multi-turn dialogues. Specifically, we design a two-tier hierarchical safety taxonomy that considers 6 safety dimensions and generates more than 4000 multi-turn dialogues in both Chinese and English under 22 dialogue scenarios. We employ 7 jailbreak attack strategies, such as reference attack and purpose reverse, to enhance the dataset quality for dialogue generation. Notably, we construct an innovative assessment framework of LLMs, measuring capabilities in detecting, and handling unsafe information and maintaining consistency when facing jailbreak attacks. Experimental results across 17 LLMs reveal that Yi-34B-Chat and GLM4-9B-Chat demonstrate superior safety performance, while Llama3.1-8B-Instruct and o3-mini exhibit safety vulnerabilities.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-02-16T12:08:08Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Hongye Cao</name>
+    </author>
+    <author>
+      <name>Sijia Jing</name>
+    </author>
+    <author>
+      <name>Yanming Wang</name>
+    </author>
+    <author>
+      <name>Ziyue Peng</name>
+    </author>
+    <author>
+      <name>Zhixin Bai</name>
+    </author>
+    <author>
+      <name>Zhe Cao</name>
+    </author>
+    <author>
+      <name>Meng Fang</name>
+    </author>
+    <author>
+      <name>Fan Feng</name>
+    </author>
+    <author>
+      <name>Boyan Wang</name>
+    </author>
+    <author>
+      <name>Jiaheng Liu</name>
+    </author>
+    <author>
+      <name>Tianpei Yang</name>
+    </author>
+    <author>
+      <name>Jing Huo</name>
+    </author>
+    <author>
+      <name>Yang Gao</name>
+    </author>
+    <author>
+      <name>Fanyu Meng</name>
+    </author>
+    <author>
+      <name>Xi Yang</name>
+    </author>
+    <author>
+      <name>Chao Deng</name>
+    </author>
+    <author>
+      <name>Junlan Feng</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.22673v1</id>
+    <title>AgentLens: Interpretable Safety Steering via Mechanistic Subspaces for Multi-Turn Coding Agent</title>
+    <updated>2026-06-21T21:13:55Z</updated>
+    <link href="https://arxiv.org/abs/2606.22673v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.22673v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Coding agents based on large language models (LLMs) demonstrate remarkable autonomous capabilities, but they also introduce significant safety and misuse risks during multi-turn interactions with external environments. Existing safety mechanisms mainly rely on external guardrails, which have a limited ability to perform fine-grained behavioral control during execution. Meanwhile, recent mechanistic interpretability methods for LLM safety are mostly confined to single-turn or jailbreak-style QA settings, limiting their ability to capture the evolving risk dynamics of multi-turn agent execution. In this paper, we investigate the safety of multi-turn coding agents from an internal perspective. We propose AgentLens (Mechanistic Subspace Intervention and Steering), a white-box defense framework that performs runtime safety detection and representation-level mitigation for coding agents. Unlike conventional agent guardrails, AgentLens detect harmful execution states from step-level hidden representations and mitigate unsafe behavior by intervening in a 10-dimensional subspace within a single layer. To support this research, we introduce the Mechanistic Agent Safety (MAS) benchmark, comprising comprehensively annotated multi-turn execution trajectories across 194 tasks using LLaMA-3.1-8B, Qwen-2.5-7B, and Gemma-2-9B. Extensive experiments show that AgentLens achieves strong safety detection performance, provides preliminary evidence for lookahead risk anticipation, and substantially reduces harmful actions of the coding agent, establishing a foundation for applying mechanistic interpretability to dynamic LLM agent safety. The code is available at: https://github.com/EddyLuo1232/AgentLens</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SE" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-21T21:13:55Z</published>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Weidi Luo</name>
+    </author>
+    <author>
+      <name>Qiming Zhang</name>
+    </author>
+    <author>
+      <name>Yihao Quan</name>
+    </author>
+    <author>
+      <name>Mingyu Jin</name>
+    </author>
+    <author>
+      <name>Jie Cai</name>
+    </author>
+    <author>
+      <name>Chaowei Xiao</name>
+    </author>
+    <author>
+      <name>Jingcheng Niu</name>
+    </author>
+    <author>
+      <name>Zhen Xiang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2512.15163v2</id>
+    <title>MCP-SafetyBench: A Benchmark for Safety Evaluation of Large Language Models with Real-World MCP Servers</title>
+    <updated>2026-03-05T04:41:49Z</updated>
+    <link href="https://arxiv.org/abs/2512.15163v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2512.15163v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large language models (LLMs) are evolving into agentic systems that reason, plan, and operate external tools. The Model Context Protocol (MCP) is a key enabler of this transition, offering a standardized interface for connecting LLMs with heterogeneous tools and services. Yet MCP's openness and multi-server workflows introduce new safety risks that existing benchmarks fail to capture, as they focus on isolated attacks or lack real-world coverage. We present MCP-SafetyBench, a comprehensive benchmark built on real MCP servers that supports realistic multi-turn evaluation across five domains: browser automation, financial analysis, location navigation, repository management, and web search. It incorporates a unified taxonomy of 20 MCP attack types spanning server, host, and user sides, and includes tasks requiring multi-step reasoning and cross-server coordination under uncertainty. Using MCP-SafetyBench, we systematically evaluate leading open- and closed-source LLMs, revealing that all models remain vulnerable to MCP attacks, with a notable safety-utility trade-off. Our results highlight the urgent need for stronger defenses and establish MCP-SafetyBench as a foundation for diagnosing and mitigating safety risks in real-world MCP deployments.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-12-17T08:00:32Z</published>
+    <arxiv:comment>Our benchmark is available at https://github.com/xjzzzzzzzz/MCPSafety</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Xuanjun Zong</name>
+    </author>
+    <author>
+      <name>Zhiqi Shen</name>
+    </author>
+    <author>
+      <name>Lei Wang</name>
+    </author>
+    <author>
+      <name>Yunshi Lan</name>
+    </author>
+    <author>
+      <name>Chao Yang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.04736v2</id>
+    <title>Towards Multi-modal Multi-turn Safety: From Agentic Interaction to Strategic Alignment</title>
+    <updated>2026-09-03T05:55:13Z</updated>
+    <link href="https://arxiv.org/abs/2601.04736v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.04736v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Despite remarkable capability in multi-modal understanding, deploying Multi-modal Large Language Models (MLLMs) in open-ended conversational scenarios introduces safety risks that remain poorly addressed by existing alignment methods. Unlike simple malicious visual question and answer (VQA) pairs , multi-turn interactions enable adversaries to incrementally reconstruct harmful intent across dialogues, progressively bypassing safety constraints in ways that are difficult to detect at any individual turn. Meanwhile, conventional reinforcement learning from human feedback (RLHF) approaches are unsuitable for this situation: designed primarily for VQA tasks, they neither capture cross-turn risk dynamics nor scale efficiently without costly manual preference annotation. To close this gap, we introduce \textbf{MINT-Safe}, an open-source visual multi-turn training dataset comprising 11,270 multi-image dialogues and 500 refusal VQA pairs, constructed via multi-agent interaction with text-to-image (T2I) tool-call augmentation. Building on MINT-Safe, we propose \textbf{TAD-Align}, a dialogue safety alignment framework centered on a turn-aware dual-objective reward function. Rather than treating all dialogue turns uniformly, TAD-Align leverages rollout-based safety score variance to dynamically identify turns where the model exhibits inconsistent safety behavior, and adaptively up-weights these turns during optimization. Experiments on Qwen2.5-VL-7B-Instruct and LLaVA-NeXT-7B demonstrate reductions of over 10\% in Attack Success Rate (ASR), alongside improvements of at least 8\% in harmlessness and 13\% in helpfulness on multi-modal multi-turn safety benchmarks, while preserving general model capabilities.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-08T08:57:05Z</published>
+    <arxiv:comment>EMNLP Main 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Han Zhu</name>
+    </author>
+    <author>
+      <name>Jiale Chen</name>
+    </author>
+    <author>
+      <name>Chengkun Cai</name>
+    </author>
+    <author>
+      <name>Shengjie Sun</name>
+    </author>
+    <author>
+      <name>Haoran Li</name>
+    </author>
+    <author>
+      <name>Yujin Zhou</name>
+    </author>
+    <author>
+      <name>Chi-Min Chan</name>
+    </author>
+    <author>
+      <name>Pengcheng Wen</name>
+    </author>
+    <author>
+      <name>Lei Li</name>
+    </author>
+    <author>
+      <name>Yike Guo</name>
+    </author>
+    <author>
+      <name>Sirui Han</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.25711v1</id>
+    <title>Reassembling Distributed Risk: Trajectory-Conditioned Action Generation for Multi-Turn Agent Safety</title>
+    <updated>2026-08-26T12:28:35Z</updated>
+    <link href="https://arxiv.org/abs/2608.25711v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.25711v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Tool-using LLM agents extend security risks beyond generated text to actions that affect external systems. Under multi-turn decomposition attacks, a harmful objective can be distributed across individually plausible requests and tool calls, becoming apparent only from the accumulated trajectory. Existing defenses either rely on auxiliary online reasoning to recover long-horizon security evidence or assess actions after generation, often incurring additional inference cost or depending on runtime-specific action representations.
+  We propose \emph{Reassembling Distributed Risk} (ReDiR), a generation-time defense that conditions action generation on trajectory-level security evidence. Before each action, ReDiR compresses the current trajectory into a compact latent safety representation and injects it into the frozen base model. The representation is learned through same-model, cross-view supervision, where safe behavior from an explicit task view provides supervision for recovering distributed safety evidence from the original multi-turn trajectory. This design enables ReDiR to integrate cross-turn security information directly within the generation process without relying on a separate action-level safety module. We evaluate ReDiR on two agent-safety benchmarks across three model families and eight held-out tool domains. ReDiR reduces attack success rates to below 8\%, transfers to unseen tool domains, and preserves benign fidelity with low computational overhead.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-26T12:28:35Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Yanbo Dai</name>
+    </author>
+    <author>
+      <name>Zhenlan Ji</name>
+    </author>
+    <author>
+      <name>Zongjie Li</name>
+    </author>
+    <author>
+      <name>Shuai Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.10258v1</id>
+    <title>TAF-MED: Multi-Turn Safety Refusal Collapse in LLMs Under Declared Self-Treatment Intent</title>
+    <updated>2026-08-10T21:43:58Z</updated>
+    <link href="https://arxiv.org/abs/2608.10258v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.10258v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large language models (LLMs) increasingly provide conversational health information that may influence treatment decisions, yet existing benchmarks do not isolate whether medication-safety boundaries persist across follow-ups after explicit self-treatment intent. We introduce TAF-MED, a physician-reviewed benchmark of 500 fixed three-turn scenarios, and evaluate eight LLMs across 4,000 conversations. A rubric-based automated judge labelled responses as SAFE, LEAKY, or UNSAFE, and two physicians independently annotated a model-balanced random subset of 400 conversations. We assessed unsafe guidance, collapse after a strictly SAFE initial response, and model-ranking stability. Overall, 71.6% of conversations contained an UNSAFE response, and 61.4% of those beginning with a strictly SAFE response later collapsed to UNSAFE; model-level collapse rates ranged from 24.4% to 96.2%. Four of 28 model pairs reversed order between initial unsafe and collapse rates. Automated labels achieved 94.3% agreement with the adjudicated physician reference ($κ= 0.895$). These findings show that first-turn safety is an incomplete proxy for conversational safety persistence and motivate evaluation across complete dialogue trajectories. We will release TAF-MED on Hugging Face to support reproducible research on multi-turn medical safety.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-10T21:43:58Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Waleed Jamil</name>
+    </author>
+    <author>
+      <name>Raphael Schmitt</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.27690v1</id>
+    <title>TRACES: Proactive Safety Auditing for Multi-Turn LLM Agents via Trajectory-State Modeling</title>
+    <updated>2026-05-26T21:11:02Z</updated>
+    <link href="https://arxiv.org/abs/2605.27690v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.27690v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>LLM agents increasingly operate through multi-turn tool use and environment interaction, where safety risks often emerge from intermediate steps long before they surface in the final outcome. Reactive auditing is therefore insufficient: post-hoc diagnosis frequently misses the chance to flag risks while they are unfolding. We propose TRACES, a representation-based proactive auditor that learns prefix-level trajectory risk states from the hidden representations of an observer LLM. TRACES induces latent mechanism features from step representations and models their temporal evolution to estimate whether a partial trajectory is drifting toward unsafe behavior. To sidestep the cost and ambiguity of step-level risk annotation, TRACES is trained with weak trajectory-level supervision while still producing dense prefix-level risk estimates. Across multiple agent safety benchmarks, TRACES improves both full-trajectory safety prediction and proactive risk discrimination. Our analyses further suggest that these risk states can help train a safer agent, highlighting the broader potential of proactive auditing for long-horizon agent safety.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-26T21:11:02Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Jiaqian Li</name>
+    </author>
+    <author>
+      <name>Yanshu Li</name>
+    </author>
+    <author>
+      <name>Boxuan Zhang</name>
+    </author>
+    <author>
+      <name>Ruixiang Tang</name>
+    </author>
+    <author>
+      <name>Kuan-Hao Huang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2505.17147v1</id>
+    <title>MTSA: Multi-turn Safety Alignment for LLMs through Multi-round Red-teaming</title>
+    <updated>2025-05-22T08:22:57Z</updated>
+    <link href="https://arxiv.org/abs/2505.17147v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.17147v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The proliferation of jailbreak attacks against large language models (LLMs) highlights the need for robust security measures. However, in multi-round dialogues, malicious intentions may be hidden in interactions, leading LLMs to be more prone to produce harmful responses. In this paper, we propose the \textbf{M}ulti-\textbf{T}urn \textbf{S}afety \textbf{A}lignment (\ourapproach) framework, to address the challenge of securing LLMs in multi-round interactions. It consists of two stages: In the thought-guided attack learning stage, the red-team model learns about thought-guided multi-round jailbreak attacks to generate adversarial prompts. In the adversarial iterative optimization stage, the red-team model and the target model continuously improve their respective capabilities in interaction. Furthermore, we introduce a multi-turn reinforcement learning algorithm based on future rewards to enhance the robustness of safety alignment. Experimental results show that the red-team model exhibits state-of-the-art attack capabilities, while the target model significantly improves its performance on safety benchmarks.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-22T08:22:57Z</published>
+    <arxiv:comment>19 pages,6 figures,ACL2025</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Weiyang Guo</name>
+    </author>
+    <author>
+      <name>Jing Li</name>
+    </author>
+    <author>
+      <name>Wenya Wang</name>
+    </author>
+    <author>
+      <name>YU LI</name>
+    </author>
+    <author>
+      <name>Daojing He</name>
+    </author>
+    <author>
+      <name>Jun Yu</name>
+    </author>
+    <author>
+      <name>Min Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.06099v1</id>
+    <title>CogManip: Benchmarking Manipulative Behavior in Multi-Turn Interactions with Large Language Model</title>
+    <updated>2026-06-04T12:38:43Z</updated>
+    <link href="https://arxiv.org/abs/2606.06099v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.06099v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Whether Large Language Models (LLMs) exhibit covert psychological manipulation in complex human-AI interactions has garnered increasing safety concerns. However, existing AI safety benchmarks remain largely restricted to explicit rule compliance and static prompts, failing to capture the dynamic and covert nature of manipulative strategies in multi-turn dialogues. We introduce CogManip, a comprehensive benchmark that evaluates 15 manipulation strategy risks across 1,000 multi-turn interaction scenarios, validated by human experts. A systematic evaluation of 13 representative models, including frontier models like GPT-5.4 and DeepSeek-V3.2, reveals significant risk heterogeneities and illuminates the targeted direction for future defense. Further analysis of objective function perturbation reveals that DeepSeek-V3.2's manipulation tactics are highly sensitive to both negative and benign system prompts, demonstrating the critical necessity of prompt-based defense engineering and implicit goal auditing. CogManip offers a robust instrument and perspective for auditing the implicit psychological influence and dynamic strategy selection of modern LLMs.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-04T12:38:43Z</published>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Zeyang Yue</name>
+    </author>
+    <author>
+      <name>Chenfei Yan</name>
+    </author>
+    <author>
+      <name>Feifei Zhao</name>
+    </author>
+    <author>
+      <name>Haibo Tong</name>
+    </author>
+    <author>
+      <name>Mengwen Xu</name>
+    </author>
+    <author>
+      <name>Xiaozhen Wang</name>
+    </author>
+    <author>
+      <name>Erliang Lin</name>
+    </author>
+    <author>
+      <name>Yi Zeng</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.18063v2</id>
+    <title>Adaptive Adversaries: A Multi-Turn, Multi-LLM Benchmark for LLM Agent Security</title>
+    <updated>2026-09-11T18:06:53Z</updated>
+    <link href="https://arxiv.org/abs/2607.18063v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.18063v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>LLM-based agents process external content, exposing them to prompt injection and multi-turn manipulation. We present a 21-scenario benchmark for adaptive cross-session attacks against fresh-session LLM defenders: an autonomous LLM attacker observes prior defender responses and pivots across rounds, while each defender response is evaluated as a fresh interaction. A controlled 3 x 3 attacker-defender matrix contains 945 battles. Restricting scoring to the first round yields 0-1% attack success rate (ASR); allowing 15 rounds yields 7.9-16.8%. Pooling three attacker LLMs uncovers 1.7-2.2 times as many unique successful inputs as the best single attacker, at three times the battle budget. Aggregate rates conceal opposing scenario-specific weaknesses in session-secret protection and authority handling, preserved in two higher-sample evaluations. On six scenarios, adding one provenance paragraph reduces ASR from 110/270 to 70/270, with selective effects across tasks. History and defender-state controls, together with frozen replay, characterize how the interaction protocol changes the result. A competition adds 18,422 held-out battles on a fixed gpt-oss-20b backbone and complementary benign-task evaluations. The benchmark exposes attacker and defender models, harnesses, scenarios, session state, and interaction budgets as configurable choices for systematic security evaluation.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-20T15:30:38Z</published>
+    <arxiv:comment>Second Workshop on Agents in the Wild: Safety, Security, and Beyond</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Devina Jain</name>
+    </author>
+    <author>
+      <name>David Hartmann</name>
+    </author>
+    <author>
+      <name>Chuan Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.04796v2</id>
+    <title>LALM-as-a-Judge: Benchmarking Large Audio-Language Models for Safety Evaluation in Multi-Turn Spoken Dialogues</title>
+    <updated>2026-06-17T10:06:12Z</updated>
+    <link href="https://arxiv.org/abs/2602.04796v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.04796v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Evaluation of socially unsafe content in spoken dialogues remains text-centric, missing prosody and transcription failures. We present LALM-as-a-Judge, which includes an open benchmark of 24,000 multi-turn spoken dialogues with one localized unsafe turn, generated out of 8 socially unsafe categories and 5 severity levels. We evaluate 6 large audio-language models (LALMs) as judges, open and closed-source, in text-only, audio-only, and multimodal setups by their sensitivity, severity-order specificity, and turn-position bias for socially harmful content in the dialogue. Results show that audio contributes non-lexical evidence beyond transcript semantics and that multimodal gains are not universal but can be text-anchored, balanced, conservative, and interfering, which we link to the audio pathway bottlenecks and fusion limits. We position the benchmark as diagnostic and derive practitioner guidance for model, modality, and prompts choices.</summary>
+    <category term="eess.AS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SD" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-04T17:43:48Z</published>
+    <arxiv:comment>Accepted to ICML 2026</arxiv:comment>
+    <arxiv:primary_category term="eess.AS"/>
+    <author>
+      <name>Amir Ivry</name>
+    </author>
+    <author>
+      <name>Shinji Watanabe</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2506.19054v3</id>
+    <title>Poly-Guard: Massive Multi-Domain Safety Policy-Grounded Guardrail Dataset</title>
+    <updated>2026-02-11T21:25:33Z</updated>
+    <link href="https://arxiv.org/abs/2506.19054v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2506.19054v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>As LLMs become widespread across diverse applications, concerns about the security and safety of LLM interactions have intensified. Numerous guardrail models and benchmarks have been developed to ensure LLM content safety. However, existing guardrail benchmarks are often built upon ad hoc risk taxonomies that lack a principled grounding in standardized safety policies, limiting their alignment with real-world operational requirements. Moreover, they tend to overlook domain-specific risks, while the same risk category can carry different implications across different domains. To bridge these gaps, we introduce Poly-Guard, the first massive multi-domain safety policy-grounded guardrail dataset. Poly-Guard offers: (1) broad domain coverage across eight safety-critical domains, such as finance, law, and codeGen; (2) policy-grounded risk construction based on authentic, domain-specific safety guidelines; (3) diverse interaction formats, encompassing declarative statements, questions, instructions, and multi-turn conversations; (4) advanced benign data curation via detoxification prompting to challenge over-refusal behaviors; and (5) \textbf{attack-enhanced instances} that simulate adversarial inputs designed to bypass guardrails. Based on Poly-Guard, we benchmark 19 advanced guardrail models and uncover a series of findings, such as: (1) All models achieve varied F1 scores, with many demonstrating high variance across risk categories, highlighting their limited domain coverage and insufficient handling of domain-specific safety concerns; (2) As models evolve, their coverage of safety risks broadens, but performance on common risk categories may decrease; (3) All models remain vulnerable to optimized adversarial attacks. We believe that \dataset and the unique insights derived from our evaluations will advance the development of policy-aligned and resilient guardrail systems.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-06-18T01:35:33Z</published>
+    <arxiv:comment>NeurIPS 2025 Dataset &amp; Benchmark</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Mintong Kang</name>
+    </author>
+    <author>
+      <name>Zhaorun Chen</name>
+    </author>
+    <author>
+      <name>Chejian Xu</name>
+    </author>
+    <author>
+      <name>Jiawei Zhang</name>
+    </author>
+    <author>
+      <name>Chengquan Guo</name>
+    </author>
+    <author>
+      <name>Minzhou Pan</name>
+    </author>
+    <author>
+      <name>Ivan Revilla</name>
+    </author>
+    <author>
+      <name>Yu Sun</name>
+    </author>
+    <author>
+      <name>Bo Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.02520v1</id>
+    <title>MedPRESS: A Multi-turn Benchmark for Patient-Pressure-Induced Medical Sycophancy in LLMs</title>
+    <updated>2026-08-03T17:17:29Z</updated>
+    <link href="https://arxiv.org/abs/2608.02520v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.02520v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large language models (LLMs) are increasingly used for health-related advice. Existing research measures their safety with static questions rather than pressured patient-facing conversations. We introduce MedPRESS, a multi-turn benchmark for measuring patient-pressure-induced sycophancy in LLMs. MedPRESS contains 600 medically grounded five-turn dialogues across three scenario families: medication and treatment demand, personal health self-care, and symptom triage and care resistance. Each dialogue begins with a health query and escalates through personal experience, social proof, external evidence claims, and direct adversarial challenge. We evaluate 20 LLMs across general, medical-domain, lightweight, large, open-weight, and proprietary families using structured judging and safety-focused metrics. Results show that models frequently shift toward unsafe agreement under repeated patient pressure, with substantial variation across model families, model scale, and prompt type. Anti-sycophancy prompting improves robustness for several models, but does not eliminate unsafe agreement. MedPRESS highlights a critical gap in medical LLM evaluation: safe medical knowledge is not enough unless models can maintain it under conversational pressure.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-03T17:17:29Z</published>
+    <arxiv:comment>27 pages, 10 figures. Both authors contributed equally</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Saman Sarker Joy</name>
+    </author>
+    <author>
+      <name>Niloy Farhan</name>
+    </author>
+  </entry>
+</feed>

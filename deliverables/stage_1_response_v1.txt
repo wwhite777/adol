@@ -1,0 +1,36 @@
+adol / KYRA-Bench — S1 executed + audited; stopped and recorded on your order (2026-09-16, session 2)
+
+WHERE THINGS STAND (one paragraph)
+S0 is closed (your D1–D4 approval is in DECISION_LOG.md). S1 ran end to end today: dated arXiv sweep, novelty matrix + reject memo, and the full Codex audit round r001 — blind closest-three lock first, then the informed adversarial assessment. The verdict is AWAITING_PI: no work in evidence defeats our priority outright, but novelty is NOT cleared either — five major findings need your decisions and my follow-up. All artifacts, findings, and drafts are on disk and committed locally; nothing is running; decrypted temporaries are deleted.
+
+WHAT THE SWEEP + AUDIT CHANGED (the honest picture)
+1) Three close works even plan v2 (same-day) missed: TSJ 2606.25396 — longitudinal cumulative companion risk in minors, stable estimates only after ~140 turns; TAF-MED 2608.10258 — 61.4% of safe-first-turn conversations collapse by turn 3 (medical); K-Bench 2609.15855 — clinician-calibrated multi-turn crisis benchmark with protected test set.
+2) The auditor caught three MORE on the localization axis that I had missed in my own corpus (F-r001-2, major): ROK-FORTRESS 2605.14152 (KOREAN transcreation effects on safety evaluation), Culturally-Adapted Red-Teaming 2606.09178 (direct-translation vs adapted evaluation — essentially our H3 method), CultureConverse 2608.28405. H3's "we show culture changes measurement" needs these reconciled before any priority language survives.
+3) What still looks unoccupied after all of it: practitioner-criterion PSYCHOMETRIC validation of a cumulative relational index; boundary-survival WITH recovery in the youth relational domain; Korean adolescents 12–17; joint safety/over-refusal there. But the auditor is right that our matrix's "they don't have X" rows rest on abstracts — the crossfam project logged the same trap on 2026-09-13 (3/3 such claims false under full-text reading).
+
+THE FIVE DECISIONS ONLY YOU CAN TAKE (audit/r001/out/VERDICT.md)
+1. Contribution level: is a Korean-adolescent benchmark/instrument extension worthwhile on its own, or must the paper establish a general measurement result? Which claim LEADS?
+2. Measurement success + scope: what held-out improvement over final-turn/max/unweighted/refusal-only/CRB baselines is substantively important; what exactly "cumulative", "failure", "recovery" mean within ≤8 turns; practitioner judgment as the criterion — yes/no?
+3. Localization: keep a CAUSAL claim (then I must define intervention/outcome/identification per F-r001-4) or approve the narrower matched paired-comparison claim?
+4. Evidence threshold: require full-text verification of the decisive exclusion rows BEFORE closing S1, or authorize conditional progression with uncertainties recorded?
+5. Claim contract: adopt the expanded non-claims list; separate judge over-flagging from model over-refusal; and if CRRI's incremental validity comes out null — is the benchmark deliverable alone an acceptable paper, and framed how?
+
+MY NEXT ACTIONS ONCE YOU DECIDE
+Reconcile the three localization comparators (full texts) → qualify the 8 flagged matrix rows → rewrite the pitch premise (F-r001-3: "unvalidated measures cause evaluation failure" becomes a testable incremental-validity question) → close r001 → S2: CONTRIBUTION_CONTRACT + PREREGISTERED_kyra_v1.yaml freeze (template ready; OSF target 10-31).
+
+ALSO READY FOR YOU (D3, PI-side September critical path)
+- deliverables/ETRI_공개합의서_초안_v1.md — hybrid release (60% sanitized public / 40% private split), canary, licenses, reviewer access, 30-day review clause, 체결 목표 10/15.
+- deliverables/IRB_판정신청_초안_v1.md — 활동 A–D 분리(성인 전문가만으로 완결; youth advisory 별도·이연 가능), 평정자 보호 조치. 판정 회신 목표 9/30.
+
+OTHER RESULTS TODAY
+- Power simulation of plan v2 §6 REPRODUCED: all 6 configs within ±0.033 (48 scenarios @ OR≈2.1 → 0.82 vs plan 0.85; 72 → 0.96 vs 0.95). The plan's sample-size logic holds under the stated assumptions (definition caveat pinned in src/power_sim.py and the prereg template).
+- Drafts written for expert refinement: RB-6D-v2 manual with behavioral anchors + CF1–CF6 critical-failure list; CRRI-v2 spec (formula, baselines, survival+recovery model, acceptance bars); safe-controls guideline ADDING turn-matched benign controls (kills the "long conversations degrade anyway" alternative explanation — new H1.3); stratification + literal-twin scheme; judge/user-agent pipeline v0 design; OSF prereg template.
+- REFERENCES.csv (21 rows, per-row verification status — venue claims still unverified at source), SOURCE_LICENSE_REGISTRY.md (every license UNVERIFIED until repo-checked; adaptation locked until then), EXPERIMENTS.csv + ISSUES.csv seeded (7 findings logged).
+
+DISCLOSURES
+- On your stop order I killed my own codex Phase-B process by its explicit PID — both its deliverables were already fully written; only the terminal wrap-up message was cut.
+- Two self-inflicted launch mistakes on that codex run (trailing & inside a compound command; missing -C): harness tracking lost, codex started at project root and recovered by searching for its request file. No damage; logged in memory.md and wiki/methods/verification-traps.md.
+- The blind lock's input contained no pitch (none existed on disk when it ran; its report confirms corpus-only basis); pitch files were written after the lock timestamp.
+- Sweep scope: arXiv API only this pass. A different project's codex audit (bf) is running on this machine — untouched.
+
+NOTHING IS RUNNING; RESUME POINT = your five decisions. handoff.md, memory.md, STATE.yaml, PAPER_PLAN.md, and the hub page all agree: stage S1, status awaiting_pi.

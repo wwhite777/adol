@@ -1,0 +1,1711 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/fHhUFbJ6/QCe7gUgfBS0a3Dnclk</id>
+  <title>arXiv Query: search_query=all:"Korean" AND all:"safety" AND all:"language model"&amp;id_list=&amp;start=0&amp;max_results=20</title>
+  <updated>2026-09-16T09:57:52Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22Korean%22+AND+(all:%22safety%22+AND+all:%22language+model%22)&amp;start=0&amp;max_results=20&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>20</opensearch:itemsPerPage>
+  <opensearch:totalResults>15</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2605.28013v1</id>
+    <title>KSAFE-MM: A Multimodal Safety Benchmark via Localized Contextualization for Korean Cultural Risks</title>
+    <updated>2026-05-27T06:08:54Z</updated>
+    <link href="https://arxiv.org/abs/2605.28013v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.28013v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal Large Language Models (MLLMs) exacerbate safety risks by introducing vulnerabilities across multiple modalities, such as language and vision. Current MLLM safety evaluation tools, however, suffer from major limitations: 1) English-centric dataset construction, and 2) a focus on generic risks that are not tied to local cultural contexts. This paper introduces KSAFE-MM, a benchmark for Korean multimodal safety evaluation that covers both general safety risks and culture-specific vulnerabilities. KSAFE-MM consists of two parts, KSAFE-MM-G and KSAFE-MM-C. KSAFE-MM-G evaluates globally shared risks in Korean contexts through linguistic contextualization, which transforms generic safety queries into contextually grounded multimodal samples. KSAFE-MM-C targets culture-dependent MLLM safety vulnerabilities using localized visual queries derived from real-world contexts. It pairs these visual queries with jailbreak-style textual queries to cover multimodal safety risks involving cultural visual cues and malicious textual intent. Together, these components provide a general-to-local construction pipeline for evaluating both globally shared safety risks and culture-specific vulnerabilities. We evaluate 12 state-of-the-art MLLMs on KSAFE-MM and reveal that models exhibit greater vulnerability to culturally grounded attacks than to generic ones. Notably, jailbreaking strategies substantially amplify attack success rates, with ProgramExecution yielding up to 74.2% ASR compared to 13.4% for standard queries. Furthermore, we identify a systematic trade-off between safety and over-refusal, where models achieving low ASR tend to exhibit excessive refusal behavior on benign queries. These findings highlight the urgent need for culturally grounded safety evaluation beyond English-centric benchmarks.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-27T06:08:54Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Yongwoo Kim</name>
+    </author>
+    <author>
+      <name>Sojung An</name>
+    </author>
+    <author>
+      <name>Yunjin Park</name>
+    </author>
+    <author>
+      <name>Jungwon Yoon</name>
+    </author>
+    <author>
+      <name>Dujin Lee</name>
+    </author>
+    <author>
+      <name>HyunBeom Cho</name>
+    </author>
+    <author>
+      <name>Jaewon Lee</name>
+    </author>
+    <author>
+      <name>Wonhyuk Lee</name>
+    </author>
+    <author>
+      <name>Youngchol Kim</name>
+    </author>
+    <author>
+      <name>JeongYeop Kim</name>
+    </author>
+    <author>
+      <name>Donghyun Kim</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2504.13216v1</id>
+    <title>KFinEval-Pilot: A Comprehensive Benchmark Suite for Korean Financial Language Understanding</title>
+    <updated>2025-04-17T00:12:58Z</updated>
+    <link href="https://arxiv.org/abs/2504.13216v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2504.13216v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We introduce KFinEval-Pilot, a benchmark suite specifically designed to evaluate large language models (LLMs) in the Korean financial domain. Addressing the limitations of existing English-centric benchmarks, KFinEval-Pilot comprises over 1,000 curated questions across three critical areas: financial knowledge, legal reasoning, and financial toxicity. The benchmark is constructed through a semi-automated pipeline that combines GPT-4-generated prompts with expert validation to ensure domain relevance and factual accuracy. We evaluate a range of representative LLMs and observe notable performance differences across models, with trade-offs between task accuracy and output safety across different model families. These results highlight persistent challenges in applying LLMs to high-stakes financial applications, particularly in reasoning and safety. Grounded in real-world financial use cases and aligned with the Korean regulatory and linguistic context, KFinEval-Pilot serves as an early diagnostic tool for developing safer and more reliable financial AI systems.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-04-17T00:12:58Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Bokwang Hwang</name>
+    </author>
+    <author>
+      <name>Seonkyu Lim</name>
+    </author>
+    <author>
+      <name>Taewoong Kim</name>
+    </author>
+    <author>
+      <name>Yongjae Geun</name>
+    </author>
+    <author>
+      <name>Sunghyun Bang</name>
+    </author>
+    <author>
+      <name>Sohyun Park</name>
+    </author>
+    <author>
+      <name>Jihyun Park</name>
+    </author>
+    <author>
+      <name>Myeonggyu Lee</name>
+    </author>
+    <author>
+      <name>Jinwoo Lee</name>
+    </author>
+    <author>
+      <name>Yerin Kim</name>
+    </author>
+    <author>
+      <name>Jinsun Yoo</name>
+    </author>
+    <author>
+      <name>Jingyeong Hong</name>
+    </author>
+    <author>
+      <name>Jina Park</name>
+    </author>
+    <author>
+      <name>Yongchan Kim</name>
+    </author>
+    <author>
+      <name>Suhyun Kim</name>
+    </author>
+    <author>
+      <name>Younggyun Hahm</name>
+    </author>
+    <author>
+      <name>Yiseul Lee</name>
+    </author>
+    <author>
+      <name>Yejee Kang</name>
+    </author>
+    <author>
+      <name>Chanhyuk Yoon</name>
+    </author>
+    <author>
+      <name>Chansu Lee</name>
+    </author>
+    <author>
+      <name>Heeyewon Jeong</name>
+    </author>
+    <author>
+      <name>Jiyeon Lee</name>
+    </author>
+    <author>
+      <name>Seonhye Gu</name>
+    </author>
+    <author>
+      <name>Hyebin Kang</name>
+    </author>
+    <author>
+      <name>Yousang Cho</name>
+    </author>
+    <author>
+      <name>Hangyeol Yoo</name>
+    </author>
+    <author>
+      <name>KyungTae Lim</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.14152v2</id>
+    <title>ROK-FORTRESS: Measuring the Effect of Geopolitical Transcreation for National Security and Public Safety</title>
+    <updated>2026-07-07T01:59:55Z</updated>
+    <link href="https://arxiv.org/abs/2605.14152v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.14152v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Safety evaluations for large language models (LLMs) increasingly target high-stakes National Security and Public Safety (NSPS) risks, yet multilingual safety is mostly assessed through translation-only benchmarks that preserve the underlying scenario, leaving how language and geopolitical context interact largely unexamined beyond a few language pairs. We introduce ROK-FORTRESS, a bilingual, culturally adversarial NSPS benchmark that uses the English-Korean language pair and U.S.-ROK geopolitical axis as a case study, separating the effects of language and geopolitical grounding via a transcreation matrix: adversarial intents are evaluated under controlled combinations of (i) English versus Korean language and (ii) U.S. versus Korean entities, institutions, and operational details. Each adversarial prompt is paired with a dual-use benign counterpart to quantify over-refusal, and responses are scored by calibrated LLM-as-a-judge panels using expert-crafted, prompt-specific binary rubrics. Across a dual-track set of frontier and Korean-optimized models, we find a consistent suppression effect in Korean variants and substantial model-to-model variation in how geopolitical grounding interacts with language; in a subset of models, Korean grounding further mitigates the language-driven suppression. This indicates that, at least in the English-Korean case, safety behavior is shaped by language-as-risk signals and context interactions that translation-only evaluations miss. A direct-request ablation that strips jailbreak wrappers separates a small but persistent reduction for closed-source models from a larger, wrapper-dependent effect that reverses for open-source models, suggesting part of the Korean suppression reflects prompt specialization rather than intrinsic language-based safety alignment. The transcreation matrix methodology is designed to generalize to other language-culture pairs.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CY" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-13T22:07:22Z</published>
+    <arxiv:comment>16 pages main text + appendix (74 pages total), 4 figures and 2 tables in main text; dataset at https://huggingface.co/datasets/ScaleAI/ROK-FORTRESS_public</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Michael S. Lee</name>
+    </author>
+    <author>
+      <name>Yash Maurya</name>
+    </author>
+    <author>
+      <name>Drew Rein</name>
+    </author>
+    <author>
+      <name>Bert Herring</name>
+    </author>
+    <author>
+      <name>Jonathan Nguyen</name>
+    </author>
+    <author>
+      <name>Kyungho Song</name>
+    </author>
+    <author>
+      <name>Udari Madhushani Sehwag</name>
+    </author>
+    <author>
+      <name>Jiyeon Cho</name>
+    </author>
+    <author>
+      <name>Kaustubh Deshpande</name>
+    </author>
+    <author>
+      <name>Yeongkyun Jang</name>
+    </author>
+    <author>
+      <name>Jiyeon Joo</name>
+    </author>
+    <author>
+      <name>Minn Seok Choi</name>
+    </author>
+    <author>
+      <name>Evi Fuelle</name>
+    </author>
+    <author>
+      <name>Christina Q. Knight</name>
+    </author>
+    <author>
+      <name>Joseph Brandifino</name>
+    </author>
+    <author>
+      <name>Max Fenkell</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.12033v2</id>
+    <title>Preserving Fairness and Safety in Quantized LLMs Through Critical Weight Protection</title>
+    <updated>2026-06-27T01:08:09Z</updated>
+    <link href="https://arxiv.org/abs/2601.12033v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.12033v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Quantization is widely adopted to reduce the computational cost of large language models (LLMs); however, its implications for fairness and safety, particularly in dynamic quantization and multilingual contexts, remain underexplored. In this work, we conduct a systematic study of how static and dynamic quantization methods impact fairness and safety across benchmarks measuring intrinsic and extrinsic bias and safety alignment. For fairness, we evaluate English, French, Dutch, Spanish, and Turkish; for safety, we focus on English, Korean, and Arabic. Our findings reveal that quantization consistently degrades fairness and safety, with dynamic methods demonstrating greater stability than static ones. Moreover, fairness degradation varies across languages, while safety deterioration is especially pronounced in non-English settings. To address these risks, we introduce Critical Weight Protection, a novel technique that identifies and preserves fairness- and safety-critical weights during quantization. This approach effectively mitigates bias and safety deterioration without costly retraining or alignment, maintaining trustworthiness while retaining efficiency.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-17T12:21:47Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Muhammad Alif Al Hakim</name>
+    </author>
+    <author>
+      <name>Alfan Farizki Wicaksono</name>
+    </author>
+    <author>
+      <name>Fajri Koto</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2509.10105v2</id>
+    <title>VARCO-VISION-2.0 Technical Report</title>
+    <updated>2025-09-16T01:21:28Z</updated>
+    <link href="https://arxiv.org/abs/2509.10105v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2509.10105v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We introduce VARCO-VISION-2.0, an open-weight bilingual vision-language model (VLM) for Korean and English with improved capabilities compared to the previous model VARCO-VISION-14B. The model supports multi-image understanding for complex inputs such as documents, charts, and tables, and delivers layoutaware OCR by predicting both textual content and its spatial location. Trained with a four-stage curriculum with memory-efficient techniques, the model achieves enhanced multimodal alignment, while preserving core language abilities and improving safety via preference optimization. Extensive benchmark evaluations demonstrate strong spatial grounding and competitive results for both languages, with the 14B model achieving 8th place on the OpenCompass VLM leaderboard among models of comparable scale. Alongside the 14B-scale model, we release a 1.7B version optimized for on-device deployment. We believe these models advance the development of bilingual VLMs and their practical applications. Two variants of VARCO-VISION-2.0 are available at Hugging Face: a full-scale 14B model and a lightweight 1.7B model.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-09-12T09:55:56Z</published>
+    <arxiv:comment>19 pages, 1 figure, 14 tables. Technical report for VARCO-VISION-2.0, a Korean-English bilingual VLM in 14B and 1.7B variants. Key features: multi-image understanding, OCR with text localization, improved Korean capabilities</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Young-rok Cha</name>
+    </author>
+    <author>
+      <name>Jeongho Ju</name>
+    </author>
+    <author>
+      <name>SunYoung Park</name>
+    </author>
+    <author>
+      <name>Jong-Hyeon Lee</name>
+    </author>
+    <author>
+      <name>Younghyun Yu</name>
+    </author>
+    <author>
+      <name>Youngjune Kim</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2205.00176v1</id>
+    <title>Building a Role Specified Open-Domain Dialogue System Leveraging Large-Scale Language Models</title>
+    <updated>2022-04-30T06:23:06Z</updated>
+    <link href="https://arxiv.org/abs/2205.00176v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2205.00176v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recent open-domain dialogue models have brought numerous breakthroughs. However, building a chat system is not scalable since it often requires a considerable volume of human-human dialogue data, especially when enforcing features such as persona, style, or safety. In this work, we study the challenge of imposing roles on open-domain dialogue systems, with the goal of making the systems maintain consistent roles while conversing naturally with humans. To accomplish this, the system must satisfy a role specification that includes certain conditions on the stated features as well as a system policy on whether or not certain types of utterances are allowed. For this, we propose an efficient data collection framework leveraging in-context few-shot learning of large-scale language models for building role-satisfying dialogue dataset from scratch. We then compare various architectures for open-domain dialogue systems in terms of meeting role specifications while maintaining conversational abilities. Automatic and human evaluations show that our models return few out-of-bounds utterances, keeping competitive performance on general metrics. We release a Korean dialogue dataset we built for further research.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-04-30T06:23:06Z</published>
+    <arxiv:comment>Accepted to NAACL2022 as a long paper</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Sanghwan Bae</name>
+    </author>
+    <author>
+      <name>Donghyun Kwak</name>
+    </author>
+    <author>
+      <name>Sungdong Kim</name>
+    </author>
+    <author>
+      <name>Donghoon Ham</name>
+    </author>
+    <author>
+      <name>Soyoung Kang</name>
+    </author>
+    <author>
+      <name>Sang-Woo Lee</name>
+    </author>
+    <author>
+      <name>Woomyoung Park</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2509.23381v2</id>
+    <title>Guard Vector: Beyond English LLM Guardrails with Task-Vector Composition and Streaming-Aware Prefix SFT</title>
+    <updated>2026-07-21T08:03:44Z</updated>
+    <link href="https://arxiv.org/abs/2509.23381v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2509.23381v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We introduce Guard Vector, a safety task vector computed as the parameter difference between a guardrail model (Guard Model) and a same-architecture pretrained language model. Composing this vector with a target language model yields a Target Guard Model (TGM). We then adapt TGM with a streaming-aware approach that combines prefix-based training and evaluation with a classifier that produces a single-token output. With this composition alone, TGM improves classification quality over established Guard Models across standard safety suites and enables language extensibility to Chinese, Japanese, and Korean, requiring neither additional training nor target language labels for this composition step. It also demonstrates model portability across two widely used public guardrail backbones, Llama and Gemma. With prefix SFT (supervised fine-tuning), TGM preserves classification quality under streaming by aligning the behavior between prefix inputs and full-text inputs. The single-token output design increases throughput and reduces latency. Together, these components reduce data and compute requirements while promoting streaming-aware evaluation practices, thereby contributing to a more responsible AI ecosystem.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-09-27T16:03:44Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Wonhyuk Lee</name>
+    </author>
+    <author>
+      <name>Youngchol Kim</name>
+    </author>
+    <author>
+      <name>Yunjin Park</name>
+    </author>
+    <author>
+      <name>Junhyung Moon</name>
+    </author>
+    <author>
+      <name>Dongyoung Jeong</name>
+    </author>
+    <author>
+      <name>Wanjin Park</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2404.01954v2</id>
+    <title>HyperCLOVA X Technical Report</title>
+    <updated>2024-04-13T15:06:19Z</updated>
+    <link href="https://arxiv.org/abs/2404.01954v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2404.01954v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We introduce HyperCLOVA X, a family of large language models (LLMs) tailored to the Korean language and culture, along with competitive capabilities in English, math, and coding. HyperCLOVA X was trained on a balanced mix of Korean, English, and code data, followed by instruction-tuning with high-quality human-annotated datasets while abiding by strict safety guidelines reflecting our commitment to responsible AI. The model is evaluated across various benchmarks, including comprehensive reasoning, knowledge, commonsense, factuality, coding, math, chatting, instruction-following, and harmlessness, in both Korean and English. HyperCLOVA X exhibits strong reasoning capabilities in Korean backed by a deep understanding of the language and cultural nuances. Further analysis of the inherent bilingual nature and its extension to multilingualism highlights the model's cross-lingual proficiency and strong generalization ability to untargeted languages, including machine translation between several language pairs and cross-lingual inference tasks. We believe that HyperCLOVA X can provide helpful guidance for regions or countries in developing their sovereign LLMs.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-04-02T13:48:49Z</published>
+    <arxiv:comment>44 pages; updated authors list and fixed author names</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Kang Min Yoo</name>
+    </author>
+    <author>
+      <name>Jaegeun Han</name>
+    </author>
+    <author>
+      <name>Sookyo In</name>
+    </author>
+    <author>
+      <name>Heewon Jeon</name>
+    </author>
+    <author>
+      <name>Jisu Jeong</name>
+    </author>
+    <author>
+      <name>Jaewook Kang</name>
+    </author>
+    <author>
+      <name>Hyunwook Kim</name>
+    </author>
+    <author>
+      <name>Kyung-Min Kim</name>
+    </author>
+    <author>
+      <name>Munhyong Kim</name>
+    </author>
+    <author>
+      <name>Sungju Kim</name>
+    </author>
+    <author>
+      <name>Donghyun Kwak</name>
+    </author>
+    <author>
+      <name>Hanock Kwak</name>
+    </author>
+    <author>
+      <name>Se Jung Kwon</name>
+    </author>
+    <author>
+      <name>Bado Lee</name>
+    </author>
+    <author>
+      <name>Dongsoo Lee</name>
+    </author>
+    <author>
+      <name>Gichang Lee</name>
+    </author>
+    <author>
+      <name>Jooho Lee</name>
+    </author>
+    <author>
+      <name>Baeseong Park</name>
+    </author>
+    <author>
+      <name>Seongjin Shin</name>
+    </author>
+    <author>
+      <name>Joonsang Yu</name>
+    </author>
+    <author>
+      <name>Seolki Baek</name>
+    </author>
+    <author>
+      <name>Sumin Byeon</name>
+    </author>
+    <author>
+      <name>Eungsup Cho</name>
+    </author>
+    <author>
+      <name>Dooseok Choe</name>
+    </author>
+    <author>
+      <name>Jeesung Han</name>
+    </author>
+    <author>
+      <name>Youngkyun Jin</name>
+    </author>
+    <author>
+      <name>Hyein Jun</name>
+    </author>
+    <author>
+      <name>Jaeseung Jung</name>
+    </author>
+    <author>
+      <name>Chanwoong Kim</name>
+    </author>
+    <author>
+      <name>Jinhong Kim</name>
+    </author>
+    <author>
+      <name>Jinuk Kim</name>
+    </author>
+    <author>
+      <name>Dokyeong Lee</name>
+    </author>
+    <author>
+      <name>Dongwook Park</name>
+    </author>
+    <author>
+      <name>Jeong Min Sohn</name>
+    </author>
+    <author>
+      <name>Sujung Han</name>
+    </author>
+    <author>
+      <name>Jiae Heo</name>
+    </author>
+    <author>
+      <name>Sungju Hong</name>
+    </author>
+    <author>
+      <name>Mina Jeon</name>
+    </author>
+    <author>
+      <name>Hyunhoon Jung</name>
+    </author>
+    <author>
+      <name>Jungeun Jung</name>
+    </author>
+    <author>
+      <name>Wangkyo Jung</name>
+    </author>
+    <author>
+      <name>Chungjoon Kim</name>
+    </author>
+    <author>
+      <name>Hyeri Kim</name>
+    </author>
+    <author>
+      <name>Jonghyun Kim</name>
+    </author>
+    <author>
+      <name>Min Young Kim</name>
+    </author>
+    <author>
+      <name>Soeun Lee</name>
+    </author>
+    <author>
+      <name>Joonhee Park</name>
+    </author>
+    <author>
+      <name>Jieun Shin</name>
+    </author>
+    <author>
+      <name>Sojin Yang</name>
+    </author>
+    <author>
+      <name>Jungsoon Yoon</name>
+    </author>
+    <author>
+      <name>Hwaran Lee</name>
+    </author>
+    <author>
+      <name>Sanghwan Bae</name>
+    </author>
+    <author>
+      <name>Jeehwan Cha</name>
+    </author>
+    <author>
+      <name>Karl Gylleus</name>
+    </author>
+    <author>
+      <name>Donghoon Ham</name>
+    </author>
+    <author>
+      <name>Mihak Hong</name>
+    </author>
+    <author>
+      <name>Youngki Hong</name>
+    </author>
+    <author>
+      <name>Yunki Hong</name>
+    </author>
+    <author>
+      <name>Dahyun Jang</name>
+    </author>
+    <author>
+      <name>Hyojun Jeon</name>
+    </author>
+    <author>
+      <name>Yujin Jeon</name>
+    </author>
+    <author>
+      <name>Yeji Jeong</name>
+    </author>
+    <author>
+      <name>Myunggeun Ji</name>
+    </author>
+    <author>
+      <name>Yeguk Jin</name>
+    </author>
+    <author>
+      <name>Chansong Jo</name>
+    </author>
+    <author>
+      <name>Shinyoung Joo</name>
+    </author>
+    <author>
+      <name>Seunghwan Jung</name>
+    </author>
+    <author>
+      <name>Adrian Jungmyung Kim</name>
+    </author>
+    <author>
+      <name>Byoung Hoon Kim</name>
+    </author>
+    <author>
+      <name>Hyomin Kim</name>
+    </author>
+    <author>
+      <name>Jungwhan Kim</name>
+    </author>
+    <author>
+      <name>Minkyoung Kim</name>
+    </author>
+    <author>
+      <name>Minseung Kim</name>
+    </author>
+    <author>
+      <name>Sungdong Kim</name>
+    </author>
+    <author>
+      <name>Yonghee Kim</name>
+    </author>
+    <author>
+      <name>Youngjun Kim</name>
+    </author>
+    <author>
+      <name>Youngkwan Kim</name>
+    </author>
+    <author>
+      <name>Donghyeon Ko</name>
+    </author>
+    <author>
+      <name>Dughyun Lee</name>
+    </author>
+    <author>
+      <name>Ha Young Lee</name>
+    </author>
+    <author>
+      <name>Jaehong Lee</name>
+    </author>
+    <author>
+      <name>Jieun Lee</name>
+    </author>
+    <author>
+      <name>Jonghyun Lee</name>
+    </author>
+    <author>
+      <name>Jongjin Lee</name>
+    </author>
+    <author>
+      <name>Min Young Lee</name>
+    </author>
+    <author>
+      <name>Yehbin Lee</name>
+    </author>
+    <author>
+      <name>Taehong Min</name>
+    </author>
+    <author>
+      <name>Yuri Min</name>
+    </author>
+    <author>
+      <name>Kiyoon Moon</name>
+    </author>
+    <author>
+      <name>Hyangnam Oh</name>
+    </author>
+    <author>
+      <name>Jaesun Park</name>
+    </author>
+    <author>
+      <name>Kyuyon Park</name>
+    </author>
+    <author>
+      <name>Younghun Park</name>
+    </author>
+    <author>
+      <name>Hanbae Seo</name>
+    </author>
+    <author>
+      <name>Seunghyun Seo</name>
+    </author>
+    <author>
+      <name>Mihyun Sim</name>
+    </author>
+    <author>
+      <name>Gyubin Son</name>
+    </author>
+    <author>
+      <name>Matt Yeo</name>
+    </author>
+    <author>
+      <name>Kyung Hoon Yeom</name>
+    </author>
+    <author>
+      <name>Wonjoon Yoo</name>
+    </author>
+    <author>
+      <name>Myungin You</name>
+    </author>
+    <author>
+      <name>Doheon Ahn</name>
+    </author>
+    <author>
+      <name>Homin Ahn</name>
+    </author>
+    <author>
+      <name>Joohee Ahn</name>
+    </author>
+    <author>
+      <name>Seongmin Ahn</name>
+    </author>
+    <author>
+      <name>Chanwoo An</name>
+    </author>
+    <author>
+      <name>Hyeryun An</name>
+    </author>
+    <author>
+      <name>Junho An</name>
+    </author>
+    <author>
+      <name>Sang-Min An</name>
+    </author>
+    <author>
+      <name>Boram Byun</name>
+    </author>
+    <author>
+      <name>Eunbin Byun</name>
+    </author>
+    <author>
+      <name>Jongho Cha</name>
+    </author>
+    <author>
+      <name>Minji Chang</name>
+    </author>
+    <author>
+      <name>Seunggyu Chang</name>
+    </author>
+    <author>
+      <name>Haesong Cho</name>
+    </author>
+    <author>
+      <name>Youngdo Cho</name>
+    </author>
+    <author>
+      <name>Dalnim Choi</name>
+    </author>
+    <author>
+      <name>Daseul Choi</name>
+    </author>
+    <author>
+      <name>Hyoseok Choi</name>
+    </author>
+    <author>
+      <name>Minseong Choi</name>
+    </author>
+    <author>
+      <name>Sangho Choi</name>
+    </author>
+    <author>
+      <name>Seongjae Choi</name>
+    </author>
+    <author>
+      <name>Wooyong Choi</name>
+    </author>
+    <author>
+      <name>Sewhan Chun</name>
+    </author>
+    <author>
+      <name>Dong Young Go</name>
+    </author>
+    <author>
+      <name>Chiheon Ham</name>
+    </author>
+    <author>
+      <name>Danbi Han</name>
+    </author>
+    <author>
+      <name>Jaemin Han</name>
+    </author>
+    <author>
+      <name>Moonyoung Hong</name>
+    </author>
+    <author>
+      <name>Sung Bum Hong</name>
+    </author>
+    <author>
+      <name>Dong-Hyun Hwang</name>
+    </author>
+    <author>
+      <name>Seongchan Hwang</name>
+    </author>
+    <author>
+      <name>Jinbae Im</name>
+    </author>
+    <author>
+      <name>Hyuk Jin Jang</name>
+    </author>
+    <author>
+      <name>Jaehyung Jang</name>
+    </author>
+    <author>
+      <name>Jaeni Jang</name>
+    </author>
+    <author>
+      <name>Sihyeon Jang</name>
+    </author>
+    <author>
+      <name>Sungwon Jang</name>
+    </author>
+    <author>
+      <name>Joonha Jeon</name>
+    </author>
+    <author>
+      <name>Daun Jeong</name>
+    </author>
+    <author>
+      <name>Joonhyun Jeong</name>
+    </author>
+    <author>
+      <name>Kyeongseok Jeong</name>
+    </author>
+    <author>
+      <name>Mini Jeong</name>
+    </author>
+    <author>
+      <name>Sol Jin</name>
+    </author>
+    <author>
+      <name>Hanbyeol Jo</name>
+    </author>
+    <author>
+      <name>Hanju Jo</name>
+    </author>
+    <author>
+      <name>Minjung Jo</name>
+    </author>
+    <author>
+      <name>Chaeyoon Jung</name>
+    </author>
+    <author>
+      <name>Hyungsik Jung</name>
+    </author>
+    <author>
+      <name>Jaeuk Jung</name>
+    </author>
+    <author>
+      <name>Ju Hwan Jung</name>
+    </author>
+    <author>
+      <name>Kwangsun Jung</name>
+    </author>
+    <author>
+      <name>Seungjae Jung</name>
+    </author>
+    <author>
+      <name>Soonwon Ka</name>
+    </author>
+    <author>
+      <name>Donghan Kang</name>
+    </author>
+    <author>
+      <name>Soyoung Kang</name>
+    </author>
+    <author>
+      <name>Taeho Kil</name>
+    </author>
+    <author>
+      <name>Areum Kim</name>
+    </author>
+    <author>
+      <name>Beomyoung Kim</name>
+    </author>
+    <author>
+      <name>Byeongwook Kim</name>
+    </author>
+    <author>
+      <name>Daehee Kim</name>
+    </author>
+    <author>
+      <name>Dong-Gyun Kim</name>
+    </author>
+    <author>
+      <name>Donggook Kim</name>
+    </author>
+    <author>
+      <name>Donghyun Kim</name>
+    </author>
+    <author>
+      <name>Euna Kim</name>
+    </author>
+    <author>
+      <name>Eunchul Kim</name>
+    </author>
+    <author>
+      <name>Geewook Kim</name>
+    </author>
+    <author>
+      <name>Gyu Ri Kim</name>
+    </author>
+    <author>
+      <name>Hanbyul Kim</name>
+    </author>
+    <author>
+      <name>Heesu Kim</name>
+    </author>
+    <author>
+      <name>Isaac Kim</name>
+    </author>
+    <author>
+      <name>Jeonghoon Kim</name>
+    </author>
+    <author>
+      <name>Jihye Kim</name>
+    </author>
+    <author>
+      <name>Joonghoon Kim</name>
+    </author>
+    <author>
+      <name>Minjae Kim</name>
+    </author>
+    <author>
+      <name>Minsub Kim</name>
+    </author>
+    <author>
+      <name>Pil Hwan Kim</name>
+    </author>
+    <author>
+      <name>Sammy Kim</name>
+    </author>
+    <author>
+      <name>Seokhun Kim</name>
+    </author>
+    <author>
+      <name>Seonghyeon Kim</name>
+    </author>
+    <author>
+      <name>Soojin Kim</name>
+    </author>
+    <author>
+      <name>Soong Kim</name>
+    </author>
+    <author>
+      <name>Soyoon Kim</name>
+    </author>
+    <author>
+      <name>Sunyoung Kim</name>
+    </author>
+    <author>
+      <name>Taeho Kim</name>
+    </author>
+    <author>
+      <name>Wonho Kim</name>
+    </author>
+    <author>
+      <name>Yoonsik Kim</name>
+    </author>
+    <author>
+      <name>You Jin Kim</name>
+    </author>
+    <author>
+      <name>Yuri Kim</name>
+    </author>
+    <author>
+      <name>Beomseok Kwon</name>
+    </author>
+    <author>
+      <name>Ohsung Kwon</name>
+    </author>
+    <author>
+      <name>Yoo-Hwan Kwon</name>
+    </author>
+    <author>
+      <name>Anna Lee</name>
+    </author>
+    <author>
+      <name>Byungwook Lee</name>
+    </author>
+    <author>
+      <name>Changho Lee</name>
+    </author>
+    <author>
+      <name>Daun Lee</name>
+    </author>
+    <author>
+      <name>Dongjae Lee</name>
+    </author>
+    <author>
+      <name>Ha-Ram Lee</name>
+    </author>
+    <author>
+      <name>Hodong Lee</name>
+    </author>
+    <author>
+      <name>Hwiyeong Lee</name>
+    </author>
+    <author>
+      <name>Hyunmi Lee</name>
+    </author>
+    <author>
+      <name>Injae Lee</name>
+    </author>
+    <author>
+      <name>Jaeung Lee</name>
+    </author>
+    <author>
+      <name>Jeongsang Lee</name>
+    </author>
+    <author>
+      <name>Jisoo Lee</name>
+    </author>
+    <author>
+      <name>Jongsoo Lee</name>
+    </author>
+    <author>
+      <name>Joongjae Lee</name>
+    </author>
+    <author>
+      <name>Juhan Lee</name>
+    </author>
+    <author>
+      <name>Jung Hyun Lee</name>
+    </author>
+    <author>
+      <name>Junghoon Lee</name>
+    </author>
+    <author>
+      <name>Junwoo Lee</name>
+    </author>
+    <author>
+      <name>Se Yun Lee</name>
+    </author>
+    <author>
+      <name>Sujin Lee</name>
+    </author>
+    <author>
+      <name>Sungjae Lee</name>
+    </author>
+    <author>
+      <name>Sungwoo Lee</name>
+    </author>
+    <author>
+      <name>Wonjae Lee</name>
+    </author>
+    <author>
+      <name>Zoo Hyun Lee</name>
+    </author>
+    <author>
+      <name>Jong Kun Lim</name>
+    </author>
+    <author>
+      <name>Kun Lim</name>
+    </author>
+    <author>
+      <name>Taemin Lim</name>
+    </author>
+    <author>
+      <name>Nuri Na</name>
+    </author>
+    <author>
+      <name>Jeongyeon Nam</name>
+    </author>
+    <author>
+      <name>Kyeong-Min Nam</name>
+    </author>
+    <author>
+      <name>Yeonseog Noh</name>
+    </author>
+    <author>
+      <name>Biro Oh</name>
+    </author>
+    <author>
+      <name>Jung-Sik Oh</name>
+    </author>
+    <author>
+      <name>Solgil Oh</name>
+    </author>
+    <author>
+      <name>Yeontaek Oh</name>
+    </author>
+    <author>
+      <name>Boyoun Park</name>
+    </author>
+    <author>
+      <name>Cheonbok Park</name>
+    </author>
+    <author>
+      <name>Dongju Park</name>
+    </author>
+    <author>
+      <name>Hyeonjin Park</name>
+    </author>
+    <author>
+      <name>Hyun Tae Park</name>
+    </author>
+    <author>
+      <name>Hyunjung Park</name>
+    </author>
+    <author>
+      <name>Jihye Park</name>
+    </author>
+    <author>
+      <name>Jooseok Park</name>
+    </author>
+    <author>
+      <name>Junghwan Park</name>
+    </author>
+    <author>
+      <name>Jungsoo Park</name>
+    </author>
+    <author>
+      <name>Miru Park</name>
+    </author>
+    <author>
+      <name>Sang Hee Park</name>
+    </author>
+    <author>
+      <name>Seunghyun Park</name>
+    </author>
+    <author>
+      <name>Soyoung Park</name>
+    </author>
+    <author>
+      <name>Taerim Park</name>
+    </author>
+    <author>
+      <name>Wonkyeong Park</name>
+    </author>
+    <author>
+      <name>Hyunjoon Ryu</name>
+    </author>
+    <author>
+      <name>Jeonghun Ryu</name>
+    </author>
+    <author>
+      <name>Nahyeon Ryu</name>
+    </author>
+    <author>
+      <name>Soonshin Seo</name>
+    </author>
+    <author>
+      <name>Suk Min Seo</name>
+    </author>
+    <author>
+      <name>Yoonjeong Shim</name>
+    </author>
+    <author>
+      <name>Kyuyong Shin</name>
+    </author>
+    <author>
+      <name>Wonkwang Shin</name>
+    </author>
+    <author>
+      <name>Hyun Sim</name>
+    </author>
+    <author>
+      <name>Woongseob Sim</name>
+    </author>
+    <author>
+      <name>Hyejin Soh</name>
+    </author>
+    <author>
+      <name>Bokyong Son</name>
+    </author>
+    <author>
+      <name>Hyunjun Son</name>
+    </author>
+    <author>
+      <name>Seulah Son</name>
+    </author>
+    <author>
+      <name>Chi-Yun Song</name>
+    </author>
+    <author>
+      <name>Chiyoung Song</name>
+    </author>
+    <author>
+      <name>Ka Yeon Song</name>
+    </author>
+    <author>
+      <name>Minchul Song</name>
+    </author>
+    <author>
+      <name>Seungmin Song</name>
+    </author>
+    <author>
+      <name>Jisung Wang</name>
+    </author>
+    <author>
+      <name>Yonggoo Yeo</name>
+    </author>
+    <author>
+      <name>Myeong Yeon Yi</name>
+    </author>
+    <author>
+      <name>Moon Bin Yim</name>
+    </author>
+    <author>
+      <name>Taehwan Yoo</name>
+    </author>
+    <author>
+      <name>Youngjoon Yoo</name>
+    </author>
+    <author>
+      <name>Sungmin Yoon</name>
+    </author>
+    <author>
+      <name>Young Jin Yoon</name>
+    </author>
+    <author>
+      <name>Hangyeol Yu</name>
+    </author>
+    <author>
+      <name>Ui Seon Yu</name>
+    </author>
+    <author>
+      <name>Xingdong Zuo</name>
+    </author>
+    <author>
+      <name>Jeongin Bae</name>
+    </author>
+    <author>
+      <name>Joungeun Bae</name>
+    </author>
+    <author>
+      <name>Hyunsoo Cho</name>
+    </author>
+    <author>
+      <name>Seonghyun Cho</name>
+    </author>
+    <author>
+      <name>Yongjin Cho</name>
+    </author>
+    <author>
+      <name>Taekyoon Choi</name>
+    </author>
+    <author>
+      <name>Yera Choi</name>
+    </author>
+    <author>
+      <name>Jiwan Chung</name>
+    </author>
+    <author>
+      <name>Zhenghui Han</name>
+    </author>
+    <author>
+      <name>Byeongho Heo</name>
+    </author>
+    <author>
+      <name>Euisuk Hong</name>
+    </author>
+    <author>
+      <name>Taebaek Hwang</name>
+    </author>
+    <author>
+      <name>Seonyeol Im</name>
+    </author>
+    <author>
+      <name>Sumin Jegal</name>
+    </author>
+    <author>
+      <name>Sumin Jeon</name>
+    </author>
+    <author>
+      <name>Yelim Jeong</name>
+    </author>
+    <author>
+      <name>Yonghyun Jeong</name>
+    </author>
+    <author>
+      <name>Can Jiang</name>
+    </author>
+    <author>
+      <name>Juyong Jiang</name>
+    </author>
+    <author>
+      <name>Jiho Jin</name>
+    </author>
+    <author>
+      <name>Ara Jo</name>
+    </author>
+    <author>
+      <name>Younghyun Jo</name>
+    </author>
+    <author>
+      <name>Hoyoun Jung</name>
+    </author>
+    <author>
+      <name>Juyoung Jung</name>
+    </author>
+    <author>
+      <name>Seunghyeong Kang</name>
+    </author>
+    <author>
+      <name>Dae Hee Kim</name>
+    </author>
+    <author>
+      <name>Ginam Kim</name>
+    </author>
+    <author>
+      <name>Hangyeol Kim</name>
+    </author>
+    <author>
+      <name>Heeseung Kim</name>
+    </author>
+    <author>
+      <name>Hyojin Kim</name>
+    </author>
+    <author>
+      <name>Hyojun Kim</name>
+    </author>
+    <author>
+      <name>Hyun-Ah Kim</name>
+    </author>
+    <author>
+      <name>Jeehye Kim</name>
+    </author>
+    <author>
+      <name>Jin-Hwa Kim</name>
+    </author>
+    <author>
+      <name>Jiseon Kim</name>
+    </author>
+    <author>
+      <name>Jonghak Kim</name>
+    </author>
+    <author>
+      <name>Jung Yoon Kim</name>
+    </author>
+    <author>
+      <name>Rak Yeong Kim</name>
+    </author>
+    <author>
+      <name>Seongjin Kim</name>
+    </author>
+    <author>
+      <name>Seoyoon Kim</name>
+    </author>
+    <author>
+      <name>Sewon Kim</name>
+    </author>
+    <author>
+      <name>Sooyoung Kim</name>
+    </author>
+    <author>
+      <name>Sukyoung Kim</name>
+    </author>
+    <author>
+      <name>Taeyong Kim</name>
+    </author>
+    <author>
+      <name>Naeun Ko</name>
+    </author>
+    <author>
+      <name>Bonseung Koo</name>
+    </author>
+    <author>
+      <name>Heeyoung Kwak</name>
+    </author>
+    <author>
+      <name>Haena Kwon</name>
+    </author>
+    <author>
+      <name>Youngjin Kwon</name>
+    </author>
+    <author>
+      <name>Boram Lee</name>
+    </author>
+    <author>
+      <name>Bruce W. Lee</name>
+    </author>
+    <author>
+      <name>Dagyeong Lee</name>
+    </author>
+    <author>
+      <name>Erin Lee</name>
+    </author>
+    <author>
+      <name>Euijin Lee</name>
+    </author>
+    <author>
+      <name>Ha Gyeong Lee</name>
+    </author>
+    <author>
+      <name>Hyojin Lee</name>
+    </author>
+    <author>
+      <name>Hyunjeong Lee</name>
+    </author>
+    <author>
+      <name>Jeeyoon Lee</name>
+    </author>
+    <author>
+      <name>Jeonghyun Lee</name>
+    </author>
+    <author>
+      <name>Jongheok Lee</name>
+    </author>
+    <author>
+      <name>Joonhyung Lee</name>
+    </author>
+    <author>
+      <name>Junhyuk Lee</name>
+    </author>
+    <author>
+      <name>Mingu Lee</name>
+    </author>
+    <author>
+      <name>Nayeon Lee</name>
+    </author>
+    <author>
+      <name>Sangkyu Lee</name>
+    </author>
+    <author>
+      <name>Se Young Lee</name>
+    </author>
+    <author>
+      <name>Seulgi Lee</name>
+    </author>
+    <author>
+      <name>Seung Jin Lee</name>
+    </author>
+    <author>
+      <name>Suhyeon Lee</name>
+    </author>
+    <author>
+      <name>Yeonjae Lee</name>
+    </author>
+    <author>
+      <name>Yesol Lee</name>
+    </author>
+    <author>
+      <name>Youngbeom Lee</name>
+    </author>
+    <author>
+      <name>Yujin Lee</name>
+    </author>
+    <author>
+      <name>Shaodong Li</name>
+    </author>
+    <author>
+      <name>Tianyu Liu</name>
+    </author>
+    <author>
+      <name>Seong-Eun Moon</name>
+    </author>
+    <author>
+      <name>Taehong Moon</name>
+    </author>
+    <author>
+      <name>Max-Lasse Nihlenramstroem</name>
+    </author>
+    <author>
+      <name>Wonseok Oh</name>
+    </author>
+    <author>
+      <name>Yuri Oh</name>
+    </author>
+    <author>
+      <name>Hongbeen Park</name>
+    </author>
+    <author>
+      <name>Hyekyung Park</name>
+    </author>
+    <author>
+      <name>Jaeho Park</name>
+    </author>
+    <author>
+      <name>Nohil Park</name>
+    </author>
+    <author>
+      <name>Sangjin Park</name>
+    </author>
+    <author>
+      <name>Jiwon Ryu</name>
+    </author>
+    <author>
+      <name>Miru Ryu</name>
+    </author>
+    <author>
+      <name>Simo Ryu</name>
+    </author>
+    <author>
+      <name>Ahreum Seo</name>
+    </author>
+    <author>
+      <name>Hee Seo</name>
+    </author>
+    <author>
+      <name>Kangdeok Seo</name>
+    </author>
+    <author>
+      <name>Jamin Shin</name>
+    </author>
+    <author>
+      <name>Seungyoun Shin</name>
+    </author>
+    <author>
+      <name>Heetae Sin</name>
+    </author>
+    <author>
+      <name>Jiangping Wang</name>
+    </author>
+    <author>
+      <name>Lei Wang</name>
+    </author>
+    <author>
+      <name>Ning Xiang</name>
+    </author>
+    <author>
+      <name>Longxiang Xiao</name>
+    </author>
+    <author>
+      <name>Jing Xu</name>
+    </author>
+    <author>
+      <name>Seonyeong Yi</name>
+    </author>
+    <author>
+      <name>Haanju Yoo</name>
+    </author>
+    <author>
+      <name>Haneul Yoo</name>
+    </author>
+    <author>
+      <name>Hwanhee Yoo</name>
+    </author>
+    <author>
+      <name>Liang Yu</name>
+    </author>
+    <author>
+      <name>Youngjae Yu</name>
+    </author>
+    <author>
+      <name>Weijie Yuan</name>
+    </author>
+    <author>
+      <name>Bo Zeng</name>
+    </author>
+    <author>
+      <name>Qian Zhou</name>
+    </author>
+    <author>
+      <name>Kyunghyun Cho</name>
+    </author>
+    <author>
+      <name>Jung-Woo Ha</name>
+    </author>
+    <author>
+      <name>Joonsuk Park</name>
+    </author>
+    <author>
+      <name>Jihyun Hwang</name>
+    </author>
+    <author>
+      <name>Hyoung Jo Kwon</name>
+    </author>
+    <author>
+      <name>Soonyong Kwon</name>
+    </author>
+    <author>
+      <name>Jungyeon Lee</name>
+    </author>
+    <author>
+      <name>Seungho Lee</name>
+    </author>
+    <author>
+      <name>Seonghyeon Lim</name>
+    </author>
+    <author>
+      <name>Hyunkyung Noh</name>
+    </author>
+    <author>
+      <name>Seungho Choi</name>
+    </author>
+    <author>
+      <name>Sang-Woo Lee</name>
+    </author>
+    <author>
+      <name>Jung Hwa Lim</name>
+    </author>
+    <author>
+      <name>Nako Sung</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.21086v1</id>
+    <title>LoCar: Localization-Aware Evaluation of In-Vehicle Assistants through Fine-Grained Sociolinguistic Control</title>
+    <updated>2026-05-20T12:21:15Z</updated>
+    <link href="https://arxiv.org/abs/2605.21086v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.21086v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>While Large Language Models (LLMs) are increasingly integrated into in-vehicle conversational systems, identifying the optimal model remains challenging due to the lack of domain-specific evaluation standards tailored to real-world deployment requirements. In this paper, we propose a novel evaluation framework for in-vehicle assistants, with a particular focus on Korean-language localization. Our empirical analysis reveals notable patterns in model behavior. First, fine-grained Korean honorific control remains unstable in current LLMs, indicating that precise speech-level realization must be explicitly evaluated in localization settings. Second, models exhibit weaker performance in strategic conversational metrics like clarification and proactivity. Our analysis suggests this stems from the inherent subjective complexity of these tasks, where our framework adopts a conservative evaluation stance to prioritize reliability. Together, our findings underscore that automotive AI must move beyond general competence toward precise linguistic tailoring and reliable, safety-oriented interaction management.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-20T12:21:15Z</published>
+    <arxiv:comment>To appear in ACL 2026 Industry Track</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Seogyeong Jeong</name>
+    </author>
+    <author>
+      <name>Kiwoong Park</name>
+    </author>
+    <author>
+      <name>Seyoung Song</name>
+    </author>
+    <author>
+      <name>Eunsu Kim</name>
+    </author>
+    <author>
+      <name>Ken E. Friedl</name>
+    </author>
+    <author>
+      <name>Jaeho Kim</name>
+    </author>
+    <author>
+      <name>Alice Oh</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.09178v2</id>
+    <title>Culturally-Adapted Red-Teaming Across East and Southeast Asian Contexts: A Methodological and Comparative Analysis</title>
+    <updated>2026-06-22T07:46:06Z</updated>
+    <link href="https://arxiv.org/abs/2606.09178v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.09178v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multilingual safety evaluation of large language models (LLMs) has predominantly relied on direct translation (DT) of English benchmarks into target languages - an approach that converts surface-level linguistic form while failing to reflect the cultural context embedded in threat scenarios, social norms, and legal frameworks. We construct paired DT and culturally-adapted (CA) datasets via 1:1 seed matching for four languages - Korean (KO), Japanese (JA), Thai (TH), and Khmer (KM) - and compare Attack Success Rate (ASR) and Cultural Realism scores across four open-source LLM. CA prompts yield Delta-ASR &gt; 0 across all 16 language x model combinations (mean +9.3 pp), and DT-based evaluation underestimates risk in 44 of 48 category x language combinations. Language-level analysis reveals that the distribution of threat forms is heterogeneous across languages. Cultural Realism analysis further shows that DT Cultural Depth (C3) scores remain consistently below 1.0 out of 3.0 across all four languages (mean 0.17), whereas CA scores reach up to 2.51, indicating that direct translation produces inputs systematically divergent from those encountered in real-world multicultural settings. These findings demonstrate that adapting benchmarks to language-specific cultural contexts - rather than relying on linguistic translation alone - is necessary for valid multilingual LLM safety evaluation.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-08T08:17:18Z</published>
+    <arxiv:comment>Accepted to ICML 2026 Workshop on Culture X AI</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Hyeji Choi</name>
+    </author>
+    <author>
+      <name>Yongtaek Lim</name>
+    </author>
+    <author>
+      <name>Minwoo Kim</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.05641v1</id>
+    <title>Multilingual Amnesia: On the Transferability of Unlearning in Multilingual LLMs</title>
+    <updated>2026-01-09T08:59:42Z</updated>
+    <link href="https://arxiv.org/abs/2601.05641v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.05641v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>As multilingual large language models become more widely used, ensuring their safety and fairness across diverse linguistic contexts presents unique challenges. While existing research on machine unlearning has primarily focused on monolingual settings, typically English, multilingual environments introduce additional complexities due to cross-lingual knowledge transfer and biases embedded in both pretraining and fine-tuning data. In this work, we study multilingual unlearning using the Aya-Expanse 8B model under two settings: (1) data unlearning and (2) concept unlearning. We extend benchmarks for factual knowledge and stereotypes to ten languages through translation: English, French, Arabic, Japanese, Russian, Farsi, Korean, Hindi, Hebrew, and Indonesian. These languages span five language families and a wide range of resource levels. Our experiments show that unlearning in high-resource languages is generally more stable, with asymmetric transfer effects observed between typologically related languages. Furthermore, our analysis of linguistic distances indicates that syntactic similarity is the strongest predictor of cross-lingual unlearning behavior.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-09T08:59:42Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Alireza Dehghanpour Farashah</name>
+    </author>
+    <author>
+      <name>Aditi Khandelwal</name>
+    </author>
+    <author>
+      <name>Marylou Fauchard</name>
+    </author>
+    <author>
+      <name>Zhuan Shi</name>
+    </author>
+    <author>
+      <name>Negar Rostamzadeh</name>
+    </author>
+    <author>
+      <name>Golnoosh Farnadi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.04123v1</id>
+    <title>FINEST: Improving LLM Responses to Sensitive Topics Through Fine-Grained Evaluation</title>
+    <updated>2026-03-04T14:41:54Z</updated>
+    <link href="https://arxiv.org/abs/2603.04123v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.04123v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Language Models (LLMs) often generate overly cautious and vague responses on sensitive topics, sacrificing helpfulness for safety. Existing evaluation frameworks lack systematic methods to identify and address specific weaknesses in responses to sensitive topics, making it difficult to improve both safety and helpfulness simultaneously. To address this, we introduce FINEST, a FINE-grained response evaluation taxonomy for Sensitive Topics, which breaks down helpfulness and harmlessness into errors across three main categories: Content, Logic, and Appropriateness. Experiments on a Korean-sensitive question dataset demonstrate that our score- and error-based improvement pipeline, guided by FINEST, significantly improves the model responses across all three categories, outperforming refinement without guidance. Notably, score-based improvement -- providing category-specific scores and justifications -- yields the most significant gains, reducing the error sentence ratio for Appropriateness by up to 33.09%. This work lays the foundation for a more explainable and comprehensive evaluation and improvement of LLM responses to sensitive questions.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-04T14:41:54Z</published>
+    <arxiv:comment>Accepted to EACL 2026 Findings</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Juhyun Oh</name>
+    </author>
+    <author>
+      <name>Nayeon Lee</name>
+    </author>
+    <author>
+      <name>Chani Jung</name>
+    </author>
+    <author>
+      <name>Jiho Jin</name>
+    </author>
+    <author>
+      <name>Junho Myung</name>
+    </author>
+    <author>
+      <name>Jongwon Lee</name>
+    </author>
+    <author>
+      <name>Taeui Song</name>
+    </author>
+    <author>
+      <name>Alice Oh</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.08028v1</id>
+    <title>From Prompts to Contracts: Harness Engineering for Auditable Enterprise LLM Agents</title>
+    <updated>2026-07-09T01:08:33Z</updated>
+    <link href="https://arxiv.org/abs/2607.08028v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.08028v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Enterprise large language model (LLM) applications often begin as prototypes whose behavior is carried by prompts and retrieval context. Productization adds requirements for source boundaries, entity routing, answer contracts, and reproducible traces. We present a harness-engineering approach that reconstructs this pattern into a traceable, auditable LLM-agent architecture: deterministic behavior moves into code, manifests, schemas, and validation artifacts around a replaceable composition boundary, while source-backed claims remain the authority for runtime answers. We instantiate it on a public-data slice of five Korean corporate groups (25 listed companies) and evaluate three research questions. (1) The harness preserves its source-grounding, entity-routing, trace, output-hygiene, and recommendation-language contracts across the fixed validation scenarios; a fault-injection control confirms the validators flag deliberately broken contracts. (2) The checks the harness enforces held under model substitution: across three hosted models, they passed on all 270 composition-boundary runs; failures were confined to the model-composed side and were caught and recorded. (3) The code-owned guarantees are load-bearing, not reproducible by prompting alone: holding the model fixed and varying only the enforcement layer, prompt instructions alone let recommendation-language and internal-trace-leakage violations reach the reader, which the harness blocks entirely. A bolt-on external guardrail prevents such violations too but over-refuses, dropping utility to 88/120 where the harness preserves full utility (120/120); in this ablation, only code-owned enforcement preserves both safety and utility. The result is a reusable engineering pattern for turning exploratory prototypes into auditable applications with versioned source, control, and validation artifacts.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SE" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-09T01:08:33Z</published>
+    <arxiv:comment>32 pages, 6 figures, 16 tables. Reference implementation and evaluation artifacts: https://github.com/hammerbaki/enterprise-llm-agent-harness (archived at https://doi.org/10.5281/zenodo.21269426)</arxiv:comment>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Joongho Ahn</name>
+    </author>
+    <author>
+      <name>Moonsoo Kim</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2505.12058v1</id>
+    <title>Tiny QA Benchmark++: Ultra-Lightweight, Synthetic Multilingual Dataset Generation &amp; Smoke-Tests for Continuous LLM Evaluation</title>
+    <updated>2025-05-17T15:40:03Z</updated>
+    <link href="https://arxiv.org/abs/2505.12058v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.12058v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Tiny QA Benchmark++ (TQB++) presents an ultra-lightweight, multilingual smoke-test suite designed to give large-language-model (LLM) pipelines a unit-test style safety net dataset that runs in seconds with minimal cost. Born out of the tight feedback-loop demands building the Comet Opik prompt-optimization SDK, where waiting on heavyweight benchmarks breaks developer flow. TQB++ couples a 52-item English gold set (less than 20 kB) with a tiny synthetic-data generator pypi package built on provider-agnostic LiteLLM. The generator lets practitioners mint their own tiny packs in any language, domain, or difficulty, while ten ready-made packs already cover Arabic, Chinese, French, German, Japanese, Korean, Portuguese, Russian, Spanish, and Turkish. Every dataset ships with Croissant metadata and plug-and-play files for OpenAI-Evals, LangChain, and standard CI tools, so teams can drop deterministic micro-benchmarks directly into pull-request gates, prompt-engineering loops, and production dashboards without touching GPU budgets. A complete TQB++ run adds only a few seconds to pipeline latency yet reliably flags prompt-template errors, tokenizer drift, and fine-tuning side-effects long before full-scale suites like MMLU or BIG-Bench would finish configuring. The entire framework is released to accelerate continuous, resource-efficient quality assurance across the generative-AI ecosystem.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-17T15:40:03Z</published>
+    <arxiv:comment>28 pages, 7 figures, 3 tables. Includes expanded appendix &amp; full score matrices. Dataset &amp; code: HF Hub + GitHub + Pypi links in abstract. Core data and code Apache-2.0; synthetic packs eval-only</arxiv:comment>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Vincent Koc</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2411.02460v2</id>
+    <title>Code-Switching Curriculum Learning for Multilingual Transfer in LLMs</title>
+    <updated>2025-06-11T05:32:20Z</updated>
+    <link href="https://arxiv.org/abs/2411.02460v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2411.02460v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large language models (LLMs) now exhibit near human-level performance in various tasks, but their performance drops drastically after a handful of high-resource languages due to the imbalance in pre-training data. Inspired by the human process of second language acquisition, particularly code-switching$\unicode{x2014}$the practice of language alternation in a conversation$\unicode{x2014}$we propose code-switching curriculum learning (CSCL) to enhance cross-lingual transfer for LLMs. CSCL mimics the stages of human language learning by progressively training models with a curriculum consisting of 1) token-level code-switching, 2) sentence-level code-switching, and 3) monolingual corpora. Using Qwen 2 as our underlying model, we demonstrate the efficacy of the CSCL in improving language transfer to Korean, achieving significant performance gains compared to monolingual continual pre-training methods. Ablation studies reveal that both token- and sentence-level code-switching significantly enhance cross-lingual transfer and that curriculum learning amplifies these effects. We also extend our findings into various languages, including Japanese (high-resource) and Indonesian (low-resource), and using two additional models (Gemma 2 and Phi 3.5). We further show that CSCL mitigates spurious correlations between language resources and safety alignment, presenting a robust, efficient framework for more equitable language transfer in LLMs. We observe that CSCL is effective for low-resource settings where high-quality, monolingual corpora for language transfer are hardly available.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-11-04T06:31:26Z</published>
+    <arxiv:comment>To appear in Findings of ACL 2025</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Haneul Yoo</name>
+    </author>
+    <author>
+      <name>Cheonbok Park</name>
+    </author>
+    <author>
+      <name>Sangdoo Yun</name>
+    </author>
+    <author>
+      <name>Alice Oh</name>
+    </author>
+    <author>
+      <name>Hwaran Lee</name>
+    </author>
+  </entry>
+</feed>

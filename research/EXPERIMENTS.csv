@@ -1,0 +1,2 @@
+run,class,config,seed,command,raw,log,marker,status,failure
+power_sim_repro_20260916T1001Z,exploratory,"S={48;72} p1p6 per plan v2 sec6; SD 0.8/0.6/0.5; reps600 boot500",20260916,python3 src/power_sim.py,result/power_sim/power_sim_reproduction_20260916T1001Z.csv,inline-stdout,csv-written,completed,none

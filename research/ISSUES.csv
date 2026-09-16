@@ -1,0 +1,8 @@
+finding,round,severity,affected,owner,disposition,evidence,recheck
+"F-r001-1 unsupported prior-work exclusions in matrix rows",r001,major,"NOVELTY_MATRIX.md 8 rows",builder,open,audit/r001/out/AUDIT_REPORT.md,pending
+"F-r001-2 omitted localization comparators (ROK-FORTRESS; Culturally-Adapted Red-Teaming; CultureConverse)",r001,major,"NOVELTY_MATRIX.md localization axis",builder,open,audit/r001/out/AUDIT_REPORT.md,pending
+"F-r001-3 causal premise 'unvalidated measures cause evaluation failure' unsupported",r001,major,"pitch framing",builder,open,audit/r001/out/AUDIT_REPORT.md,pending
+"F-r001-4 localization causal effect underdefined (intervention/outcome/identification)",r001,major,"H3 design",builder,open,audit/r001/out/AUDIT_REPORT.md,pending
+"F-r001-5 measurement novelty + 8-turn time scope unresolved",r001,major,"CRRI construct definition",PI,open,audit/r001/out/VERDICT.md,pending
+"F-r001-6 judge over-flagging vs model over-refusal conflation; turn-matching pending",r001,minor,"H4 endpoints; safe controls",builder,open,audit/r001/out/AUDIT_REPORT.md,pending
+"F-r001-7 non-claims list incomplete",r001,minor,"forbidden-wording list",builder,open,audit/r001/out/AUDIT_REPORT.md,pending

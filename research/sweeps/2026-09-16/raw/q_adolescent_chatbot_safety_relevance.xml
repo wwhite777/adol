@@ -1,0 +1,337 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/GILi1nGtwthr7yTlNJTChKSteRU</id>
+  <title>arXiv Query: search_query=all:"adolescent" AND all:"chatbot"&amp;id_list=&amp;start=0&amp;max_results=20</title>
+  <updated>2026-09-16T09:57:35Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22adolescent%22+AND+all:%22chatbot%22&amp;start=0&amp;max_results=20&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>20</opensearch:itemsPerPage>
+  <opensearch:totalResults>12</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2604.03470v1</id>
+    <title>Messages in a Digital Bottle: A Youth-Coauthored Perspective on LLM Chatbots and Adolescent Loneliness</title>
+    <updated>2026-04-03T21:34:15Z</updated>
+    <link href="https://arxiv.org/abs/2604.03470v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.03470v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Adolescent loneliness is a growing concern in digitally mediated social environments. This work-in-progress presents a youth-authored critical synthesis on chatbots powered by Large Language Model (LLM) and adolescent loneliness. The first author is a 16-year-old Chinese student who recently migrated to the UK. She wrote the first draft of this paper from her lived experience, supervised by the second author. Rather than treating the youth perspective as one data point among many, we foreground it as the primary interpretive lens, grounded in interdisciplinary literature from social computing, developmental psychology, and Human-Computer Interaction (HCI). We examine how chatbots shape experiences of loneliness differently across adolescent subgroups, including those with anxiety or depression, neurodivergent youth, and immigrant adolescents, and identify both conditions under which they may temporarily reduce isolation and breakdowns that risk deepening it. We derive three population-sensitive design implications. The next phase of this work will expand the youth authorship model to a panel of adolescents across these subgroups, empirically validating the framework presented here.</summary>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-03T21:34:15Z</published>
+    <arxiv:primary_category term="cs.HC"/>
+    <author>
+      <name>Jinyao Liu</name>
+    </author>
+    <author>
+      <name>Di Fu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2503.08562v1</id>
+    <title>Exploring Socio-Cultural Challenges and Opportunities in Designing Mental Health Chatbots for Adolescents in India</title>
+    <updated>2025-03-11T15:52:05Z</updated>
+    <link href="https://arxiv.org/abs/2503.08562v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2503.08562v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Mental health challenges among Indian adolescents are shaped by unique cultural and systemic barriers, including high social stigma and limited professional support. Through a mixed-methods study involving a survey of 278 adolescents and follow-up interviews with 12 participants, we explore how adolescents perceive mental health challenges and interact with digital tools. Quantitative results highlight low self-stigma but significant social stigma, a preference for text over voice interactions, and low utilization of mental health apps but high smartphone access. Our qualitative findings reveal that while adolescents value privacy, emotional support, and localized content in mental health tools, existing chatbots lack personalization and cultural relevance. These findings inform recommendations for culturally sensitive chatbot design that prioritizes anonymity, tailored support, and localized resources to better meet the needs of adolescents in India. This work advances culturally sensitive chatbot design by centering underrepresented populations, addressing critical gaps in accessibility and support for adolescents in India.</summary>
+    <category term="cs.CY" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-03-11T15:52:05Z</published>
+    <arxiv:primary_category term="cs.CY"/>
+    <arxiv:journal_ref>Extended Abstracts of the CHI Conference on Human Factors in Computing Systems 2025</arxiv:journal_ref>
+    <author>
+      <name>Neil K. R. Sehgal</name>
+    </author>
+    <author>
+      <name>Hita Kambhamettu</name>
+    </author>
+    <author>
+      <name>Sai Preethi Matam</name>
+    </author>
+    <author>
+      <name>Lyle Ungar</name>
+    </author>
+    <author>
+      <name>Sharath Chandra Guntuku</name>
+    </author>
+    <arxiv:doi>10.1145/3706599.3720137</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3706599.3720137" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.07729v1</id>
+    <title>Designing Mental-Health Chatbots for Indian Adolescents: Mixed-Methods Evidence, a Boundary-Object Lens, and a Design-Tensions Framework</title>
+    <updated>2025-11-11T01:17:45Z</updated>
+    <link href="https://arxiv.org/abs/2511.07729v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.07729v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Mental health challenges among Indian adolescents are shaped by unique cultural and systemic barriers, including high social stigma and limited professional support. We report a mixed-methods study of Indian adolescents (survey n=362; interviews n=14) examining how they navigate mental-health challenges and engage with digital tools. Quantitative results highlight low self-stigma but significant social stigma, a preference for text over voice interactions, and low utilization of mental health apps but high smartphone access. Our qualitative findings reveal that while adolescents value privacy, emotional support, and localized content in mental health tools, existing chatbots lack personalization and cultural relevance. We contribute (1) a Design-Tensions framework; (2) an artifact-level probe; and (3) a boundary-objects account that specifies how chatbots mediate adolescents, peers, families, and services. This work advances culturally sensitive chatbot design by centering on underrepresented populations, addressing critical gaps in accessibility and support for adolescents in India.</summary>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-11T01:17:45Z</published>
+    <arxiv:primary_category term="cs.HC"/>
+    <author>
+      <name>Neil K. R. Sehgal</name>
+    </author>
+    <author>
+      <name>Hita Kambhamettu</name>
+    </author>
+    <author>
+      <name>Sai Preethi Matam</name>
+    </author>
+    <author>
+      <name>Lyle Ungar</name>
+    </author>
+    <author>
+      <name>Sharath Chandra Guntuku</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1910.08814v1</id>
+    <title>On Using Chatbots to Promote Smoking Cessation Among Adolescents of Low Socioeconomic Status</title>
+    <updated>2019-10-19T18:34:56Z</updated>
+    <link href="https://arxiv.org/abs/1910.08814v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1910.08814v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Reducing youth tobacco use is critical for improving child health since tobacco use is associated with respiratory problems, and nicotine may interfere with healthy brain development. While tobacco regulation has contributed to declines in cigarette use among youth, these declines have occurred more quickly for youth of high socioeconomic status (SES) compared to youth of low SES. A major barrier to smoking cessation for adolescents of low SES is coordination of access and transportation to in-person treatment sessions. Low-SES youth may have family obligations that limit their ability to access in-person treatment. At the same time, mobile use among adolescents is high: 85% have smartphones. Additionally, adolescents engage in texting at high rates, suggesting that they are well-suited for mobile instant messaging interventions. Mobile interventions have shown promise for youth, but their use remains low. Thus, more research is needed to develop effective and engaging mobile interventions to increase quit rates. In this paper, we provide a brief review of approaches to adolescent smoking cessation and describe the promise of chatbots for smoking cessation.</summary>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-10-19T18:34:56Z</published>
+    <arxiv:comment>Selected for round-table discussion in Artificial Intelligence and Work: AAAI 2019 Fall Symposium (AAAI FSS 2019)</arxiv:comment>
+    <arxiv:primary_category term="cs.HC"/>
+    <author>
+      <name>Patricia Simon</name>
+    </author>
+    <author>
+      <name>Suchitra Krishnan-Sarin</name>
+    </author>
+    <author>
+      <name>Ting-Hao 'Kenneth' Huang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2005.07355v1</id>
+    <title>A chatbot architecture for promoting youth resilience</title>
+    <updated>2020-05-15T04:36:06Z</updated>
+    <link href="https://arxiv.org/abs/2005.07355v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2005.07355v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>E-health technologies have the potential to provide scalable and accessible interventions for youth mental health. As part of a developing an ecosystem of e-screening and e-therapy tools for New Zealand young people, a dialog agent, Headstrong, has been designed to promote resilience with methods grounded in cognitive behavioral therapy and positive psychology. This paper describes the architecture underlying the chatbot. The architecture supports a range of over 20 activities delivered in a 4-week program by relatable personas. The architecture provides a visual authoring interface to its content management system. In addition to supporting the original adolescent resilience chatbot, the architecture has been reused to create a 3-week 'stress-detox' intervention for undergraduates, and subsequently for a chatbot to support young people with the impacts of the COVID-19 pandemic, with all three systems having been used in field trials. The Headstrong architecture illustrates the feasibility of creating a domain-focused authoring environment in the context of e-therapy that supports non-technical expert input and rapid deployment.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-05-15T04:36:06Z</published>
+    <arxiv:comment>7 pages, 4 figures, submitted to Australian Health Informatics Conference, Brisbane, October 2020</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Chester Holt-Quick</name>
+    </author>
+    <author>
+      <name>Jim Warren</name>
+    </author>
+    <author>
+      <name>Karolina Stasiak</name>
+    </author>
+    <author>
+      <name>Ruth Williams</name>
+    </author>
+    <author>
+      <name>Grant Christie</name>
+    </author>
+    <author>
+      <name>Sarah Hetrick</name>
+    </author>
+    <author>
+      <name>Sarah Hopkins</name>
+    </author>
+    <author>
+      <name>Tania Cargo</name>
+    </author>
+    <author>
+      <name>Sally Merry</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2402.17456v1</id>
+    <title>A Piece of Theatre: Investigating How Teachers Design LLM Chatbots to Assist Adolescent Cyberbullying Education</title>
+    <updated>2024-02-27T12:27:51Z</updated>
+    <link href="https://arxiv.org/abs/2402.17456v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2402.17456v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Cyberbullying harms teenagers' mental health, and teaching them upstanding intervention is crucial. Wizard-of-Oz studies show chatbots can scale up personalized and interactive cyberbullying education, but implementing such chatbots is a challenging and delicate task. We created a no-code chatbot design tool for K-12 teachers. Using large language models and prompt chaining, our tool allows teachers to prototype bespoke dialogue flows and chatbot utterances. In offering this tool, we explore teachers' distinctive needs when designing chatbots to assist their teaching, and how chatbot design tools might better support them. Our findings reveal that teachers welcome the tool enthusiastically. Moreover, they see themselves as playwrights guiding both the students' and the chatbot's behaviors, while allowing for some improvisation. Their goal is to enable students to rehearse both desirable and undesirable reactions to cyberbullying in a safe environment. We discuss the design opportunities LLM-Chains offer for empowering teachers and the research opportunities this work opens up.</summary>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-02-27T12:27:51Z</published>
+    <arxiv:primary_category term="cs.HC"/>
+    <author>
+      <name>Michael A. Hedderich</name>
+    </author>
+    <author>
+      <name>Natalie N. Bazarova</name>
+    </author>
+    <author>
+      <name>Wenting Zou</name>
+    </author>
+    <author>
+      <name>Ryun Shim</name>
+    </author>
+    <author>
+      <name>Xinda Ma</name>
+    </author>
+    <author>
+      <name>Qian Yang</name>
+    </author>
+    <arxiv:doi>10.1145/3613904.3642379</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3613904.3642379" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1910.06707v1</id>
+    <title>A Deep Learning Based Chatbot for Campus Psychological Therapy</title>
+    <updated>2019-10-09T15:34:28Z</updated>
+    <link href="https://arxiv.org/abs/1910.06707v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1910.06707v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper, we propose Evebot, an innovative, sequence to sequence (Seq2seq) based, fully generative conversational system for the diagnosis of negative emotions and prevention of depression through positively suggestive responses. The system consists of an assembly of deep-learning based models, including Bi-LSTM based model for detecting negative emotions of users and obtaining psychological counselling related corpus for training the chatbot, anti-language sequence to sequence neural network, and maximum mutual information (MMI) model. As adolescents are reluctant to show their negative emotions in physical interaction, traditional methods of emotion analysis and comforting methods may not work. Therefore, this system puts emphasis on using virtual platform to detect signs of depression or anxiety, channel adolescents' stress and mood, and thus prevent the emergence of mental illness. We launched the integrated chatbot system onto an online platform for real-world campus applications. Through a one-month user study, we observe better results in the increase in positivity than other public chatbots in the control group.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-10-09T15:34:28Z</published>
+    <arxiv:comment>31 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Junjie Yin</name>
+    </author>
+    <author>
+      <name>Zixun Chen</name>
+    </author>
+    <author>
+      <name>Kelai Zhou</name>
+    </author>
+    <author>
+      <name>Chongyuan Yu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2512.15117v2</id>
+    <title>"I am here for you": How relational conversational AI appeals to adolescents, especially those who are socially and emotionally vulnerable</title>
+    <updated>2025-12-18T03:18:49Z</updated>
+    <link href="https://arxiv.org/abs/2512.15117v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2512.15117v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>General-purpose conversational AI chatbots and AI companions increasingly provide young adolescents with emotionally supportive conversations, raising questions about how conversational style shapes anthropomorphism and emotional reliance. In a preregistered online experiment with 284 adolescent-parent dyads, youth aged 11-15 and their parents read two matched transcripts in which a chatbot responded to an everyday social problem using either a relational style (first-person, affiliative, commitment language) or a transparent style (explicit nonhumanness, informational tone). Adolescents more often preferred the relational than the transparent style, whereas parents were more likely to prefer transparent style than adolescents. Adolescents rated the relational chatbot as more human-like, likable, trustworthy and emotionally close, while perceiving both styles as similarly helpful. Adolescents who preferred relational style had lower family and peer relationship quality and higher stress and anxiety than those preferring transparent style or both chatbots. These findings identify conversational style as a key design lever for youth AI safety, showing that relational framing heightens anthropomorphism, trust and emotional closeness and can be especially appealing to socially and emotionally vulnerable adolescents, who may be at increased risk for emotional reliance on conversational AI.</summary>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.RO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-12-17T06:17:52Z</published>
+    <arxiv:comment>I updated a title</arxiv:comment>
+    <arxiv:primary_category term="cs.HC"/>
+    <author>
+      <name>Pilyoung Kim</name>
+    </author>
+    <author>
+      <name>Yun Xie</name>
+    </author>
+    <author>
+      <name>Sujin Yang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2507.15783v4</id>
+    <title>Understanding Teen Overreliance on AI Companion Chatbots Through Self-Reported Reddit Narratives</title>
+    <updated>2026-01-25T19:38:46Z</updated>
+    <link href="https://arxiv.org/abs/2507.15783v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.15783v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>AI companion chatbots are increasingly popular with teens. While these interactions are entertaining, they also risk overuse that can potentially disrupt offline daily life. We examined how adolescents describe reliance on AI companions, mapping their experiences onto behavioral addiction frameworks and exploring pathways to disengagement, by analyzing 318 Reddit posts made by users who self-disclosed as 13-17 years old on the Character.AI subreddit. We found teens often begin using chatbots for support or creative play, but these activities can deepen into strong attachments marked by conflict, withdrawal, tolerance, relapse, and mood regulation. Reported consequences include sleep loss, academic decline, and strained real-world connections. Disengagement commonly arises when teens recognize harm, re-engage with offline life, or encounter restrictive platform changes. We highlight specific risks of character-based companion chatbots based on teens' perspectives and introduce a design framework (CARE) for guidance for safer systems and setting directions for future teen-centered research.</summary>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CY" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-07-21T16:39:33Z</published>
+    <arxiv:comment>Accepted for publication at CHI '26. This is the camera-ready version; the published version will be available through the ACM Digital Library</arxiv:comment>
+    <arxiv:primary_category term="cs.HC"/>
+    <author>
+      <name>Mohammad Namvarpour</name>
+      <arxiv:affiliation>Matt</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Brandon Brofsky</name>
+    </author>
+    <author>
+      <name>Jessica Medina</name>
+    </author>
+    <author>
+      <name>Mamtaj Akter</name>
+    </author>
+    <author>
+      <name>Afsaneh Razi</name>
+    </author>
+    <arxiv:doi>10.1145/3772318.3790597</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3772318.3790597" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.20345v1</id>
+    <title>When Vocabulary Comprehension Fails Clinical Reasoning: Evaluating Therapy Bots' Safety Risks for Generation Alpha</title>
+    <updated>2026-06-14T06:11:52Z</updated>
+    <link href="https://arxiv.org/abs/2608.20345v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.20345v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Conversational AI systems have become informal mental health support resources for Generation Alpha (Gen Alpha, born 2010-2024), with 13.1% of U.S. adolescents (5.4 million) using generative AI for mental health advice. While these systems, from therapy apps to general chatbots, rely on large language models trained on extensive psychological literature, their safety for youth communication patterns characterized by hyperbolic language, ironic positivity, rapid semantic drift, and contextual polysemy remains unvalidated. Following multiple adolescent deaths linked to AI chatbot interactions, systematic evaluation is critical. We present two benchmarks: (1) 64 Gen Alpha mental health expressions validated by native speakers (ICC=0.72) and clinicians (kappa=0.78); (2) 75 multi-turn conversations (780 turns) with paired Standard/Gen Alpha versions. Across evaluations of LLM architectures underlying therapy apps and general chatbots - Claude, GPT-4o, Llama-3.1 - models understand 76-82% of vocabulary but correctly calibrate only 64-72% of clinical risk, creating a 10-14 percentage point (pp) vocabulary-comprehension gap (p&lt;.001, d&gt;0.48) absent in human therapists (3pp, p=.22). The gap is architecturally consistent and widens with ambiguity (7pp -&gt; 18pp). We identify six failure patterns: sarcasm masking (29pp), minimization acceptance (43pp), informal style bias (24pp), risk-stratified ambiguity (19pp), semantic drift (19pp), context-dependent violence (7pp). Patterns compound; three or more yield 94% miss rates. Lightweight mitigations fail; only heavy scaffolding achieves human performance (6.4x cost). With 34% baseline miss rate yielding 146,880 estimated annual missed crises, we recommend mandatory human-in-the-loop architectures, quarterly youth-specific validation, transparent performance disclosure, and regulatory frameworks for youth-facing mental health AI.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CY" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-14T06:11:52Z</published>
+    <arxiv:comment>42 pages, 6 figures. Accepted at ACM FAccT '26</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Manisha Mehta</name>
+    </author>
+    <author>
+      <name>Virendra Mehta</name>
+    </author>
+    <arxiv:doi>10.1145/3805689.3806522</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3805689.3806522" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2405.03359v1</id>
+    <title>MedDoc-Bot: A Chat Tool for Comparative Analysis of Large Language Models in the Context of the Pediatric Hypertension Guideline</title>
+    <updated>2024-05-06T11:11:23Z</updated>
+    <link href="https://arxiv.org/abs/2405.03359v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2405.03359v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This research focuses on evaluating the non-commercial open-source large language models (LLMs) Meditron, MedAlpaca, Mistral, and Llama-2 for their efficacy in interpreting medical guidelines saved in PDF format. As a specific test scenario, we applied these models to the guidelines for hypertension in children and adolescents provided by the European Society of Cardiology (ESC). Leveraging Streamlit, a Python library, we developed a user-friendly medical document chatbot tool (MedDoc-Bot). This tool enables authorized users to upload PDF files and pose questions, generating interpretive responses from four locally stored LLMs. A pediatric expert provides a benchmark for evaluation by formulating questions and responses extracted from the ESC guidelines. The expert rates the model-generated responses based on their fidelity and relevance. Additionally, we evaluated the METEOR and chrF metric scores to assess the similarity of model responses to reference answers. Our study found that Llama-2 and Mistral performed well in metrics evaluation. However, Llama-2 was slower when dealing with text and tabular data. In our human evaluation, we observed that responses created by Mistral, Meditron, and Llama-2 exhibited reasonable fidelity and relevance. This study provides valuable insights into the strengths and limitations of LLMs for future developments in medical document interpretation. Open-Source Code: https://github.com/yaseen28/MedDoc-Bot</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-05-06T11:11:23Z</published>
+    <arxiv:comment>{copyright} 2024 IEEE. This work has been accepted for publication and presentation at the 46th Annual International Conference of the IEEE Engineering in Medicine and Biology Society, to be held in Orlando, Florida, USA, July 15-19, 2024</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <arxiv:journal_ref>2024</arxiv:journal_ref>
+    <author>
+      <name>Mohamed Yaseen Jabarulla</name>
+    </author>
+    <author>
+      <name>Steffen Oeltze-Jafra</name>
+    </author>
+    <author>
+      <name>Philipp Beerbaum</name>
+    </author>
+    <author>
+      <name>Theodor Uden</name>
+    </author>
+    <arxiv:doi>10.1109/EMBC53108.2024.10781509</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1109/EMBC53108.2024.10781509" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.15340v1</id>
+    <title>Restoration, Exploration and Transformation: How Youth Engage Character.AI Chatbots for Feels, Fun and Finding themselves</title>
+    <updated>2026-03-10T23:56:18Z</updated>
+    <link href="https://arxiv.org/abs/2604.15340v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.15340v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Young people are among the fastest adopters of generative AI, yet research emphasises adult-designed tools and experiments rather than playful, self-directed youth use. We analysed discourse from 4,172 users in Character.AI's official Discord, finding that the most engaged users were predominantly adolescents (50% aged 13-17), female or non-binary (61.9%), with most (59%) creating their own characters. We contribute (1) a descriptive account of how highly-engaged youth on Character.AI's Discord use AI for playful, emotional, and creative practices that push the platform limits; (2) a framework of three engagement intents -- Restoration (emotional regulation), Exploration (creative experimentation), and Transformation (identity development); and (3) a taxonomy of seven youth-created character archetypes. Together, these findings reveal how youth invent novel roles for AI, expose critical misalignments between youth use and current AI experiences, and provide frameworks for researchers and practitioners to design youth-centred AI futures.</summary>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-10T23:56:18Z</published>
+    <arxiv:comment>19 pages, 3 figures. To appear in CHI '26 (ACM CHI Conference on Human Factors in Computing Systems), April 2026, Barcelona, Spain</arxiv:comment>
+    <arxiv:primary_category term="cs.HC"/>
+    <author>
+      <name>Annabel Blake</name>
+    </author>
+    <author>
+      <name>Marcus Carter</name>
+    </author>
+    <author>
+      <name>Eduardo Velloso</name>
+    </author>
+    <arxiv:doi>10.1145/3772318.3790508</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3772318.3790508" title="doi"/>
+    <arxiv:doi>10.1145/3772318.3790508</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3772318.3790508" title="doi"/>
+    <arxiv:doi>10.1145/3772318.3790508</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3772318.3790508" title="doi"/>
+    <arxiv:doi>10.1145/3772318.3790508</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3772318.3790508" title="doi"/>
+  </entry>
+</feed>

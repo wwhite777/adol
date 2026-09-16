@@ -3,39 +3,51 @@ workflow:
   protocol: "global CLAUDE.md v3.1 L2 (sections 8-10); no project AGENTS.md"
   adopted: "2026-09-16"
 topic: "KYRA-Bench: Korean youth multi-turn relational AI-safety benchmark + CRRI psychometric validation (ETRI EA20261877 + SCI Q1 paper)"
-stage: S0
-status: awaiting_pi   # scaffolding + RESOURCE_CONTRACT draft done; PI decisions D1-D4 open (RESOURCE_CONTRACT.md section 6)
+stage: S1
+status: awaiting_pi   # r001 verdict AWAITING_PI: five PI decisions listed in audit/r001/out/VERDICT.md
+stage_history:
+  - {stage: S0, status: completed, date: "2026-09-16", gate: "PI approved D1-D4 (DECISION_LOG 2026-09-16)"}
+  - {stage: S1, status: awaiting_pi, date: "2026-09-16", gate: "sweep + matrix + memo + blind lock + informed assessment done; VERDICT r001 = AWAITING_PI"}
 roles:
   builder:
     tool: "Claude Code"
     model: "claude-fable-5"
     proposed: "2026-09-16"
-    confirmed_by_pi: null
+    confirmed_by_pi: "2026-09-16"
   auditor:
     tool: "Codex"
-    evidence: "codex-cli 0.154.0 verified installed 2026-09-16"
-    confirmed_by_pi: null
+    evidence: "codex-cli 0.154.0; r001 reports name model GPT-6"
+    confirmed_by_pi: "2026-09-16"
 lineage:
   - "2026-09-16 09:30 PI dropped upload/1.docx.gpg (plan v2) and upload/2.docx.gpg (plan v1); sha256 in REHYDRATE.md"
-  - "2026-09-16 Claude Code session: decrypted plans to scratchpad, read both, initialized project scaffolding, drafted RESOURCE_CONTRACT, proposed itself Builder; no prior sessions or artifacts existed in this directory"
-protocol_freeze: null   # S2; OSF preregistration target 2026-10-31 before first confirmatory model run (plan v2)
+  - "2026-09-16 Claude Code session 1: initialized project, drafted RESOURCE_CONTRACT (S0)"
+  - "2026-09-16 session 2: PI approved D1-D4; S0 completed; S1 executed (arXiv sweep 16 calls, NOVELTY_MATRIX, REJECT_MEMO, D3/D4 drafts, power-sim reproduction); Codex r001 Phase A lock + Phase B assessment; PI ordered stop+record before S1 gate decision"
+protocol_freeze: null   # S2; OSF preregistration target 2026-10-31 before first confirmatory model run
 caps:
-  gpu: "shared L40S x4; GPU 3 occupied by another user (never touch); GPUs 0-2 idle at init; open-weight inference only, no training planned"
-  api_budget_krw: null   # PI decision D2; plan v2 reallocates ~1.0M KRW judge panel + ~0.5M KRW T2/held-out within ETRI direct budget 63.6M KRW
+  gpu: "shared L40S x4; GPU 3 occupied by another user (never touch); open-weight inference only"
+  api_budget_krw: "authorized 2026-09-16 per RESOURCE_CONTRACT section 4; keys not yet provisioned"
   time: "ETRI deliverables 2026-11-30 (official); paper submission 2027-03/04 (plan target)"
 audit:
-  open_round: null
-  rounds: []
+  open_round: "r001"
+  rounds:
+    - id: r001
+      purpose: "S1 novelty: blind closest-three lock + informed assessment of builder pitch"
+      status: "verdict_awaiting_pi"
+      opened: "2026-09-16"
+      verdict: "AWAITING_PI (audit/r001/out/VERDICT.md): no priority defeat shown, novelty NOT cleared; findings F-r001-1..7 (5 major, 2 minor) in research/ISSUES.csv"
+      auditor_reported: "Codex / GPT-6"
 gates: {}
 pi_decisions:
-  - "2026-09-16: PI instructed 'initiate' with the two uploaded plans as input; plan v2 (1.docx) is the operative plan"
+  - "2026-09-16: 'initiate' — initialize project from the two uploaded plans; plan v2 operative"
+  - "2026-09-16: 'D1-D4 all approved. proceed' — roles confirmed, API caps authorized, drafts + D4 scope granted (DECISION_LOG.md)"
+  - "2026-09-16: 'stop work and record today's work' — S1 gate decision NOT yet taken"
 five_statuses:
   artifact_integrity: null
   numerical_reproduction: null
   statistical_validity: null
   claim_scope: null
   scientific_promise: null
-jobs: []
-next_action: "PI answers D1-D4 in RESOURCE_CONTRACT.md section 6 -> mark S0 completed -> RUN STAGE 1 (novelty prosecution: sweep + NOVELTY_MATRIX + Codex-locked closest-three list)"
+jobs: []   # own codex Phase-B process killed by explicit PID 3275771 after its deliverables were written (disclosed in handoff)
+next_action: "PI takes the five VERDICT decisions (contribution level; measurement success+scope; localization claim; evidence threshold/gate timing; claim contract+null path). Builder then: reconcile ROK-FORTRESS 2605.14152 + Culturally-Adapted Red-Teaming 2606.09178 + CultureConverse 2608.28405 into NOVELTY_MATRIX (F-r001-2), qualify the 8 flagged rows (F-r001-1), rewrite pitch per F-r001-3/4, then close S1"
 blockers:
-  - "S0 gate needs PI confirmations D1-D4 (roles, API budget/keys, ETRI agreement + IRB ownership, scope split of plan v2 section 14)"
+  - "S1 gate: five PI decisions in audit/r001/out/VERDICT.md"

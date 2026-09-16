@@ -1,0 +1,474 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/CdSK/tuhoSflAh6dbsQKvXZ214w</id>
+  <title>arXiv Query: search_query=all:"LLM judge" AND all:"human" AND all:"agreement"&amp;id_list=&amp;start=0&amp;max_results=20</title>
+  <updated>2026-09-16T09:57:45Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22LLM+judge%22+AND+(all:%22human%22+AND+all:%22agreement%22)&amp;start=0&amp;max_results=20&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>20</opensearch:itemsPerPage>
+  <opensearch:totalResults>87</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2510.09738v1</id>
+    <title>Judge's Verdict: A Comprehensive Analysis of LLM Judge Capability Through Human Agreement</title>
+    <updated>2025-10-10T17:27:33Z</updated>
+    <link href="https://arxiv.org/abs/2510.09738v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.09738v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This research introduces the Judge's Verdict Benchmark, a novel two-step methodology to evaluate Large Language Models (LLMs) as judges for response accuracy evaluation tasks. We assess how well 54 LLMs can replicate human judgment when scoring responses from RAG (Retrieval-Augmented Generation) or Agentic pipelines against ground truth answers. Our methodology progresses from traditional correlation analysis to comprehensive Cohen's Kappa analysis that measures actual agreement patterns. The two-step approach includes: (1) a correlation test that filters judges with strong alignment, followed by (2) a human-likeness test using z-scores to identify two distinct judgment patterns: human-like judgment (|z| &lt; 1) that mimics natural human variation, and super-consistent judgment (z &gt; 1) that exceeds typical human-to-human agreement levels. This methodology reveals that 27 out of 54 tested LLMs achieve Tier 1 performance: 23 models exhibit human-like patterns that preserve the nuances of human judgment, while 4 models demonstrate super-consistent behavior, a pattern that could indicate either enhanced reliability or oversimplification of complex judgments. Testing 43 open-source models (1B-405B parameters) and 11 closed models (GPT, Gemini, Claude variants), we demonstrate that judge excellence is not solely dependent on model size but on specific training strategies. Our key contributions include: (1) establishing that correlation alone is insufficient for judge evaluation, (2) introducing a "Turing Test for judges" based on agreement patterns, and (3) providing a standardized benchmark for classifying LLM judges into distinct performance tiers for different evaluation needs.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-10T17:27:33Z</published>
+    <arxiv:comment>10 pages, 1 figure, 4 tables, under review as a conference paper at ICLR 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Steve Han</name>
+    </author>
+    <author>
+      <name>Gilberto Titericz Junior</name>
+    </author>
+    <author>
+      <name>Tom Balough</name>
+    </author>
+    <author>
+      <name>Wenfei Zhou</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2407.18370v1</id>
+    <title>Trust or Escalate: LLM Judges with Provable Guarantees for Human Agreement</title>
+    <updated>2024-07-25T20:04:59Z</updated>
+    <link href="https://arxiv.org/abs/2407.18370v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2407.18370v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present a principled approach to provide LLM-based evaluation with a rigorous guarantee of human agreement. We first propose that a reliable evaluation method should not uncritically rely on model preferences for pairwise evaluation, but rather assess the confidence of judge models and selectively decide when to trust its judgement. We then show that under this selective evaluation framework, human agreement can be provably guaranteed -- such that the model evaluation aligns with that of humans to a user-specified agreement level. As part of our framework, we also introduce Simulated Annotators, a novel confidence estimation method that significantly improves judge calibration and thus enables high coverage of evaluated instances. Finally, we propose Cascaded Selective Evaluation, where we use cheaper models as initial judges and escalate to stronger models only when necessary -- again, while still providing a provable guarantee of human agreement. Experimental results show that Cascaded Selective Evaluation guarantees strong alignment with humans, far beyond what LLM judges could achieve without selective evaluation. For example, on a subset of Chatbot Arena where GPT-4 almost never achieves 80% human agreement, our method, even while employing substantially cost-effective models such as Mistral-7B, guarantees over 80% human agreement with almost 80% test coverage.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-07-25T20:04:59Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Jaehun Jung</name>
+    </author>
+    <author>
+      <name>Faeze Brahman</name>
+    </author>
+    <author>
+      <name>Yejin Choi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.16354v1</id>
+    <title>Augmenting Human Evaluation with LLM Judges: How Many Human Reviews Do You Need?</title>
+    <updated>2026-05-08T17:13:08Z</updated>
+    <link href="https://arxiv.org/abs/2605.16354v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.16354v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large language models (LLMs) are increasingly used as automated evaluators of AI systems, including in high-stakes applications. In this role, LLMs are used to generate judgments about the quality, appropriateness, or even safety of model outputs. This approach is motivated by practical constraints. Expert human ratings are costly and difficult to scale, whereas LLM ratings can be produced quickly at low cost. However, current approaches to deploying LLM evaluators are ad hoc, typically limited to reporting agreement metrics between human and LLM judges as a justification for substitution of human ratings, and lack a formal basis for study design. This paper (1) shifts the role of the LLM judge from substitutive to auxiliary, and (2) formulates the LLM-as-a-judge paradigm as one of augmenting human evaluation through a two-stage sampling design, where LLM evaluations are measured for all observations at the first stage and human ratings are partially observed for a subsample at the second stage. We propose to use a doubly robust estimator from the missing data literature, which takes advantage of the robustness property against the prediction model, since the missingness model is known by design. Using the asymptotic variance of this estimator, we propose how sample sizes of human and LLM ratings can be determined to achieve a targeted level of power. We also show that a study can be efficiently designed by allocating more human ratings for types of evaluations where the predictability of LLM ratings is not high. To the best of our knowledge, there is very little guidance on how much human oversight should be retained when validating benchmarks.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-08T17:13:08Z</published>
+    <arxiv:comment>10 pages, 5 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Jane Paik Kim</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.24314v1</id>
+    <title>Benchmarking LLM Judges for Voice-Agent Evaluation: Reliability, Calibration, and Human Oversight</title>
+    <updated>2026-08-25T09:44:36Z</updated>
+    <link href="https://arxiv.org/abs/2608.24314v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.24314v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Evaluating conversational voice agents at scale re- quires reliable assessment methods that capture both observ- able interaction quality and the contextual judgment typically provided by human evaluators. We investigate LLM-as-a-Judge evaluation by comparing human judgments with GPT-4.1 and GPT-5 on telecom and retail voice-agent conversations, across conversational quality and safety dimensions. The same interac- tions are scored under three evaluation configurations, p0, p1, and p2, to test whether automated judgments are sensitive to the evaluation setup and whether observed patterns generalize across configurations and judge models. Beyond aggregate agreement, we examine metric-level correlations, evaluator consistency, and systematic human-LLM disagreement to identify which conver- sational attributes can be judged reliably by automation and which remain sensitive to interpretation and context. Effective voice-agent evaluation is also shaped by pipeline-level factors such as speech generation, streaming, and error propagation across ASR, reasoning, and tool-calling stages, motivating our focus on comparing how human and LLM judges score the same interactions end to end. Our results show that LLM- based evaluation can serve as an effective component of large- scale voice-agent assessment, but that its reliability is metric- and configuration-dependent rather than uniform. This pro- vides an empirical framework for identifying which metrics suit automated evaluation and supports hybrid pipelines in which LLM judges handle scalable assessment while human evaluators remain engaged for metrics that demand contextual interpretation and higher-confidence judgment.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.ET" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-25T09:44:36Z</published>
+    <arxiv:comment>Extends LLM-as-a-Judge to voice agents across telecom and retail, testing GPT-4.1 and GPT-5 against human raters across 10 safety and efficiency metrics. A correlation-based calibration analysis reveals domain-dependent reliability and identifies Recovery Turn Count and safety-recall metrics as unreliable for fully automated judging</arxiv:comment>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Anupam Purwar</name>
+    </author>
+    <author>
+      <name>Shashank Singh</name>
+    </author>
+    <author>
+      <name>Kritika Srivastava</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.06538v1</id>
+    <title>Auto-Prompt Ensemble for LLM Judge</title>
+    <updated>2025-10-08T00:28:51Z</updated>
+    <link href="https://arxiv.org/abs/2510.06538v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.06538v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present a novel framework that improves the reliability of LLM judges by selectively augmenting LLM with auxiliary evaluation dimensions. Existing LLM judges often miss crucial evaluation dimensions because they fail to recognize the implicit standards underlying human assessments. To address this challenge, we propose the Auto-Prompt Ensemble (APE), an adaptive framework that automatically learns evaluation dimensions from its failure cases. APE incorporates a confidence-based ensemble mechanism to decide when to adopt the judgments from additional evaluation dimensions through a novel confidence estimation approach called Collective Confidence. Extensive experiments demonstrate that APE improves the reliability of LLM Judge across diverse standard benchmarks. For instance, APE enhances GPT-4o agreement rate on Reward Bench from 87.2% to 90.5% in the zero-shot setting. Overall, APE provides a principled approach for LLM Judge to leverage test-time computation, and bridge the evaluation gap between human and LLM judges.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-08T00:28:51Z</published>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Jiajie Li</name>
+    </author>
+    <author>
+      <name>Huayi Zhang</name>
+    </author>
+    <author>
+      <name>Peng Lin</name>
+    </author>
+    <author>
+      <name>Jinjun Xiong</name>
+    </author>
+    <author>
+      <name>Wei Xu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.13824v1</id>
+    <title>When Consistency Does Not Mean Reliability: Evaluating Local LLM Judges Against Human Ratings</title>
+    <updated>2026-09-12T09:15:59Z</updated>
+    <link href="https://arxiv.org/abs/2609.13824v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.13824v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large language models (LLMs) are increasingly used to evaluate the responses of other language models. This approach, known as LLM-as-a-Judge, is faster and cheaper than human evaluation. However, a judge may produce consistent scores without necessarily agreeing with human evaluators. In this work, we study this issue using two local open-weight LLM judges, LLaMA-3-8B and Qwen2.5-7B. We evaluate 300 responses generated by an instruction-tuned GPT-2 (124M) model for 100 questions covering five categories: factual knowledge, instruction following, mathematics, reasoning, and writing. Each response is scored by nine human annotators and is evaluated three times by each LLM judge using the same rubric. We compare the judge scores with the average human scores using Pearson correlation, Spearman correlation, mean absolute error (MAE), signed bias, and self-consistency. LLaMA-3-8B shows a Pearson correlation of 0.275 with human scores, while Qwen2.5-7B achieves 0.340. Their MAEs are 27.71 and 18.64, respectively. Despite this limited agreement, both judges show high self-consistency, with exact consistency rates of 97.3\% for LLaMA-3-8B and 92.3\% for Qwen2.5-7B. These results show that high self-consistency does not necessarily indicate high agreement with human judgments. Our findings highlight the need to evaluate both consistency and human alignment when using local LLMs as automatic judges.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-12T09:15:59Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Aakash Kumar Tiwari</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.17076v2</id>
+    <title>S-Bus: Automatic Read-Set Reconstruction for Multi-Agent LLM State Coordination</title>
+    <updated>2026-05-22T08:53:52Z</updated>
+    <link href="https://arxiv.org/abs/2605.17076v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.17076v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We address concurrency control for LLM agents sharing mutable state over HTTP, where agents cannot be modified to declare read sets. S-Bus is an HTTP middleware whose central mechanism, a server-side DeliveryLog, reconstructs each agent's read set at commit time from observed HTTP GET traffic. The consistency property it provides -- Observable-Read Isolation (ORI), a partial causal consistency over the HTTP-observable read projection -- prevents Structural Race Conditions in dedicated-shard topologies.
+  Three contributions. (C1) DeliveryLog mechanism with three-tier mechanised evidence: TLAPS proves ReadSetSoundness and ORICommitSafety (modulo one typing axiom); exhaustive TLC at N=3 explores 20,763,484 states with zero violations; Dafny discharges 9 inductive lemmas. (C2) Empirical safety parity against PostgreSQL 17 SERIALIZABLE and Redis 7 WATCH/MULTI: zero Type-I corruptions across 884,110 commit attempts (427,308 under active contention). (C3) ORI is semantically neutral in dedicated-shard workloads but harmful in single-shard collaborative writing because preservation propagates concurrent contradictions.
+  v2 update: the PH-3 LLM judge is now independently validated against a human annotator (Zahid Hussain, Mindgigs Peshawar) on 400 (step, shard) pairs at strict kappa=0.93 (n=93, 96.8% raw agreement). Inter-LLM-judge agreement is kappa=0.46 (boundary variance). Agent self-reports over-claim shard usage by 32% (LLM judge) to 49% (human annotator). The SJ-v4 semantic-quality rubric remains single-judge LLM-only.
+  Source code, formal proofs, harness, annotation data: https://github.com/sajjadanwar0/sbus</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.MA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-16T16:46:27Z</published>
+    <arxiv:comment>v2: LLM judge validated against human annotator (Zahid Hussain, Mindgigs Peshawar) on PH-3 at strict kappa=0.93 (n=93, 96.8% agreement); over-claim refined to 32% (LLM) / 49% (human). Adds Exp.PG-Comparison Rust-Native and Workload-B chi2=1094.98. 24 pages, 23 tables. Annotation data attached as arXiv ancillary files</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Sajjad Khan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.25652v2</id>
+    <title>A Two-Phase Stability Study of LLM Judges and Bar Council Examiners on Thai Bar-Exam Free-Form Essays</title>
+    <updated>2026-06-16T07:14:34Z</updated>
+    <link href="https://arxiv.org/abs/2605.25652v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.25652v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Free-form legal essay evaluation in NLP treats expert inter-rater stability as a single ceiling number, and treats LLM-judge agreement with that ceiling as evidence of judge stability. We test both assumptions on the Thai bar examination through an identical-inputs protocol: three Bar Council-trained examiners (A, B, C) and a 26-LLM judge panel score the same 15 cross-graded answers from the same four inputs (question, official Bar Council grading regulation, gold answer, candidate answer). The headline finding is asymmetric. On 10 of 15 cells where the rubric prescribes both axes, all 29 raters converge in a tight band: panel agreement is universal. On the remaining 5 cells where the rubric does not prescribe how to grade a correct final answer that omits a decisive statutory citation, the human panel splits between two coherent readings (B/C majority at the upper rubric band, score 6-8; A minority at the lower band, score 1-2). The LLM judge population does not split symmetrically: 22 of 26 LLMs score in or near B/C's contested band, 3 sit in the regulation-silent middle gap, and only 1 (GPT-5.4 Nano) approaches A's band without consistently scoring within it. Zero LLMs in our 26-judge panel reproduce the minority human reading on the contested cells. The B/C-direction cluster spans every model size, vendor, and price tier we tested. An instrumented three-LLM anchor sub-panel (Claude 4.6 Opus, Gemini 3.1 Pro, GPT-5.4 Pro) carries determinism probes, input ablations, and bootstrap CIs, and reaches anchor panel $α= 0.77$ on the 15 cells against human-panel $α= 0.36$. The high LLM-panel $α$ reflects systematic convergence on the majority reading rather than balanced reproduction of both readings; a benchmark that selects its LLM judge by maximising agreement with a human reference panel will inherit this asymmetry by construction.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CY" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-25T09:58:28Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Pawitsapak Akarajaradwong</name>
+    </author>
+    <author>
+      <name>Wuttikrai Lertprasertphakorn</name>
+    </author>
+    <author>
+      <name>Chompakorn Chaksangchaichot</name>
+    </author>
+    <author>
+      <name>Sarana Nutanong</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.07874v1</id>
+    <title>Safety is Contextual, LLM-Judges Are Not: Navigating the Rigid Priors of Evaluators</title>
+    <updated>2026-06-05T22:11:26Z</updated>
+    <link href="https://arxiv.org/abs/2606.07874v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.07874v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>LLMs-as-judges are the only way to evaluate safety at scale. Despite their importance, LLM-judges themselves are rarely evaluated beyond human agreement in simple, static benchmarks. We therefore investigate two under-explored but crucial properties of LLMs-as-judges: their susceptibility to relying on in context-information, and their steerability to differing safety definitions, which may not align with their internal safety priors. We evaluate the safety judging abilities of many generalist LLMs and safety-specific judges, and investigate the impact of task demonstrations, novel in-context information, and changing safety definitions. We find that while LLM-judges can learn from new information, they are broadly unlikely to adjust their evaluations if the context or safety definition contradicts their prior.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-05T22:11:26Z</published>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Anissa Alloula</name>
+    </author>
+    <author>
+      <name>Federico Licini</name>
+    </author>
+    <author>
+      <name>Ava Batchkala</name>
+    </author>
+    <author>
+      <name>Seraphina Goldfarb-Tarrant</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.19196v1</id>
+    <title>Time to REFLECT: Can We Trust LLM Judges for Evidence-based Research Agents?</title>
+    <updated>2026-05-18T23:55:08Z</updated>
+    <link href="https://arxiv.org/abs/2605.19196v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.19196v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Deep research agents increasingly automate complex information-seeking tasks, producing evidence-grounded reports via multi-step reasoning, tool use, and synthesis. Their growing role demands scalable, reliable evaluation, positioning LLM-as-judge as a supervision paradigm for assessing factual accuracy, evidence use, and reasoning quality. Yet the reliability of these judges for deep research agents remains poorly understood, posing a critical meta-evaluation problem: before deploying LLM judges to supervise research agents, we must first evaluate the judges themselves. Existing meta-evaluations fall short in two ways: (1) reliance on coarse, subjective human-preference agreement; (2) focus on instruction-following or verifiable tasks, leaving open-ended agent executions unexplored. To address these gaps, we introduce REFLECT (REliable Fine-grained LLM judge Evaluation via Controlled inTervention), a meta-evaluation benchmark targeting fine-grained failure detection in agentic environments. REFLECT defines a detailed taxonomy of process- and outcome-level failure modes, instantiated by performing controlled and localized interventions on quality-screened agent execution traces. This yields verifiable, comprehensive, and fine-grained instances for validating the judge models. Our experiments show that current LLM judges remain unreliable: even the best-performing models achieve overall accuracies below 55% across reasoning, tool-use, and report-quality failures, with especially poor performance on evidence verification. Together, our taxonomy and findings expose systematic judge limitations, reveal tradeoffs in cost and reliability, and offer actionable guidance for building more reliable evaluation pipelines for deep research agents.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-18T23:55:08Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Leyao Wang</name>
+    </author>
+    <author>
+      <name>Yanan He</name>
+    </author>
+    <author>
+      <name>Peng Chen</name>
+    </author>
+    <author>
+      <name>Asaf Yehudai</name>
+    </author>
+    <author>
+      <name>Yixin Liu</name>
+    </author>
+    <author>
+      <name>Rex Ying</name>
+    </author>
+    <author>
+      <name>Michal Shmueli-Scheuer</name>
+    </author>
+    <author>
+      <name>Arman Cohan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.00093v2</id>
+    <title>Agreement Metrics for LLM-as-Judge Evaluation: What to Report and Why</title>
+    <updated>2026-07-31T04:03:56Z</updated>
+    <link href="https://arxiv.org/abs/2606.00093v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.00093v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Whether a rubric-based LLM judge can replace human annotation is decided by its measured agreement with human labels. Yet the same verdicts can support wildly varying agreement numbers, depending on seemingly minor choices: the judgment scale, the retained cases, the handling of abstentions and invalid outputs, and the pooling of verdicts across items and rubric criteria. The statistics that settle these choices are established, but in psychometrics, econometrics, and corpus annotation rather than in the evaluation practice that needs them. We treat the choices as a measurement protocol that fixes what the reported number estimates before any metric is computed, assemble the relevant results into a single source-attributed analysis, and apply it to three published LLM-judge evaluations. For non-degenerate binary verdicts, Pearson's $r$, Spearman's $ρ$, Kendall's $τ_b$, the phi coefficient, and the Matthews correlation coefficient are exactly the same statistic, so reporting several repeats one number under different names. Cohen's $κ$ differs from them only through a marginal-mismatch factor in $(0,1]$ and shares their asymptotic variance when judge and human assign the positive verdict equally often. Under exclusion, accuracy over all cases is pinned down only to a worst-case interval as wide as the uncovered fraction. On a rubric benchmark carrying per-criterion human labels, protocol choice alone moves reported accuracy from $0.551$ to $0.899$ and carries $κ$ across zero, without altering a single verdict. We distill the analysis into a reporting checklist that makes agreement claims reconstructible and comparable.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.data-an" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-25T07:31:44Z</published>
+    <arxiv:comment>17 pages, 4 figures; arxiv ancillary files included</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Delip Rao</name>
+    </author>
+    <author>
+      <name>Chris Callison-Burch</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.30803v1</id>
+    <title>PReMISE: Policy Rubrics as Measurement Specifications for LLM Judges</title>
+    <updated>2026-05-29T03:45:11Z</updated>
+    <link href="https://arxiv.org/abs/2605.30803v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.30803v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>LLM judges are increasingly used to evaluate open-ended responses, but their scores depend strongly on the rubrics that condition them. A vague rubric asking for a response to be ``helpful and factual'' can reward polished answers that invent facts or violate user intent. We treat reusable rubrics as measurement specifications: changing the rubric changes the response quality measurement induced by a fixed judge. We introduce PReMISE, a framework that, given pairwise human-preference data, (i) discovers a policy-level rubric set, and (ii) audits any rubric set under LLM-judge use along four axes: structural adequacy, reliability, preference fit, and adversarial robustness. Across rubric sources no raw source is simultaneously reliable, preference-predictive, and adversarially robust; and high inter-rater agreement does not imply low exploitability. PReMISE is the only rubric source to score non-trivially on applicability, specificity, and effective dimensionality simultaneously. We contribute two audit-targeted repair operations: preference-rank selection raises judge accuracy on paired responses from $65.0\%$ to $68.6\%$, competitive with the strongest rubric-discovery baselines and leading on two of three judges in our cross-judge sweep; reliability-constrained refinement reduces the rate at which exploit responses receive high scores from $46.4\%$ to $36.0\%$ with little change in inter-judge agreement ($α{=}.531\to.519$).</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-29T03:45:11Z</published>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Swastik Roy</name>
+    </author>
+    <author>
+      <name>Rajkumar Pujari</name>
+    </author>
+    <author>
+      <name>Tharindu Kumarage</name>
+    </author>
+    <author>
+      <name>Charith Peris</name>
+    </author>
+    <author>
+      <name>Rahul Gupta</name>
+    </author>
+    <author>
+      <name>Anna Rumshisky</name>
+    </author>
+    <author>
+      <name>Pradeep Natarajan</name>
+    </author>
+    <author>
+      <name>Venkatesh Saligrama</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.18589v1</id>
+    <title>CentaurTA Studio: A Self-Improving Human-Agent Collaboration System for Thematic Analysis</title>
+    <updated>2026-03-18T02:01:28Z</updated>
+    <link href="https://arxiv.org/abs/2604.18589v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.18589v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Thematic analysis is difficult to scale: manual workflows are labor-intensive, while fully automated pipelines often lack controllability and transparent evaluation. We present \textbf{CentaurTA Studio}, a web-based system for self-improving human--agent collaboration in open coding and theme construction. The system integrates (1) a two-stage human feedback pipeline separating simulator drafting and expert validation, (2) persistent prompt optimization that distills validated feedback into reusable alignment principles, and (3) rubric-based evaluation with early stopping for process control.
+  Across three domains, CentaurTA achieves the strongest performance in both Open Coding and Theme Construction, reaching up to 92.12\% accuracy and consistently outperforming baseline systems. Agreement between the rubric-based LLM judge and human annotators reaches substantial reliability (average $κ= 0.68$). Ablation studies show that removing the feedback loop reduces performance from 90\% to 81\%, while eliminating the Critic or early stopping degrades accuracy or increases interaction cost. The full system reaches peak performance within 10 iterative rounds (about 25 minutes), demonstrating improved efficiency over expert-only refinement.</summary>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-18T02:01:28Z</published>
+    <arxiv:primary_category term="cs.HC"/>
+    <author>
+      <name>Lei Wang</name>
+    </author>
+    <author>
+      <name>Min Huang</name>
+    </author>
+    <author>
+      <name>Eduard Dragut</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.22432v2</id>
+    <title>Rank Reversal in Multilingual LLM Judges: A Label-Free Double-Centering Calibrator</title>
+    <updated>2026-09-06T08:48:54Z</updated>
+    <link href="https://arxiv.org/abs/2608.22432v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.22432v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multilingual LLM judges produce different evaluator-backbone rankings depending on the prompt language: on an eight-language Agent-as-a-Judge benchmark, the top-ranked backbone alternates across English, Arabic, Chinese, Hindi, Japanese, Spanish, Turkish, and Swahili, and 7 of 15 backbone pairs show statistically significant pairwise rank reversal. We treat this as a measurement problem. The multilingual judge score decomposes additively into task difficulty, backbone skill, and a language-backbone interaction term, the last of which is recoverable without human labels by double-centering the cell-mean score matrix. We make this estimator (\textbf{Consensus-Based Calibration}, CBC) explicit, give an $O(1/\sqrt{n})$ finite-sample concentration bound with variance constant $(1-\tfrac{1}{m})(1-\tfrac{1}{k})$, and show that it is unbiased even when task-language interactions are present. Across 7{,}920 judge runs (6 backbones, 8 languages, 55 tasks, 3 frameworks), CBC raises held-out cross-task rank consistency $τ$ from 0.650 to 0.902 and agrees with the held-out additive-model oracle in 100\% of per-language decisions versus 68.5\% raw; these are consistency diagnostics, not human-grounded correctness measures. On a separately collected M-RewardBench panel (7 languages, 1{,}500 items per language, 10{,}500 language-item instances, 5 evaluators), panel agreement with the public human gold preferences rises from 68.7\% to 76.6\% (gain 7.9 percentage points, 95\% CI $[6.0, 9.9]$), our strongest external evidence of downstream usefulness. The estimator is the standard two-way ANOVA interaction-recovery operation under sum-to-zero contrasts; our contribution is its application as a label-free post-hoc calibrator for multilingual LLM judges, an explicit finite-sample concentration bound, and an unbiasedness result that holds even under task-language misspecification.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-23T14:18:25Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Alhasan Mahmood</name>
+    </author>
+    <author>
+      <name>Samir Abdaljalil</name>
+    </author>
+    <author>
+      <name>Hasan Kurban</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.08654v3</id>
+    <title>From Rubrics to Reliable Scores: Evidence-Grounded Text Evaluation with LLM Judges</title>
+    <updated>2026-09-09T02:14:09Z</updated>
+    <link href="https://arxiv.org/abs/2601.08654v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.08654v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Rubric-based text evaluation increasingly relies on large language models (LLMs) as scalable judges, yet frozen black-box models can interpret the same criteria inconsistently, produce score attributions that are difficult to audit, and map judgments poorly onto human scoring scales. We define this challenge as criteria transfer: translating human rubric intent into a stable, auditable inference-time scoring protocol. We introduce Rulers, which locks a task-level rubric specification, executes it through structured, evidence-grounded judgments, and calibrates the resulting signals to human score boundaries. Across four rubric-governed benchmarks and multiple frozen backbone models, Rulers achieves stronger agreement with human scores in most evaluated settings, while better matching empirical score distributions and remaining more stable under semantically equivalent rubric perturbations. Calibration controls and component ablations show that these gains cannot be attributed to post-hoc alignment alone, but depend on the combination of fixed criteria, traceable evidence, and calibrated score interpretation. These findings suggest that reliable LLM judging requires faithfully operationalizing human evaluation standards rather than relying on prompt-level scoring alone. Our code is available at https://github.com/LabRAI/Rulers.git.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-13T15:31:42Z</published>
+    <arxiv:comment>Accepted to EMNLP 2026 Main Conference</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Yihan Hong</name>
+    </author>
+    <author>
+      <name>Huaiyuan Yao</name>
+    </author>
+    <author>
+      <name>Bolin Shen</name>
+    </author>
+    <author>
+      <name>Wanpeng Xu</name>
+    </author>
+    <author>
+      <name>Hua Wei</name>
+    </author>
+    <author>
+      <name>Yushun Dong</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.15015v1</id>
+    <title>Four Ledgers, Not One Score: Responsible Communication of LLM-Judge Calibration in Biomedical ML</title>
+    <updated>2026-09-14T04:27:58Z</updated>
+    <link href="https://arxiv.org/abs/2609.15015v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.15015v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Synthetic perturbations appear to offer inexpensive calibration data for LLM evaluators in biomedical ML, where expert review is scarce. Yet a planted mutation key is neither a detector output nor automatically human ground truth. We formalize four distinct ledgers: planted perturbations, independent detector outputs, source-linked human dispositions, and human-added discoveries. We then audit the evaluation design, scoring code, read paths, and current human records of a private synthetic Japanese care-handoff workflow. The factory stored 69 planted error cards across 47 targets. Final review covers 22 targets and contains 22 confirmed imported proposals, 9 rejected proposals, and 79 human-added cards; only 3 reviewed targets are double annotated. Passing imported plant keys to a generic detector scorer yields 22/(22+9)=0.710 and 22/(22+79)=0.218. A direct audit identity shows that these values are proposal-confirmation yield and submitted-ledger composition, not judge precision and recall, because no independent detector realization was preserved for the audited proposals in the available records. The audit also finds source-name collisions, row shadowing, forced severity, vacuous ratio defaults, and unsupported zero-support field weights. We contribute a provenance-aware claim audit, a storage contract, and a minimum calibration gate for responsibly communicating biomedical ML capability claims. This single-workflow forensic case is an existence proof of a failure mode, not an estimate of its prevalence: existing human work supports an exploratory audit of synthetic proposals, but not LLM-judge operating characteristics, clinical validity, corpus prevalence, or robust inter-annotator agreement.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-14T04:27:58Z</published>
+    <arxiv:comment>6 pages, 0 figures, 3 tables. A public reproducibility artifact accompanies the paper</arxiv:comment>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Sidi Chang</name>
+    </author>
+    <author>
+      <name>Peiying Zhu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.14673v1</id>
+    <title>Project Kaleidoscope: Contextual, Human-Aligned Evaluation for Real-World AI Applications</title>
+    <updated>2026-07-16T07:38:39Z</updated>
+    <link href="https://arxiv.org/abs/2607.14673v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.14673v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Evaluations (Evals) are a deployment bottleneck for real-world AI applications: public benchmarks rarely match a team's users, context, or policies, and human review is often tedious to scale. Motivated by our work with AI applications in the public sector, this project addresses recurring evaluation challenges encountered when applications must satisfy local policy and governance requirements. We present Kaleidoscope, an integrated workflow for contextual functional evaluation that links persona-based test generation, contextualized rubrics, and human review for reliability-gated automated scoring. Generated test cases are scored against application-specific rubrics; human annotations provide reviewable labels; and LLM judges automate scoring only when their agreement with those labels meets a configured threshold. Kaleidoscope is therefore a practical, inspectable, iterative workflow for product teams. We report early evidence from a three-week pilot across four organizational use cases and custom-rubric judge experiments on 108 annotated Q\&amp;A pairs spanning four domains and 14 evaluation dimensions. The results highlight useful features for end-to-end reliable, automated scoring.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-16T07:38:39Z</published>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Leanne Tan</name>
+    </author>
+    <author>
+      <name>Rohan Jaggi</name>
+    </author>
+    <author>
+      <name>Shaun Khoo</name>
+    </author>
+    <author>
+      <name>Roy Ka-Wei Lee</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2503.05061v3</id>
+    <title>No Free Labels: Limitations of LLM-as-a-Judge Without Human Grounding</title>
+    <updated>2026-08-11T15:28:16Z</updated>
+    <link href="https://arxiv.org/abs/2503.05061v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2503.05061v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Reliable evaluation of large language models (LLMs) is critical as their deployment rapidly expands, particularly in high-stakes domains such as business and finance. The LLM-as-a-Judge framework, which uses prompted LLMs to evaluate response quality, is appealing due to its scalability, low cost, and strong correlations with human stylistic preferences. However, it remains unclear how accurately these methods can assess response quality in domains where correctness matters more than style. To address this gap, we introduce the Business and Finance Fundamentals Benchmark (BFF-Bench), a dataset of 160 challenging questions and long-form responses authored by financial professionals. These experts subsequently evaluated the correctness of 1,200 responses generated by a diverse set of LLMs on both BFF-Bench and a challenging subset of MT-Bench. With this expert-annotated dataset of judgments (VERDICTS), we analyze the agreement between a suite of automated grading methods and human experts. While we observe that LLM Judges are more reliable than other grading methods, our findings reveal a clear pattern in LLM Judge performance: when not provided with a correct reference, judges show high agreement with human experts only on questions the judges were able to correctly answer themselves. We demonstrate that providing the judges with expert-written references largely mitigates this issue, highlighting the limits of using LLM-as-a-Judge without any form of human verification.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-03-07T00:42:08Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Michael Krumdick</name>
+    </author>
+    <author>
+      <name>Charles Lovering</name>
+    </author>
+    <author>
+      <name>Varshini Reddy</name>
+    </author>
+    <author>
+      <name>Seth Ebner</name>
+    </author>
+    <author>
+      <name>Chris Tanner</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.05384v1</id>
+    <title>Stability vs. Manipulability: Evaluating Robustness Under Post-Decision Interaction in LLM Judges</title>
+    <updated>2026-06-03T19:37:23Z</updated>
+    <link href="https://arxiv.org/abs/2606.05384v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.05384v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>LLM-as-judge evaluation is widely used in benchmarking pipelines, where model outputs are compared and ranked using automated evaluators. These pipelines typically assume that judgments are stable properties of fixed inputs. We show that this assumption does not hold under interaction. We study post-decision manipulability: the extent to which an evaluation outcome can be altered through subsequent conversation with the judge after an initial decision has been made. Across controlled experiments on MT-Bench and AlpacaEval, we find that LLM judges are highly stable under repeated and neutral reevaluation, yet become substantially reversible under targeted post-decision challenge. An anti-baseline challenge protocol shows that stable judgments can be overturned through motivated interaction, while a counterbalanced target-validation protocol separates this reversibility from net target-directed steering. These reversals have practical consequences: they can degrade agreement with human preferences, shift benchmark rankings, and produce harmful evaluation changes despite high self-reported confidence. Authority framing is especially destabilizing, and revised judgments are often accompanied by low-overlap justifications, suggesting post hoc rationalization rather than reliable error correction. We introduce the Evaluation Robustness Score (ERS) to quantify interactional robustness by combining reversal susceptibility with counterbalanced directional effects. Our findings identify post-decision interaction as a distinct failure mode for LLM-as-judge evaluation and motivate evaluation protocols that measure not only static agreement, but robustness under challenge.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-03T19:37:23Z</published>
+    <arxiv:comment>Accepted at ACL 2026 GEM (Generation, Evaluation and Metrics) Workshop</arxiv:comment>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Srimonti Dutta</name>
+    </author>
+    <author>
+      <name>Akshata Kishore Moharir</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.29517v1</id>
+    <title>LLM Judges as Raters: A Pre-Registered Audit of Severity, Halo, Reliability, and Version Instability in LLM Essay Scoring on Public Corpora</title>
+    <updated>2026-08-30T02:45:46Z</updated>
+    <link href="https://arxiv.org/abs/2608.29517v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.29517v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large language models (LLMs) are increasingly used as essay graders in learning analytics, evaluated almost exclusively with agreement statistics. Educational measurement warns that raters also differ in severity, show halo, and drift as instruments. We treat LLM judges as raters and run a pre-registered rater-effects battery (many-facet Rasch severity, residual halo, generalizability/decision studies, cross-version shifts, differential functioning) on public corpora in two languages (ENEM/Essay-BR; ASAP): 2,377 essays, 12 judges, 4 providers, 5 version contrasts, replicated cells, released as a score tensor. Judge severity spans 219 points on ENEM's 0-1000 scale; on ASAP the panel spread is 15-33% of the score range against a between-trained-human gap near 1%. Judge-human correlations sit in an undiscriminating .47-.56 band. All five version contrasts shift severity beyond a family-wise permutation null (up to 133 points), and one judge was deprecated mid-study, caught by identity canaries. Two pre-registered tests returned honest nulls: severity-adjusted leaderboard reversals did not survive a permutation null, and "silent drift" was refuted: agreement moved with severity in four of five contrasts. Replication yields self-consistency (phi&gt;=.80 at k&lt;=2) but not human-level accuracy, and a same-instrument check overturned our own halo comparison: matched on instrument and calibration, we find no credible evidence that judge halo exceeds the trained-human range.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CY" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-30T02:45:46Z</published>
+    <arxiv:comment>14 pages, 2 figures, 8 tables. Under review at the Journal of Learning Analytics (LAK27 research track). Artifact: https://anonymous.4open.science/r/lak-27-A618</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Veerendra Kumar Sunkavalli</name>
+    </author>
+  </entry>
+</feed>

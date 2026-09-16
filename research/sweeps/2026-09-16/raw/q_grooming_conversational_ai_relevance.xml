@@ -1,0 +1,220 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/SqXhc90IuFrCAejTb5g5QzA9/RA</id>
+  <title>arXiv Query: search_query=all:"grooming" AND all:"language model"&amp;id_list=&amp;start=0&amp;max_results=20</title>
+  <updated>2026-09-16T09:57:56Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22grooming%22+AND+all:%22language+model%22&amp;start=0&amp;max_results=20&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>20</opensearch:itemsPerPage>
+  <opensearch:totalResults>8</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2502.12563v1</id>
+    <title>Evaluating Language Models on Grooming Risk Estimation Using Fuzzy Theory</title>
+    <updated>2025-02-18T05:59:54Z</updated>
+    <link href="https://arxiv.org/abs/2502.12563v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2502.12563v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Encoding implicit language presents a challenge for language models, especially in high-risk domains where maintaining high precision is important. Automated detection of online child grooming is one such critical domain, where predators manipulate victims using a combination of explicit and implicit language to convey harmful intentions. While recent studies have shown the potential of Transformer language models like SBERT for preemptive grooming detection, they primarily depend on surface-level features and approximate real victim grooming processes using vigilante and law enforcement conversations. The question of whether these features and approximations are reasonable has not been addressed thus far. In this paper, we address this gap and study whether SBERT can effectively discern varying degrees of grooming risk inherent in conversations, and evaluate its results across different participant groups. Our analysis reveals that while fine-tuning aids language models in learning to assign grooming scores, they show high variance in predictions, especially for contexts containing higher degrees of grooming risk. These errors appear in cases that 1) utilize indirect speech pathways to manipulate victims and 2) lack sexually explicit content. This finding underscores the necessity for robust modeling of indirect speech acts by language models, particularly those employed by predators.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-02-18T05:59:54Z</published>
+    <arxiv:comment>9 pages, 2 figures. Accepted for publication in the Proceedings of the NAFIPS International Conference on Fuzzy Systems, Soft Computing, and Explainable AI. NAFIPS'2024</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Geetanjali Bihani</name>
+    </author>
+    <author>
+      <name>Tatiana Ringenberg</name>
+    </author>
+    <author>
+      <name>Julia Rayz</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2403.09795v1</id>
+    <title>Helpful or Harmful? Exploring the Efficacy of Large Language Models for Online Grooming Prevention</title>
+    <updated>2024-03-14T18:27:43Z</updated>
+    <link href="https://arxiv.org/abs/2403.09795v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2403.09795v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Powerful generative Large Language Models (LLMs) are becoming popular tools amongst the general public as question-answering systems, and are being utilised by vulnerable groups such as children. With children increasingly interacting with these tools, it is imperative for researchers to scrutinise the safety of LLMs, especially for applications that could lead to serious outcomes, such as online child safety queries. In this paper, the efficacy of LLMs for online grooming prevention is explored both for identifying and avoiding grooming through advice generation, and the impact of prompt design on model performance is investigated by varying the provided context and prompt specificity. In results reflecting over 6,000 LLM interactions, we find that no models were clearly appropriate for online grooming prevention, with an observed lack of consistency in behaviours, and potential for harmful answer generation, especially from open-source models. We outline where and how models fall short, providing suggestions for improvement, and identify prompt designs that heavily altered model performance in troubling ways, with findings that can be used to inform best practice usage guides.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-03-14T18:27:43Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Ellie Prosser</name>
+    </author>
+    <author>
+      <name>Matthew Edwards</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.06914v2</id>
+    <title>What You See Is Not What AI Gets: DPAgent-in-the-Middle Defense Against AI-Groomed Deceptive Patterns</title>
+    <updated>2026-09-08T08:14:56Z</updated>
+    <link href="https://arxiv.org/abs/2606.06914v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.06914v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Privacy deceptive patterns in web interfaces manipulate users into disclosing personal data, yet existing defenses are fragmented, static, and increasingly vulnerable to manipulation by large language models. Moreover, data voids, areas of information scarcity on the web, allow adversaries to inject misleading content that can be scraped and learned by AI systems, amplifying both deceptive design and model misbehavior. In this paper, we formalize AI grooming as a new threat in which adversaries seed benign-looking artifacts carrying machine-consumable manipulative signals into AI-mediated workflows. To address this threat, we present DPAgent, an agentic, reasoning-aware framework that orchestrates four specialized agents combining latent-space purification with defensive prompting to explore, detect, and repair privacy deceptive interfaces in live web environments. Extensive evaluations show that DPAgent filters 91\% of naive whole-page generated samples and consistently reduces attack success across five targeted grooming strategies, achieves state-of-the-art detection with a micro F1 of 0.82, explores over 80\% of pattern types while visiting only about 10\% of the pages required by baselines, and successfully repairs 89.7\% of correctly detected PDP instances. Our results demonstrate the promise of agent-in-the-middle defenses for securing the web UI supply chain against deceptive design and emerging AI threats rooted in data void exploitation.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-05T05:26:42Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Zewei Shi</name>
+    </author>
+    <author>
+      <name>Ruoxi Sun</name>
+    </author>
+    <author>
+      <name>Haoyang Li</name>
+    </author>
+    <author>
+      <name>Seong Oun Hwang</name>
+    </author>
+    <author>
+      <name>Feng Liu</name>
+    </author>
+    <author>
+      <name>Minhui Xue</name>
+    </author>
+    <author>
+      <name>Xingliang Yuan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2501.05443v1</id>
+    <title>A survey of textual cyber abuse detection using cutting-edge language models and large language models</title>
+    <updated>2025-01-09T18:55:50Z</updated>
+    <link href="https://arxiv.org/abs/2501.05443v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2501.05443v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The success of social media platforms has facilitated the emergence of various forms of online abuse within digital communities. This abuse manifests in multiple ways, including hate speech, cyberbullying, emotional abuse, grooming, and sexting. In this paper, we present a comprehensive analysis of the different forms of abuse prevalent in social media, with a particular focus on how emerging technologies, such as Language Models (LMs) and Large Language Models (LLMs), are reshaping both the detection and generation of abusive content within these networks. We delve into the mechanisms through which social media abuse is perpetuated, exploring the psychological and social impact. Additionally, we examine the dual role of advanced language models-highlighting their potential to enhance automated detection systems for abusive behavior while also acknowledging their capacity to generate harmful content. This paper aims to contribute to the ongoing discourse on online safety and ethics, offering insights into the evolving landscape of cyberabuse and the technological innovations that both mitigate and exacerbate it.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-01-09T18:55:50Z</published>
+    <arxiv:comment>37 pages, under review in WIREs Data Mining and Knowledge Discovery</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <arxiv:journal_ref>Wiley Interdisciplinary Reviews: Data Mining and Knowledge Discovery (2025), 15(3), e70029</arxiv:journal_ref>
+    <author>
+      <name>Jose A. Diaz-Garcia</name>
+    </author>
+    <author>
+      <name>Joao Paulo Carvalho</name>
+    </author>
+    <arxiv:doi>10.1002/widm.70029</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1002/widm.70029" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2509.08997v1</id>
+    <title>YouthSafe: A Youth-Centric Safety Benchmark and Safeguard Model for Large Language Models</title>
+    <updated>2025-09-10T20:47:56Z</updated>
+    <link href="https://arxiv.org/abs/2509.08997v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2509.08997v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Language Models (LLMs) are increasingly used by teenagers and young adults in everyday life, ranging from emotional support and creative expression to educational assistance. However, their unique vulnerabilities and risk profiles remain under-examined in current safety benchmarks and moderation systems, leaving this population disproportionately exposed to harm. In this work, we present Youth AI Risk (YAIR), the first benchmark dataset designed to evaluate and improve the safety of youth LLM interactions. YAIR consists of 12,449 annotated conversation snippets spanning 78 fine grained risk types, grounded in a taxonomy of youth specific harms such as grooming, boundary violation, identity confusion, and emotional overreliance. We systematically evaluate widely adopted moderation models on YAIR and find that existing approaches substantially underperform in detecting youth centered risks, often missing contextually subtle yet developmentally harmful interactions. To address these gaps, we introduce YouthSafe, a real-time risk detection model optimized for youth GenAI contexts. YouthSafe significantly outperforms prior systems across multiple metrics on risk detection and classification, offering a concrete step toward safer and more developmentally appropriate AI interactions for young users.</summary>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-09-10T20:47:56Z</published>
+    <arxiv:comment>15 pages, 4 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.HC"/>
+    <author>
+      <name>Yaman Yu</name>
+    </author>
+    <author>
+      <name>Yiren Liu</name>
+    </author>
+    <author>
+      <name>Jacky Zhang</name>
+    </author>
+    <author>
+      <name>Yun Huang</name>
+    </author>
+    <author>
+      <name>Yang Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.29685v1</id>
+    <title>CAREBench: A Child-Safety Risk Benchmark for Language Models</title>
+    <updated>2026-06-29T01:17:41Z</updated>
+    <link href="https://arxiv.org/abs/2606.29685v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.29685v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>How can we evaluate whether frontier AI systems recognize child-safety risks before they escalate into explicit harm? Existing child safety evaluations focus on child sexual abuse material, yet many child-safety failures begin earlier: in model assistance that helps adults manipulate, impersonate, profile, or isolate minors, and in model responses that deepen children's emotional dependence on AI systems rather than redirecting them toward human support. We introduce CAREBench (Child AI Risk Evaluation), a benchmark to assess such upstream child-safety risks in language models. CAREBench contains 500 prompts spanning twelve risk categories, including grooming and relationship engineering, deception and impersonation, surveillance and privacy, sextortion and sexual abuse, AI anthropomorphization, emotional dependency, and mental illness sensitivity. Developed with response annotations from parents and clinicians, the benchmark excludes explicit abuse material and imagery; instead, it evaluates whether models recognize, refuse, de-escalate, or redirect risky interactions before harm becomes overt. Evaluating seven frontier models on our benchmark, we find failure rates ranging from 2% to 58%, with failure patterns that vary across risk categories. CAREBench provides a responsibly scoped evaluation for LLM developers to identify and close gaps in child safety policies.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-29T01:17:41Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Kaavya Krishna-Kumar</name>
+    </author>
+    <author>
+      <name>Elaine Lau</name>
+    </author>
+    <author>
+      <name>Vaughn Robinson</name>
+    </author>
+    <author>
+      <name>Jay Caldwell</name>
+    </author>
+    <author>
+      <name>Sheriff Issaka</name>
+    </author>
+    <author>
+      <name>Skyler Wang</name>
+    </author>
+    <author>
+      <name>Francisco Guzmán</name>
+    </author>
+    <author>
+      <name>Steven Kelling</name>
+    </author>
+    <author>
+      <name>Jonas Mueller</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.18540v1</id>
+    <title>Rodent-Bench</title>
+    <updated>2026-02-20T15:14:38Z</updated>
+    <link href="https://arxiv.org/abs/2602.18540v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.18540v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present Rodent-Bench, a novel benchmark designed to evaluate the ability of Multimodal Large Language Models (MLLMs) to annotate rodent behaviour footage. We evaluate state-of-the-art MLLMs, including Gemini-2.5-Pro, Gemini-2.5-Flash and Qwen-VL-Max, using this benchmark and find that none of these models perform strongly enough to be used as an assistant for this task. Our benchmark encompasses diverse datasets spanning multiple behavioral paradigms including social interactions, grooming, scratching, and freezing behaviors, with videos ranging from 10 minutes to 35 minutes in length. We provide two benchmark versions to accommodate varying model capabilities and establish standardized evaluation metrics including second-wise accuracy, macro F1, mean average precision, mutual information, and Matthew's correlation coefficient. While some models show modest performance on certain datasets (notably grooming detection), overall results reveal significant challenges in temporal segmentation, handling extended video sequences, and distinguishing subtle behavioral states. Our analysis identifies key limitations in current MLLMs for scientific video annotation and provides insights for future model development. Rodent-Bench serves as a foundation for tracking progress toward reliable automated behavioral annotation in neuroscience research.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-20T15:14:38Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Thomas Heap</name>
+    </author>
+    <author>
+      <name>Laurence Aitchison</name>
+    </author>
+    <author>
+      <name>Emma Cahill</name>
+    </author>
+    <author>
+      <name>Adriana Casado Rodriguez</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.04491v2</id>
+    <title>An Evaluation of Chat Safety Moderations in Roblox</title>
+    <updated>2026-05-07T18:52:25Z</updated>
+    <link href="https://arxiv.org/abs/2605.04491v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.04491v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Roblox is among the most popular online gaming platforms, used by hundreds of millions of users every day. A substantial portion of these users are underage, who are at a greater risk, where abusive users may utilize Roblox's real-time chat interface to make the initial contact with potential victims. Roblox employs automated chat moderation mechanisms to detect potentially abusive messages; however, to date, their effectiveness has not been independently investigated. Toward this goal, we collected approximately 2 million chat messages from four games across multiple age groups and analyzed them to evaluate the moderation system. These messages were collected from public game servers following ethical and legal norms as well as Roblox's terms of service.
+  We use this corpus to qualitatively study which types of unsafe chats escape the moderation system and how policy-violating users evade the moderation system. Given the dataset's scale, it is prohibitively expensive to conduct qualitative content analysis manually. Therefore, we adopt a two-step approach. First, we manually labeled safe and unsafe messages (n=99.8K) and used them as a ground truth to evaluate four locally hosted state-of-the-art large language models (LLMs). Next, the best-performing LLM was applied to the entire corpus to identify potentially unsafe messages, which we manually categorized using iterative open and axial coding methods until thematic saturation was reached. Overall, our findings reveal a troublesome reality: numerous instances of unsafe chat messages related to grooming, sexualizing minors, bullying, &amp; harassment, violence, self-harm, and sharing sensitive information, etc., escaped the current moderation. Our analysis of users whose messages were previously flagged revealed that they continue to send harmful messages by employing a wide range of techniques to evade the moderation system.</summary>
+    <category term="cs.CY" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-06T04:41:11Z</published>
+    <arxiv:primary_category term="cs.CY"/>
+    <author>
+      <name>Priya Kaushik</name>
+    </author>
+    <author>
+      <name>Sonja Brown</name>
+    </author>
+    <author>
+      <name>Rakibul Hasan</name>
+    </author>
+    <author>
+      <name>Sazzadur Rahaman</name>
+    </author>
+  </entry>
+</feed>

@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/mPqIsR+/53g7rtjEj1+Mfy7h+Gc</id>
+  <title>arXiv Query: search_query=ti:"Red Queen" AND cat:cs.CL&amp;id_list=&amp;start=0&amp;max_results=5</title>
+  <updated>2026-09-16T09:56:55Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=ti:%22Red+Queen%22+AND+cat:cs.CL&amp;start=0&amp;max_results=5&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>5</opensearch:itemsPerPage>
+  <opensearch:totalResults>1</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2409.17458v2</id>
+    <title>RED QUEEN: Safeguarding Large Language Models against Concealed Multi-Turn Jailbreaking</title>
+    <updated>2025-06-07T08:11:07Z</updated>
+    <link href="https://arxiv.org/abs/2409.17458v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2409.17458v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The rapid progress of Large Language Models (LLMs) has opened up new opportunities across various domains and applications; yet it also presents challenges related to potential misuse. To mitigate such risks, red teaming has been employed as a proactive security measure to probe language models for harmful outputs via jailbreak attacks. However, current jailbreak attack approaches are single-turn with explicit malicious queries that do not fully capture the complexity of real-world interactions. In reality, users can engage in multi-turn interactions with LLM-based chat assistants, allowing them to conceal their true intentions in a more covert manner. To bridge this gap, we, first, propose a new jailbreak approach, RED QUEEN ATTACK. This method constructs a multi-turn scenario, concealing the malicious intent under the guise of preventing harm. We craft 40 scenarios that vary in turns and select 14 harmful categories to generate 56k multi-turn attack data points. We conduct comprehensive experiments on the RED QUEEN ATTACK with four representative LLM families of different sizes. Our experiments reveal that all LLMs are vulnerable to RED QUEEN ATTACK, reaching 87.62% attack success rate on GPT-4o and 75.4% on Llama3-70B. Further analysis reveals that larger models are more susceptible to the RED QUEEN ATTACK, with multi-turn structures and concealment strategies contributing to its success. To prioritize safety, we introduce a straightforward mitigation strategy called RED QUEEN GUARD, which aligns LLMs to effectively counter adversarial attacks. This approach reduces the attack success rate to below 1% while maintaining the model's performance across standard benchmarks. Full implementation and dataset are publicly accessible at https://github.com/kriti-hippo/red_queen.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-09-26T01:24:17Z</published>
+    <arxiv:comment>Accepted in ACL 2025 Findings</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Yifan Jiang</name>
+    </author>
+    <author>
+      <name>Kriti Aggarwal</name>
+    </author>
+    <author>
+      <name>Tanmay Laud</name>
+    </author>
+    <author>
+      <name>Kashif Munir</name>
+    </author>
+    <author>
+      <name>Jay Pujara</name>
+    </author>
+    <author>
+      <name>Subhabrata Mukherjee</name>
+    </author>
+  </entry>
+</feed>

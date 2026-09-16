@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/EL9y5OAb3g3fNtvsRL+4mc3nPyE</id>
+  <title>arXiv Query: search_query=&amp;id_list=2606.25396,2609.15855,2608.10258&amp;start=0&amp;max_results=3</title>
+  <updated>2026-09-16T09:58:59Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=&amp;start=0&amp;max_results=3&amp;id_list=2606.25396,2609.15855,2608.10258" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>3</opensearch:itemsPerPage>
+  <opensearch:totalResults>3</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2608.10258v1</id>
+    <title>TAF-MED: Multi-Turn Safety Refusal Collapse in LLMs Under Declared Self-Treatment Intent</title>
+    <updated>2026-08-10T21:43:58Z</updated>
+    <link href="https://arxiv.org/abs/2608.10258v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.10258v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large language models (LLMs) increasingly provide conversational health information that may influence treatment decisions, yet existing benchmarks do not isolate whether medication-safety boundaries persist across follow-ups after explicit self-treatment intent. We introduce TAF-MED, a physician-reviewed benchmark of 500 fixed three-turn scenarios, and evaluate eight LLMs across 4,000 conversations. A rubric-based automated judge labelled responses as SAFE, LEAKY, or UNSAFE, and two physicians independently annotated a model-balanced random subset of 400 conversations. We assessed unsafe guidance, collapse after a strictly SAFE initial response, and model-ranking stability. Overall, 71.6% of conversations contained an UNSAFE response, and 61.4% of those beginning with a strictly SAFE response later collapsed to UNSAFE; model-level collapse rates ranged from 24.4% to 96.2%. Four of 28 model pairs reversed order between initial unsafe and collapse rates. Automated labels achieved 94.3% agreement with the adjudicated physician reference ($κ= 0.895$). These findings show that first-turn safety is an incomplete proxy for conversational safety persistence and motivate evaluation across complete dialogue trajectories. We will release TAF-MED on Hugging Face to support reproducible research on multi-turn medical safety.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-10T21:43:58Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Waleed Jamil</name>
+    </author>
+    <author>
+      <name>Raphael Schmitt</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.15855v2</id>
+    <title>K-Bench: a clinically calibrated benchmark for evaluating large language models in high-risk mental health conversations</title>
+    <updated>2026-09-15T07:30:50Z</updated>
+    <link href="https://arxiv.org/abs/2609.15855v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.15855v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>People increasingly use large language models (LLMs) for mental health support, yet their safety in evolving, high-risk conversations remains poorly characterised. We developed K-Bench, a clinician-calibrated, protected benchmark evaluating 125 model configurations representing 33 base models from 14 providers across a fixed cohort of 200 multi-turn vignettes involving suicide, self-harm, domestic violence, substance misuse, and no-risk presentations. Synthetic patient conversations showed substantial distributional overlap with real human-AI conversations. A frozen GPT-4o judge achieved 94.2% exact agreement with clinician consensus across 6,751 eligible item comparisons from 151 clinician-rated transcripts. Leading models combined strong supportive conversation with combined-risk scores above 95, whereas risk exploration exposed substantial variation among lower-performing configurations. Therapeutic prompting produced configuration-specific gains concentrated among weaker models, while elevated reasoning produced no average improvement. K-Bench combines broader clinical coverage and configuration-scale comparison with a continuously updated public leaderboard whose operational test materials are protected from direct optimisation. The leaderboard is available at www.k-bench.ai.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-14T16:49:23Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Laura M. Vowels</name>
+    </author>
+    <author>
+      <name>Matthew J. Vowels</name>
+    </author>
+    <author>
+      <name>Shivali Sharma</name>
+    </author>
+    <author>
+      <name>Apoorv Jha</name>
+    </author>
+    <author>
+      <name>Rehnuma Choudhury</name>
+    </author>
+    <author>
+      <name>Wasseem El Sarraj</name>
+    </author>
+    <author>
+      <name>Rachel Francois-Walcott</name>
+    </author>
+    <author>
+      <name>Aruba Hussain</name>
+    </author>
+    <author>
+      <name>Sarah Ingram</name>
+    </author>
+    <author>
+      <name>Angela Loulopoulou</name>
+    </author>
+    <author>
+      <name>Adva Segal</name>
+    </author>
+    <author>
+      <name>Elena Volkova</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.25396v1</id>
+    <title>Long-Term Simulation Exposes Cognitive-Developmental Risks in AI Companions</title>
+    <updated>2026-06-24T04:46:42Z</updated>
+    <link href="https://arxiv.org/abs/2606.25396v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.25396v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>AI companions powered by large language models increasingly interact with cognition-developing users, including children and adolescents, creating risks that may accumulate over time. Existing safety evaluations largely rely on single-turn or short-session tests, which cannot capture risks that emerge only through prolonged interaction. To address this gap, we propose TSJ (Theater-Stage-Judge), a longitudinal framework combining persona-driven user simulation, dynamic psychological-state updating and retrospective evaluation. We evaluate six mainstream models across four developmental stages, twenty-four risk dimensions and three psychological-vulnerability personas, covering 12,960 simulated person-day interactions. TSJ shows that short-horizon testing systematically underestimates developmental risks, for which TSJ yields a stable risk estimate only after 140 turns within prolonged simulated relationships. Applying TSJ further identifies early childhood and emerging adulthood as the most vulnerable stages, with cognitive trust and emotional dependency as the weakest domains. TSJ provides a scalable methodology for longitudinal cognitive developmental risk evaluation in AI companion systems.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-24T04:46:42Z</published>
+    <arxiv:comment>19 pages, 4 figures, 2 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Kaicheng Shen</name>
+    </author>
+    <author>
+      <name>Lingyu Li</name>
+    </author>
+    <author>
+      <name>Wen Wu</name>
+    </author>
+    <author>
+      <name>Yan Teng</name>
+    </author>
+    <author>
+      <name>Liang He</name>
+    </author>
+    <author>
+      <name>Yingchun Wang</name>
+    </author>
+  </entry>
+</feed>

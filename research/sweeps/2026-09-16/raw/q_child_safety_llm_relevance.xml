@@ -1,0 +1,230 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/tz/uGN3ABddBEbaponsGXcmRjsk</id>
+  <title>arXiv Query: search_query=all:"child safety" AND all:"language model"&amp;id_list=&amp;start=0&amp;max_results=20</title>
+  <updated>2026-09-16T09:57:05Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22child+safety%22+AND+all:%22language+model%22&amp;start=0&amp;max_results=20&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>20</opensearch:itemsPerPage>
+  <opensearch:totalResults>9</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2606.29685v1</id>
+    <title>CAREBench: A Child-Safety Risk Benchmark for Language Models</title>
+    <updated>2026-06-29T01:17:41Z</updated>
+    <link href="https://arxiv.org/abs/2606.29685v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.29685v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>How can we evaluate whether frontier AI systems recognize child-safety risks before they escalate into explicit harm? Existing child safety evaluations focus on child sexual abuse material, yet many child-safety failures begin earlier: in model assistance that helps adults manipulate, impersonate, profile, or isolate minors, and in model responses that deepen children's emotional dependence on AI systems rather than redirecting them toward human support. We introduce CAREBench (Child AI Risk Evaluation), a benchmark to assess such upstream child-safety risks in language models. CAREBench contains 500 prompts spanning twelve risk categories, including grooming and relationship engineering, deception and impersonation, surveillance and privacy, sextortion and sexual abuse, AI anthropomorphization, emotional dependency, and mental illness sensitivity. Developed with response annotations from parents and clinicians, the benchmark excludes explicit abuse material and imagery; instead, it evaluates whether models recognize, refuse, de-escalate, or redirect risky interactions before harm becomes overt. Evaluating seven frontier models on our benchmark, we find failure rates ranging from 2% to 58%, with failure patterns that vary across risk categories. CAREBench provides a responsibly scoped evaluation for LLM developers to identify and close gaps in child safety policies.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-29T01:17:41Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Kaavya Krishna-Kumar</name>
+    </author>
+    <author>
+      <name>Elaine Lau</name>
+    </author>
+    <author>
+      <name>Vaughn Robinson</name>
+    </author>
+    <author>
+      <name>Jay Caldwell</name>
+    </author>
+    <author>
+      <name>Sheriff Issaka</name>
+    </author>
+    <author>
+      <name>Skyler Wang</name>
+    </author>
+    <author>
+      <name>Francisco Guzmán</name>
+    </author>
+    <author>
+      <name>Steven Kelling</name>
+    </author>
+    <author>
+      <name>Jonas Mueller</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.25510v3</id>
+    <title>The Age of Curiosity Meets the Age of AI: Benchmarking Child Safety in Large Language Models</title>
+    <updated>2026-09-02T21:01:48Z</updated>
+    <link href="https://arxiv.org/abs/2605.25510v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.25510v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Children increasingly have access to Large Language Models (LLMs), which may expose them to responses that are developmentally inappropriate or require age-sensitive safety, guidance, and boundaries. Existing LLM safety evaluations largely focus on general harmful-content avoidance and do not explicitly target child-facing safety. We introduce KIDBench, a benchmark for evaluating child-facing LLM safety for ages 7-11 using a LLM-as-a-Judge rubric grounded in developmental-psychology. KIDBench contains realistic child queries across ten categories, with single-turn prompts and multi-turn child-actor simulations. We compare no-cues prompts with no child context, implicit-cues prompts that suggest a child speaker, and explicit age instructions. Implicit-cues improve scores by 8.6-46.8% over no-cue, while explicit age provides an additional 9.9-30.4% improvement over implicit-cues. Cross-lingual and cultural evaluations show uneven safety behavior across languages and country contexts. Multi-turn simulations show peak quality drops of up to 0.959 points on the 1-5 scale. We also introduce KIDGuardLlama, a child-safety evaluator, and KIDLlama, a child-safe response model. Code, data, and evaluation resources are available at https://github.com/MichiganNLP/kidbench.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-25T07:14:58Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Samee Arif</name>
+    </author>
+    <author>
+      <name>Angana Borah</name>
+    </author>
+    <author>
+      <name>Rada Mihalcea</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.16181v1</id>
+    <title>KidsNanny: A Two-Stage Multimodal Content Moderation Pipeline Integrating Visual Classification, Object Detection, OCR, and Contextual Reasoning for Child Safety</title>
+    <updated>2026-03-17T07:00:43Z</updated>
+    <link href="https://arxiv.org/abs/2603.16181v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.16181v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present KidsNanny, a two-stage multimodal content moderation architecture for child safety. Stage 1 combines a vision transformer (ViT) with an object detector for visual screening (11.7 ms); outputs are routed as text not raw pixels to Stage 2, which applies OCR and a text based 7B language model for contextual reasoning (120 ms total pipeline). We evaluate on the UnsafeBench Sexual category (1,054 images) under two regimes: vision-only, isolating Stage 1, and multimodal, evaluating the full Stage 1+2 pipeline. Stage 1 achieves 80.27% accuracy and 85.39% F1 at 11.7 ms; vision-only baselines range from 59.01% to 77.04% accuracy. The full pipeline achieves 81.40% accuracy and 86.16% F1 at 120 ms, compared to ShieldGemma-2 (64.80% accuracy, 1,136 ms) and LlavaGuard (80.36% accuracy, 4,138 ms). To evaluate text-awareness, we filter two subsets: a text+visual subset (257 images) and a text-only subset (44 images where safety depends primarily on embedded text). On text-only images, KidsNanny achieves 100% recall (25/25 positives; small sample) and 75.76% precision; ShieldGemma-2 achieves 84% recall and 60% precision at 1,136 ms. Results suggest that dedicated OCR-based reasoning may offer recall-precision advantages on text-embedded threats at lower latency, though the small text-only subset limits generalizability. By documenting this architecture and evaluation methodology, we aim to contribute to the broader research effort on efficient multimodal content moderation for child safety.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-17T07:00:43Z</published>
+    <arxiv:comment>12 pages, 2 figures, 6 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Viraj Panchal</name>
+    </author>
+    <author>
+      <name>Tanmay Talsaniya</name>
+    </author>
+    <author>
+      <name>Parag Patel</name>
+    </author>
+    <author>
+      <name>Meet Patel</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2403.09795v1</id>
+    <title>Helpful or Harmful? Exploring the Efficacy of Large Language Models for Online Grooming Prevention</title>
+    <updated>2024-03-14T18:27:43Z</updated>
+    <link href="https://arxiv.org/abs/2403.09795v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2403.09795v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Powerful generative Large Language Models (LLMs) are becoming popular tools amongst the general public as question-answering systems, and are being utilised by vulnerable groups such as children. With children increasingly interacting with these tools, it is imperative for researchers to scrutinise the safety of LLMs, especially for applications that could lead to serious outcomes, such as online child safety queries. In this paper, the efficacy of LLMs for online grooming prevention is explored both for identifying and avoiding grooming through advice generation, and the impact of prompt design on model performance is investigated by varying the provided context and prompt specificity. In results reflecting over 6,000 LLM interactions, we find that no models were clearly appropriate for online grooming prevention, with an observed lack of consistency in behaviours, and potential for harmful answer generation, especially from open-source models. We outline where and how models fall short, providing suggestions for improvement, and identify prompt designs that heavily altered model performance in troubling ways, with findings that can be used to inform best practice usage guides.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-03-14T18:27:43Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Ellie Prosser</name>
+    </author>
+    <author>
+      <name>Matthew Edwards</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2508.11690v1</id>
+    <title>Real Time Child Abduction And Detection System</title>
+    <updated>2025-08-12T05:56:05Z</updated>
+    <link href="https://arxiv.org/abs/2508.11690v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2508.11690v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Child safety continues to be a paramount concern worldwide, with child abduction posing significant threats to communities. This paper presents the development of an edge-based child abduction detection and alert system utilizing a multi-agent framework where each agent incorporates Vision-Language Models (VLMs) deployed on a Raspberry Pi. Leveraging the advanced capabilities of VLMs within individual agents of a multi-agent team, our system is trained to accurately detect and interpret complex interactions involving children in various environments in real-time. The multi-agent system is deployed on a Raspberry Pi connected to a webcam, forming an edge device capable of processing video feeds, thereby reducing latency and enhancing privacy. An integrated alert system utilizes the Twilio API to send immediate SMS and WhatsApp notifications, including calls and messages, when a potential child abduction event is detected. Experimental results demonstrate that the system achieves high accuracy in detecting potential abduction scenarios, with near real-time performance suitable for practical deployment. The multi-agent architecture enhances the system's ability to process complex situational data, improving detection capabilities over traditional single-model approaches. The edge deployment ensures scalability and cost-effectiveness, making it accessible for widespread use. The proposed system offers a proactive solution to enhance child safety through continuous monitoring and rapid alerting, contributing a valuable tool in efforts to prevent child abductions.</summary>
+    <category term="cs.CY" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-08-12T05:56:05Z</published>
+    <arxiv:primary_category term="cs.CY"/>
+    <author>
+      <name>Tadisetty Sai Yashwanth</name>
+    </author>
+    <author>
+      <name>Yangalasetty Sruthi Royal</name>
+    </author>
+    <author>
+      <name>Vankayala Rajeshwari Shreya</name>
+    </author>
+    <author>
+      <name>Mayank Kashyap</name>
+    </author>
+    <author>
+      <name>Divyaprabha K N</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.06650v1</id>
+    <title>Beyond Static Alignment: Hierarchical Policy Control for LLM Safety via Risk-Aware Chain-of-Thought</title>
+    <updated>2026-02-06T12:20:01Z</updated>
+    <link href="https://arxiv.org/abs/2602.06650v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.06650v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Language Models (LLMs) face a fundamental safety-helpfulness trade-off due to static, one-size-fits-all safety policies that lack runtime controllabilityxf, making it difficult to tailor responses to diverse application needs. %As a result, models may over-refuse benign requests or under-constrain harmful ones. We present \textbf{PACT} (Prompt-configured Action via Chain-of-Thought), a framework for dynamic safety control through explicit, risk-aware reasoning. PACT operates under a hierarchical policy architecture: a non-overridable global safety policy establishes immutable boundaries for critical risks (e.g., child safety, violent extremism), while user-defined policies can introduce domain-specific (non-global) risk categories and specify label-to-action behaviors to improve utility in real-world deployment settings. The framework decomposes safety decisions into structured Classify$\rightarrow$Act paths that route queries to the appropriate action (comply, guide, or reject) and render the decision-making process transparent.
+  Extensive experiments demonstrate that PACT achieves near state-of-the-art safety performance under global policy evaluation while attaining the best controllability under user-specific policy evaluation, effectively mitigating the safety-helpfulness trade-off. We will release the PACT model suite, training data, and evaluation protocols to facilitate reproducible research in controllable safety alignment.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-06T12:20:01Z</published>
+    <arxiv:comment>13 pages, 5 tables, 2 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Jianfeng Si</name>
+    </author>
+    <author>
+      <name>Lin Sun</name>
+    </author>
+    <author>
+      <name>Weihong Lin</name>
+    </author>
+    <author>
+      <name>Xiangzheng Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2502.12552v1</id>
+    <title>LLM Safety for Children</title>
+    <updated>2025-02-18T05:26:27Z</updated>
+    <link href="https://arxiv.org/abs/2502.12552v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2502.12552v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper analyzes the safety of Large Language Models (LLMs) in interactions with children below age of 18 years. Despite the transformative applications of LLMs in various aspects of children's lives such as education and therapy, there remains a significant gap in understanding and mitigating potential content harms specific to this demographic. The study acknowledges the diverse nature of children often overlooked by standard safety evaluations and proposes a comprehensive approach to evaluating LLM safety specifically for children. We list down potential risks that children may encounter when using LLM powered applications. Additionally we develop Child User Models that reflect the varied personalities and interests of children informed by literature in child care and psychology. These user models aim to bridge the existing gap in child safety literature across various fields. We utilize Child User Models to evaluate the safety of six state of the art LLMs. Our observations reveal significant safety gaps in LLMs particularly in categories harmful to children but not adults</summary>
+    <category term="cs.CY" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-02-18T05:26:27Z</published>
+    <arxiv:primary_category term="cs.CY"/>
+    <author>
+      <name>Prasanjit Rath</name>
+    </author>
+    <author>
+      <name>Hari Shrawgi</name>
+    </author>
+    <author>
+      <name>Parag Agrawal</name>
+    </author>
+    <author>
+      <name>Sandipan Dandapat</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2503.10242v1</id>
+    <title>MinorBench: A hand-built benchmark for content-based risks for children</title>
+    <updated>2025-03-13T10:34:43Z</updated>
+    <link href="https://arxiv.org/abs/2503.10242v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2503.10242v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Language Models (LLMs) are rapidly entering children's lives - through parent-driven adoption, schools, and peer networks - yet current AI ethics and safety research do not adequately address content-related risks specific to minors. In this paper, we highlight these gaps with a real-world case study of an LLM-based chatbot deployed in a middle school setting, revealing how students used and sometimes misused the system. Building on these findings, we propose a new taxonomy of content-based risks for minors and introduce MinorBench, an open-source benchmark designed to evaluate LLMs on their ability to refuse unsafe or inappropriate queries from children. We evaluate six prominent LLMs under different system prompts, demonstrating substantial variability in their child-safety compliance. Our results inform practical steps for more robust, child-focused safety mechanisms and underscore the urgency of tailoring AI systems to safeguard young users.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-03-13T10:34:43Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Shaun Khoo</name>
+    </author>
+    <author>
+      <name>Gabriel Chua</name>
+    </author>
+    <author>
+      <name>Rachel Shong</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.06571v1</id>
+    <title>LLM-based Schema-Guided Extraction and Validation of Missing-Person Intelligence from Heterogeneous Data Sources</title>
+    <updated>2026-04-08T01:35:56Z</updated>
+    <link href="https://arxiv.org/abs/2604.06571v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.06571v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Missing-person and child-safety investigations rely on heterogeneous case documents, including structured forms, bulletin-style posters, and narrative web profiles. Variations in layout, terminology, and data quality impede rapid triage, large-scale analysis, and search-planning workflows. This paper introduces the Guardian Parser Pack, an AI-driven parsing and normalization pipeline that transforms multi-source investigative documents into a unified, schema-compliant representation suitable for operational review and downstream spatial modeling. The proposed system integrates (i) multi-engine PDF text extraction with Optical Character Recognition (OCR) fallback, (ii) rule-based source identification with source-specific parsers, (iii) schema-first harmonization and validation, and (iv) an optional Large Language Model (LLM)-assisted extraction pathway incorporating validator-guided repair and shared geocoding services. We present the system architecture, key implementation decisions, and output design, and evaluate performance using both gold-aligned extraction metrics and corpus-level operational indicators. On a manually aligned subset of 75 cases, the LLM-assisted pathway achieved substantially higher extraction quality than the deterministic comparator (F1 = 0.8664 vs. 0.2578), while across 517 parsed records per pathway it also improved aggregate key-field completeness (96.97\% vs. 93.23\%). The deterministic pathway remained much faster (mean runtime 0.03 s/record vs. 3.95 s/record for the LLM pathway). In the evaluated run, all LLM outputs passed initial schema validation, so validator-guided repair functioned as a built-in safeguard rather than a contributor to the observed gains. These results support controlled use of probabilistic AI within a schema-first, auditable pipeline for high-stakes investigative settings.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-08T01:35:56Z</published>
+    <arxiv:comment>9 pages, 6 figures. Accepted at International Conference on Intelligent Digitization of Systems and Services (IDSS 2026)</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Joshua Castillo</name>
+    </author>
+    <author>
+      <name>Ravi Mukkamala</name>
+    </author>
+  </entry>
+</feed>

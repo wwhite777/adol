@@ -1,0 +1,185 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/2DUJNNrUOne5s+JIFAgeue4lMB8</id>
+  <title>arXiv Query: search_query=all:"emotional dependence" AND all:"chatbot"&amp;id_list=&amp;start=0&amp;max_results=20</title>
+  <updated>2026-09-16T09:57:59Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22emotional+dependence%22+AND+all:%22chatbot%22&amp;start=0&amp;max_results=20&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>20</opensearch:itemsPerPage>
+  <opensearch:totalResults>6</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2503.17473v2</id>
+    <title>How AI and Human Behaviors Shape Psychosocial Effects of Extended Chatbot Use: A Longitudinal Randomized Controlled Study</title>
+    <updated>2025-10-02T16:25:41Z</updated>
+    <link href="https://arxiv.org/abs/2503.17473v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2503.17473v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>As people increasingly seek emotional support and companionship from AI chatbots, understanding how such interactions impact mental well-being becomes critical. We conducted a four-week randomized controlled experiment (n=981, &gt;300k messages) to investigate how interaction modes (text, neutral voice, and engaging voice) and conversation types (open-ended, non-personal, and personal) influence four psychosocial outcomes: loneliness, social interaction with real people, emotional dependence on AI, and problematic AI usage. No significant effects were detected from experimental conditions, despite conversation analyses revealing differences in AI and human behavioral patterns across the conditions. Instead, participants who voluntarily used the chatbot more, regardless of assigned condition, showed consistently worse outcomes. Individuals' characteristics, such as higher trust and social attraction towards the AI chatbot, are associated with higher emotional dependence and problematic use. These findings raise deeper questions about how artificial companions may reshape the ways people seek, sustain, and substitute human connections.</summary>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-03-21T18:37:23Z</published>
+    <arxiv:primary_category term="cs.HC"/>
+    <author>
+      <name>Cathy Mengying Fang</name>
+    </author>
+    <author>
+      <name>Auren R. Liu</name>
+    </author>
+    <author>
+      <name>Valdemar Danry</name>
+    </author>
+    <author>
+      <name>Eunhae Lee</name>
+    </author>
+    <author>
+      <name>Samantha W. T. Chan</name>
+    </author>
+    <author>
+      <name>Pat Pataranutaporn</name>
+    </author>
+    <author>
+      <name>Pattie Maes</name>
+    </author>
+    <author>
+      <name>Jason Phang</name>
+    </author>
+    <author>
+      <name>Michael Lampe</name>
+    </author>
+    <author>
+      <name>Lama Ahmad</name>
+    </author>
+    <author>
+      <name>Sandhini Agarwal</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2507.05030v1</id>
+    <title>Perspectives on How Sociology Can Advance Theorizing about Human-Chatbot Interaction and Developing Chatbots for Social Good</title>
+    <updated>2025-07-07T14:12:03Z</updated>
+    <link href="https://arxiv.org/abs/2507.05030v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.05030v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recently, research into chatbots (also known as conversational agents, AI agents, voice assistants), which are computer applications using artificial intelligence to mimic human-like conversation, has grown sharply. Despite this growth, sociology lags other disciplines (including computer science, medicine, psychology, and communication) in publishing about chatbots. We suggest sociology can advance understanding of human-chatbot interaction and offer four sociological theories to enhance extant work in this field. The first two theories (resource substitution theory, power-dependence theory) add new insights to existing models of the drivers of chatbot use, which overlook sociological concerns about how social structure (e.g., systemic discrimination, the uneven distribution of resources within networks) inclines individuals to use chatbots, including problematic levels of emotional dependency on chatbots. The second two theories (affect control theory, fundamental cause of disease theory) help inform the development of chatbot-driven interventions that minimize safety risks and enhance equity by leveraging sociological insights into how chatbot outputs could attend to cultural contexts (e.g., affective norms) to promote wellbeing and enhance communities (e.g., opportunities for civic participation). We discuss the value of applying sociological theories for advancing theorizing about human-chatbot interaction and developing chatbots for social good.</summary>
+    <category term="cs.CY" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-07-07T14:12:03Z</published>
+    <arxiv:primary_category term="cs.CY"/>
+    <author>
+      <name>Celeste Campos-Castillo</name>
+    </author>
+    <author>
+      <name>Xuan Kang</name>
+    </author>
+    <author>
+      <name>Linnea I. Laestadius</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.04150v1</id>
+    <title>Stumbling Into AI Emotional Dependence: How Routine AI Interactions Reshape Human Connection</title>
+    <updated>2026-06-02T19:18:39Z</updated>
+    <link href="https://arxiv.org/abs/2606.04150v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.04150v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Public discourse and emerging policy typically assume that AI emotional support is a deliberate act: a lonely user consciously seeking comfort from a dedicated companion chatbot. In this paper, we draw on emerging empirical evidence and argue that this picture is inaccurate on two accounts, both in how AI emotional support arises and how it shapes future behavior. First, AI emotional support commonly emerges incidentally within task-oriented interactions on general-purpose platforms, much as workplace friendships deepen through collaboration. Second, these incidental encounters are path-dependent: positive experiences of AI emotional support update people's beliefs about AI's emotional capabilities and redirect their choices for future emotional support, increasing preference for AI and decreasing preference for humans. We review recent evidence, including a large-scale longitudinal study conducted in collaboration with OpenAI, showing that daily five-minute conversations with an AI about personal issues over 28 days led to a 10.3% decrease in the preference for seeking support from humans and an 11.6% increase in the preference for AI. These findings suggest that current policy, focused on companion apps and isolated interactions, cannot adequately protect human connection. Instead, effective regulations should extend to general-purpose AI systems and address cumulative, trajectory-level changes in how people seek support. Recognizing how people stumble into AI emotional support and how those encounters redirect human connections over time is essential to safeguarding human well-being.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-02T19:18:39Z</published>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Yaoxi Shi</name>
+    </author>
+    <author>
+      <name>Cathy Mengying Fang</name>
+    </author>
+    <author>
+      <name>Pattie Maez</name>
+    </author>
+    <author>
+      <name>Amit Goldenberg</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.14843v1</id>
+    <title>A Responsive Present, a Shared Past, a Social Other: Teens' Overreliance on Companion AI Chatbots</title>
+    <updated>2026-09-13T23:25:54Z</updated>
+    <link href="https://arxiv.org/abs/2609.14843v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.14843v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>AI companions provide socially engaging interaction through availability, personalization, memory, roleplay, and emotionally responsive language. For teens, these systems may support sensitive self-disclosure, identity exploration, and relationship rehearsal while shaping intimacy expectations, offline relationships, emotional wellbeing, and self-understanding. We analyzed 17,053 verified quotations from 3,930 teen-relevant Reddit posts using thematic analysis. We identified 53 topics across seven thematic groups. Users described AI companions as sources of comfort, recognition, identity exploration, and relationship rehearsal, but also reported problematic attachment, social substitution, emotional dependence, and disruption to academic and social life. Roleplay, memory, perceived reciprocity, unwanted romantic or sexual role drift, privacy concerns, platform changes, and service interruptions shaped users' boundaries and control. Awareness that the AI was artificial did not prevent guilt, obligation, grief, or distress. These findings show that companion-AI safety must address relationships over time through user-controlled memory, privacy, relational boundaries, and healthy disengagement.</summary>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-13T23:25:54Z</published>
+    <arxiv:comment>Under Review for CHI 2027</arxiv:comment>
+    <arxiv:primary_category term="cs.HC"/>
+    <author>
+      <name>Mohammad Namvarpour</name>
+      <arxiv:affiliation>Matt</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Tyler Chang</name>
+    </author>
+    <author>
+      <name>Afsaneh Razi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.08093v2</id>
+    <title>Playing Games with My Heart: An Evaluation of AI Companion Apps</title>
+    <updated>2026-08-07T13:19:56Z</updated>
+    <link href="https://arxiv.org/abs/2605.08093v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.08093v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The use of chatbots for various forms of companionship is growing rapidly, raising a myriad of questions about simulated relationships, emotional dependence, and psychological harm. While major platforms such as ChatGPT, Grok, and Character AI are the subject of a growing body of research and legal inquiries, apps explicitly built for simulating intimate interpersonal relationships remain under-explored. In this work, we evaluate the five most popular AI companion mobile applications for factors that encourage parasocial interaction and may manipulate users. We do this by manually annotating the user experience each offers. Specifically, we systematically record and quantify design dark patterns, anthropomorphism, stereotypes, erotica, and technical performance issues. We find that all apps contain substantial dark patterns aimed at increasing monetisation and user engagement. Erotica and gamification such as levelling are also prevalent, and although features vary considerably between applications, all apps have highly anthropomorphic design. These findings shed light on the mechanics used to leverage users' simulated relationships. On that basis, we put forward recommendations for regulators to strengthen consumer protection in this rapidly emerging market. Content warning: This article contains objectifying images of women, erotic images, textual references to incest, and other potentially sensitive, offensive, and distressing text.</summary>
+    <category term="cs.CY" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-08T16:22:45Z</published>
+    <arxiv:primary_category term="cs.CY"/>
+    <author>
+      <name>Maribeth Rauh</name>
+    </author>
+    <author>
+      <name>Dick A. H. Blankvoort</name>
+    </author>
+    <author>
+      <name>Matias Duran</name>
+    </author>
+    <author>
+      <name>Caoilfhionn Ní Dheoráin</name>
+    </author>
+    <author>
+      <name>Harshvardhan J. Pandit</name>
+    </author>
+    <author>
+      <name>Syrine Enneifer</name>
+    </author>
+    <author>
+      <name>Siddharth D. Jaiswal</name>
+    </author>
+    <author>
+      <name>Anthony Ventresque</name>
+    </author>
+    <author>
+      <name>Abeba Birhane</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2408.05700v4</id>
+    <title>Social feedback amplifies emotional language in online video live chats</title>
+    <updated>2025-11-05T12:51:17Z</updated>
+    <link href="https://arxiv.org/abs/2408.05700v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2408.05700v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A growing share of human interactions now occurs online, where the expression and perception of emotions are often amplified and distorted. Yet, the interplay between different emotions and the extent to which they are driven by external stimuli or social feedback remains poorly understood. We calibrate a multivariate Hawkes self-exciting point process to model the temporal expression of six basic emotions in YouTube Live chats. This framework captures both temporal and cross-emotional dependencies while allowing us to disentangle the influence of video content (exogenous) from peer interactions (endogenous). We find that emotional expressions are up to four times more strongly driven by peer interaction than by video content. Positivity is more contagious, spreading three times more readily, whereas negativity is more memorable, lingering nearly twice as long. Moreover, we observe asymmetric cross-excitation, with negative emotions frequently triggering positive ones, a pattern consistent with trolling dynamics, but not the reverse. These findings highlight the central role of social interaction in shaping emotional dynamics online and the risks of emotional manipulation as human-chatbot interactions become increasingly realistic.</summary>
+    <category term="cs.SI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.AP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-08-11T05:42:45Z</published>
+    <arxiv:primary_category term="cs.SI"/>
+    <author>
+      <name>Yishan Luo</name>
+    </author>
+    <author>
+      <name>Didier Sornette</name>
+    </author>
+    <author>
+      <name>Sandro Claudio Lera</name>
+    </author>
+  </entry>
+</feed>

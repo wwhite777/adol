@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/8/Zj+hce0XxOPTTggMRWKosrxTc</id>
+  <title>arXiv Query: search_query=ti:"HarmBench"&amp;id_list=&amp;start=0&amp;max_results=5</title>
+  <updated>2026-09-16T09:57:02Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=ti:%22HarmBench%22&amp;start=0&amp;max_results=5&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>5</opensearch:itemsPerPage>
+  <opensearch:totalResults>2</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2602.12316v2</id>
+    <title>GT-HarmBench: Benchmarking AI Safety Risks Through the Lens of Game Theory</title>
+    <updated>2026-05-22T00:32:35Z</updated>
+    <link href="https://arxiv.org/abs/2602.12316v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.12316v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Frontier AI systems are increasingly capable and deployed in high-stakes multi-agent environments. However, existing AI safety benchmarks largely evaluate single agents, leaving multi-agent risks such as coordination failure and conflict poorly understood. We introduce GT-HarmBench, a benchmark of 1,535 high-stakes scenarios spanning game-theoretic structures such as the Prisoner's Dilemma, Stag Hunt and Chicken. Scenarios are drawn from realistic AI risk contexts in the MIT AI Risk Repository. Across 15 frontier models, agents fail to choose socially beneficial actions in 38% of high-stakes cases, such as military escalation, election manipulation, and medical malpractice. We measure sensitivity to game-theoretic prompt framing and ordering, and analyze reasoning patterns driving failures. We further show that game-theoretic interventions improve socially beneficial outcomes by up to 18%. Our results highlight substantial reliability gaps and provide a broad standardized testbed for studying alignment in multi-agent environments. The benchmark and code are available at https://github.com/causalNLP/gt-harmbench.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CY" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.GT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.MA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-12T17:29:52Z</published>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Pepijn Cobben</name>
+    </author>
+    <author>
+      <name>Xuanqiang Angelo Huang</name>
+    </author>
+    <author>
+      <name>Thao Amelia Pham</name>
+    </author>
+    <author>
+      <name>Isabel Dahlgren</name>
+    </author>
+    <author>
+      <name>Terry Jingchen Zhang</name>
+    </author>
+    <author>
+      <name>Zhijing Jin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2402.04249v2</id>
+    <title>HarmBench: A Standardized Evaluation Framework for Automated Red Teaming and Robust Refusal</title>
+    <updated>2024-02-27T04:43:08Z</updated>
+    <link href="https://arxiv.org/abs/2402.04249v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2402.04249v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Automated red teaming holds substantial promise for uncovering and mitigating the risks associated with the malicious use of large language models (LLMs), yet the field lacks a standardized evaluation framework to rigorously assess new methods. To address this issue, we introduce HarmBench, a standardized evaluation framework for automated red teaming. We identify several desirable properties previously unaccounted for in red teaming evaluations and systematically design HarmBench to meet these criteria. Using HarmBench, we conduct a large-scale comparison of 18 red teaming methods and 33 target LLMs and defenses, yielding novel insights. We also introduce a highly efficient adversarial training method that greatly enhances LLM robustness across a wide range of attacks, demonstrating how HarmBench enables codevelopment of attacks and defenses. We open source HarmBench at https://github.com/centerforaisafety/HarmBench.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-02-06T18:59:08Z</published>
+    <arxiv:comment>Website: https://www.harmbench.org</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Mantas Mazeika</name>
+    </author>
+    <author>
+      <name>Long Phan</name>
+    </author>
+    <author>
+      <name>Xuwang Yin</name>
+    </author>
+    <author>
+      <name>Andy Zou</name>
+    </author>
+    <author>
+      <name>Zifan Wang</name>
+    </author>
+    <author>
+      <name>Norman Mu</name>
+    </author>
+    <author>
+      <name>Elham Sakhaee</name>
+    </author>
+    <author>
+      <name>Nathaniel Li</name>
+    </author>
+    <author>
+      <name>Steven Basart</name>
+    </author>
+    <author>
+      <name>Bo Li</name>
+    </author>
+    <author>
+      <name>David Forsyth</name>
+    </author>
+    <author>
+      <name>Dan Hendrycks</name>
+    </author>
+  </entry>
+</feed>

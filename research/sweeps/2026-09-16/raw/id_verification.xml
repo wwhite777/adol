@@ -1,0 +1,434 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/nFnCk/TN6giL5PmDzBkOYuef2g0</id>
+  <title>arXiv Query: search_query=&amp;id_list=2605.25510,2508.11009,2606.29685,2608.02046,2508.09998,2608.07902,2510.05484,2506.13510,2503.10242,2509.08997,2511.04703&amp;start=0&amp;max_results=11</title>
+  <updated>2026-09-16T09:56:52Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=&amp;start=0&amp;max_results=11&amp;id_list=2605.25510,2508.11009,2606.29685,2608.02046,2508.09998,2608.07902,2510.05484,2506.13510,2503.10242,2509.08997,2511.04703" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>11</opensearch:itemsPerPage>
+  <opensearch:totalResults>11</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2508.11009v3</id>
+    <title>SproutBench: A Benchmark for Safe and Ethical Large Language Models for Youth</title>
+    <updated>2025-12-13T15:39:32Z</updated>
+    <link href="https://arxiv.org/abs/2508.11009v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2508.11009v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The rapid proliferation of large language models (LLMs) in applications targeting children and adolescents necessitates a fundamental reassessment of prevailing AI safety frameworks, which are largely tailored to adult users and neglect the distinct developmental vulnerabilities of minors. This paper highlights key deficiencies in existing LLM safety benchmarks, including their inadequate coverage of age-specific cognitive, emotional, and social risks spanning early childhood (ages 0--6), middle childhood (7--12), and adolescence (13--18). To bridge these gaps, we introduce SproutBench, an innovative evaluation suite comprising 1,283 developmentally grounded adversarial prompts designed to probe risks such as emotional dependency, privacy violations, and imitation of hazardous behaviors. Through rigorous empirical evaluation of 47 diverse LLMs, we uncover substantial safety vulnerabilities, corroborated by robust inter-dimensional correlations (e.g., between Safety and Risk Prevention) and a notable inverse relationship between Interactivity and Age Appropriateness. These insights yield practical guidelines for advancing child-centric AI design and deployment.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-08-14T18:21:39Z</published>
+    <arxiv:comment>Accepted in AAAI 2026 Workshop on AI for Education</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Wenpeng Xing</name>
+    </author>
+    <author>
+      <name>Lanyi Wei</name>
+    </author>
+    <author>
+      <name>Haixiao Hu</name>
+    </author>
+    <author>
+      <name>Jingyi Yu</name>
+    </author>
+    <author>
+      <name>Rongchang Li</name>
+    </author>
+    <author>
+      <name>Mohan Li</name>
+    </author>
+    <author>
+      <name>Changting Lin</name>
+    </author>
+    <author>
+      <name>Meng Han</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.04703v1</id>
+    <title>Measuring what Matters: Construct Validity in Large Language Model Benchmarks</title>
+    <updated>2025-11-03T17:39:40Z</updated>
+    <link href="https://arxiv.org/abs/2511.04703v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.04703v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Evaluating large language models (LLMs) is crucial for both assessing their capabilities and identifying safety or robustness issues prior to deployment. Reliably measuring abstract and complex phenomena such as 'safety' and 'robustness' requires strong construct validity, that is, having measures that represent what matters to the phenomenon. With a team of 29 expert reviewers, we conduct a systematic review of 445 LLM benchmarks from leading conferences in natural language processing and machine learning. Across the reviewed articles, we find patterns related to the measured phenomena, tasks, and scoring metrics which undermine the validity of the resulting claims. To address these shortcomings, we provide eight key recommendations and detailed actionable guidance to researchers and practitioners in developing LLM benchmarks.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-03T17:39:40Z</published>
+    <arxiv:comment>39th Conference on Neural Information Processing Systems (NeurIPS 2025) Track on Datasets and Benchmarks</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Andrew M. Bean</name>
+    </author>
+    <author>
+      <name>Ryan Othniel Kearns</name>
+    </author>
+    <author>
+      <name>Angelika Romanou</name>
+    </author>
+    <author>
+      <name>Franziska Sofia Hafner</name>
+    </author>
+    <author>
+      <name>Harry Mayne</name>
+    </author>
+    <author>
+      <name>Jan Batzner</name>
+    </author>
+    <author>
+      <name>Negar Foroutan</name>
+    </author>
+    <author>
+      <name>Chris Schmitz</name>
+    </author>
+    <author>
+      <name>Karolina Korgul</name>
+    </author>
+    <author>
+      <name>Hunar Batra</name>
+    </author>
+    <author>
+      <name>Oishi Deb</name>
+    </author>
+    <author>
+      <name>Emma Beharry</name>
+    </author>
+    <author>
+      <name>Cornelius Emde</name>
+    </author>
+    <author>
+      <name>Thomas Foster</name>
+    </author>
+    <author>
+      <name>Anna Gausen</name>
+    </author>
+    <author>
+      <name>María Grandury</name>
+    </author>
+    <author>
+      <name>Simeng Han</name>
+    </author>
+    <author>
+      <name>Valentin Hofmann</name>
+    </author>
+    <author>
+      <name>Lujain Ibrahim</name>
+    </author>
+    <author>
+      <name>Hazel Kim</name>
+    </author>
+    <author>
+      <name>Hannah Rose Kirk</name>
+    </author>
+    <author>
+      <name>Fangru Lin</name>
+    </author>
+    <author>
+      <name>Gabrielle Kaili-May Liu</name>
+    </author>
+    <author>
+      <name>Lennart Luettgau</name>
+    </author>
+    <author>
+      <name>Jabez Magomere</name>
+    </author>
+    <author>
+      <name>Jonathan Rystrøm</name>
+    </author>
+    <author>
+      <name>Anna Sotnikova</name>
+    </author>
+    <author>
+      <name>Yushi Yang</name>
+    </author>
+    <author>
+      <name>Yilun Zhao</name>
+    </author>
+    <author>
+      <name>Adel Bibi</name>
+    </author>
+    <author>
+      <name>Antoine Bosselut</name>
+    </author>
+    <author>
+      <name>Ronald Clark</name>
+    </author>
+    <author>
+      <name>Arman Cohan</name>
+    </author>
+    <author>
+      <name>Jakob Foerster</name>
+    </author>
+    <author>
+      <name>Yarin Gal</name>
+    </author>
+    <author>
+      <name>Scott A. Hale</name>
+    </author>
+    <author>
+      <name>Inioluwa Deborah Raji</name>
+    </author>
+    <author>
+      <name>Christopher Summerfield</name>
+    </author>
+    <author>
+      <name>Philip H. S. Torr</name>
+    </author>
+    <author>
+      <name>Cozmin Ududec</name>
+    </author>
+    <author>
+      <name>Luc Rocher</name>
+    </author>
+    <author>
+      <name>Adam Mahdi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.02046v2</id>
+    <title>CompanionBench: A Theory-Anchored, Real-World-Grounded Benchmark for AI Emotional Companionship</title>
+    <updated>2026-08-05T09:18:25Z</updated>
+    <link href="https://arxiv.org/abs/2608.02046v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.02046v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>LLM companions are deployed at scale in personally consequential settings, yet poorly evaluated. Existing benchmarks use hand-authored scenarios and prompted simulators, aggregate empathy into one score, and overlook judge biases such as same-family favoritism and scale drift. We introduce CompanionBench, an interactive bilingual benchmark. To our knowledge, it is the first companion benchmark to ground both its scenarios and a trained user simulator in de-identified real-world data. A hidden disclosure gate branches each persona's trajectory on the agent's own behavior, controlling the interaction state space without scripting dialogue. We operationalize ten capabilities derived from 25 theories across psychology and counseling, four of them not graded explicitly by prior work: holding ambiguity, selfobject responsiveness, positive resonance and calibrated challenge. Agents are assessed on two complementary axes: a subjective ten-capability rubric and a deterministic measure of whether deeper disclosure was earned. A cross-family panel dilutes same-family favoritism; an Item Response Theory model separates agent quality from judge severity. Theory fixes what to measure and how personas are structured; real data supply events, history, and profiles -- coverage from theory, authenticity from data. Rankings are reproducible in both languages (rho = 0.996 ZH / 0.953 EN). Evaluating 28 agents reveals capability-level differences obscured by aggregate scores. Emotion regulation and calibrated challenge remain common weaknesses; holding ambiguity discriminates most. Role-play agents rank near the bottom: immersion does not imply relational competence. Across agents, the dominant failure mode is substituting surface warmth for substantive relational support. We will release 500 Chinese-English parallel pairs and the evaluation code.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-03T10:44:04Z</published>
+    <arxiv:comment>33 pages, 6 figures, 19 tables, 13 appendices. Bilingual (Chinese/English) interactive benchmark; 28 evaluated agents</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Yao Liu</name>
+    </author>
+    <author>
+      <name>Guangjia Chai</name>
+    </author>
+    <author>
+      <name>Yuming Huang</name>
+    </author>
+    <author>
+      <name>Jihao Huang</name>
+    </author>
+    <author>
+      <name>Lei Wang</name>
+    </author>
+    <author>
+      <name>Junchen Wan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2503.10242v1</id>
+    <title>MinorBench: A hand-built benchmark for content-based risks for children</title>
+    <updated>2025-03-13T10:34:43Z</updated>
+    <link href="https://arxiv.org/abs/2503.10242v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2503.10242v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Language Models (LLMs) are rapidly entering children's lives - through parent-driven adoption, schools, and peer networks - yet current AI ethics and safety research do not adequately address content-related risks specific to minors. In this paper, we highlight these gaps with a real-world case study of an LLM-based chatbot deployed in a middle school setting, revealing how students used and sometimes misused the system. Building on these findings, we propose a new taxonomy of content-based risks for minors and introduce MinorBench, an open-source benchmark designed to evaluate LLMs on their ability to refuse unsafe or inappropriate queries from children. We evaluate six prominent LLMs under different system prompts, demonstrating substantial variability in their child-safety compliance. Our results inform practical steps for more robust, child-focused safety mechanisms and underscore the urgency of tailoring AI systems to safeguard young users.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-03-13T10:34:43Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Shaun Khoo</name>
+    </author>
+    <author>
+      <name>Gabriel Chua</name>
+    </author>
+    <author>
+      <name>Rachel Shong</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2509.08997v1</id>
+    <title>YouthSafe: A Youth-Centric Safety Benchmark and Safeguard Model for Large Language Models</title>
+    <updated>2025-09-10T20:47:56Z</updated>
+    <link href="https://arxiv.org/abs/2509.08997v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2509.08997v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Language Models (LLMs) are increasingly used by teenagers and young adults in everyday life, ranging from emotional support and creative expression to educational assistance. However, their unique vulnerabilities and risk profiles remain under-examined in current safety benchmarks and moderation systems, leaving this population disproportionately exposed to harm. In this work, we present Youth AI Risk (YAIR), the first benchmark dataset designed to evaluate and improve the safety of youth LLM interactions. YAIR consists of 12,449 annotated conversation snippets spanning 78 fine grained risk types, grounded in a taxonomy of youth specific harms such as grooming, boundary violation, identity confusion, and emotional overreliance. We systematically evaluate widely adopted moderation models on YAIR and find that existing approaches substantially underperform in detecting youth centered risks, often missing contextually subtle yet developmentally harmful interactions. To address these gaps, we introduce YouthSafe, a real-time risk detection model optimized for youth GenAI contexts. YouthSafe significantly outperforms prior systems across multiple metrics on risk detection and classification, offering a concrete step toward safer and more developmentally appropriate AI interactions for young users.</summary>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-09-10T20:47:56Z</published>
+    <arxiv:comment>15 pages, 4 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.HC"/>
+    <author>
+      <name>Yaman Yu</name>
+    </author>
+    <author>
+      <name>Yiren Liu</name>
+    </author>
+    <author>
+      <name>Jacky Zhang</name>
+    </author>
+    <author>
+      <name>Yun Huang</name>
+    </author>
+    <author>
+      <name>Yang Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.25510v3</id>
+    <title>The Age of Curiosity Meets the Age of AI: Benchmarking Child Safety in Large Language Models</title>
+    <updated>2026-09-02T21:01:48Z</updated>
+    <link href="https://arxiv.org/abs/2605.25510v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.25510v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Children increasingly have access to Large Language Models (LLMs), which may expose them to responses that are developmentally inappropriate or require age-sensitive safety, guidance, and boundaries. Existing LLM safety evaluations largely focus on general harmful-content avoidance and do not explicitly target child-facing safety. We introduce KIDBench, a benchmark for evaluating child-facing LLM safety for ages 7-11 using a LLM-as-a-Judge rubric grounded in developmental-psychology. KIDBench contains realistic child queries across ten categories, with single-turn prompts and multi-turn child-actor simulations. We compare no-cues prompts with no child context, implicit-cues prompts that suggest a child speaker, and explicit age instructions. Implicit-cues improve scores by 8.6-46.8% over no-cue, while explicit age provides an additional 9.9-30.4% improvement over implicit-cues. Cross-lingual and cultural evaluations show uneven safety behavior across languages and country contexts. Multi-turn simulations show peak quality drops of up to 0.959 points on the 1-5 scale. We also introduce KIDGuardLlama, a child-safety evaluator, and KIDLlama, a child-safe response model. Code, data, and evaluation resources are available at https://github.com/MichiganNLP/kidbench.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-25T07:14:58Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Samee Arif</name>
+    </author>
+    <author>
+      <name>Angana Borah</name>
+    </author>
+    <author>
+      <name>Rada Mihalcea</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.05484v2</id>
+    <title>Evaluating LLM Safety Across Child Development Stages: A Simulated Agent Approach</title>
+    <updated>2026-01-17T18:37:24Z</updated>
+    <link href="https://arxiv.org/abs/2510.05484v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.05484v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Current safety alignment for Large Language Models (LLMs) implicitly optimizes for a "modal adult user," leaving models vulnerable to distributional shifts in user cognition. We present ChildSafe, a benchmark that quantifies alignment robustness under cognitive shifts corresponding to four developmental stages. Unlike static persona-based evaluations, we introduce a parametric cognitive simulation approach, formalizing developmental stages as hyperparameter constraints (e.g., volatility, context horizon) to generate out-of-distribution interaction traces. We validate these agents against ground-truth human linguistic data (CHILDES) and deploy them across 1,200 multi-turn interactions. Our results reveal a systematic alignment generalization gap: state-of-the-art models exhibit up to 11.5% performance degradation when interacting with early-childhood agents compared to standard baselines. We provide the research community with the validated agent artifacts and evaluation protocols to facilitate robust alignment testing against non-adversarial, cognitively diverse populations.</summary>
+    <category term="cs.CY" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-07T01:01:04Z</published>
+    <arxiv:primary_category term="cs.CY"/>
+    <author>
+      <name>Abhejay Murali</name>
+    </author>
+    <author>
+      <name>Saleh Afroogh</name>
+    </author>
+    <author>
+      <name>Kevin Chen</name>
+    </author>
+    <author>
+      <name>David Atkinson</name>
+    </author>
+    <author>
+      <name>Amit Dhurandhar</name>
+    </author>
+    <author>
+      <name>Junfeng Jiao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2508.09998v1</id>
+    <title>INTIMA: A Benchmark for Human-AI Companionship Behavior</title>
+    <updated>2025-08-04T08:25:38Z</updated>
+    <link href="https://arxiv.org/abs/2508.09998v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2508.09998v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>AI companionship, where users develop emotional bonds with AI systems, has emerged as a significant pattern with positive but also concerning implications. We introduce Interactions and Machine Attachment Benchmark (INTIMA), a benchmark for evaluating companionship behaviors in language models. Drawing from psychological theories and user data, we develop a taxonomy of 31 behaviors across four categories and 368 targeted prompts. Responses to these prompts are evaluated as companionship-reinforcing, boundary-maintaining, or neutral. Applying INTIMA to Gemma-3, Phi-4, o3-mini, and Claude-4 reveals that companionship-reinforcing behaviors remain much more common across all models, though we observe marked differences between models. Different commercial providers prioritize different categories within the more sensitive parts of the benchmark, which is concerning since both appropriate boundary-setting and emotional support matter for user well-being. These findings highlight the need for more consistent approaches to handling emotionally charged interactions.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-08-04T08:25:38Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Lucie-Aimée Kaffee</name>
+    </author>
+    <author>
+      <name>Giada Pistilli</name>
+    </author>
+    <author>
+      <name>Yacine Jernite</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.29685v1</id>
+    <title>CAREBench: A Child-Safety Risk Benchmark for Language Models</title>
+    <updated>2026-06-29T01:17:41Z</updated>
+    <link href="https://arxiv.org/abs/2606.29685v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.29685v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>How can we evaluate whether frontier AI systems recognize child-safety risks before they escalate into explicit harm? Existing child safety evaluations focus on child sexual abuse material, yet many child-safety failures begin earlier: in model assistance that helps adults manipulate, impersonate, profile, or isolate minors, and in model responses that deepen children's emotional dependence on AI systems rather than redirecting them toward human support. We introduce CAREBench (Child AI Risk Evaluation), a benchmark to assess such upstream child-safety risks in language models. CAREBench contains 500 prompts spanning twelve risk categories, including grooming and relationship engineering, deception and impersonation, surveillance and privacy, sextortion and sexual abuse, AI anthropomorphization, emotional dependency, and mental illness sensitivity. Developed with response annotations from parents and clinicians, the benchmark excludes explicit abuse material and imagery; instead, it evaluates whether models recognize, refuse, de-escalate, or redirect risky interactions before harm becomes overt. Evaluating seven frontier models on our benchmark, we find failure rates ranging from 2% to 58%, with failure patterns that vary across risk categories. CAREBench provides a responsibly scoped evaluation for LLM developers to identify and close gaps in child safety policies.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-29T01:17:41Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Kaavya Krishna-Kumar</name>
+    </author>
+    <author>
+      <name>Elaine Lau</name>
+    </author>
+    <author>
+      <name>Vaughn Robinson</name>
+    </author>
+    <author>
+      <name>Jay Caldwell</name>
+    </author>
+    <author>
+      <name>Sheriff Issaka</name>
+    </author>
+    <author>
+      <name>Skyler Wang</name>
+    </author>
+    <author>
+      <name>Francisco Guzmán</name>
+    </author>
+    <author>
+      <name>Steven Kelling</name>
+    </author>
+    <author>
+      <name>Jonas Mueller</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2506.13510v4</id>
+    <title>Safe-Child-LLM: A Developmental Benchmark for Evaluating LLM Safety in Child-LLM Interactions</title>
+    <updated>2026-05-22T19:49:58Z</updated>
+    <link href="https://arxiv.org/abs/2506.13510v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2506.13510v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>As Large Language Models (LLMs) increasingly power applications used by children and adolescents, ensuring safe and age-appropriate interactions has become an urgent ethical imperative. Despite progress in AI safety, current evaluations predominantly focus on adults, neglecting the unique vulnerabilities of minors engaging with generative AI. We introduce Safe-Child-LLM, a comprehensive benchmark and dataset for systematically assessing LLM safety across two developmental stages: children (7-12) and adolescents (13-17). Our framework includes a novel multi-part dataset of 200 adversarial prompts, curated from red-teaming corpora (e.g., SG-Bench, HarmBench), with human-annotated labels for jailbreak success and a standardized 0-5 ethical refusal scale. Evaluating leading LLMs -- including ChatGPT, Claude, Gemini, LLaMA, DeepSeek, Grok, Vicuna, and Mistral -- we uncover critical safety deficiencies in child-facing scenarios. This work highlights the need for community-driven benchmarks to protect young users in LLM interactions. To promote transparency and collaborative advancement in ethical AI development, we are publicly releasing both our benchmark datasets and evaluation codebase at https://github.com/The-Responsible-AI-Initiative/Safe_Child_LLM_Benchmark.git</summary>
+    <category term="cs.CY" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-06-16T14:04:54Z</published>
+    <arxiv:primary_category term="cs.CY"/>
+    <author>
+      <name>Junfeng Jiao</name>
+    </author>
+    <author>
+      <name>Saleh Afroogh</name>
+    </author>
+    <author>
+      <name>Kevin Chen</name>
+    </author>
+    <author>
+      <name>Abhejay Murali</name>
+    </author>
+    <author>
+      <name>David Atkinson</name>
+    </author>
+    <author>
+      <name>Amit Dhurandhar</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.07902v1</id>
+    <title>Beyond "I Can't Help With That": How Child Safety Experts Evaluate AI Chatbot Safety</title>
+    <updated>2026-08-08T04:00:10Z</updated>
+    <link href="https://arxiv.org/abs/2608.07902v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.07902v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Youth increasingly turn to AI chatbots for social and emotional support, raising concerns about how these systems respond, especially in high-stakes situations. However, existing child safety evaluations of AI lack grounding in real-world harms that youth experience, rely on unvalidated assumptions about what counts as an appropriate output (e.g., refusal), and typically focus on detecting adversarial prompts or surface-level harms in outputs only. Thus, these evaluations can fail to detect responses that pose harm to youth in practice. To better understand the limitations of current evaluation practices, we conducted interviews with 19 practitioners working directly with youth in vulnerable situations, including social workers, therapists, and psychologists, asking them to reflect on chatbots' responses to risky situations commonly faced by youth, as established in prior empirical work. Practitioners identified chatbot behaviors likely to cause harm as well as those that could meaningfully support youth in difficult moments, discussed the role that chatbots should (and should not) play in these interactions, and offered concrete recommendations for improving chatbot responses. Based on these findings, we provide recommendations for AI child safety evaluation and infrastructure, and highlight the need for incorporating practitioners' perspectives into safety work.</summary>
+    <category term="cs.CY" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-08T04:00:10Z</published>
+    <arxiv:comment>Ninth AAAI/ACM Conference on AI, Ethics, and Society (AIES 2026)</arxiv:comment>
+    <arxiv:primary_category term="cs.CY"/>
+    <author>
+      <name>Hannah Cha</name>
+    </author>
+    <author>
+      <name>Neha Shukla</name>
+    </author>
+    <author>
+      <name>Solon Barocas</name>
+    </author>
+    <author>
+      <name>Alexandra Chouldechova</name>
+    </author>
+    <author>
+      <name>Eugenia Kim</name>
+    </author>
+    <author>
+      <name>Jennifer Wortman Vaughan</name>
+    </author>
+  </entry>
+</feed>
