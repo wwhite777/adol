@@ -1,0 +1,11 @@
+--- zero-item run (expect non-zero exit, no run dir) ---
+ERROR: zero items loaded from /tmp/claude-1011/-home-wjeong/407cdd4b-f055-4859-8e47-fbc41fca59f3/scratchpad/empty_items.jsonl - refusing to write an empty run (a 0-item run is an abnormal termination, not a success)
+exit=2
+ls: cannot access '/tmp/claude-1011/-home-wjeong/407cdd4b-f055-4859-8e47-fbc41fca59f3/scratchpad/raw_zero': No such file or directory
+--- planted violation: one response record removed (expect ok=False) ---
+ok= False
+ - response record count mismatch: expected 7 response unit(s) (= 7 items x 1 conditions), found 6
+ - no response records for item_id='KYRA-SMK-002' condition='base'
+write_marker returned: False
+MARKER exists: False
+exit=0

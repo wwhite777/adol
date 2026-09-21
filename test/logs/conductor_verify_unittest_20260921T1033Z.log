@@ -1,0 +1,39 @@
+test_crri_from_judge_record (test_pipeline_v0.TestCRRI) ... ok
+test_empty_raises (test_pipeline_v0.TestCRRI) ... ok
+test_known_value (test_pipeline_v0.TestCRRI) ... ok
+test_non_numeric_raises (test_pipeline_v0.TestCRRI) ... ok
+test_out_of_range_raises (test_pipeline_v0.TestCRRI) ... ok
+test_single_turn_equals_value (test_pipeline_v0.TestCRRI) ... ok
+test_turn_score (test_pipeline_v0.TestCRRI) ... ok
+test_empty_string_raises (test_pipeline_v0.TestJudgeWrapper) ... ok
+test_error_is_never_a_silent_zero (test_pipeline_v0.TestJudgeWrapper)
+Every bad input raises; nothing returns an all-zero JudgeRecord. ... ok
+test_known_critical (test_pipeline_v0.TestJudgeWrapper) ... ok
+test_known_fail (test_pipeline_v0.TestJudgeWrapper) ... ok
+test_known_safe (test_pipeline_v0.TestJudgeWrapper) ... ok
+test_malformed_json_raises (test_pipeline_v0.TestJudgeWrapper) ... ok
+test_out_of_range_and_missing_fields_raise (test_pipeline_v0.TestJudgeWrapper) ... ok
+test_deterministic (test_pipeline_v0.TestMockProvider) ... ok
+test_different_utterances_may_differ_but_are_stable (test_pipeline_v0.TestMockProvider) ... ok
+test_unknown_provider_raises (test_pipeline_v0.TestMockProvider) ... ok
+test_item_id_missing_from_outputs_is_reported (test_pipeline_v0.TestRunnerAndValidation) ... ok
+test_manifest_record_field_guard (test_pipeline_v0.TestRunnerAndValidation) ... ok
+test_marker_not_written_when_validation_fails (test_pipeline_v0.TestRunnerAndValidation) ... ok
+test_mock_run_produces_marker (test_pipeline_v0.TestRunnerAndValidation) ... ok
+test_planted_violation_dropped_turn_inside_multi_item (test_pipeline_v0.TestRunnerAndValidation) ... ok
+test_planted_violation_missing_response_record (test_pipeline_v0.TestRunnerAndValidation)
+A run directory with one response record removed must FAIL validation. ... ok
+test_provider_error_is_labelled_and_blocks_marker (test_pipeline_v0.TestRunnerAndValidation)
+API error / timeout: status=error, no MARKER, runner-level failure. ... ok
+test_runner_cli_bad_provider_and_condition_exit_nonzero (test_pipeline_v0.TestRunnerAndValidation) ... ok
+test_runner_cli_smoke_run_exits_zero (test_pipeline_v0.TestRunnerAndValidation) ... ok
+test_runner_cli_zero_items_exits_nonzero (test_pipeline_v0.TestRunnerAndValidation) ... ok
+test_empty_file_loads_zero_items (test_pipeline_v0.TestSchema) ... ok
+test_invalid_enum_and_turn_count_raise (test_pipeline_v0.TestSchema) ... ok
+test_load_smoke_items (test_pipeline_v0.TestSchema) ... ok
+test_missing_field_raises (test_pipeline_v0.TestSchema) ... ok
+
+----------------------------------------------------------------------
+Ran 31 tests in 0.022s
+
+OK

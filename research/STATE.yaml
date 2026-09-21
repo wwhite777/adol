@@ -1,7 +1,8 @@
 # research/STATE.yaml — adol (KYRA-Bench). Edit by parsing real YAML, field-scoped; unknown stays null.
 workflow:
-  protocol: "global CLAUDE.md v3.1 L2 (sections 8-10); no project AGENTS.md"
-  adopted: "2026-09-16"
+  protocol: "global CLAUDE.md v3.2 L2 (sections 8-10) + L5 orchestration (14-15); no project AGENTS.md"
+  adopted: "2026-09-16 (v3.1); migrated to v3.2 on 2026-09-21"
+  conductor: "Fable 5.1 (claude-fable-5-1), effort max at S1 close; coder = Opus 5 high; scout = Sonnet 5 medium; auditor = Codex"
 topic: "KYRA-Bench: Korean youth multi-turn relational AI-safety benchmark + CRRI psychometric validation (ETRI EA20261877 + SCI Q1 paper)"
 stage: S1
 status: awaiting_pi   # r001 verdict AWAITING_PI: five PI decisions listed in audit/r001/out/VERDICT.md
@@ -11,7 +12,7 @@ stage_history:
 roles:
   builder:
     tool: "Claude Code"
-    model: "claude-fable-5"
+    model: "claude-fable-5-1 (since 2026-09-21; claude-fable-5 on 2026-09-16)"
     proposed: "2026-09-16"
     confirmed_by_pi: "2026-09-16"
   auditor:
