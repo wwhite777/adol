@@ -30,5 +30,6 @@ ETRI direct ≈ 63.6M KRW total (PI-managed). Claude-relevant caps: API judge ~1
 ## Decisions so far
 2026-09-16 PI: "initiate" from the two uploads; plan v2 operative. Standing (2026-09-11): Korean domestic journals need no cross-family audit.
 
-## Next action (updated 2026-09-16 end of session 2)
-S0 completed (D1–D4 approved). S1 executed and audited: VERDICT r001 = AWAITING_PI. Next: PI takes the five decisions in audit/r001/out/VERDICT.md → builder reconciles the three omitted localization comparators (ROK-FORTRESS 2605.14152, Culturally-Adapted Red-Teaming 2606.09178, CultureConverse 2608.28405), qualifies the matrix rows, rewrites the pitch per F-r001-3/4 → S1 closes → S2 claim contract + freeze (OSF by 10-31).
+## Next action (updated 2026-09-21 end of session 3)
+S0 completed. S1 executed, re-evidenced from 21 full texts, and audited twice: r001 AWAITING_PI → pitch v2 → r002 AWAITING_PI (5/7 prior findings resolved; F-r002-1..4 corrected in v3, unverified). Next: PI takes the SIX decisions in audit/r002/out/VERDICT.md; on the PI's word open r003 (auditor verifies v3) → S1 closes → S2: CONTRIBUTION_CONTRACT.md + PREREGISTERED_kyra_v1.yaml from research/PREREG_TEMPLATE_v1.md with the r002-sharpened contracts (8-turn failure/recovery definitions; transcript-aware baseline; judge-calibration gate with common reference; item-paired lexical benign twins; separate over-refusal / judge-FPR endpoints) — OSF by 10-31. Pipeline v0 skeleton exists (src/kyra, 31 tests); real providers wait on API keys (D2).
+Delegation record (rules §14.4): conductor Fable 5.1 max; scouts Sonnet 5 medium ×4 (full-text extraction); coder Opus 5 high ×1 (pipeline v0); auditor Codex (GPT-6) r002.

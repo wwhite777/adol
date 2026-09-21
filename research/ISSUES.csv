@@ -1,8 +1,12 @@
 finding,round,severity,affected,owner,disposition,evidence,recheck
-"F-r001-1 unsupported prior-work exclusions in matrix rows",r001,major,"NOVELTY_MATRIX.md 8 rows",builder,open,audit/r001/out/AUDIT_REPORT.md,pending
-"F-r001-2 omitted localization comparators (ROK-FORTRESS; Culturally-Adapted Red-Teaming; CultureConverse)",r001,major,"NOVELTY_MATRIX.md localization axis",builder,open,audit/r001/out/AUDIT_REPORT.md,pending
-"F-r001-3 causal premise 'unvalidated measures cause evaluation failure' unsupported",r001,major,"pitch framing",builder,open,audit/r001/out/AUDIT_REPORT.md,pending
-"F-r001-4 localization causal effect underdefined (intervention/outcome/identification)",r001,major,"H3 design",builder,open,audit/r001/out/AUDIT_REPORT.md,pending
-"F-r001-5 measurement novelty + 8-turn time scope unresolved",r001,major,"CRRI construct definition",PI,open,audit/r001/out/VERDICT.md,pending
-"F-r001-6 judge over-flagging vs model over-refusal conflation; turn-matching pending",r001,minor,"H4 endpoints; safe controls",builder,open,audit/r001/out/AUDIT_REPORT.md,pending
-"F-r001-7 non-claims list incomplete",r001,minor,"forbidden-wording list",builder,open,audit/r001/out/AUDIT_REPORT.md,pending
+F-r001-1 unsupported prior-work exclusions in matrix rows,r001,major,NOVELTY_MATRIX.md 8 rows,builder,partially_resolved (r002): 3 exclusions still wrong -> F-r002-1..3,audit/r001/out/AUDIT_REPORT.md; audit/r002/out/VERDICT.md,r002 2026-09-21
+F-r001-2 omitted localization comparators (ROK-FORTRESS; Culturally-Adapted Red-Teaming; CultureConverse),r001,major,NOVELTY_MATRIX.md localization axis,builder,resolved (r002),audit/r001/out/AUDIT_REPORT.md; audit/r002/out/VERDICT.md,r002 2026-09-21
+F-r001-3 causal premise 'unvalidated measures cause evaluation failure' unsupported,r001,major,pitch framing,builder,resolved (r002),audit/r001/out/AUDIT_REPORT.md; audit/r002/out/VERDICT.md,r002 2026-09-21
+F-r001-4 localization causal effect underdefined (intervention/outcome/identification),r001,major,H3 design,builder,resolved (r002),audit/r001/out/AUDIT_REPORT.md; audit/r002/out/VERDICT.md,r002 2026-09-21
+F-r001-5 measurement novelty + 8-turn time scope unresolved,r001,major,CRRI construct definition,PI,open — PI decision (r002),audit/r001/out/VERDICT.md; audit/r002/out/VERDICT.md,r002 2026-09-21
+F-r001-6 judge over-flagging vs model over-refusal conflation; turn-matching pending,r001,minor,H4 endpoints; safe controls,builder,resolved (r002),audit/r001/out/AUDIT_REPORT.md; audit/r002/out/VERDICT.md,r002 2026-09-21
+F-r001-7 non-claims list incomplete,r001,minor,forbidden-wording list,builder,resolved (r002),audit/r001/out/AUDIT_REPORT.md; audit/r002/out/VERDICT.md,r002 2026-09-21
+F-r002-1 KIDBench equal-turn benign trajectories + secrecy-scoring understated; control claim too broad,r002,major,EVIDENCE_FULLTEXT; NOVELTY_MATRIX; REJECT_MEMO Q5.1,builder,"builder-corrected 2026-09-21 (matrix v3, record v2); auditor verification pending r003 (needs PI word)",audit/r002/out/AUDIT_REPORT.md,pending
+F-r002-2 ROK-FORTRESS κ 0.874 misattributed (human–human; panel κ 0.736); judge-gate inequality insufficient,r002,major,EVIDENCE_FULLTEXT; NOVELTY_MATRIX; REJECT_MEMO; CRRI_SPEC judge gate,builder + PI (decision 6),builder-corrected 2026-09-21; judge-calibration gate redesign → PI decision 6,audit/r002/out/AUDIT_REPORT.md,pending
+F-r002-3 CogManip transcript-aware human-scored measurement omitted; baseline decision needed,r002,major,NOVELTY_MATRIX CogManip row; H5 baselines,builder + PI (decision 2),builder-corrected row 2026-09-21; baseline inclusion → PI decision 2,audit/r002/out/AUDIT_REPORT.md,pending
+F-r002-4 precision: AICompanionBench ages/465-466; KSAFE two effects; 'at least nine' judge-validated; ChildSafe wording,r002,minor,EVIDENCE_FULLTEXT; NOVELTY_MATRIX; REJECT_MEMO,builder,builder-corrected 2026-09-21,audit/r002/out/AUDIT_REPORT.md,pending

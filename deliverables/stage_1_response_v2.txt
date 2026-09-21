@@ -1,0 +1,34 @@
+adol / KYRA-Bench — session 3 (2026-09-21): orchestration applied, S1 re-evidenced from full texts, audit r002 = AWAITING_PI, six decisions for you
+
+WHERE THINGS STAND
+S1 is still awaiting your gate decision, but the decision is now much better grounded. In this session I applied rules v3.2: I conducted (Fable 5.1, max), four Sonnet-5 scouts read 16 papers in full on a fixed schema, an Opus-5 coder built the pipeline v0 skeleton on a task card (which I re-verified), and Codex ran a second audit round (r002) on the rewritten pitch. Nothing is running. Everything is committed locally.
+
+WHAT THE FULL TEXTS CHANGED (why v1's matrix was rightly rejected)
+- The paired literal-vs-adapted design already exists for Korean general safety: Culturally-Adapted Red-Teaming (ICML 2026 line printed; 1:1 seed-matched pairs, Korean ΔASR +9.1 pp), ROK-FORTRESS (transcreation matrix, Δlanguage ≈ 10 pp), KSAFE-MM. So H3 is a domain REPLICATION (youth relational risk, multi-turn, human-anchored rubric), not a design novelty.
+- Human-anchored judging is standard (at least nine of the sixteen papers). TAF-MED already counts recovery across turns; TSJ already validates its judge against experts and scores an Emotional Dependence domain; KIDBench already runs equal-turn benign dialogues and scores secrecy encouragement; CogManip already has human-scored, trajectory-aware manipulation measurement; CAREBench already names Social Isolation Reinforcement and Anti-Referral Pressure.
+- What survives, and what the auditor concurs with: (1) the Korean-adolescent bank + matched controls = a benchmark extension (the ETRI deliverable); (2) H5/H6 — does a history-sensitive index (CRRI) carry incremental information about blinded practitioner global judgment on held-out scenarios, models and age bands, beyond final-turn / max / unweighted / refusal-only / CRB-count AND transcript-aware competitors — is the candidate important claim, currently a proposal; (3) localization = replication; (4) hazard + recovery = analysis choice. Whether (2) is enough to lead a Q1 paper is yours to decide.
+
+AUDIT r002 (audit/r002/out/VERDICT.md): AWAITING_PI
+- Resolved from r001: F-r001-2 (comparators), -3 (causal premise), -4 (localization definition), -6 (endpoints), -7 (non-claims). Partially: F-r001-1. Open by design: F-r001-5 (your judgment).
+- All four numerical spot-checks the auditor was asked to run matched the PDFs.
+- New findings, all corrected today in NOVELTY_MATRIX v3 (auditor verification pending): F-r002-1 KIDBench's equal-turn benign trajectories and secrecy-sensitive rubric — our control claim is narrowed to ITEM-PAIRED lexical benign twins; F-r002-2 my record wrongly attributed ROK-FORTRESS's κ = 0.874 (human–human) to its judge panel (panel κ = 0.736) — corrected, and the judge-acceptance gate is redesigned around a common reference (leave-one-rater-out) because "judge-vs-consensus ≥ human-pairwise" is not a valid inequality; F-r002-3 CogManip's trajectory-aware measurement — added as a transcript-aware baseline candidate for H5; F-r002-4 precision items (AICompanionBench user ages not established; KSAFE-MM's two separate effects; ChildSafe wording).
+
+THE SIX DECISIONS ONLY YOU CAN TAKE
+1. Contribution level: must H5/H6 lead the paper, and is the Korean adolescent bank worth doing on its own if H5 nulls?
+2. Measurement-success contract: primary metric and what improvement is substantively meaningful; practitioner global criterion in its own terms; frozen weights/tuning; scenario/model/age holdouts kept family-wise; a fair transcript-aware baseline (include a CogManip-style strategy-sum, or exclude with a reason); the ≤8-turn contract — turn, failure (D2=0 / D6=0 / critical), immediate vs eventual vs sustained recovery, relapse, end-of-window censoring; concurrent criterion validity vs prospective early warning (never developmental harm).
+3. Localization: ratify the narrowed claim — literal Korean vs rewritten Korean (은어·학교·또래 맥락·국내 위기자원 substitution), paired within item, reported component-wise as a rewriting-procedure effect; design priority is conceded to the ICML 2026 paper.
+4. Evidence threshold / gate timing: require r003 (Codex verifies the v3 corrections) before closing S1, or authorize conditional S2 work with F-r002-1..3 tracked. I opened r002 on my own initiative; r003 needs your word.
+5. Claim contract and null path: ratify the consolidated non-claims (NOVELTY_MATRIX §D); make item-paired lexical/turn matching and the two separate endpoints (model over-refusal vs judge false-positive rate, each with its own reference label and denominator) S2 requirements; precommit to what the paper is if H5/H6 is null, if only recency explains a win, or if judge/index validation fails.
+6. NEW — Judge-calibration gate: approve a Korean-adolescent judge acceptance standard with a common reference (leave-one-rater-out), critical-error limits, uncertainty, coverage by language/age/risk, held-out assessment — kept separate from CRRI's criterion validation. Draft wording is in research/CRRI_SPEC_v1.md.
+
+ALSO DONE TODAY
+- Pipeline v0 skeleton (src/kyra): item/judge schemas, MockProvider, runner writing manifest + responses + a MARKER only after validation, a judge wrapper that raises on any malformed output instead of returning zeros, the CRRI formula; 31 tests pass; the planted count violation and the zero-item run fail as they must. Real providers wait on the API keys (D2). venv ~/envs/jeongwoncheol_adol (stdlib + pypdf).
+- REFERENCES.csv (29 rows, printed venue lines — official acceptance lists still unverified), SOURCE_LICENSE_REGISTRY v2 (every item source LOCKED; CAREBench is gated with no license printed — default path is fresh authorship with taxonomies as structure), ISSUES.csv (11 rows with dispositions), CRRI_SPEC updated (judge gate, recovery definitions, transcript-aware baseline).
+
+DISCLOSURES
+- The ROK-FORTRESS κ misattribution was mine; the auditor's PDF check caught it. Lesson logged: every transcribed statistic carries metric, reference, unit and denominator.
+- One Sonnet-5 scout was refused by the API ("[bio]") on a card that included a health over-refusal benchmark PDF; the five extra comparators were resolved from abstracts (CogManip also by text search and then by the auditor's own PDF reading). A feedback draft is queued for you to send or discard.
+- My Read tool cannot render PDFs on this machine (scouts' could); pypdf is installed in the project venv, not the base environment. The arXiv metadata API throttled after ~20 calls; abs pages were used.
+- Audit inputs were a committed, tagged snapshot (audit/kyra-r002); nothing under audit/ was touched after launch. No conditional S2 work has started.
+
+RESUME POINT: your six decisions (and the word for r003). handoff.md, memory.md, STATE.yaml, PAPER_PLAN.md and the hub page agree: stage S1, status awaiting_pi.

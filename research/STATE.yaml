@@ -5,10 +5,10 @@ workflow:
   conductor: "Fable 5.1 (claude-fable-5-1), effort max at S1 close; coder = Opus 5 high; scout = Sonnet 5 medium; auditor = Codex"
 topic: "KYRA-Bench: Korean youth multi-turn relational AI-safety benchmark + CRRI psychometric validation (ETRI EA20261877 + SCI Q1 paper)"
 stage: S1
-status: awaiting_pi   # r001 verdict AWAITING_PI: five PI decisions listed in audit/r001/out/VERDICT.md
+status: awaiting_pi   # r002 verdict AWAITING_PI: six PI decisions in audit/r002/out/VERDICT.md
 stage_history:
   - {stage: S0, status: completed, date: "2026-09-16", gate: "PI approved D1-D4 (DECISION_LOG 2026-09-16)"}
-  - {stage: S1, status: awaiting_pi, date: "2026-09-16", gate: "sweep + matrix + memo + blind lock + informed assessment done; VERDICT r001 = AWAITING_PI"}
+  - {stage: S1, status: awaiting_pi, date: "2026-09-21", gate: "r001 AWAITING_PI (2026-09-16); full-text evidence + pitch v2 (2026-09-21); r002 recheck AWAITING_PI: F-r001 2,3,4,6,7 resolved, 1 partial, 5 PI; new F-r002-1..4 builder-corrected in v3 (auditor verification pending r003); six PI decisions open"}
 roles:
   builder:
     tool: "Claude Code"
@@ -17,38 +17,52 @@ roles:
     confirmed_by_pi: "2026-09-16"
   auditor:
     tool: "Codex"
-    evidence: "codex-cli 0.154.0; r001 reports name model GPT-6"
+    evidence: "codex-cli 0.154.0; r001/r002 reports name model GPT-6"
     confirmed_by_pi: "2026-09-16"
 lineage:
   - "2026-09-16 09:30 PI dropped upload/1.docx.gpg (plan v2) and upload/2.docx.gpg (plan v1); sha256 in REHYDRATE.md"
   - "2026-09-16 Claude Code session 1: initialized project, drafted RESOURCE_CONTRACT (S0)"
-  - "2026-09-16 session 2: PI approved D1-D4; S0 completed; S1 executed (arXiv sweep 16 calls, NOVELTY_MATRIX, REJECT_MEMO, D3/D4 drafts, power-sim reproduction); Codex r001 Phase A lock + Phase B assessment; PI ordered stop+record before S1 gate decision"
+  - "2026-09-16 session 2: PI approved D1-D4; S0 completed; S1 executed (arXiv sweep, NOVELTY_MATRIX v1, REJECT_MEMO v1, D3/D4 drafts, power-sim reproduction); Codex r001 lock + assessment (AWAITING_PI); PI ordered stop+record"
+  - "2026-09-21 session 3 (rules v3.2, orchestration): 21 full texts downloaded; 4 scouts (Sonnet 5) extracted 16 papers on a fixed schema; conductor wrote evidence record + NOVELTY_MATRIX v2 + REJECT_MEMO v2; coder (Opus 5) built pipeline v0 skeleton (verified by conductor); Codex r002 recheck (AWAITING_PI); conductor applied F-r002 corrections -> v3; PI gate decisions pending"
 protocol_freeze: null   # S2; OSF preregistration target 2026-10-31 before first confirmatory model run
 caps:
   gpu: "shared L40S x4; GPU 3 occupied by another user (never touch); open-weight inference only"
   api_budget_krw: "authorized 2026-09-16 per RESOURCE_CONTRACT section 4; keys not yet provisioned"
   time: "ETRI deliverables 2026-11-30 (official); paper submission 2027-03/04 (plan target)"
 audit:
-  open_round: "r001"
+  open_round: "r002"
   rounds:
     - id: r001
-      purpose: "S1 novelty: blind closest-three lock + informed assessment of builder pitch"
-      status: "verdict_awaiting_pi"
+      purpose: "S1 novelty: blind closest-three lock + informed assessment of builder pitch v1"
+      status: "verdict_awaiting_pi; findings dispositioned by r002"
       opened: "2026-09-16"
-      verdict: "AWAITING_PI (audit/r001/out/VERDICT.md): no priority defeat shown, novelty NOT cleared; findings F-r001-1..7 (5 major, 2 minor) in research/ISSUES.csv"
+      verdict: "AWAITING_PI (audit/r001/out/VERDICT.md): no priority defeat shown, novelty NOT cleared; F-r001-1..7 (5 major, 2 minor)"
       auditor_reported: "Codex / GPT-6"
+    - id: r002
+      purpose: "S1 novelty recheck of pitch v2 (full-text evidence) against F-r001-1..7; successor round on changed input"
+      status: "verdict_awaiting_pi"
+      opened: "2026-09-21"
+      snapshot: "git 0f0a565, tag audit/kyra-r002"
+      verdict: "AWAITING_PI (audit/r002/out/VERDICT.md): F-r001-2/3/4/6/7 RESOLVED, F-r001-1 PARTIAL, F-r001-5 OPEN (PI); new F-r002-1..3 major + F-r002-4 minor; six PI decisions; 4 suggested numerical spot-checks confirmed"
+      builder_response: "2026-09-21: F-r002-1..4 corrected in NOVELTY_MATRIX v3 + evidence record + REJECT_MEMO + CRRI_SPEC; auditor verification pending r003"
+      auditor_reported: "Codex / GPT-6"
+    - id: r003
+      purpose: "verify v3 corrections (F-r002-1..4) — NOT opened: successor rounds beyond one need the PI's word (rules 12.4)"
+      status: "not_opened"
 gates: {}
 pi_decisions:
   - "2026-09-16: 'initiate' — initialize project from the two uploaded plans; plan v2 operative"
   - "2026-09-16: 'D1-D4 all approved. proceed' — roles confirmed, API caps authorized, drafts + D4 scope granted (DECISION_LOG.md)"
   - "2026-09-16: 'stop work and record today's work' — S1 gate decision NOT yet taken"
+  - "2026-09-21: 'apply the orchestration of agents ... resume work' — process only; S1 gate decision still NOT taken"
 five_statuses:
   artifact_integrity: null
   numerical_reproduction: null
   statistical_validity: null
   claim_scope: null
   scientific_promise: null
-jobs: []   # own codex Phase-B process killed by explicit PID 3275771 after its deliverables were written (disclosed in handoff)
-next_action: "PI takes the five VERDICT decisions (contribution level; measurement success+scope; localization claim; evidence threshold/gate timing; claim contract+null path). Builder then: reconcile ROK-FORTRESS 2605.14152 + Culturally-Adapted Red-Teaming 2606.09178 + CultureConverse 2608.28405 into NOVELTY_MATRIX (F-r001-2), qualify the 8 flagged rows (F-r001-1), rewrite pitch per F-r001-3/4, then close S1"
+jobs: []
+next_action: "PI takes decisions 1-6 in audit/r002/out/VERDICT.md (contribution level; measurement success + 8-turn failure/recovery contract + transcript-aware baseline incl. CogManip; ratify paired-rewrite localization replication; evidence threshold / conditional S2; claim contract + null path; NEW judge-calibration gate). On the PI's word: open r003 for auditor verification of v3, then close S1 and start S2 (CONTRIBUTION_CONTRACT + PREREGISTERED_kyra_v1.yaml; OSF by 10-31)"
 blockers:
-  - "S1 gate: five PI decisions in audit/r001/out/VERDICT.md"
+  - "S1 gate: six PI decisions in audit/r002/out/VERDICT.md"
+  - "r003 (verification of v3 corrections) needs PI authorization"
