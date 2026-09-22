@@ -2,13 +2,18 @@
 workflow:
   protocol: "global CLAUDE.md v3.2 L2 (sections 8-10) + L5 orchestration (14-15); no project AGENTS.md"
   adopted: "2026-09-16 (v3.1); migrated to v3.2 on 2026-09-21"
-  conductor: "Fable 5.1 (claude-fable-5-1), effort max at S1 close; coder = Opus 5 high; scout = Sonnet 5 medium; auditor = Codex"
-topic: "KYRA-Bench: Korean youth multi-turn relational AI-safety benchmark + CRRI psychometric validation (ETRI EA20261877 + SCI Q1 paper)"
-stage: S1
-status: awaiting_pi   # r002 verdict AWAITING_PI: six PI decisions in audit/r002/out/VERDICT.md
+  conductor: "Fable 5.1 (claude-fable-5-1), effort max for contracts/freeze; recommend high for S3 building; coder = Opus 5 high; scout = Sonnet 5 medium; auditor = Codex (not used in phase A by PI waiver)"
+topic: "KYRA-Bench phase A (option C): Korean adolescent multi-turn relational AI-safety benchmark, 5 open-weight models; domestic-first paper with Q1-grade methods; CRRI validity deferred to phase B"
+venue:
+  phase_a: "domestic — 한국정보통신학회 JKIICE or 한국융합학회 (PI 2026-09-22); no cross-family audit (PI rule 2026-09-11)"
+  phase_b: "optional Q1 attempt (JMIR Formative / Sci Rep / JMIR MH) after co-author double rating; T1 conference only if H5 strong"
+stage: S3
+status: in_progress   # infrastructure: vLLM open-weight provider (coder running), then judge prompt + wrapper self-tests, G6 judge, analysis scripts; item authoring in parallel
 stage_history:
-  - {stage: S0, status: completed, date: "2026-09-16", gate: "PI approved D1-D4 (DECISION_LOG 2026-09-16)"}
-  - {stage: S1, status: awaiting_pi, date: "2026-09-21", gate: "r001 AWAITING_PI (2026-09-16); full-text evidence + pitch v2 (2026-09-21); r002 recheck AWAITING_PI: F-r001 2,3,4,6,7 resolved, 1 partial, 5 PI; new F-r002-1..4 builder-corrected in v3 (auditor verification pending r003); six PI decisions open"}
+  - {stage: S0, status: completed, date: "2026-09-16", gate: "PI approved D1-D4"}
+  - {stage: S1, status: completed_with_waiver, date: "2026-09-22", gate: "PI decisions 1-6 approved (2026-09-22); r001/r002 AWAITING_PI, r003 FAIL on prose corrected in v4 (unverified by auditor); r004 WAIVED by venue change to domestic (PI rule 2026-09-11) — DECISION_LOG 2026-09-22"}
+  - {stage: S2, status: completed, date: "2026-09-22", gate: "CONTRIBUTION_CONTRACT v2 + PREREGISTERED_kyra_v2.yaml frozen by src/gates/freeze.py; sha256 87abaae4c16fb0efe3dad27ff464fcd86b6b48ff67a33f1414336ccc7ddd34a4; verify_freeze exit 0; logged in DECISION_LOG"}
+  - {stage: S3, status: in_progress, date: "2026-09-22", gate: "provider adapter proven on a small model; judge wrapper self-tests; comparators/analysis scripts with fixtures"}
 roles:
   builder:
     tool: "Claude Code"
@@ -17,61 +22,51 @@ roles:
     confirmed_by_pi: "2026-09-16"
   auditor:
     tool: "Codex"
-    evidence: "codex-cli 0.154.0; r001/r002 reports name model GPT-6"
+    evidence: "codex-cli 0.154.0; r001-r003 reports name model GPT-6"
     confirmed_by_pi: "2026-09-16"
+    phase_a_status: "not required (domestic venue; PI waiver 2026-09-22); would return for phase B"
 lineage:
   - "2026-09-16 09:30 PI dropped upload/1.docx.gpg (plan v2) and upload/2.docx.gpg (plan v1); sha256 in REHYDRATE.md"
-  - "2026-09-16 Claude Code session 1: initialized project, drafted RESOURCE_CONTRACT (S0)"
-  - "2026-09-16 session 2: PI approved D1-D4; S0 completed; S1 executed (arXiv sweep, NOVELTY_MATRIX v1, REJECT_MEMO v1, D3/D4 drafts, power-sim reproduction); Codex r001 lock + assessment (AWAITING_PI); PI ordered stop+record"
-  - "2026-09-21 session 3 (rules v3.2, orchestration): 21 full texts downloaded; 4 scouts (Sonnet 5) extracted 16 papers on a fixed schema; conductor wrote evidence record + NOVELTY_MATRIX v2 + REJECT_MEMO v2; coder (Opus 5) built pipeline v0 skeleton (verified by conductor); Codex r002 recheck (AWAITING_PI); conductor applied F-r002 corrections -> v3; PI gate decisions pending"
-protocol_freeze: null   # S2; OSF preregistration target 2026-10-31 before first confirmatory model run
+  - "2026-09-16 session 1: initialized project, RESOURCE_CONTRACT (S0)"
+  - "2026-09-16 session 2: D1-D4 approved; S1 executed; Codex r001 (AWAITING_PI); PI stop+record"
+  - "2026-09-21 session 3 (rules v3.2): 21 full texts, 4 scouts, NOVELTY_MATRIX v2, coder pipeline v0, Codex r002 (AWAITING_PI), corrections v3"
+  - "2026-09-22 session 4: PI approved decisions 1-6; Codex r003 (FAIL on prose) -> v4 corrections; S2 drafts v1 (full design); freeze gate built (coder) and verified"
+  - "2026-09-22 session 5: PI option C (domestic-first, no OSF/ETRI/IRB/keys, no human raters in phase A); r004 waived; contract v2 + prereg v2 FROZEN (87abaae4...); S3 opened: coder building vLLM provider + smoke test"
+protocol_freeze:
+  file: "PREREGISTERED_kyra_v2.yaml"
+  sha256: "87abaae4c16fb0efe3dad27ff464fcd86b6b48ff67a33f1414336ccc7ddd34a4"
+  receipt: "PREREGISTERED_kyra_v2.yaml.sha256 (written by src/gates/freeze.py, 2026-09-22T08:05:21Z)"
+  contract: "CONTRIBUTION_CONTRACT.md Version: v2"
+  superseded_drafts: "PREREGISTERED_kyra_v1.yaml + CONTRIBUTION_CONTRACT_v1_fulldesign_2026-09-22.md (full design, never frozen; phase B basis)"
 caps:
-  gpu: "shared L40S x4; GPU 3 occupied by another user (never touch); open-weight inference only"
-  api_budget_krw: "authorized 2026-09-16 per RESOURCE_CONTRACT section 4; keys not yet provisioned"
-  time: "ETRI deliverables 2026-11-30 (official); paper submission 2027-03/04 (plan target)"
+  gpu: "L40S GPUs 0-2 only (GPU 3 = another user); open-weight inference only"
+  disk: "150 GB quota: weights downloaded sequentially and deleted after runs (REHYDRATE.md) or 4-bit; models/ git-ignored"
+  money: "$0 in phase A (no API keys); phase B optional $30-300 personal credit"
+  human_time: "PI ~5-8 h in phase A (review + submission); phase B ~30-45 h co-author rating"
 audit:
-  open_round: "r002"
+  open_round: null
   rounds:
-    - id: r001
-      purpose: "S1 novelty: blind closest-three lock + informed assessment of builder pitch v1"
-      status: "verdict_awaiting_pi; findings dispositioned by r002"
-      opened: "2026-09-16"
-      verdict: "AWAITING_PI (audit/r001/out/VERDICT.md): no priority defeat shown, novelty NOT cleared; F-r001-1..7 (5 major, 2 minor)"
-      auditor_reported: "Codex / GPT-6"
-    - id: r002
-      purpose: "S1 novelty recheck of pitch v2 (full-text evidence) against F-r001-1..7; successor round on changed input"
-      status: "verdict_awaiting_pi"
-      opened: "2026-09-21"
-      snapshot: "git 0f0a565, tag audit/kyra-r002"
-      verdict: "AWAITING_PI (audit/r002/out/VERDICT.md): F-r001-2/3/4/6/7 RESOLVED, F-r001-1 PARTIAL, F-r001-5 OPEN (PI); new F-r002-1..3 major + F-r002-4 minor; six PI decisions; 4 suggested numerical spot-checks confirmed"
-      builder_response: "2026-09-21: F-r002-1..4 corrected in NOVELTY_MATRIX v3 + evidence record + REJECT_MEMO + CRRI_SPEC; auditor verification pending r003"
-      auditor_reported: "Codex / GPT-6"
-    - id: r003
-      purpose: "verify the builder's corrections to F-r002-1..4 (v3) against the PDFs; propagation check into CRRI_SPEC + safe-controls guideline"
-      status: "verdict_fail"
-      opened: "2026-09-22 (PI: 'open r003 and proceed')"
-      snapshot: "tag audit/kyra-r003"
-      verdict: "FAIL on the record/pitch prose (audit/r003/out/VERDICT.md): F-r002-2/3/4 verified, F-r002-1 still wrong in two synthesis sentences; new F-r003-1..6 (3 major, 3 minor) + 4 propagation gaps; 'PI decisions still required: none'"
-      builder_response: "2026-09-22: all corrected -> NOVELTY_MATRIX v4, REJECT_MEMO, evidence record, CRRI_SPEC, safe_controls_guideline (twin per script), PREREGISTERED yaml (definitions.controls, comparator_inference, grouping_rule, judge_gate risk coverage)"
-      auditor_reported: "Codex / GPT-6"
-    - id: r004
-      purpose: "verify the v4 corrections (F-r003-1..6 + propagation) — package prepared; NOT launched: a further self-initiated successor round is not allowed (rules 12.4); needs the PI's word"
-      status: "prepared_not_opened"
-gates: {}
+    - {id: r001, purpose: "S1 novelty lock + assessment (v1)", status: "verdict_awaiting_pi -> superseded", opened: "2026-09-16"}
+    - {id: r002, purpose: "S1 recheck (v2, full texts)", status: "verdict_awaiting_pi -> PI decisions 1-6 approved 2026-09-22", opened: "2026-09-21", snapshot: "tag audit/kyra-r002"}
+    - {id: r003, purpose: "verify v3 corrections", status: "verdict_fail -> corrected in v4 (auditor-unverified)", opened: "2026-09-22", snapshot: "tag audit/kyra-r003"}
+    - {id: r004, purpose: "verify v4 corrections", status: "WAIVED 2026-09-22 (domestic venue; package kept at audit/r004/, tag audit/kyra-r004)"}
+gates:
+  freeze: "PASS 2026-09-22 (src/gates/freeze.py exit 0; verify_freeze exit 0)"
 pi_decisions:
-  - "2026-09-16: 'initiate' — initialize project from the two uploaded plans; plan v2 operative"
-  - "2026-09-16: 'D1-D4 all approved. proceed' — roles confirmed, API caps authorized, drafts + D4 scope granted (DECISION_LOG.md)"
-  - "2026-09-16: 'stop work and record today's work' — S1 gate decision NOT yet taken"
-  - "2026-09-21: 'apply the orchestration of agents ... resume work' — process only; S1 gate decision still NOT taken"
-  - "2026-09-22: 'decisions 1-6 all approved. open r003 and proceed' — S1 gate decisions 1-6 APPROVED (operationalization in DECISION_LOG.md); r003 authorized"
+  - "2026-09-16: 'initiate'"
+  - "2026-09-16: 'D1-D4 all approved. proceed'"
+  - "2026-09-16: 'stop work and record today's work'"
+  - "2026-09-21: 'apply the orchestration of agents ... resume work'"
+  - "2026-09-22: 'decisions 1-6 all approved. open r003 and proceed'"
+  - "2026-09-22: 'I agree with your recommendation, C' — domestic-first, reduced design, no OSF/ETRI/IRB/keys/human raters in phase A; r004 waived (DECISION_LOG)"
 five_statuses:
   artifact_integrity: null
   numerical_reproduction: null
   statistical_validity: null
-  claim_scope: null
+  claim_scope: "frozen v2 (N1 escalation + length control; N2 localization replication; N3 judge reliability; CRRI descriptive)"
   scientific_promise: null
-jobs: []
-next_action: "PI authorizes r004 (verify v4 corrections) or waives; on PASS/EDITORIAL: S1 -> completed, run src/gates/freeze.py on PREREGISTERED_kyra_v1.yaml + CONTRIBUTION_CONTRACT.md (receipt written by the gate), log the hash in DECISION_LOG, S2 -> completed; PI registers on OSF (by 10-31). Drafts, gate and ledger are ready; freeze gate verified by the conductor (18 tests + planted violations)"
+jobs:
+  - "coder (Opus 5) card: vLLM provider + small-model smoke test on GPU 0/1/2 — running 2026-09-22"
+next_action: "Verify the coder's provider receipt; then S3 cards: judge prompt v0 + judge_wrapper self-tests on fixtures, comparator/analysis scripts (GLMM, paired GLMM, AC2) with synthetic fixtures, G6 judge script that verifies the freeze hash; conductor authors the item bank (120 items + 36 localization twins + 24 benign twins + 24 lexical contrasts) as JSONL with a PI review checkpoint on the first risk group; select and download the 5 models sequentially within quota"
 blockers:
-  - "S1 close and the S2 freeze wait for r004 PASS/EDITORIAL or a PI waiver (decision 4: verification before closing S1)"
-  - "API keys (D2) for pipeline providers and the Oct W2 pilot"
+  - "none PI-side in phase A (PI review checkpoints only)"

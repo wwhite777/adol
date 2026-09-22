@@ -1,4 +1,6 @@
-# RESOURCE_CONTRACT.md — adol / KYRA-Bench (S0, draft v1, 2026-09-16)
+# RESOURCE_CONTRACT.md — adol / KYRA-Bench (S0 v1 2026-09-16; AMENDED 2026-09-22 under option C)
+AMENDMENT 2026-09-22 (PI option C, DECISION_LOG): phase A is domestic-first (JKIICE / 한국융합학회), $0 money, no external raters/panels, no IRB, no OSF, no ETRI 합의서, no API keys; compute = L40S GPUs 0–2 for open-weight inference; disk = 150 GB quota → weights downloaded sequentially and deleted after runs (REHYDRATE.md) or 4-bit quantized; human time budget = PI ≈ 5–8 h (review + submission). Phase B (optional Q1 attempt) adds ≈ 30–45 h of co-author rating and, if wanted, ~$30–300 of personal API credit. The sections below describe the original full plan and stay for reference.
+
 Source: PI plan v2 (upload/1.docx.gpg, dated 2026-09-16) + plan v1 (upload/2.docx.gpg). Status: DRAFT — awaiting PI decisions D1–D4 (§6). Unknown is not unlimited: every null below is a cap of zero until the PI sets it.
 
 ## 1. People and hardware
