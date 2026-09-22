@@ -902,6 +902,7 @@ class TestCampaignScoring(unittest.TestCase):
         self.assertIn("panel -> ", out)
         self.assertIn("class=smoke", out)
         self.assertIn("evaluated_family=fake_a", out)
+        self.assertIn("control) - every id present in the items file", out)
         self.assertFalse((Path(self.main_run) / "judge_JF1.jsonl").exists())
 
     def test_2_two_fake_judges_and_panel_end_to_end(self):
@@ -993,6 +994,60 @@ class TestCampaignScoring(unittest.TestCase):
         code, out = self.score(bare, self.judges_file(self.main_run), "scorebare")
         self.assertEqual(code, campaign.EXIT_PREFLIGHT, out)
         self.assertFalse((bare / "judge_JF1.jsonl").exists())
+
+    def test_6a_items_not_covering_the_run_is_refused(self):
+        """The mistake this guard exists for: scoring a smoke run against the
+        phase-A item file would turn every control view into a risk view."""
+        argv = [
+            "score",
+            "--items", str(REAL_ITEMS),          # wrong item file for this run
+            "--models", str(FIX / "models_fake.json"),
+            "--judges", str(self.judges_file(self.runs[2])),
+            "--cohort", "scorecover",
+            "--runs", str(self.runs[2]),
+            "--anchors", str(ANCHORS),
+            "--out-root", str(self.out_root),
+            "--experiments-csv", str(self.csv),
+        ]
+        buf = io.StringIO()
+        with self.csv.open(encoding="utf-8", newline="") as fh:
+            before = len(list(csv.reader(fh)))
+        with redirect_stdout(buf):
+            code = campaign.main(argv, gpu_probe=fake_gpu_probe())
+        self.assertEqual(code, campaign.EXIT_PREFLIGHT, buf.getvalue())
+        self.assertFalse((Path(self.runs[2]) / "judge_JF1.jsonl").exists())
+        self.assertFalse(
+            (self.out_root / "scorecover" / "campaign_scorecover_scoring.json").exists()
+        )
+        with self.csv.open(encoding="utf-8", newline="") as fh:
+            self.assertEqual(len(list(csv.reader(fh))), before)
+
+    def test_6b_panel_overwrite_is_refused_without_the_flag(self):
+        run_dir = Path(self.runs[3])
+        judges_path = self.judges_file(run_dir)
+        code, out = self.score(run_dir, judges_path, "scorepanel1")
+        self.assertEqual(code, 0, out)
+        panel_before = sha256(run_dir / "panel.jsonl")
+
+        # judge files now exist too, so clear them to isolate the panel guard
+        for judge_id in ("JF1", "JF2"):
+            (run_dir / ("judge_%s.jsonl" % judge_id)).unlink()
+        code, out = self.score(run_dir, judges_path, "scorepanel2")
+        self.assertEqual(code, campaign.EXIT_PREFLIGHT, out)
+        self.assertEqual(sha256(run_dir / "panel.jsonl"), panel_before)
+        self.assertFalse((run_dir / "judge_JF1.jsonl").exists())
+
+        code, out = self.score(
+            run_dir, judges_path, "scorepanel3", extra=["--allow-panel-overwrite"]
+        )
+        self.assertEqual(code, 0, out)
+        record = json.loads(
+            (self.out_root / "scorepanel3" / "campaign_scorepanel3_scoring.json")
+            .read_text(encoding="utf-8")
+        )
+        self.assertTrue(record["allow_panel_overwrite"])
+        self.assertTrue(record["plan"]["allow_panel_overwrite"])
+        self.assertEqual(record["status"], "completed")
 
     def test_6_unknown_run_glob_is_refused(self):
         code, out = self.score(

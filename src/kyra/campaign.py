@@ -942,6 +942,39 @@ def model_for_run(run_dir: Path, models: List[Dict[str, Any]]) -> Tuple[Dict[str
     )
 
 
+def run_item_ids(run_dir: Path) -> List[str]:
+    """The item_ids a run actually produced, in first-seen order."""
+    path = Path(run_dir) / mf.RESPONSES_NAME
+    if not path.is_file():
+        raise CampaignError(
+            "refusing to score %s: no %s" % (run_dir, mf.RESPONSES_NAME), EXIT_PREFLIGHT
+        )
+    ids: List[str] = []
+    with path.open("r", encoding="utf-8") as fh:
+        for lineno, line in enumerate(fh, start=1):
+            if not line.strip():
+                continue
+            try:
+                rec = json.loads(line)
+            except json.JSONDecodeError as exc:
+                raise CampaignError(
+                    "%s:%d is not valid JSON (%s)" % (path, lineno, exc), EXIT_PREFLIGHT
+                )
+            item_id = rec.get("item_id") if isinstance(rec, dict) else None
+            if not isinstance(item_id, str):
+                raise CampaignError(
+                    "%s:%d has no item_id" % (path, lineno), EXIT_PREFLIGHT
+                )
+            if item_id not in ids:
+                ids.append(item_id)
+    if not ids:
+        raise CampaignError(
+            "refusing to score %s: %s carries no records" % (run_dir, mf.RESPONSES_NAME),
+            EXIT_PREFLIGHT,
+        )
+    return ids
+
+
 def judge_command(
     judge: Dict[str, Any],
     run_dir: Path,
@@ -1052,12 +1085,20 @@ def score_main(argv: List[str], gpu_probe=query_gpus) -> int:
         return exc.code
 
     anchors_sha = sha256_file(anchors_path) if anchors_path is not None else None
+    try:
+        scored_items = load_items(items_path)
+    except ValueError as exc:
+        sys.stderr.write("ERROR: could not load items: %s\n" % exc)
+        return EXIT_BAD_INPUT
+    known_item_ids = {it.item_id for it in scored_items}
+    control_item_ids = {it.item_id for it in scored_items if it.risk_group == "CTRL"}
     family_map = {j["judge_id"]: j["family"] for j in judges}
     model_families = {m["model_id"]: m["family"] for m in models}
 
     plan: Dict[str, Any] = {
         "cohort": args.cohort,
         "created_utc": utc_stamp(),
+        "allow_panel_overwrite": bool(args.allow_panel_overwrite),
         "items_path": str(items_path),
         "items_sha256": sha256_file(items_path),
         "views": JUDGE_VIEWS,
@@ -1091,10 +1132,22 @@ def score_main(argv: List[str], gpu_probe=query_gpus) -> int:
                     EXIT_BAD_INPUT,
                 )
             model, model_source = model_for_run(Path(run_dir), models)
+            run_ids = run_item_ids(Path(run_dir))
+            missing = [i for i in run_ids if i not in known_item_ids]
+            if missing:
+                raise CampaignError(
+                    "refusing to score %s: %d item_id(s) in responses.jsonl are absent "
+                    "from %s, so their risk_group (and therefore which views are "
+                    "CTRL controls) is unknown: %s"
+                    % (run_dir, len(missing), items_path, ", ".join(missing[:20])
+                       + (" ..." if len(missing) > 20 else "")),
+                    EXIT_PREFLIGHT,
+                )
             judge_files = [
                 Path(run_dir) / ("judge_%s.jsonl" % j["judge_id"]) for j in judges
             ]
             existing = [str(p) for p in judge_files if p.exists()]
+            panel_file = Path(run_dir) / PANEL_NAME
             plan["runs"].append(
                 {
                     "run_dir": str(run_dir),
@@ -1104,9 +1157,12 @@ def score_main(argv: List[str], gpu_probe=query_gpus) -> int:
                     "model_id": model["model_id"],
                     "evaluated_family": model["family"],
                     "model_source": model_source,
+                    "n_items": len(run_ids),
+                    "n_control_items": sum(1 for i in run_ids if i in control_item_ids),
                     "judge_files": [str(p) for p in judge_files],
                     "existing_judge_files": existing,
-                    "panel_file": str(Path(run_dir) / PANEL_NAME),
+                    "panel_file": str(panel_file),
+                    "panel_exists": panel_file.exists(),
                 }
             )
     except CampaignError as exc:
@@ -1151,6 +1207,7 @@ def score_main(argv: List[str], gpu_probe=query_gpus) -> int:
         "plan": plan,
         "command": command,
         "dry_run": bool(args.dry_run),
+        "allow_panel_overwrite": bool(args.allow_panel_overwrite),
         "experiments_csv": str(experiments_csv),
         "freeze": freeze,
         "gpu": gpu,
@@ -1176,10 +1233,19 @@ def score_main(argv: List[str], gpu_probe=query_gpus) -> int:
         return EXIT_FREEZE_MISMATCH if not freeze["ok"] else EXIT_PREFLIGHT
 
     blocked = [r for r in plan["runs"] if r["existing_judge_files"]]
-    if blocked:
-        reason = "judge output already exists, refusing to overwrite: %s" % ", ".join(
-            blocked[0]["existing_judge_files"]
-        )
+    panel_blocked = [
+        r for r in plan["runs"] if r["panel_exists"] and not args.allow_panel_overwrite
+    ]
+    if blocked or panel_blocked:
+        if blocked:
+            reason = "judge output already exists, refusing to overwrite: %s" % ", ".join(
+                blocked[0]["existing_judge_files"]
+            )
+        else:
+            reason = (
+                "panel output already exists, refusing to overwrite: %s "
+                "(pass --allow-panel-overwrite to replace it)" % panel_blocked[0]["panel_file"]
+            )
         payload["status"] = "refused"
         payload["stopped_because"] = reason
         path = record_campaign_json(
@@ -1371,7 +1437,14 @@ def print_score_plan(plan: Dict[str, Any], freeze: Dict[str, Any], gpu: Dict[str
         w("  MARKER sha256=%s\n" % run["marker_sha256"])
         for path in run["judge_files"]:
             w("  judge -> %s%s\n" % (path, "  [EXISTS - refused]" if path in run["existing_judge_files"] else ""))
-        w("  panel -> %s\n" % run["panel_file"])
+        w(
+            "  items: %d (%d control) - every id present in the items file\n"
+            % (run["n_items"], run["n_control_items"])
+        )
+        w(
+            "  panel -> %s%s\n"
+            % (run["panel_file"], "  [EXISTS]" if run["panel_exists"] else "")
+        )
     if freeze["required"]:
         w("freeze: %s\n" % ("OK sha256=%s" % freeze["sha256"] if freeze["ok"] else "FAIL %s" % freeze["error"]))
     else:
@@ -1397,6 +1470,11 @@ def build_score_parser() -> argparse.ArgumentParser:
     p.add_argument("--runs", nargs="+", required=True, help="run directories or globs")
     p.add_argument("--anchors", default=None, help="judge calibration anchors JSON")
     p.add_argument("--dry-run", action="store_true", help="print the plan only")
+    p.add_argument(
+        "--allow-panel-overwrite",
+        action="store_true",
+        help="replace an existing panel.jsonl in a run directory (refused by default)",
+    )
     p.add_argument(
         "--class",
         dest="run_class",
