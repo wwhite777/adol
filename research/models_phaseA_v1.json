@@ -68,9 +68,9 @@
       "family": "mistral",
       "provider": "vllm",
       "gpu_memory_utilization": 0.5,
-      "path": "models/hf (Intel int4 AutoRound snapshot)",
+      "path": "models/hf (Intel int4 AutoRound snapshot 21907bf9; DELETED 2026-09-22 13:47Z to lift the disk floor for the EXAONE re-run — re-download per REHYDRATE.md before scoring)",
       "disk_gb": 14,
-      "status": "downloaded",
+      "status": "deleted_regenerable",
       "notes": "judge J2; Intel AutoRound int4 of Mistral-Small-3.2-24B (organizational provenance chosen over a personal AWQ); vLLM-loadable; Korean competence checked in the N3 reliability run"
     },
     {
