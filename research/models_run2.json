@@ -1,0 +1,1 @@
+[{"model_id": "LGAI-EXAONE/EXAONE-4.0-32B-AWQ", "family": "lg", "provider": "vllm", "gpu_memory_utilization": 0.85, "notes": "official 4-bit AWQ, downloaded 2026-09-22 into models/hf; evaluated model 2 of 5"}]
