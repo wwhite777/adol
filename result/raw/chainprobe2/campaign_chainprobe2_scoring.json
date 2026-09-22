@@ -1,0 +1,151 @@
+{
+  "allow_panel_overwrite": true,
+  "command": "PYTHONPATH=src python -m kyra.campaign score --items test/fixtures/items_smoke.jsonl --models /tmp/claude-1011/-home-wjeong/407cdd4b-f055-4859-8e47-fbc41fca59f3/scratchpad/models_mock.json --judges /tmp/claude-1011/-home-wjeong/407cdd4b-f055-4859-8e47-fbc41fca59f3/scratchpad/judges_smoke2.json --cohort chainprobe2 --runs 'result/raw/mock/*' --anchors research/judge_anchors_v1.json --allow-panel-overwrite",
+  "dry_run": false,
+  "experiments_csv": "research/EXPERIMENTS.csv",
+  "freeze": {
+    "error": "skipped (no confirmatory run in this scoring batch)",
+    "ok": true,
+    "prereg": "PREREGISTERED_kyra_v2.yaml",
+    "required": false,
+    "sha": "PREREGISTERED_kyra_v2.yaml.sha256",
+    "sha256": null
+  },
+  "gpu": {
+    "allowed": [
+      0,
+      1,
+      2
+    ],
+    "chosen": 1,
+    "error": null,
+    "never": 3,
+    "ok": true,
+    "required": true,
+    "visible": [
+      {
+        "index": 0,
+        "used_mib": 18779
+      },
+      {
+        "index": 1,
+        "used_mib": 4
+      },
+      {
+        "index": 2,
+        "used_mib": 4
+      },
+      {
+        "index": 3,
+        "used_mib": 4
+      }
+    ]
+  },
+  "judge_runs": [
+    {
+      "anchors_sha256": "7f54fdbded6071d7f5e202d1b7820fe4a64b454dc695b6eb39def227c3373679",
+      "class": "smoke",
+      "exit_code": 0,
+      "failure": null,
+      "family": "lg",
+      "judge_id": "JS3",
+      "log": "result/raw/chainprobe2/scoring_logs/chainprobe2__20260921T1031Z-4daff6__judge_JS3.log",
+      "out": "result/raw/mock/20260921T1031Z-4daff6/judge_JS3.jsonl",
+      "provider": "vllm",
+      "run_dir": "result/raw/mock/20260921T1031Z-4daff6",
+      "run_key": "chainprobe2__20260921T1031Z-4daff6__judge_JS3",
+      "sha256": "c67b8e9dc4bc0ae1a5e8430dd53b3b8d498744bef8cd88c928290210582b6e22",
+      "status": "completed"
+    },
+    {
+      "anchors_sha256": "7f54fdbded6071d7f5e202d1b7820fe4a64b454dc695b6eb39def227c3373679",
+      "class": "smoke",
+      "exit_code": 0,
+      "failure": null,
+      "family": "lg",
+      "judge_id": "JS4",
+      "log": "result/raw/chainprobe2/scoring_logs/chainprobe2__20260921T1031Z-4daff6__judge_JS4.log",
+      "out": "result/raw/mock/20260921T1031Z-4daff6/judge_JS4.jsonl",
+      "provider": "vllm",
+      "run_dir": "result/raw/mock/20260921T1031Z-4daff6",
+      "run_key": "chainprobe2__20260921T1031Z-4daff6__judge_JS4",
+      "sha256": "6400a85768afa44cb99258a07773b9040cf263c356bec52ec59cf9c4a939c3af",
+      "status": "completed"
+    }
+  ],
+  "note": "judges run one model at a time as child processes (kyra.judge --views prefix --items <items>, so control ids come from risk_group CTRL); the panel is kyra.panel over this run's judge files",
+  "panel_runs": [
+    {
+      "class": "smoke",
+      "evaluated_family": "mock",
+      "exit_code": 0,
+      "failure": null,
+      "judges": [
+        "JS3",
+        "JS4"
+      ],
+      "log": "result/raw/chainprobe2/scoring_logs/chainprobe2__20260921T1031Z-4daff6__panel.log",
+      "out": "result/raw/mock/20260921T1031Z-4daff6/panel.jsonl",
+      "run_dir": "result/raw/mock/20260921T1031Z-4daff6",
+      "run_key": "chainprobe2__20260921T1031Z-4daff6__panel",
+      "sha256": "ccf26ab7e487240b9b4f22a2310a9c1d89a0db1a8bda9c36d71f30d78b1b954e",
+      "status": "completed"
+    }
+  ],
+  "plan": {
+    "allow_panel_overwrite": true,
+    "anchors_path": "research/judge_anchors_v1.json",
+    "anchors_sha256": "7f54fdbded6071d7f5e202d1b7820fe4a64b454dc695b6eb39def227c3373679",
+    "cohort": "chainprobe2",
+    "created_utc": "2026-09-22T09:49:40Z",
+    "family_map": {
+      "JS3": "lg",
+      "JS4": "lg"
+    },
+    "items_path": "test/fixtures/items_smoke.jsonl",
+    "items_sha256": "d4303170ee85a3eba46edae13c751af6fd1279fea54ec73a12113178418bcc49",
+    "judges": [
+      {
+        "family": "lg",
+        "judge_id": "JS3",
+        "model_id": "LGAI-EXAONE/EXAONE-4.0-1.2B",
+        "notes": "",
+        "provider": "vllm"
+      },
+      {
+        "family": "lg",
+        "judge_id": "JS4",
+        "model_id": "LGAI-EXAONE/EXAONE-4.0-1.2B",
+        "notes": "",
+        "provider": "vllm"
+      }
+    ],
+    "model_families": {
+      "mock-v0": "mock"
+    },
+    "out_root": "result/raw",
+    "runs": [
+      {
+        "class": "smoke",
+        "class_source": "EXPERIMENTS row mock_smoke_20260921T1031Z-4daff6",
+        "evaluated_family": "mock",
+        "existing_judge_files": [],
+        "judge_files": [
+          "result/raw/mock/20260921T1031Z-4daff6/judge_JS3.jsonl",
+          "result/raw/mock/20260921T1031Z-4daff6/judge_JS4.jsonl"
+        ],
+        "marker_sha256": "bda70895aeee7ea1a910fb34e1c2c516c7850af334ad655a835012dd4fbe7c53",
+        "model_id": "mock-v0",
+        "model_source": "manifest model_id=mock-v0",
+        "n_control_items": 2,
+        "n_items": 7,
+        "panel_exists": true,
+        "panel_file": "result/raw/mock/20260921T1031Z-4daff6/panel.jsonl",
+        "run_dir": "result/raw/mock/20260921T1031Z-4daff6"
+      }
+    ],
+    "views": "prefix"
+  },
+  "status": "completed",
+  "stopped_because": null
+}

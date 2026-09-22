@@ -434,7 +434,7 @@ def make_judge_record(
     model_id: str,
     depth: Optional[int] = None,
     view: str = VIEW_PREFIX,
-    is_control: bool = False,
+    is_control: Optional[bool] = False,
 ) -> Dict[str, Any]:
     """Assemble one output record. status follows from record/error, not a caller flag.
 
@@ -448,7 +448,7 @@ def make_judge_record(
         "condition": condition,
         "depth": int(depth) if depth is not None else int(n_turns),
         "view": view,
-        "is_control": bool(is_control),
+        "is_control": None if is_control is None else bool(is_control),
         "status": status,
         "record": asdict(record) if record is not None else None,
         "error": None if record is not None else (error or "unknown judge failure"),
@@ -476,7 +476,7 @@ def check_record_fail_closed(rec: Dict[str, Any]) -> None:
     depth = rec.get("depth")
     if isinstance(depth, bool) or not isinstance(depth, int) or depth < 1:
         raise RuntimeError("judge record has invalid depth %r" % (depth,))
-    if not isinstance(rec.get("is_control"), bool):
+    if rec.get("is_control") is not None and not isinstance(rec.get("is_control"), bool):
         raise RuntimeError("judge record has a non-boolean is_control")
     payload = rec.get("record")
     if status == STATUS_OK:
@@ -484,7 +484,8 @@ def check_record_fail_closed(rec: Dict[str, Any]) -> None:
             raise RuntimeError("status 'ok' with no parsed record: refusing to write")
         try:
             parsed = parse_judge_output(
-                json.dumps(payload, ensure_ascii=False), is_control=bool(rec["is_control"])
+                json.dumps(payload, ensure_ascii=False),
+                is_control=bool(rec["is_control"]),  # unknown (null) is judged as a risk item
             )
         except JudgeParseError as exc:
             raise RuntimeError("status 'ok' with an invalid record: %s" % exc) from exc
@@ -527,6 +528,7 @@ def judge_run(
     template: Optional[str] = None,
     views: str = VIEW_PREFIX,
     control_item_ids: Optional[Any] = None,
+    control_unknown: bool = False,
 ) -> Dict[str, Any]:
     """Score every view of every conversation with one judge; write judge_<id>.jsonl.
 
@@ -569,7 +571,10 @@ def judge_run(
     }
     model_id = str(getattr(provider, "model_id", "unknown"))
     for conv in conversations:
+        # control_unknown (bare probe, --no-items): judged as a risk item but
+        # recorded as is_control=null, never as a claimed non-control item.
         is_control = conv["item_id"] in control
+        recorded_control = None if control_unknown else is_control
         for depth, view_turns in make_views(conv["turns"], views):
             messages = build_judge_prompt(
                 view_turns, manual_text, anchors or [], template=tpl, is_control=is_control
@@ -596,7 +601,7 @@ def judge_run(
                 model_id=model_id,
                 depth=depth,
                 view=views,
-                is_control=is_control,
+                is_control=recorded_control,
             )
             write_judge_record(out, rec)
             counts["total"] += 1
@@ -682,16 +687,36 @@ def build_parser() -> argparse.ArgumentParser:
         default=None,
         help="comma-separated item_ids to treat as control items (instead of --items)",
     )
+    p.add_argument(
+        "--no-items",
+        action="store_true",
+        help="bare probe: no items file, control status unknown (is_control=null in every record)",
+    )
     return p
 
 
-def control_ids_from_args(args) -> set:
-    """Control item_ids from --items (risk_group CTRL) or --control-ids; never guessed."""
+def control_ids_from_args(args, run_item_ids=None) -> set:
+    """Control item_ids from --items (risk_group CTRL) or --control-ids; never guessed.
+
+    When --items is given together with the run's item_ids, every item_id in the
+    run must appear in the items file. A CTRL set built from an items file that
+    does not describe this run could silently cover nothing, which would turn
+    control items into risk items without a trace.
+    """
     ids = set()
     if getattr(args, "items", None):
         from kyra.schema import load_items  # local import: keep module import cheap
 
-        for item in load_items(args.items):
+        items = load_items(args.items)
+        known = {item.item_id for item in items}
+        if run_item_ids is not None:
+            missing = sorted(set(run_item_ids) - known)
+            if missing:
+                raise ValueError(
+                    "items file %s does not describe %d item(s) in this run: %s"
+                    % (args.items, len(missing), ", ".join(missing))
+                )
+        for item in items:
             if item.risk_group == "CTRL":
                 ids.add(item.item_id)
     if getattr(args, "control_ids", None):
@@ -730,7 +755,12 @@ def main(argv=None) -> int:
         manual_text = load_manual_text(args.manual)
         out_path = Path(args.out) if args.out else Path(args.run_dir) / ("judge_%s.jsonl" % args.judge_id)
         conversations = read_conversations(args.run_dir)
-        control = control_ids_from_args(args)
+        if args.views == VIEW_PREFIX and not (args.items or args.control_ids or args.no_items):
+            raise ValueError(
+                "--views prefix needs the control status of every item: pass --items "
+                "<items.jsonl> (or --control-ids), or --no-items for a bare probe"
+            )
+        control = control_ids_from_args(args, {c["item_id"] for c in conversations})
     except ValueError as exc:
         sys.stderr.write("ERROR: %s\n" % exc)
         return EXIT_BAD_INPUT
@@ -763,6 +793,7 @@ def main(argv=None) -> int:
             anchors=anchors,
             views=args.views,
             control_item_ids=control,
+            control_unknown=bool(args.no_items and not (args.items or args.control_ids)),
         )
     except ValueError as exc:
         sys.stderr.write("ERROR: %s\n" % exc)

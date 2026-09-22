@@ -1,0 +1,8 @@
+command: PYTHONPATH=src /home/wjeong/envs/jeongwoncheol_adol/bin/python -m kyra.panel --judges result/raw/mock/20260921T1031Z-4daff6/judge_JS3.jsonl result/raw/mock/20260921T1031Z-4daff6/judge_JS4.jsonl --family-map result/raw/chainprobe2/family_map_chainprobe2.json --evaluated-family mock --out result/raw/mock/20260921T1031Z-4daff6/panel.jsonl
+exit=0
+--- stdout ---
+views=14 conversations=7 ok=14 insufficient=0 evaluated_family=mock
+out=result/raw/mock/20260921T1031Z-4daff6/panel.jsonl
+
+--- stderr ---
+

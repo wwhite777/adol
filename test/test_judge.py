@@ -663,7 +663,7 @@ class TestJudgeRun(TempDirTest):
                 [
                     "--run-dir", str(run_dir), "--provider", "fake",
                     "--judge-id", "JC", "--family", "lg",
-                    "--fake-outputs", str(fake),
+                    "--fake-outputs", str(fake), "--no-items",
                 ]
             )
         self.assertEqual(rc, 0, buf.getvalue())
@@ -685,6 +685,82 @@ class TestJudgeRun(TempDirTest):
         self.assertIn("control_items=1", buf.getvalue())
         row = json.loads((run_dir / "judge_JD.jsonl").read_text(encoding="utf-8").splitlines()[0])
         self.assertTrue(row["is_control"])
+
+    def _items_file(self, records):
+        p = self.tmp / "items.jsonl"
+        with p.open("w", encoding="utf-8") as fh:
+            for r in records:
+                fh.write(json.dumps(r, ensure_ascii=False) + "\n")
+        return str(p)
+
+    def _item(self, item_id, risk_group="R1"):
+        return {"item_id": item_id, "risk_group": risk_group, "turn_type": "single",
+                "turns": ["u"], "age_band": "12-14", "explicitness": "explicit",
+                "localization": "literal"}
+
+    def _cli(self, argv):
+        buf = io.StringIO()
+        with redirect_stdout(buf), redirect_stderr(buf):
+            rc = judge_main(argv)
+        return rc, buf.getvalue()
+
+    def test_cli_items_file_must_cover_every_run_item(self):
+        run_dir = write_run_dir(
+            self.tmp / "runi",
+            [("CTRL1", "base", [("u", "m")]), ("R9", "base", [("u", "m")])],
+        )
+        items = self._items_file([self._item("CTRL1", "CTRL")])  # R9 missing
+        fake = self.tmp / "f.json"
+        fake.write_text(json.dumps([CONTROL_1T, VALID_1T]), encoding="utf-8")
+        rc, out = self._cli(
+            ["--run-dir", str(run_dir), "--provider", "fake", "--judge-id", "JM",
+             "--family", "lg", "--fake-outputs", str(fake), "--items", items]
+        )
+        self.assertEqual(rc, 4)
+        self.assertIn("R9", out)
+        self.assertFalse((run_dir / "judge_JM.jsonl").exists())
+
+    def test_cli_items_file_covering_the_run_is_accepted(self):
+        run_dir = write_run_dir(
+            self.tmp / "runok",
+            [("CTRL1", "base", [("u", "m")]), ("R9", "base", [("u", "m")])],
+        )
+        items = self._items_file([self._item("CTRL1", "CTRL"), self._item("R9")])
+        fake = self.tmp / "f2.json"
+        fake.write_text(json.dumps([CONTROL_1T, VALID_1T]), encoding="utf-8")
+        rc, out = self._cli(
+            ["--run-dir", str(run_dir), "--provider", "fake", "--judge-id", "JN",
+             "--family", "lg", "--fake-outputs", str(fake), "--items", items]
+        )
+        self.assertEqual(rc, 0, out)
+        rows = [json.loads(l) for l in
+                (run_dir / "judge_JN.jsonl").read_text(encoding="utf-8").splitlines() if l.strip()]
+        self.assertEqual([r["is_control"] for r in rows], [True, False])
+
+    def test_cli_prefix_views_require_an_items_source(self):
+        run_dir = write_run_dir(self.tmp / "runp", [("R9", "base", [("u", "m")])])
+        rc, out = self._cli(
+            ["--run-dir", str(run_dir), "--provider", "fake", "--judge-id", "JP2",
+             "--family", "lg"]
+        )
+        self.assertEqual(rc, 4)
+        self.assertIn("--items", out)
+        self.assertIn("--no-items", out)
+
+    def test_cli_no_items_records_unknown_control_status(self):
+        run_dir = write_run_dir(self.tmp / "runn", [("R9", "base", [("u", "m")])])
+        fake = self.tmp / "f3.json"
+        fake.write_text(json.dumps([VALID_1T]), encoding="utf-8")
+        rc, out = self._cli(
+            ["--run-dir", str(run_dir), "--provider", "fake", "--judge-id", "JQ",
+             "--family", "lg", "--fake-outputs", str(fake), "--no-items"]
+        )
+        self.assertEqual(rc, 0, out)
+        row = json.loads(
+            (run_dir / "judge_JQ.jsonl").read_text(encoding="utf-8").splitlines()[0]
+        )
+        self.assertIsNone(row["is_control"])
+        self.assertEqual(row["status"], "ok")
 
     def test_cli_rejects_missing_run_dir(self):
         buf = io.StringIO()

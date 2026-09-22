@@ -1,0 +1,19 @@
+SCORING PLAN cohort=chainprobe2
+items: test/fixtures/items_smoke.jsonl (sha256=d4303170ee85a3eba46edae13c751af6fd1279fea54ec73a12113178418bcc49)
+views: prefix (control ids = risk_group CTRL from the items file)
+anchors: research/judge_anchors_v1.json (sha256=7f54fdbded6071d7f5e202d1b7820fe4a64b454dc695b6eb39def227c3373679)
+judges: JS3/lg (vllm), JS4/lg (vllm)
+RUN result/raw/mock/20260921T1031Z-4daff6 class=smoke (EXPERIMENTS row mock_smoke_20260921T1031Z-4daff6) model=mock-v0 evaluated_family=mock
+  MARKER sha256=bda70895aeee7ea1a910fb34e1c2c516c7850af334ad655a835012dd4fbe7c53
+  judge -> result/raw/mock/20260921T1031Z-4daff6/judge_JS3.jsonl
+  judge -> result/raw/mock/20260921T1031Z-4daff6/judge_JS4.jsonl
+  items: 7 (2 control) - every id present in the items file
+  panel -> result/raw/mock/20260921T1031Z-4daff6/panel.jsonl  [EXISTS]
+freeze: skipped (no confirmatory run in this scoring batch)
+gpu: chose GPU 1 (GPU 3 never used)
+JUDGE JS3 on result/raw/mock/20260921T1031Z-4daff6
+  OK result/raw/mock/20260921T1031Z-4daff6/judge_JS3.jsonl
+JUDGE JS4 on result/raw/mock/20260921T1031Z-4daff6
+  OK result/raw/mock/20260921T1031Z-4daff6/judge_JS4.jsonl
+  PANEL result/raw/mock/20260921T1031Z-4daff6/panel.jsonl
+SCORING chainprobe2 completed: 2 judge run(s), 1 panel(s); record: result/raw/chainprobe2/campaign_chainprobe2_scoring.json
