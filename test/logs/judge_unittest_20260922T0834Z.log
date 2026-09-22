@@ -1,0 +1,56 @@
+test_error_record_carries_no_scores (test_judge.TestFailClosed) ... ok
+test_error_without_text_is_refused (test_judge.TestFailClosed) ... ok
+test_ok_record_passes_the_guard (test_judge.TestFailClosed) ... ok
+test_ok_with_incomplete_scores_is_refused (test_judge.TestFailClosed) ... ok
+test_ok_with_zeroed_missing_dimension_is_refused (test_judge.TestFailClosed) ... ok
+test_ok_without_scores_is_refused (test_judge.TestFailClosed) ... ok
+test_empty_output_is_error (test_judge.TestJudgeConversation) ... ok
+test_malformed_then_valid_is_ok_after_retry (test_judge.TestJudgeConversation) ... ok
+test_malformed_twice_is_error_without_scores (test_judge.TestJudgeConversation) ... ok
+test_no_retry_when_max_retries_zero (test_judge.TestJudgeConversation) ... ok
+test_out_of_range_score_is_error_not_clamped (test_judge.TestJudgeConversation) ... ok
+test_provider_exception_is_error_not_retried (test_judge.TestJudgeConversation) ... ok
+test_valid_output_is_ok_in_one_attempt (test_judge.TestJudgeConversation) ... ok
+test_anchors_are_rendered (test_judge.TestJudgePrompt) ... ok
+test_bad_anchor_raises (test_judge.TestJudgePrompt) ... ok
+test_contains_every_dimension_axis_and_cf_code (test_judge.TestJudgePrompt) ... ok
+test_contains_json_schema_keys (test_judge.TestJudgePrompt) ... ok
+test_empty_anchors_leave_a_stated_placeholder (test_judge.TestJudgePrompt) ... ok
+test_empty_conversation_raises (test_judge.TestJudgePrompt) ... ok
+test_manual_excerpt_is_embedded (test_judge.TestJudgePrompt) ... ok
+test_missing_model_text_raises (test_judge.TestJudgePrompt) ... ok
+test_no_unfilled_slots (test_judge.TestJudgePrompt) ... ok
+test_roles (test_judge.TestJudgePrompt) ... ok
+test_template_file_keeps_both_anchor_slots (test_judge.TestJudgePrompt) ... ok
+test_turn_count_and_indexed_conversation (test_judge.TestJudgePrompt) ... ok
+test_all_error_run_still_exits_with_a_file_and_no_scores (test_judge.TestJudgeRun) ... ok
+test_cli_rejects_missing_run_dir (test_judge.TestJudgeRun) ... ok
+test_cli_with_fake_provider (test_judge.TestJudgeRun) ... ok
+test_mixed_outcomes_counts_and_rate (test_judge.TestJudgeRun) ... ok
+test_refuses_to_append_to_an_existing_judge_file (test_judge.TestJudgeRun) ... ok
+test_three_fake_judges_then_panel (test_judge.TestJudgeToPanel) ... ok
+test_all_judges_dropped_raises (test_judge.TestPanel) ... ok
+test_family_map_disagreement_raises (test_judge.TestPanel) ... ok
+test_insufficient_after_family_drop (test_judge.TestPanel) ... ok
+test_insufficient_when_fewer_than_two_ok_judges (test_judge.TestPanel) ... ok
+test_judge_file_with_ok_but_no_record_is_rejected (test_judge.TestPanel) ... ok
+test_leave_one_family_out_drops_the_shared_family_judge (test_judge.TestPanel) ... ok
+test_majority_false_yields_no_codes (test_judge.TestPanel) ... ok
+test_median_and_majority_over_three_judges (test_judge.TestPanel) ... ok
+test_panel_cli (test_judge.TestPanel) ... ok
+test_panel_cli_bad_input_exits_4 (test_judge.TestPanel) ... ok
+test_panel_write_guard_rejects_ok_with_one_judge (test_judge.TestPanel) ... ok
+test_panel_write_guard_rejects_ok_without_scores (test_judge.TestPanel) ... ok
+test_turn_count_mismatch_judge_is_dropped_and_named (test_judge.TestPanel) ... ok
+test_unknown_judge_id_raises (test_judge.TestPanel) ... ok
+test_write_panel_roundtrip (test_judge.TestPanel) ... ok
+test_groups_and_orders_turns (test_judge.TestReadConversations) ... ok
+test_missing_file_raises (test_judge.TestReadConversations) ... ok
+test_non_contiguous_turn_index_raises (test_judge.TestReadConversations) ... ok
+test_real_smoke_run_is_readable (test_judge.TestReadConversations) ... ok
+
+----------------------------------------------------------------------
+Ran 50 tests in 0.022s
+
+OK
+exit=0
