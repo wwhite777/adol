@@ -1,33 +1,35 @@
 # handoff.md — adol (rolling; overwritten each session)
 
-## 2026-09-22 — session 5: option C adopted; r004 waived; S2 FROZEN; S3 provider proven; first item group drafted (Claude Code conductor Fable 5.1, Builder)
+## 2026-09-22 — session 5 (continued): option C executed end to end through S3 tooling — item bank complete, judge module built; awaiting the PI's item review (Claude Code conductor Fable 5.1, Builder)
 
-State in one paragraph: Phase A is a DOMESTIC-FIRST paper (JKIICE / 한국융합학회) with Q1-grade methods, reduced design, $0, no human raters, no OSF/ETRI/IRB/API keys (PI option C, DECISION_LOG). S1 closed by PI waiver of the cross-family audit (domestic venue; v4 corrections auditor-unverified). S2 completed: CONTRIBUTION_CONTRACT v2 + PREREGISTERED_kyra_v2.yaml frozen by the gate — sha256 87abaae4c16fb0efe3dad27ff464fcd86b6b48ff67a33f1414336ccc7ddd34a4 (tag freeze/kyra-v2). S3 in progress: the open-weight provider is proven end to end (vLLM 0.19.0 via uv into the adol venv, EXAONE-4.0-1.2B smoke on GPU 1, 78 tests, MARKER, provenance fields in the manifest). Items: R4 group drafted as the PI review sample. Disk is the binding constraint (26 GB free on the shared volume). No jobs running.
+State in one paragraph: Phase A (domestic-first, reduced design, $0, no human raters) is frozen (PREREGISTERED_kyra_v2.yaml sha256 87abaae4…, tag freeze/kyra-v2) and its build is largely done. Item bank: all six risk groups authored by the conductor (pattern-level wording), benign twins gate-matched by a coder (39 lines rewritten under the ±20 % token / equal-request rule; every change reviewed), 156 items built (research/items/items_phaseA_v1.jsonl, sha 8ab7cda1…) with a stratification table; the PI review sheet (deliverables/item_review_sheet_v1.md, 72 items) is waiting for the PI. Pipeline: vLLM provider proven; judge runner + 3-judge panel aggregation built; judge prompt v0.1 (example-copy hazard fixed; smoke probe 7/7 parsed). 156 tests pass. Not yet: model selection within disk, analysis scripts, the G6 judge, runs. Disk: 26 GB free on the shared volume (the binding constraint). No jobs running.
 
-Done today (paths):
-- DECISION_LOG.md: decisions 1–6 approved; option C + r004 waiver + reduced design; freeze receipt line. RESOURCE_CONTRACT.md amended; research/PAPER_PLAN.md option-C plan; STATE.yaml.
-- audit/r003/ (FAIL on prose → corrected in NOVELTY_MATRIX v4, memo, evidence record, CRRI_SPEC, controls guideline); audit/r004/ package prepared then WAIVED.
-- CONTRIBUTION_CONTRACT.md v2 (v1 full design preserved as CONTRIBUTION_CONTRACT_v1_fulldesign_2026-09-22.md), PREREGISTERED_kyra_v2.yaml + .sha256, CLAIM_LEDGER.md v2.
-- src/gates/ (freeze + verify, 18 tests; coder, conductor-verified with planted violations). src/kyra/ provider work (coder ×2; conductor-verified): VLLMProvider, --model-path/--max-new-tokens, effective_params provenance, manifest optional chat_template fields; test/ 78 tests; result/raw/smoke_vllm/…; REHYDRATE.md lines for the model, the vllm stack and the smoke run.
-- research/items/R4_emotional_overdependence_v1.yaml (6 single + 6 multi; 4 lexical contrasts; 4 long-horizon scripts with benign twins; literal/localized versions from English sources; failing/passing patterns).
-- deliverables/scope_decision_response_2026-09-22_v1.txt (cost, scope, T1 answers), stage_2_report_v1.md, stage_2_response_v1.txt. Hub page + shared-server-ops disk note (#6 pending).
+Done this session (paths):
+- DECISION_LOG.md: decisions 1–6; option C + r004 waiver; freeze receipt; judge prompt v0.1 adoption. STATE.yaml, PAPER_PLAN.md (option C plan), RESOURCE_CONTRACT amendment, CLAIM_LEDGER v2.
+- audit/r003 (FAIL on prose → v4 corrections), audit/r004 (prepared, waived).
+- CONTRIBUTION_CONTRACT.md v2 + PREREGISTERED_kyra_v2.yaml (+ .sha256, written by src/gates/freeze.py); v1 full-design files preserved unfrozen.
+- src/gates/ (freeze/verify, 18 tests); src/kyra/providers.py VLLMProvider + effective_params provenance; src/kyra/items.py (builder + fail-closed design gate + diagnose); src/kyra/judge.py, panel.py, judge_prompt_v0.md (v0.1); tests 156 total; result/raw/smoke_vllm/… (smoke run + judge probes J0/J0b — never evidence).
+- research/items/R1..R6_*_v1.yaml (all six groups), items_phaseA_v1.jsonl, stratification_v1.csv, make_review_sheet.py; deliverables/item_review_sheet_v1.md, stage_2_report_v1.md, stage_2_response_v1.txt, scope_decision_response_2026-09-22_v1.txt.
+- manual/safe_controls_guideline_v1.md §3 (twin per script; operational request-count rule), research/CRRI_SPEC_v1.md (comparators, grouping, judge gate, panel rules), REHYDRATE.md (model, vllm stack, smoke run).
+- Hub: wiki/projects/adol.md, INDEX row, methods/shared-server-ops.md (#6 pending), methods/verification-traps.md (+2).
 
-Exact next steps (start a FRESH session from this file — rules 15.4; effort high is enough for building, max for contracts):
-1. [PI] Read research/items/R4_emotional_overdependence_v1.yaml (12 items, ~15 min): wording policy OK? persona/age bands OK? Anything too explicit or too mild? Reply in one line; the other five groups follow the same style.
-2. Conductor: author R3 (정체성 혼동·의인화), R6 (컴패니언 특화), then R1 (그루밍), R2 (경계침해·조종), R5 (자해·위기) at pattern level; then a coder card converting the YAML groups into the runner's items JSONL (schema src/kyra/schema.py) with a validation gate (counts per stratum, twin/control links).
-3. Coder cards (one at a time, same test tree): judge prompt v0 + judge_wrapper fixtures/self-tests; analysis scripts (logistic GLMM w/ cluster bootstrap, paired GLMM + TOST, Gwet's AC2) with synthetic fixtures whose answers are known; G6 judge that calls gates.verify_freeze first.
-4. Models within disk: evaluated = Qwen2.5-14B-Instruct (cached, fusion1's — read-only), EXAONE (7.8B or 4-bit 32B), HyperCLOVA X SEED (gated — PI must accept the HF license or pick Kanana instead), Gemma-3-12B/27B-4bit, one more; judges = Llama-3.1-8B-Instruct (cached) + two disjoint families (Mistral-Small-24B-4bit, Phi-4). One ≤20 GB checkpoint at a time; delete after its runs; REHYDRATE line each.
-5. [PI, separate session, optional] home-cleanup pass: home 174 GB vs 150 GB quota; shared volume 98 % full. Protected: ~/.cache/huggingface (fusion1 pilot Sep 26). Candidates are PI-gated (see wiki/methods/shared-server-ops.md).
-6. Venue: obtain the JKIICE / 한국융합학회 manuscript template before S8.
+Exact next steps (fresh session recommended; `/effort high` is enough for building):
+1. [PI] Read deliverables/item_review_sheet_v1.md (~40 min): per item ✔ / ✘ / comment on wording level, persona plausibility, clarity of the risk. Also: accept the HyperCLOVA X SEED license on Hugging Face under your account, or say "Kanana instead".
+2. Model selection + download plan within 26 GB free (one checkpoint at a time; delete after runs; REHYDRATE line each): evaluated = Qwen2.5-14B-Instruct (cached, fusion1's — read-only), EXAONE-4.0-32B in 4-bit (find a vLLM-compatible AWQ/GPTQ; else EXAONE-4.0-7.8B), Kanana-1.5-8B (≈16 GB bf16) or 15.7B-A3B 4-bit, Gemma-3-12B-it (≈24 GB — tight) or 27B-it 4-bit, HyperCLOVAX-SEED-Think-14B 4-bit (gated); judges = Llama-3.1-8B-Instruct (cached), Mistral-Small-24B 4-bit, Phi-4 — families disjoint from the model being scored (LOFO handles overlap). Facts fetched 2026-09-22: EXAONE-4.0-32B ungated, "EXAONE AI Model License Agreement 1.2 - NC", vLLM ≥0.10; Kanana-1.5-15.7B-A3B ungated, "Kanana" license, vLLM ≥0.8.5; HyperCLOVAX-SEED-Think-32B gated (license agreement), 14B variant exists.
+3. Coder cards (one at a time in the test tree, or scoped -p): analysis scripts with synthetic fixtures whose answers are known (logistic GLMM + scenario cluster bootstrap for N1; paired GLMM + TOST for N2; Gwet's AC2 with bootstrap for N3; transition tables + immediate/eventual recovery; H4 Pareto); G6 judge script (verifies PREREGISTERED_kyra_v2.yaml.sha256 via gates.verify_freeze, applies the frozen decision rules, outputs GO/KILL/KILL_WITH_SURVIVOR/INCONCLUSIVE); run orchestration for conditions (LOC/LIT/BEN/CTRL), the 20 % × 3 repeats at T = 0.7, per-run MARKER, EXPERIMENTS.csv rows.
+4. Runs: only after the PI's item sign-off; class confirmatory; GPUs 0–2 as free (GPU 0 has a foreign 18.8 GB job; GPU 3 was foreign, now idle — check each time).
+5. Judge prompt anchors ({{ANCHOR_SAFE}}/{{ANCHOR_FAIL}}) — fill from the manual's failing/passing patterns before scoring; the in-scoring revision budget (one) stays untouched.
+6. Venue template (JKIICE / 한국융합학회) before S8; phase B decision later (co-author rating).
 
-Open blockers: none PI-side except the R4 review nod; disk headroom for larger checkpoints.
+Open blockers: PI item review; HF license choice; disk headroom (a home-cleanup pass is PI-gated, see wiki/methods/shared-server-ops.md #6).
 
 Disclosures:
-- r004 waived (venue), so NOVELTY_MATRIX v4 / evidence record corrections were never verified by the auditor — every record says so.
-- The coder edited src/kyra/manifest.py (3 additive lines) outside its card scope to admit the two chat-template fields; accepted (needed, backward compatible). MockProvider now records max_tokens=None (it caps nothing) — honest, kept.
-- The uv install grew ~/.cache/uv by 10 GB (new wheels), not the venv; free space 38 → 26 GB. The 20 GB floor was never breached.
-- HyperCLOVA X SEED is a gated HF repo; EXAONE-4.0-1.2B was used for the smoke instead.
-- Smoke responses are not evidence (class smoke); EXPERIMENTS.csv row to be added when the real cohorts start.
-- Standing rule §7 (co-author → SCI Q1) is overridden by the PI's current instruction; logged in DECISION_LOG.
+- r004 waived; the S1 v4 corrections remain auditor-unverified (every record says so).
+- Sensitive item groups (R1 grooming, R5 self-harm, R6 companion) are written at pattern level with no method or explicit content; failing patterns are described, never exemplified. A judge with weak Korean may still misread — the pilot's reliability check (N3) is the safeguard.
+- Benign-twin rewrites (39) were made by a coder under the fixed rule; the conductor read every before/after line; two are semantically thinner (R2-M01 t4, R4-M03 t4) and accepted.
+- Judge smoke probes used a 1.2B model that is unfit for scoring (one J0b rationale praised secrecy); they are loop/format evidence only and are labeled smoke.
+- Coder scope deviations accepted today: manifest.py optional fields (3 lines); `diagnose` subcommand shipped in kyra.items; `source_group` column in the stratification CSV.
+- Disk: uv install grew ~/.cache/uv by 10 GB; 26 GB free; models/ holds only EXAONE-4.0-1.2B (2.4 GB).
+- Standing rule §7 (co-author → SCI Q1) overridden by the PI's instruction (logged).
 
-Instruction conflicts: none unresolved (the §7 venue rule vs the supervisor's domestic request is resolved by the PI's instruction, recorded).
+Instruction conflicts: none unresolved.
