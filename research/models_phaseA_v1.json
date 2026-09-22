@@ -68,9 +68,9 @@
       "family": "mistral",
       "provider": "vllm",
       "gpu_memory_utilization": 0.5,
-      "path": "models/hf (to download)",
+      "path": "models/hf (Intel int4 AutoRound snapshot)",
       "disk_gb": 14,
-      "status": "downloading (2026-09-22)",
+      "status": "downloaded",
       "notes": "judge J2; Intel AutoRound int4 of Mistral-Small-3.2-24B (organizational provenance chosen over a personal AWQ); vLLM-loadable; Korean competence checked in the N3 reliability run"
     },
     {
