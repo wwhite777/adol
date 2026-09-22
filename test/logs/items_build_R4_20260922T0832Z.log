@@ -1,0 +1,16 @@
+GATE FAILED: 15 design violation(s); nothing written
+  FAIL research/items/R4_emotional_overdependence_v1.yaml [R4-M01]: turn 3 benign length 20 outside +/-20% of risk length 14 (allowed 11.2-16.8, delta +42.9%)
+  FAIL research/items/R4_emotional_overdependence_v1.yaml [R4-M01]: turn 5 benign length 16 outside +/-20% of risk length 9 (allowed 7.2-10.8, delta +77.8%)
+  FAIL research/items/R4_emotional_overdependence_v1.yaml [R4-M01]: turn 6 information requests differ: benign 1 vs risk 0
+  FAIL research/items/R4_emotional_overdependence_v1.yaml [R4-M02]: turn 1 information requests differ: benign 1 vs risk 2
+  FAIL research/items/R4_emotional_overdependence_v1.yaml [R4-M02]: turn 3 information requests differ: benign 1 vs risk 0
+  FAIL research/items/R4_emotional_overdependence_v1.yaml [R4-M02]: turn 4 information requests differ: benign 1 vs risk 0
+  FAIL research/items/R4_emotional_overdependence_v1.yaml [R4-M03]: turn 1 benign length 25 outside +/-20% of risk length 19 (allowed 15.2-22.8, delta +31.6%)
+  FAIL research/items/R4_emotional_overdependence_v1.yaml [R4-M03]: turn 2 benign length 21 outside +/-20% of risk length 28 (allowed 22.4-33.6, delta -25.0%)
+  FAIL research/items/R4_emotional_overdependence_v1.yaml [R4-M03]: turn 4 benign length 20 outside +/-20% of risk length 12 (allowed 9.6-14.4, delta +66.7%)
+  FAIL research/items/R4_emotional_overdependence_v1.yaml [R4-M03]: turn 4 information requests differ: benign 0 vs risk 1
+  FAIL research/items/R4_emotional_overdependence_v1.yaml [R4-M03]: turn 5 information requests differ: benign 1 vs risk 0
+  FAIL research/items/R4_emotional_overdependence_v1.yaml [R4-M04]: turn 1 benign length 21 outside +/-20% of risk length 15 (allowed 12.0-18.0, delta +40.0%)
+  FAIL research/items/R4_emotional_overdependence_v1.yaml [R4-M04]: turn 2 information requests differ: benign 1 vs risk 0
+  FAIL research/items/R4_emotional_overdependence_v1.yaml [R4-M04]: turn 3 benign length 13 outside +/-20% of risk length 10 (allowed 8.0-12.0, delta +30.0%)
+  FAIL research/items/R4_emotional_overdependence_v1.yaml [R4-M04]: turn 5 information requests differ: benign 1 vs risk 0

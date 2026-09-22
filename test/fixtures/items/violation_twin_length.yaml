@@ -1,0 +1,227 @@
+# SYNTHETIC test fixture for kyra.items — invented content, not a copy of any authored item.
+# PLANTED VIOLATION: FX-M01 benign_twin has 5 turns while the risk script has 6
+# One minimally valid group: 6 single-turn + 6 multi-turn items.
+group: R1
+group_ko: 합성 테스트 그룹
+persona_note: "synthetic fixture"
+
+single_turn:
+  - item_id: FX-S01
+    age_band: "12-14"
+    explicitness: implicit
+    axes_targeted: [A1]
+    cf_applicable: []
+    literal_ko: "하나 문장 하나 문장 하나 문장."
+    localized_ko: "하나 문장 하나 문장 하나."
+    lexical_contrast: "하나 질문 하나 질문 하나 알려줘."
+  - item_id: FX-S02
+    age_band: "15-17"
+    explicitness: explicit
+    axes_targeted: [A2]
+    cf_applicable: []
+    literal_ko: "둘 문장 둘 문장 둘 문장."
+    localized_ko: "둘 문장 둘 문장 둘."
+    lexical_contrast: "둘 질문 둘 질문 둘 알려줘."
+  - item_id: FX-S03
+    age_band: "12-14"
+    explicitness: explicit
+    axes_targeted: [A3]
+    cf_applicable: []
+    literal_ko: "셋 문장 셋 문장 셋 문장."
+    localized_ko: "셋 문장 셋 문장 셋."
+    lexical_contrast: "셋 질문 셋 질문 셋 알려줘."
+  - item_id: FX-S04
+    age_band: "15-17"
+    explicitness: implicit
+    axes_targeted: [A4]
+    cf_applicable: []
+    literal_ko: "넷 문장 넷 문장 넷 문장."
+    localized_ko: "넷 문장 넷 문장 넷."
+    lexical_contrast: "넷 질문 넷 질문 넷 알려줘."
+  - item_id: FX-S05
+    age_band: "12-14"
+    explicitness: implicit
+    axes_targeted: [A1]
+    cf_applicable: []
+    literal_ko: "다섯 문장 다섯 문장 다섯 문장."
+    localized_ko: "다섯 문장 다섯 문장 다섯."
+  - item_id: FX-S06
+    age_band: "15-17"
+    explicitness: explicit
+    axes_targeted: [A2]
+    cf_applicable: []
+    literal_ko: "여섯 문장 여섯 문장 여섯 문장."
+    localized_ko: "여섯 문장 여섯 문장 여섯."
+
+multi_turn:
+  - item_id: FX-M01
+    age_band: "15-17"
+    explicitness: implicit
+    long_horizon: true
+    axes_targeted: [A1]
+    cf_applicable: []
+    en_source:
+      - "Synthetic risk line one."
+      - "Synthetic risk line two."
+      - "Synthetic risk line three."
+      - "Synthetic risk line four."
+      - "Synthetic risk line five."
+      - "Synthetic risk line six."
+    literal_ko:
+      - "가 문장 하나 문장 하나."
+      - "가 문장 둘 문장 둘."
+      - "가 문장 셋 문장 셋."
+      - "가 문장 넷 문장 넷?"
+      - "가 문장 다섯 문장?"
+      - "가 문장 여섯 문장."
+    localized_ko:
+      - "가 문장 하나 문장 하나."
+      - "가 문장 둘 문장 둘."
+      - "가 문장 셋 문장 셋."
+      - "가 문장 넷 문장 넷?"
+      - "가 문장 다섯 문장?"
+      - "가 문장 여섯 문장."
+    benign_twin:
+      - "나 문장 하나 문장 하나."
+      - "나 문장 둘 문장 둘."
+      - "나 문장 셋 문장 셋."
+      - "나 문장 넷 문장 넷?"
+      - "나 문장 다섯 문장?"
+  - item_id: FX-M02
+    age_band: "12-14"
+    explicitness: implicit
+    long_horizon: true
+    axes_targeted: [A2]
+    cf_applicable: []
+    en_source:
+      - "Synthetic risk line one."
+      - "Synthetic risk line two."
+      - "Synthetic risk line three."
+      - "Synthetic risk line four."
+      - "Synthetic risk line five."
+      - "Synthetic risk line six."
+    literal_ko:
+      - "다 문장 하나 문장 하나."
+      - "다 문장 둘 문장 둘."
+      - "다 문장 셋 문장 셋 알려줘."
+      - "다 문장 넷 문장 넷?"
+      - "다 문장 다섯 문장."
+      - "다 문장 여섯 문장."
+    localized_ko:
+      - "다 문장 하나 문장 하나."
+      - "다 문장 둘 문장 둘."
+      - "다 문장 셋 문장 셋 알려줘."
+      - "다 문장 넷 문장 넷?"
+      - "다 문장 다섯 문장."
+      - "다 문장 여섯 문장."
+    benign_twin:
+      - "라 문장 하나 문장 하나."
+      - "라 문장 둘 문장 둘."
+      - "라 문장 셋 문장 셋 알려줘."
+      - "라 문장 넷 문장 넷?"
+      - "라 문장 다섯 문장."
+      - "라 문장 여섯 문장."
+  - item_id: FX-M03
+    age_band: "15-17"
+    explicitness: explicit
+    long_horizon: true
+    axes_targeted: [A3]
+    cf_applicable: []
+    en_source:
+      - "Synthetic risk line one."
+      - "Synthetic risk line two."
+      - "Synthetic risk line three."
+      - "Synthetic risk line four."
+      - "Synthetic risk line five."
+      - "Synthetic risk line six."
+    literal_ko:
+      - "마 문장 하나 문장 하나."
+      - "마 문장 둘 문장 둘."
+      - "마 문장 셋 문장 셋."
+      - "마 문장 넷 문장 넷."
+      - "마 문장 다섯 문장 줄래?"
+      - "마 문장 여섯 문장."
+    localized_ko:
+      - "마 문장 하나 문장 하나."
+      - "마 문장 둘 문장 둘."
+      - "마 문장 셋 문장 셋."
+      - "마 문장 넷 문장 넷."
+      - "마 문장 다섯 문장 줄래?"
+      - "마 문장 여섯 문장."
+    benign_twin:
+      - "바 문장 하나 문장 하나."
+      - "바 문장 둘 문장 둘."
+      - "바 문장 셋 문장 셋."
+      - "바 문장 넷 문장 넷."
+      - "바 문장 다섯 문장 줄래?"
+      - "바 문장 여섯 문장."
+  - item_id: FX-M04
+    age_band: "12-14"
+    explicitness: explicit
+    long_horizon: true
+    axes_targeted: [A4]
+    cf_applicable: []
+    en_source:
+      - "Synthetic risk line one."
+      - "Synthetic risk line two."
+      - "Synthetic risk line three."
+      - "Synthetic risk line four."
+      - "Synthetic risk line five."
+      - "Synthetic risk line six."
+    literal_ko:
+      - "사 문장 하나 문장 하나."
+      - "사 문장 둘 문장 둘."
+      - "사 문장 셋 문장 셋."
+      - "사 문장 넷 문장 넷."
+      - "사 문장 다섯 문장."
+      - "사 문장 여섯 문장 도와줘."
+    localized_ko:
+      - "사 문장 하나 문장 하나."
+      - "사 문장 둘 문장 둘."
+      - "사 문장 셋 문장 셋."
+      - "사 문장 넷 문장 넷."
+      - "사 문장 다섯 문장."
+      - "사 문장 여섯 문장 도와줘."
+    benign_twin:
+      - "아 문장 하나 문장 하나."
+      - "아 문장 둘 문장 둘."
+      - "아 문장 셋 문장 셋."
+      - "아 문장 넷 문장 넷."
+      - "아 문장 다섯 문장."
+      - "아 문장 여섯 문장 도와줘."
+  - item_id: FX-M05
+    age_band: "15-17"
+    explicitness: implicit
+    long_horizon: false
+    axes_targeted: [A1]
+    cf_applicable: []
+    en_source:
+      - "Synthetic short line one."
+      - "Synthetic short line two."
+      - "Synthetic short line three."
+    literal_ko:
+      - "자 문장 하나 문장 하나."
+      - "자 문장 둘 문장 둘."
+      - "자 문장 셋 문장 셋?"
+    localized_ko:
+      - "자 문장 하나 문장 하나."
+      - "자 문장 둘 문장 둘."
+      - "자 문장 셋 문장 셋?"
+  - item_id: FX-M06
+    age_band: "12-14"
+    explicitness: explicit
+    long_horizon: false
+    axes_targeted: [A2]
+    cf_applicable: []
+    en_source:
+      - "Synthetic short line one."
+      - "Synthetic short line two."
+      - "Synthetic short line three."
+    literal_ko:
+      - "차 문장 하나 문장 하나."
+      - "차 문장 둘 문장 둘."
+      - "차 문장 셋 문장 셋?"
+    localized_ko:
+      - "차 문장 하나 문장 하나."
+      - "차 문장 둘 문장 둘."
+      - "차 문장 셋 문장 셋?"

@@ -1,0 +1,4 @@
+GATE FAILED: 3 design violation(s); nothing written
+  FAIL duplicate source item_id 'FX-S01' appears 2 times
+  FAIL duplicate generated item_id 'FX-S01-CTRL' appears 2 times
+  FAIL duplicate generated item_id 'FX-S01-LOC' appears 2 times

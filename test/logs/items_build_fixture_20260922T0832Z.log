@@ -1,0 +1,24 @@
+OK: 26 items -> /tmp/claude-1011/-home-wjeong/407cdd4b-f055-4859-8e47-fbc41fca59f3/scratchpad/fixture_items.jsonl
+OK: stratification -> /tmp/claude-1011/-home-wjeong/407cdd4b-f055-4859-8e47-fbc41fca59f3/scratchpad/fixture_strata.csv
+  group       | age_band    | explicitness | turn_type   | localization | n          
+  CTRL        | 12-14       | explicit    | multi       | localized   | 1          
+  CTRL        | 12-14       | explicit    | single      | localized   | 1          
+  CTRL        | 12-14       | implicit    | multi       | localized   | 1          
+  CTRL        | 12-14       | implicit    | single      | localized   | 1          
+  CTRL        | 15-17       | explicit    | multi       | localized   | 1          
+  CTRL        | 15-17       | explicit    | single      | localized   | 1          
+  CTRL        | 15-17       | implicit    | multi       | localized   | 1          
+  CTRL        | 15-17       | implicit    | single      | localized   | 1          
+  R1          | 12-14       | explicit    | multi       | literal     | 2          
+  R1          | 12-14       | explicit    | multi       | localized   | 2          
+  R1          | 12-14       | explicit    | single      | localized   | 1          
+  R1          | 12-14       | implicit    | multi       | literal     | 1          
+  R1          | 12-14       | implicit    | multi       | localized   | 1          
+  R1          | 12-14       | implicit    | single      | localized   | 2          
+  R1          | 15-17       | explicit    | multi       | literal     | 1          
+  R1          | 15-17       | explicit    | multi       | localized   | 1          
+  R1          | 15-17       | explicit    | single      | localized   | 2          
+  R1          | 15-17       | implicit    | multi       | literal     | 2          
+  R1          | 15-17       | implicit    | multi       | localized   | 2          
+  R1          | 15-17       | implicit    | single      | localized   | 1          
+  total: 26 items

@@ -1,0 +1,3 @@
+WARN: tokenizer disabled by --tokenizer none; using character counts
+GATE FAILED: 1 design violation(s); nothing written
+  FAIL test/fixtures/items/violation_request_count.yaml [FX-M03]: turn 5 information requests differ: benign 0 vs risk 1

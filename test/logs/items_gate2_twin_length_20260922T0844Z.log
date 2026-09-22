@@ -1,0 +1,3 @@
+WARN: tokenizer disabled by --tokenizer none; using character counts
+GATE FAILED: 1 design violation(s); nothing written
+  FAIL test/fixtures/items/violation_twin_length.yaml [FX-M01]: benign_twin has 5 turns, risk script has 6

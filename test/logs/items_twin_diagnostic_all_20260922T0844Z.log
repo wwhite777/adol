@@ -1,0 +1,208 @@
+tokenizer: LGAI-EXAONE/EXAONE-4.0-1.2B (local files only)
+tolerance: benign token length must be within +/-20% of the localized risk turn
+
+### group R1 (research/items/R1_grooming_exploitation_v1.yaml)
+
+== R1-M01
+  turn 1  tok risk=28  benign=24  allowed=22.4-33.6 OK   | req risk=0 benign=0 OK
+  turn 2  tok risk=23  benign=24  allowed=18.4-27.6 OK   | req risk=0 benign=0 OK
+  turn 3  tok risk=17  benign=17  allowed=13.6-20.4 OK   | req risk=1 benign=1 OK
+  turn 4  tok risk=21  benign=22  allowed=16.8-25.2 OK   | req risk=1 benign=1 OK
+  turn 5  tok risk=17  benign=18  allowed=13.6-20.4 OK   | req risk=1 benign=1 OK
+  turn 6  tok risk=17  benign=19  allowed=13.6-20.4 OK   | req risk=1 benign=1 OK
+
+== R1-M02
+  turn 1  tok risk=26  benign=24  allowed=20.8-31.2 OK   | req risk=0 benign=0 OK
+  turn 2  tok risk=14  benign=16  allowed=11.2-16.8 OK   | req risk=1 benign=1 OK
+  turn 3  tok risk=15  benign=17  allowed=12.0-18.0 OK   | req risk=1 benign=1 OK
+  turn 4  tok risk=19  benign=18  allowed=15.2-22.8 OK   | req risk=1 benign=1 OK
+  turn 5  tok risk=11  benign=11  allowed=8.8-13.2 OK   | req risk=0 benign=0 OK
+  turn 6  tok risk=19  benign=20  allowed=15.2-22.8 OK   | req risk=1 benign=1 OK
+
+== R1-M03
+  turn 1  tok risk=21  benign=21  allowed=16.8-25.2 OK   | req risk=0 benign=0 OK
+  turn 2  tok risk=13  benign=13  allowed=10.4-15.6 OK   | req risk=0 benign=0 OK
+  turn 3  tok risk=16  benign=17  allowed=12.8-19.2 OK   | req risk=0 benign=0 OK
+  turn 4  tok risk=22  benign=20  allowed=17.6-26.4 OK   | req risk=1 benign=1 OK
+  turn 5  tok risk=14  benign=15  allowed=11.2-16.8 OK   | req risk=1 benign=1 OK
+  turn 6  tok risk=22  benign=19  allowed=17.6-26.4 OK   | req risk=1 benign=1 OK
+
+== R1-M04
+  turn 1  tok risk=24  benign=22  allowed=19.2-28.8 OK   | req risk=0 benign=0 OK
+  turn 2  tok risk=20  benign=22  allowed=16.0-24.0 OK   | req risk=1 benign=1 OK
+  turn 3  tok risk=19  benign=21  allowed=15.2-22.8 OK   | req risk=1 benign=1 OK
+  turn 4  tok risk=17  benign=17  allowed=13.6-20.4 OK   | req risk=1 benign=1 OK
+  turn 5  tok risk=26  benign=21  allowed=20.8-31.2 OK   | req risk=1 benign=1 OK
+  turn 6  tok risk=22  benign=20  allowed=17.6-26.4 OK   | req risk=1 benign=1 OK
+
+### group R2 (research/items/R2_boundary_manipulation_v1.yaml)
+
+== R2-M01
+  turn 1  tok risk=19  benign=18  allowed=15.2-22.8 OK   | req risk=0 benign=0 OK
+  turn 2  tok risk=22  benign=22  allowed=17.6-26.4 OK   | req risk=1 benign=1 OK
+  turn 3  tok risk=13  benign=13  allowed=10.4-15.6 OK   | req risk=1 benign=1 OK
+  turn 4  tok risk=12  benign=10  allowed=9.6-14.4 OK   | req risk=0 benign=0 OK
+  turn 5  tok risk=15  benign=13  allowed=12.0-18.0 OK   | req risk=1 benign=1 OK
+  turn 6  tok risk=16  benign=14  allowed=12.8-19.2 OK   | req risk=1 benign=1 OK
+
+== R2-M02
+  turn 1  tok risk=24  benign=23  allowed=19.2-28.8 OK   | req risk=1 benign=1 OK
+  turn 2  tok risk=16  benign=13  allowed=12.8-19.2 OK   | req risk=1 benign=1 OK
+  turn 3  tok risk=18  benign=18  allowed=14.4-21.6 OK   | req risk=1 benign=1 OK
+  turn 4  tok risk=20  benign=23  allowed=16.0-24.0 OK   | req risk=1 benign=1 OK
+  turn 5  tok risk=22  benign=22  allowed=17.6-26.4 OK   | req risk=1 benign=1 OK
+  turn 6  tok risk=16  benign=15  allowed=12.8-19.2 OK   | req risk=2 benign=2 OK
+
+== R2-M03
+  turn 1  tok risk=27  benign=24  allowed=21.6-32.4 OK   | req risk=0 benign=0 OK
+  turn 2  tok risk=18  benign=18  allowed=14.4-21.6 OK   | req risk=1 benign=1 OK
+  turn 3  tok risk=20  benign=20  allowed=16.0-24.0 OK   | req risk=0 benign=0 OK
+  turn 4  tok risk=20  benign=20  allowed=16.0-24.0 OK   | req risk=1 benign=1 OK
+  turn 5  tok risk=20  benign=19  allowed=16.0-24.0 OK   | req risk=0 benign=0 OK
+  turn 6  tok risk=22  benign=22  allowed=17.6-26.4 OK   | req risk=1 benign=1 OK
+
+== R2-M04
+  turn 1  tok risk=20  benign=22  allowed=16.0-24.0 OK   | req risk=0 benign=0 OK
+  turn 2  tok risk=19  benign=17  allowed=15.2-22.8 OK   | req risk=0 benign=0 OK
+  turn 3  tok risk=15  benign=17  allowed=12.0-18.0 OK   | req risk=0 benign=0 OK
+  turn 4  tok risk=14  benign=16  allowed=11.2-16.8 OK   | req risk=0 benign=0 OK
+  turn 5  tok risk=20  benign=20  allowed=16.0-24.0 OK   | req risk=1 benign=1 OK
+  turn 6  tok risk=16  benign=16  allowed=12.8-19.2 OK   | req risk=1 benign=1 OK
+
+### group R3 (research/items/R3_identity_anthropomorphism_v1.yaml)
+
+== R3-M01
+  turn 1  tok risk=19  benign=22  allowed=15.2-22.8 OK   | req risk=1 benign=1 OK
+  turn 2  tok risk=11  benign=12  allowed=8.8-13.2 OK   | req risk=2 benign=2 OK
+  turn 3  tok risk=9   benign=10  allowed=7.2-10.8 OK   | req risk=1 benign=1 OK
+  turn 4  tok risk=12  benign=14  allowed=9.6-14.4 OK   | req risk=1 benign=1 OK
+  turn 5  tok risk=20  benign=21  allowed=16.0-24.0 OK   | req risk=1 benign=1 OK
+  turn 6  tok risk=14  benign=15  allowed=11.2-16.8 OK   | req risk=0 benign=0 OK
+
+== R3-M02
+  turn 1  tok risk=23  benign=23  allowed=18.4-27.6 OK   | req risk=0 benign=0 OK
+  turn 2  tok risk=12  benign=14  allowed=9.6-14.4 OK   | req risk=1 benign=1 OK
+  turn 3  tok risk=14  benign=15  allowed=11.2-16.8 OK   | req risk=1 benign=1 OK
+  turn 4  tok risk=16  benign=16  allowed=12.8-19.2 OK   | req risk=1 benign=1 OK
+  turn 5  tok risk=13  benign=15  allowed=10.4-15.6 OK   | req risk=1 benign=1 OK
+  turn 6  tok risk=14  benign=14  allowed=11.2-16.8 OK   | req risk=0 benign=0 OK
+
+== R3-M03
+  turn 1  tok risk=12  benign=14  allowed=9.6-14.4 OK   | req risk=1 benign=1 OK
+  turn 2  tok risk=16  benign=19  allowed=12.8-19.2 OK   | req risk=0 benign=0 OK
+  turn 3  tok risk=11  benign=11  allowed=8.8-13.2 OK   | req risk=1 benign=1 OK
+  turn 4  tok risk=22  benign=18  allowed=17.6-26.4 OK   | req risk=1 benign=1 OK
+  turn 5  tok risk=17  benign=16  allowed=13.6-20.4 OK   | req risk=1 benign=1 OK
+  turn 6  tok risk=22  benign=19  allowed=17.6-26.4 OK   | req risk=1 benign=1 OK
+
+== R3-M04
+  turn 1  tok risk=12  benign=12  allowed=9.6-14.4 OK   | req risk=2 benign=2 OK
+  turn 2  tok risk=21  benign=24  allowed=16.8-25.2 OK   | req risk=1 benign=1 OK
+  turn 3  tok risk=13  benign=12  allowed=10.4-15.6 OK   | req risk=0 benign=0 OK
+  turn 4  tok risk=19  benign=18  allowed=15.2-22.8 OK   | req risk=0 benign=0 OK
+  turn 5  tok risk=19  benign=17  allowed=15.2-22.8 OK   | req risk=2 benign=2 OK
+  turn 6  tok risk=13  benign=11  allowed=10.4-15.6 OK   | req risk=1 benign=1 OK
+
+### group R4 (research/items/R4_emotional_overdependence_v1.yaml)
+
+== R4-M01
+  turn 1  tok risk=19  benign=17  allowed=15.2-22.8 OK   | req risk=0 benign=0 OK
+  turn 2  tok risk=18  benign=20  allowed=14.4-21.6 OK   | req risk=0 benign=0 OK
+  turn 3  tok risk=14  benign=15  allowed=11.2-16.8 OK   | req risk=1 benign=1 OK
+  turn 4  tok risk=15  benign=18  allowed=12.0-18.0 OK   | req risk=1 benign=1 OK
+  turn 5  tok risk=9   benign=10  allowed=7.2-10.8 OK   | req risk=1 benign=1 OK
+  turn 6  tok risk=15  benign=15  allowed=12.0-18.0 OK   | req risk=0 benign=0 OK
+
+== R4-M02
+  turn 1  tok risk=21  benign=23  allowed=16.8-25.2 OK   | req risk=2 benign=2 OK
+  turn 2  tok risk=24  benign=20  allowed=19.2-28.8 OK   | req risk=0 benign=0 OK
+  turn 3  tok risk=23  benign=23  allowed=18.4-27.6 OK   | req risk=0 benign=0 OK
+  turn 4  tok risk=19  benign=18  allowed=15.2-22.8 OK   | req risk=0 benign=0 OK
+  turn 5  tok risk=17  benign=17  allowed=13.6-20.4 OK   | req risk=1 benign=1 OK
+  turn 6  tok risk=19  benign=19  allowed=15.2-22.8 OK   | req risk=1 benign=1 OK
+
+== R4-M03
+  turn 1  tok risk=19  benign=16  allowed=15.2-22.8 OK   | req risk=1 benign=1 OK
+  turn 2  tok risk=28  benign=28  allowed=22.4-33.6 OK   | req risk=1 benign=1 OK
+  turn 3  tok risk=15  benign=15  allowed=12.0-18.0 OK   | req risk=0 benign=0 OK
+  turn 4  tok risk=12  benign=10  allowed=9.6-14.4 OK   | req risk=1 benign=1 OK
+  turn 5  tok risk=21  benign=17  allowed=16.8-25.2 OK   | req risk=0 benign=0 OK
+  turn 6  tok risk=20  benign=20  allowed=16.0-24.0 OK   | req risk=1 benign=1 OK
+
+== R4-M04
+  turn 1  tok risk=15  benign=13  allowed=12.0-18.0 OK   | req risk=0 benign=0 OK
+  turn 2  tok risk=18  benign=20  allowed=14.4-21.6 OK   | req risk=0 benign=0 OK
+  turn 3  tok risk=10  benign=12  allowed=8.0-12.0 OK   | req risk=1 benign=1 OK
+  turn 4  tok risk=16  benign=17  allowed=12.8-19.2 OK   | req risk=1 benign=1 OK
+  turn 5  tok risk=15  benign=15  allowed=12.0-18.0 OK   | req risk=0 benign=0 OK
+  turn 6  tok risk=15  benign=18  allowed=12.0-18.0 OK   | req risk=1 benign=1 OK
+
+### group R5 (research/items/R5_selfharm_crisis_v1.yaml)
+
+== R5-M01
+  turn 1  tok risk=17  benign=14  allowed=13.6-20.4 OK   | req risk=0 benign=0 OK
+  turn 2  tok risk=14  benign=16  allowed=11.2-16.8 OK   | req risk=0 benign=0 OK
+  turn 3  tok risk=15  benign=16  allowed=12.0-18.0 OK   | req risk=0 benign=0 OK
+  turn 4  tok risk=13  benign=15  allowed=10.4-15.6 OK   | req risk=0 benign=0 OK
+  turn 5  tok risk=15  benign=15  allowed=12.0-18.0 OK   | req risk=0 benign=0 OK
+  turn 6  tok risk=23  benign=19  allowed=18.4-27.6 OK   | req risk=1 benign=1 OK
+
+== R5-M02
+  turn 1  tok risk=16  benign=13  allowed=12.8-19.2 OK   | req risk=0 benign=0 OK
+  turn 2  tok risk=19  benign=20  allowed=15.2-22.8 OK   | req risk=1 benign=1 OK
+  turn 3  tok risk=13  benign=13  allowed=10.4-15.6 OK   | req risk=1 benign=1 OK
+  turn 4  tok risk=17  benign=19  allowed=13.6-20.4 OK   | req risk=1 benign=1 OK
+  turn 5  tok risk=24  benign=21  allowed=19.2-28.8 OK   | req risk=1 benign=1 OK
+  turn 6  tok risk=21  benign=23  allowed=16.8-25.2 OK   | req risk=1 benign=1 OK
+
+== R5-M03
+  turn 1  tok risk=21  benign=23  allowed=16.8-25.2 OK   | req risk=0 benign=0 OK
+  turn 2  tok risk=14  benign=14  allowed=11.2-16.8 OK   | req risk=0 benign=0 OK
+  turn 3  tok risk=16  benign=17  allowed=12.8-19.2 OK   | req risk=0 benign=0 OK
+  turn 4  tok risk=13  benign=14  allowed=10.4-15.6 OK   | req risk=0 benign=0 OK
+  turn 5  tok risk=18  benign=20  allowed=14.4-21.6 OK   | req risk=1 benign=1 OK
+  turn 6  tok risk=22  benign=22  allowed=17.6-26.4 OK   | req risk=1 benign=1 OK
+
+== R5-M04
+  turn 1  tok risk=18  benign=17  allowed=14.4-21.6 OK   | req risk=0 benign=0 OK
+  turn 2  tok risk=13  benign=14  allowed=10.4-15.6 OK   | req risk=0 benign=0 OK
+  turn 3  tok risk=22  benign=22  allowed=17.6-26.4 OK   | req risk=1 benign=1 OK
+  turn 4  tok risk=21  benign=22  allowed=16.8-25.2 OK   | req risk=0 benign=0 OK
+  turn 5  tok risk=18  benign=21  allowed=14.4-21.6 OK   | req risk=0 benign=0 OK
+  turn 6  tok risk=18  benign=18  allowed=14.4-21.6 OK   | req risk=0 benign=0 OK
+
+### group R6 (research/items/R6_companion_specific_v1.yaml)
+
+== R6-M01
+  turn 1  tok risk=19  benign=18  allowed=15.2-22.8 OK   | req risk=1 benign=1 OK
+  turn 2  tok risk=11  benign=13  allowed=8.8-13.2 OK   | req risk=0 benign=0 OK
+  turn 3  tok risk=15  benign=14  allowed=12.0-18.0 OK   | req risk=1 benign=1 OK
+  turn 4  tok risk=14  benign=15  allowed=11.2-16.8 OK   | req risk=1 benign=1 OK
+  turn 5  tok risk=23  benign=23  allowed=18.4-27.6 OK   | req risk=1 benign=1 OK
+  turn 6  tok risk=12  benign=14  allowed=9.6-14.4 OK   | req risk=1 benign=1 OK
+
+== R6-M02
+  turn 1  tok risk=11  benign=11  allowed=8.8-13.2 OK   | req risk=0 benign=0 OK
+  turn 2  tok risk=16  benign=15  allowed=12.8-19.2 OK   | req risk=2 benign=2 OK
+  turn 3  tok risk=20  benign=21  allowed=16.0-24.0 OK   | req risk=1 benign=1 OK
+  turn 4  tok risk=15  benign=13  allowed=12.0-18.0 OK   | req risk=0 benign=0 OK
+  turn 5  tok risk=17  benign=17  allowed=13.6-20.4 OK   | req risk=2 benign=2 OK
+  turn 6  tok risk=24  benign=26  allowed=19.2-28.8 OK   | req risk=1 benign=1 OK
+
+== R6-M03
+  turn 1  tok risk=13  benign=14  allowed=10.4-15.6 OK   | req risk=0 benign=0 OK
+  turn 2  tok risk=13  benign=13  allowed=10.4-15.6 OK   | req risk=2 benign=2 OK
+  turn 3  tok risk=14  benign=14  allowed=11.2-16.8 OK   | req risk=0 benign=0 OK
+  turn 4  tok risk=18  benign=17  allowed=14.4-21.6 OK   | req risk=1 benign=1 OK
+  turn 5  tok risk=16  benign=18  allowed=12.8-19.2 OK   | req risk=2 benign=2 OK
+  turn 6  tok risk=17  benign=16  allowed=13.6-20.4 OK   | req risk=0 benign=0 OK
+
+== R6-M04
+  turn 1  tok risk=18  benign=15  allowed=14.4-21.6 OK   | req risk=1 benign=1 OK
+  turn 2  tok risk=11  benign=12  allowed=8.8-13.2 OK   | req risk=1 benign=1 OK
+  turn 3  tok risk=12  benign=14  allowed=9.6-14.4 OK   | req risk=1 benign=1 OK
+  turn 4  tok risk=15  benign=16  allowed=12.0-18.0 OK   | req risk=1 benign=1 OK
+  turn 5  tok risk=15  benign=15  allowed=12.0-18.0 OK   | req risk=1 benign=1 OK
+  turn 6  tok risk=20  benign=20  allowed=16.0-24.0 OK   | req risk=1 benign=1 OK
+
+0 turn(s) fail the twin rules

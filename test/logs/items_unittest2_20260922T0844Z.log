@@ -1,0 +1,36 @@
+test_missing_top_level_key (test_items_build.TestBadInput) ... ok
+test_no_matching_source (test_items_build.TestBadInput) ... ok
+test_unknown_expect_group (test_items_build.TestBadInput) ... ok
+test_unparseable_yaml (test_items_build.TestBadInput) ... ok
+test_all_reasons_are_printed (test_items_build.TestGateFailures) ... ok
+test_duplicate_item_id (test_items_build.TestGateFailures) ... ok
+test_length_tolerance_violation (test_items_build.TestGateFailures)
+A benign turn far longer than its risk turn fails the +/-20% rule. ... ok
+test_missing_benign_twin (test_items_build.TestGateFailures) ... ok
+test_missing_expected_group (test_items_build.TestGateFailures) ... ok
+test_request_count_mismatch (test_items_build.TestGateFailures) ... ok
+test_unlisted_group (test_items_build.TestGateFailures) ... ok
+test_wrong_twin_length (test_items_build.TestGateFailures) ... ok
+test_endings_configured_in_one_place (test_items_build.TestRequestCounting) ... ok
+test_korean_request_endings (test_items_build.TestRequestCounting) ... ok
+test_line_breaks_split_sentences (test_items_build.TestRequestCounting) ... ok
+test_multiple_sentences_counted_separately (test_items_build.TestRequestCounting) ... ok
+test_other_verb_endings_are_not_requests (test_items_build.TestRequestCounting) ... ok
+test_question_mark_is_a_request (test_items_build.TestRequestCounting) ... ok
+test_statement_is_not_a_request (test_items_build.TestRequestCounting) ... ok
+test_suffix_match_covers_compound_verbs (test_items_build.TestRequestCounting)
+Verbs ending in one of the suffixes count without being listed. ... ok
+test_trailing_punctuation_is_stripped_before_matching (test_items_build.TestRequestCounting) ... ok
+test_build_writes_26_items (test_items_build.TestValidGroup) ... ok
+test_character_fallback_prints_warn (test_items_build.TestValidGroup) ... ok
+test_item_kinds_and_links (test_items_build.TestValidGroup) ... ok
+test_jsonl_records_are_schema_clean (test_items_build.TestValidGroup) ... ok
+test_real_tokenizer_path (test_items_build.TestValidGroup) ... ok
+test_stratification_csv (test_items_build.TestValidGroup) ... ok
+test_stratification_has_source_group (test_items_build.TestValidGroup)
+Contrasts and twins keep their origin group in the source_group column. ... ok
+
+----------------------------------------------------------------------
+Ran 28 tests in 4.490s
+
+OK

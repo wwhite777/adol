@@ -1,0 +1,2 @@
+GATE FAILED: 1 design violation(s); nothing written
+  FAIL test/fixtures/items/violation_missing_twin.yaml [FX-M02]: long_horizon item has no benign_twin
