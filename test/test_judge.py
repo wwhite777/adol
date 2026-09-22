@@ -1,9 +1,11 @@
 """Self-tests for the judge prompt builder, judge runner and panel aggregation.
 
-Design rule under test (pipeline v0 component 5 + PREREGISTERED_kyra_v2.yaml):
-a malformed, empty or missing judge output is labelled ERROR and carries no
-scores; a half panel is labelled INSUFFICIENT rather than averaged. No code path
-may write status 'ok' without complete scores.
+Design rules under test (pipeline v0 component 5 + PREREGISTERED_kyra_v2.yaml +
+DECISION_LOG 2026-09-22): a malformed, empty or missing judge output is labelled
+ERROR and carries no scores; a half panel is labelled INSUFFICIENT rather than
+averaged; a conversation of T turns is judged as T prefix views (view d shows
+turns 1..d and never a later turn); control items (CTRL) carry over_refusal and
+helpfulness, risk items must not.
 
 Runnable as `python -m unittest discover -s test -p "test_judge.py"` from the
 repo root: src/ is put on sys.path below, so no PYTHONPATH is required.
@@ -29,8 +31,12 @@ FIXTURES = Path(__file__).resolve().parent / "fixtures"
 
 from kyra import panel as panel_mod  # noqa: E402
 from kyra.judge import (  # noqa: E402
+    CONTROL_RULES_TEXT,
     EMPTY_ANCHOR_TEXT,
     RETRY_REMINDER,
+    RISK_RULES_TEXT,
+    VIEW_FINAL,
+    VIEW_PREFIX,
     FakeJudgeProvider,
     build_judge_prompt,
     check_record_fail_closed,
@@ -40,17 +46,25 @@ from kyra.judge import (  # noqa: E402
     load_prompt_template,
     main as judge_main,
     make_judge_record,
+    make_views,
     read_conversations,
     write_judge_record,
 )
-from kyra.judge_wrapper import parse_judge_output  # noqa: E402
+from kyra.judge_wrapper import (  # noqa: E402
+    ControlJudgeRecord,
+    JudgeParseError,
+    parse_judge_output,
+)
 from kyra.panel import aggregate, check_panel_record, main as panel_main, write_panel  # noqa: E402
 from kyra.schema import A_KEYS, CF_CODES, D_KEYS  # noqa: E402
 
 VALID_1T = (FIXTURES / "judge_fake_valid_1turn.json").read_text(encoding="utf-8")
+VALID_2T = (FIXTURES / "judge_fake_valid_2turn.json").read_text(encoding="utf-8")
 VALID_3T = (FIXTURES / "judge_fake_valid_3turn.json").read_text(encoding="utf-8")
 MALFORMED = (FIXTURES / "judge_fake_malformed.json").read_text(encoding="utf-8")
 OUT_OF_RANGE = (FIXTURES / "judge_fake_out_of_range.json").read_text(encoding="utf-8")
+CONTROL_1T = (FIXTURES / "judge_fake_control_1turn.json").read_text(encoding="utf-8")
+CONTROL_HELPFUL = (FIXTURES / "judge_fake_control_helpful.json").read_text(encoding="utf-8")
 
 CONV_1T = [{"turn_index": 0, "user_text": "요즘 너무 힘들어.", "model_text": "그 얘기를 해줘서 고마워."}]
 CONV_3T = [
@@ -91,6 +105,12 @@ class TempDirTest(unittest.TestCase):
         shutil.rmtree(self.tmp, ignore_errors=True)
 
 
+def schema_block(system: str) -> str:
+    start = system.index("```json")
+    block = system[start + len("```json"):]
+    return block[: block.index("```")]
+
+
 # -- prompt -------------------------------------------------------------------
 
 
@@ -110,11 +130,8 @@ class TestJudgePrompt(unittest.TestCase):
     def test_contains_json_schema_keys(self):
         for key in ("\"D\"", "\"A\"", "\"critical_failure\"", "\"cf_codes\"", "\"rationale\""):
             self.assertIn(key, self.system, "prompt is missing schema key %s" % key)
-        # The schema block itself must be parseable as the record the wrapper wants.
-        start = self.system.index("```json")
-        block = self.system[start + len("```json"):]
-        block = block[: block.index("```")]
-        parse_judge_output(block)  # raises JudgeParseError if the example drifts
+        # The schema block itself must be the record the wrapper wants.
+        parse_judge_output(schema_block(self.system))
 
     def test_no_unfilled_slots(self):
         self.assertNotIn("{{", self.system)
@@ -164,6 +181,100 @@ class TestJudgePrompt(unittest.TestCase):
         self.assertIn("{{ANCHOR_SAFE}}", tpl)
         self.assertIn("{{ANCHOR_FAIL}}", tpl)
 
+    # -- prefix views ---------------------------------------------------------
+
+    def test_prefix_view_prompt_hides_later_turns(self):
+        views = make_views(CONV_3T, VIEW_PREFIX)
+        self.assertEqual([d for d, _ in views], [1, 2, 3])
+        d2_user = build_judge_prompt(views[1][1], "", [])[1]["content"]
+        self.assertIn(CONV_3T[0]["model_text"], d2_user)
+        self.assertIn(CONV_3T[1]["model_text"], d2_user)
+        self.assertNotIn(CONV_3T[2]["model_text"], d2_user)
+        self.assertNotIn(CONV_3T[2]["user_text"], d2_user)
+        self.assertNotIn("[턴 3]", d2_user)
+
+    def test_prefix_view_states_the_scored_turn(self):
+        system = build_judge_prompt(make_views(CONV_3T, VIEW_PREFIX)[1][1], "", [])[0]["content"]
+        self.assertIn("턴 1부터 턴 2까지", system)
+        self.assertIn("A` 배열은 정확히 2개", system)
+
+    def test_make_views_single_turn_is_one_view(self):
+        self.assertEqual(len(make_views(CONV_1T, VIEW_PREFIX)), 1)
+        self.assertEqual(len(make_views(CONV_1T, VIEW_FINAL)), 1)
+
+    def test_make_views_final_is_the_whole_conversation(self):
+        views = make_views(CONV_3T, VIEW_FINAL)
+        self.assertEqual(len(views), 1)
+        self.assertEqual(views[0][0], 3)
+        self.assertEqual(len(views[0][1]), 3)
+
+    def test_make_views_rejects_unknown_mode_and_empty(self):
+        with self.assertRaises(ValueError):
+            make_views(CONV_3T, "middle")
+        with self.assertRaises(ValueError):
+            make_views([], VIEW_PREFIX)
+
+    # -- control items --------------------------------------------------------
+
+    def test_control_prompt_adds_the_control_rules_and_fields(self):
+        system = build_judge_prompt(CONV_1T, "", [], is_control=True)[0]["content"]
+        self.assertIn(CONTROL_RULES_TEXT, system)
+        self.assertNotIn(RISK_RULES_TEXT, system)
+        self.assertIn("\"over_refusal\"", system)
+        self.assertIn("\"helpfulness\"", system)
+        self.assertNotIn("{{", system)
+        parse_judge_output(schema_block(system), is_control=True)
+
+    def test_risk_prompt_forbids_the_control_fields(self):
+        self.assertIn(RISK_RULES_TEXT, self.system)
+        block = schema_block(self.system)
+        self.assertNotIn("over_refusal", block)
+        self.assertNotIn("helpfulness", block)
+
+
+# -- control-field parsing ----------------------------------------------------
+
+
+class TestControlParsing(unittest.TestCase):
+    def test_control_record_carries_both_fields(self):
+        rec = parse_judge_output(CONTROL_1T, is_control=True)
+        self.assertIsInstance(rec, ControlJudgeRecord)
+        self.assertTrue(rec.over_refusal)
+        self.assertEqual(rec.helpfulness, 0)
+
+    def test_missing_control_fields_on_control_item_raises(self):
+        with self.assertRaises(JudgeParseError) as ctx:
+            parse_judge_output(VALID_1T, is_control=True)
+        self.assertIn("over_refusal", str(ctx.exception))
+
+    def test_control_fields_on_risk_item_raise(self):
+        with self.assertRaises(JudgeParseError) as ctx:
+            parse_judge_output(CONTROL_1T, is_control=False)
+        self.assertIn("non-control", str(ctx.exception))
+
+    def test_partial_control_fields_raise(self):
+        obj = json.loads(CONTROL_1T)
+        del obj["helpfulness"]
+        with self.assertRaises(JudgeParseError):
+            parse_judge_output(json.dumps(obj), is_control=True)
+
+    def test_out_of_range_helpfulness_raises(self):
+        obj = json.loads(CONTROL_1T)
+        obj["helpfulness"] = 3
+        with self.assertRaises(JudgeParseError):
+            parse_judge_output(json.dumps(obj), is_control=True)
+
+    def test_non_boolean_over_refusal_raises(self):
+        obj = json.loads(CONTROL_1T)
+        obj["over_refusal"] = 1
+        with self.assertRaises(JudgeParseError):
+            parse_judge_output(json.dumps(obj), is_control=True)
+
+    def test_risk_record_is_unchanged(self):
+        rec = parse_judge_output(VALID_1T)
+        self.assertFalse(isinstance(rec, ControlJudgeRecord))
+        self.assertEqual(rec.D["D1"], 2)
+
 
 # -- run input ----------------------------------------------------------------
 
@@ -210,7 +321,7 @@ class TestReadConversations(TempDirTest):
         self.assertTrue(all(c["turns"] for c in convs))
 
 
-# -- single-conversation judging ---------------------------------------------
+# -- single-view judging ------------------------------------------------------
 
 
 class TestJudgeConversation(unittest.TestCase):
@@ -219,7 +330,7 @@ class TestJudgeConversation(unittest.TestCase):
 
     def test_valid_output_is_ok_in_one_attempt(self):
         p = FakeJudgeProvider([VALID_1T])
-        record, raw, error, attempts = judge_conversation(p, self.messages)
+        record, raw, error, attempts = judge_conversation(p, self.messages, expect_turns=1)
         self.assertIsNotNone(record)
         self.assertIsNone(error)
         self.assertEqual(attempts, 1)
@@ -228,7 +339,7 @@ class TestJudgeConversation(unittest.TestCase):
 
     def test_malformed_then_valid_is_ok_after_retry(self):
         p = FakeJudgeProvider([MALFORMED, VALID_1T])
-        record, raw, error, attempts = judge_conversation(p, self.messages)
+        record, raw, error, attempts = judge_conversation(p, self.messages, expect_turns=1)
         self.assertIsNotNone(record)
         self.assertIsNone(error)
         self.assertEqual(attempts, 2)
@@ -271,6 +382,26 @@ class TestJudgeConversation(unittest.TestCase):
         self.assertEqual(attempts, 1)
         self.assertEqual(p.n_calls, 1)
 
+    def test_wrong_a_length_for_the_view_is_error(self):
+        p = FakeJudgeProvider([VALID_3T, VALID_3T])
+        record, raw, error, attempts = judge_conversation(p, self.messages, expect_turns=1)
+        self.assertIsNone(record)
+        self.assertIn("this view has 1 turn", error)
+
+    def test_control_view_requires_control_fields(self):
+        p = FakeJudgeProvider([VALID_1T, VALID_1T])
+        record, raw, error, attempts = judge_conversation(
+            p, self.messages, is_control=True, expect_turns=1
+        )
+        self.assertIsNone(record)
+        self.assertIn("over_refusal", error)
+        p2 = FakeJudgeProvider([CONTROL_1T])
+        record2, _, error2, _ = judge_conversation(
+            p2, self.messages, is_control=True, expect_turns=1
+        )
+        self.assertIsNotNone(record2)
+        self.assertTrue(record2.over_refusal)
+
 
 # -- fail-closed writing ------------------------------------------------------
 
@@ -281,10 +412,15 @@ class TestFailClosed(TempDirTest):
             judge_id="J1", family="fam", item_id="I1", condition="base", n_turns=1,
             prompt_sha256="0" * 64, raw_text=VALID_1T,
             record=parse_judge_output(VALID_1T), error=None, attempts=1, model_id="m",
+            depth=1, view=VIEW_PREFIX, is_control=False,
         )
 
     def test_ok_record_passes_the_guard(self):
-        check_record_fail_closed(self._ok_record())
+        rec = self._ok_record()
+        check_record_fail_closed(rec)
+        self.assertEqual(rec["depth"], 1)
+        self.assertEqual(rec["view"], VIEW_PREFIX)
+        self.assertFalse(rec["is_control"])
 
     def test_ok_without_scores_is_refused(self):
         rec = self._ok_record()
@@ -307,11 +443,34 @@ class TestFailClosed(TempDirTest):
         with self.assertRaises(RuntimeError):
             write_judge_record(self.tmp / "j.jsonl", rec)
 
+    def test_ok_whose_a_length_contradicts_depth_is_refused(self):
+        rec = self._ok_record()
+        rec["depth"] = 2
+        with self.assertRaises(RuntimeError):
+            write_judge_record(self.tmp / "j.jsonl", rec)
+
+    def test_control_flag_must_match_the_record(self):
+        rec = self._ok_record()
+        rec["is_control"] = True  # record has no over_refusal/helpfulness
+        with self.assertRaises(RuntimeError):
+            write_judge_record(self.tmp / "j.jsonl", rec)
+
+    def test_bad_depth_or_view_is_refused(self):
+        rec = self._ok_record()
+        rec["depth"] = 0
+        with self.assertRaises(RuntimeError):
+            check_record_fail_closed(rec)
+        rec = self._ok_record()
+        rec["view"] = "middle"
+        with self.assertRaises(RuntimeError):
+            check_record_fail_closed(rec)
+
     def test_error_record_carries_no_scores(self):
         rec = make_judge_record(
             judge_id="J1", family="fam", item_id="I1", condition="base", n_turns=1,
             prompt_sha256="0" * 64, raw_text="junk", record=None,
             error="JudgeParseError: malformed JSON", attempts=2, model_id="m",
+            depth=1, view=VIEW_PREFIX,
         )
         self.assertEqual(rec["status"], "ERROR")
         self.assertIsNone(rec["record"])
@@ -324,7 +483,7 @@ class TestFailClosed(TempDirTest):
         rec = make_judge_record(
             judge_id="J1", family="fam", item_id="I1", condition="base", n_turns=1,
             prompt_sha256="0" * 64, raw_text=None, record=None, error=None,
-            attempts=1, model_id="m",
+            attempts=1, model_id="m", depth=1,
         )
         # make_judge_record supplies a fallback text rather than an empty error.
         check_record_fail_closed(rec)
@@ -348,53 +507,132 @@ class TestJudgeRun(TempDirTest):
             ],
         )
 
+    def test_prefix_views_produce_one_record_per_depth(self):
+        run_dir = write_run_dir(
+            self.tmp / "run3", [("I2", "base", [("u1", "m1"), ("u2", "m2"), ("u3", "m3")])]
+        )
+        out = self.tmp / "judge_JP.jsonl"
+        provider = FakeJudgeProvider([VALID_1T, VALID_2T, VALID_3T])
+        counts = judge_run(run_dir, provider, "JP", "lg", out, manual_text="")
+        self.assertEqual(counts["conversations"], 1)
+        self.assertEqual(counts["total"], 3)
+        self.assertEqual(counts["ok"], 3)
+        rows = [json.loads(l) for l in out.read_text(encoding="utf-8").splitlines() if l.strip()]
+        self.assertEqual([r["depth"] for r in rows], [1, 2, 3])
+        self.assertEqual([len(r["record"]["A"]) for r in rows], [1, 2, 3])
+        self.assertTrue(all(r["view"] == VIEW_PREFIX for r in rows))
+        self.assertTrue(all(r["is_control"] is False for r in rows))
+        # the depth-1 prompt must not contain turn 2 or 3
+        d1_user = provider.calls[0][1]["content"]
+        self.assertIn("m1", d1_user)
+        self.assertNotIn("m2", d1_user)
+        self.assertNotIn("m3", d1_user)
+        d2_user = provider.calls[1][1]["content"]
+        self.assertIn("m2", d2_user)
+        self.assertNotIn("m3", d2_user)
+
+    def test_views_final_reproduces_the_single_view(self):
+        run_dir = write_run_dir(
+            self.tmp / "runf", [("I2", "base", [("u1", "m1"), ("u2", "m2"), ("u3", "m3")])]
+        )
+        out = self.tmp / "judge_JF.jsonl"
+        counts = judge_run(
+            run_dir, FakeJudgeProvider([VALID_3T]), "JF", "lg", out,
+            manual_text="", views=VIEW_FINAL,
+        )
+        self.assertEqual(counts["total"], 1)
+        rows = [json.loads(l) for l in out.read_text(encoding="utf-8").splitlines() if l.strip()]
+        self.assertEqual(rows[0]["depth"], 3)
+        self.assertEqual(rows[0]["view"], VIEW_FINAL)
+        self.assertEqual(len(rows[0]["record"]["A"]), 3)
+
     def test_mixed_outcomes_counts_and_rate(self):
         run_dir = self._run_dir()
         out = self.tmp / "judge_J1.jsonl"
         provider = FakeJudgeProvider(
             [
-                VALID_1T,                              # I1 ok, 1 attempt
-                MALFORMED, VALID_3T,                   # I2 retry -> ok
-                MALFORMED, MALFORMED,                  # I3 -> ERROR (parse)
-                TimeoutError("simulated judge timeout"),  # I4 -> ERROR (provider)
+                VALID_1T,                                 # I1 d1 ok
+                VALID_1T,                                 # I2 d1 ok
+                VALID_2T,                                 # I2 d2 ok
+                MALFORMED, VALID_3T,                      # I2 d3 retry -> ok
+                MALFORMED, MALFORMED,                     # I3 d1 -> ERROR (parse)
+                TimeoutError("simulated judge timeout"),   # I4 d1 -> ERROR (provider)
             ]
         )
         counts = judge_run(run_dir, provider, "J1", "lg", out, manual_text="")
-        self.assertEqual(counts["total"], 4)
-        self.assertEqual(counts["ok"], 2)
+        self.assertEqual(counts["conversations"], 4)
+        self.assertEqual(counts["total"], 6)  # 1 + 3 + 1 + 1 views
+        self.assertEqual(counts["ok"], 4)
         self.assertEqual(counts["error"], 2)
         self.assertEqual(counts["parse_error"], 1)
         self.assertEqual(counts["provider_error"], 1)
-        # denominator = every conversation judged, not just the failed calls
-        self.assertAlmostEqual(counts["parse_error_rate"], 1.0 / 4.0)
-        self.assertAlmostEqual(counts["error_rate"], 2.0 / 4.0)
+        # denominator = every view judged, not just the failed calls
+        self.assertAlmostEqual(counts["parse_error_rate"], 1.0 / 6.0)
+        self.assertAlmostEqual(counts["error_rate"], 2.0 / 6.0)
 
         rows = [json.loads(l) for l in out.read_text(encoding="utf-8").splitlines() if l.strip()]
-        self.assertEqual(len(rows), 4)
-        self.assertEqual([r["item_id"] for r in rows], ["I1", "I2", "I3", "I4"])
-        self.assertEqual([r["status"] for r in rows], ["ok", "ok", "ERROR", "ERROR"])
+        self.assertEqual(len(rows), 6)
+        self.assertEqual([(r["item_id"], r["depth"]) for r in rows],
+                         [("I1", 1), ("I2", 1), ("I2", 2), ("I2", 3), ("I3", 1), ("I4", 1)])
+        self.assertEqual([r["status"] for r in rows],
+                         ["ok", "ok", "ok", "ok", "ERROR", "ERROR"])
         for r in rows:
             self.assertEqual(r["judge_id"], "J1")
             self.assertEqual(r["family"], "lg")
             self.assertEqual(len(r["prompt_sha256"]), 64)
             if r["status"] == "ok":
                 # an ok row always re-parses: no ok row can be missing scores
-                parse_judge_output(json.dumps(r["record"]))
+                parse_judge_output(json.dumps(r["record"]), is_control=r["is_control"])
+                self.assertEqual(len(r["record"]["A"]), r["depth"])
                 self.assertIsNone(r["error"])
             else:
                 self.assertIsNone(r["record"])
                 self.assertTrue(r["error"])
-        self.assertEqual(rows[1]["attempts"], 2)
-        self.assertEqual(rows[3]["raw_text_sha256"], None)
-        self.assertEqual(len(rows[1]["record"]["A"]), 3)
+        self.assertEqual(rows[3]["attempts"], 2)
+        self.assertIsNone(rows[5]["raw_text_sha256"])
+
+    def test_control_items_are_judged_with_the_control_schema(self):
+        run_dir = write_run_dir(
+            self.tmp / "runc",
+            [("CTRL1", "base", [("u", "m")]), ("R1", "base", [("u", "m")])],
+        )
+        out = self.tmp / "judge_JC2.jsonl"
+        provider = FakeJudgeProvider([CONTROL_1T, VALID_1T])
+        counts = judge_run(
+            run_dir, provider, "JC2", "lg", out, manual_text="",
+            control_item_ids={"CTRL1"},
+        )
+        self.assertEqual(counts["total"], 2)
+        self.assertEqual(counts["ok"], 2)
+        self.assertEqual(counts["control_views"], 1)
+        rows = [json.loads(l) for l in out.read_text(encoding="utf-8").splitlines() if l.strip()]
+        self.assertTrue(rows[0]["is_control"])
+        self.assertTrue(rows[0]["record"]["over_refusal"])
+        self.assertEqual(rows[0]["record"]["helpfulness"], 0)
+        self.assertFalse(rows[1]["is_control"])
+        self.assertNotIn("over_refusal", rows[1]["record"])
+        self.assertIn(CONTROL_RULES_TEXT, provider.calls[0][0]["content"])
+        self.assertIn(RISK_RULES_TEXT, provider.calls[1][0]["content"])
+
+    def test_control_output_on_a_risk_item_is_an_error(self):
+        run_dir = write_run_dir(self.tmp / "runr", [("R1", "base", [("u", "m")])])
+        out = self.tmp / "judge_JR.jsonl"
+        counts = judge_run(
+            run_dir, FakeJudgeProvider([CONTROL_1T, CONTROL_1T]), "JR", "lg", out,
+            manual_text="",
+        )
+        self.assertEqual(counts["ok"], 0)
+        self.assertEqual(counts["parse_error"], 1)
+        rows = [json.loads(l) for l in out.read_text(encoding="utf-8").splitlines() if l.strip()]
+        self.assertIn("non-control", rows[0]["error"])
 
     def test_all_error_run_still_exits_with_a_file_and_no_scores(self):
         run_dir = self._run_dir()
         out = self.tmp / "judge_J2.jsonl"
-        provider = FakeJudgeProvider([MALFORMED] * 8)
+        provider = FakeJudgeProvider([MALFORMED] * 12)
         counts = judge_run(run_dir, provider, "J2", "qwen", out, manual_text="")
         self.assertEqual(counts["ok"], 0)
-        self.assertEqual(counts["parse_error"], 4)
+        self.assertEqual(counts["parse_error"], 6)
         self.assertAlmostEqual(counts["parse_error_rate"], 1.0)
         rows = [json.loads(l) for l in out.read_text(encoding="utf-8").splitlines() if l.strip()]
         self.assertTrue(all(r["status"] == "ERROR" and r["record"] is None for r in rows))
@@ -404,12 +642,21 @@ class TestJudgeRun(TempDirTest):
         out = self.tmp / "judge_J3.jsonl"
         out.write_text("{}\n", encoding="utf-8")
         with self.assertRaises(ValueError):
-            judge_run(run_dir, FakeJudgeProvider([VALID_1T] * 4), "J3", "lg", out, manual_text="")
+            judge_run(run_dir, FakeJudgeProvider([VALID_1T] * 6), "J3", "lg", out, manual_text="")
+
+    def test_unknown_view_mode_raises(self):
+        run_dir = self._run_dir()
+        with self.assertRaises(ValueError):
+            judge_run(run_dir, FakeJudgeProvider([VALID_1T]), "J4", "lg",
+                      self.tmp / "j4.jsonl", manual_text="", views="middle")
 
     def test_cli_with_fake_provider(self):
         run_dir = self._run_dir()
         fake = self.tmp / "fake.json"
-        fake.write_text(json.dumps([VALID_1T, VALID_3T, VALID_1T, VALID_1T]), encoding="utf-8")
+        fake.write_text(
+            json.dumps([VALID_1T, VALID_1T, VALID_2T, VALID_3T, VALID_1T, VALID_1T]),
+            encoding="utf-8",
+        )
         buf = io.StringIO()
         with redirect_stdout(buf), redirect_stderr(buf):
             rc = judge_main(
@@ -420,8 +667,24 @@ class TestJudgeRun(TempDirTest):
                 ]
             )
         self.assertEqual(rc, 0, buf.getvalue())
-        self.assertIn("total=4 ok=4", buf.getvalue())
+        self.assertIn("n_views=6", buf.getvalue())
+        self.assertIn("total=6 ok=6", buf.getvalue())
         self.assertTrue((run_dir / "judge_JC.jsonl").is_file())
+
+    def test_cli_control_ids(self):
+        run_dir = write_run_dir(self.tmp / "runcli", [("CTRL1", "base", [("u", "m")])])
+        fake = self.tmp / "fake2.json"
+        fake.write_text(json.dumps([CONTROL_1T]), encoding="utf-8")
+        buf = io.StringIO()
+        with redirect_stdout(buf), redirect_stderr(buf):
+            rc = judge_main(
+                ["--run-dir", str(run_dir), "--provider", "fake", "--judge-id", "JD",
+                 "--family", "lg", "--fake-outputs", str(fake), "--control-ids", "CTRL1"]
+            )
+        self.assertEqual(rc, 0, buf.getvalue())
+        self.assertIn("control_items=1", buf.getvalue())
+        row = json.loads((run_dir / "judge_JD.jsonl").read_text(encoding="utf-8").splitlines()[0])
+        self.assertTrue(row["is_control"])
 
     def test_cli_rejects_missing_run_dir(self):
         buf = io.StringIO()
@@ -437,21 +700,28 @@ class TestJudgeRun(TempDirTest):
 
 
 def judge_row(judge_id, family, item_id, condition, D=None, A=None, cf=False, codes=None,
-              status="ok", error=None):
+              status="ok", error=None, depth=None, view=VIEW_PREFIX, is_control=False,
+              over_refusal=None, helpfulness=None):
     record = None
     if status == "ok":
         record = {
+            "rationale": "테스트 근거",
             "D": dict(D),
             "A": [dict(a) for a in A],
             "critical_failure": cf,
             "cf_codes": list(codes or []),
-            "rationale": "테스트 근거",
         }
+        if is_control:
+            record["over_refusal"] = over_refusal
+            record["helpfulness"] = helpfulness
     return {
         "judge_id": judge_id,
         "family": family,
         "item_id": item_id,
         "condition": condition,
+        "depth": depth if depth is not None else (len(A) if A else 1),
+        "view": view,
+        "is_control": is_control,
         "status": status,
         "record": record,
         "error": None if status == "ok" else (error or "JudgeParseError: malformed JSON"),
@@ -494,13 +764,18 @@ class TestPanel(TempDirTest):
         ])
         return f1, f2, f3
 
-    def test_median_and_majority_over_three_judges(self):
+    def _panel_ok_args(self):
         files = list(self._three_judges())
-        fam = {"J1": "lg", "J2": "qwen", "J3": "gemma"}
-        recs = aggregate(files, fam, "kanana")
+        return files, {"J1": "lg", "J2": "qwen", "J3": "gemma"}, "kanana"
+
+    def test_median_and_majority_over_three_judges(self):
+        files, fam, evaluated = self._panel_ok_args()
+        recs = aggregate(files, fam, evaluated)
         self.assertEqual(len(recs), 1)
         r = recs[0]
         self.assertEqual(r["status"], "ok")
+        self.assertEqual(r["depth"], 1)
+        self.assertEqual(r["view"], VIEW_PREFIX)
         self.assertEqual(r["D"], {"D1": 1, "D2": 1, "D3": 1, "D4": 2, "D5": 2, "D6": 2})
         self.assertEqual(r["A"], [{"A1": 1, "A2": 0, "A3": 1, "A4": 0}])
         self.assertTrue(r["critical_failure"])
@@ -509,10 +784,11 @@ class TestPanel(TempDirTest):
         self.assertEqual(r["cf_codes"], ["CF1", "CF4"])
         self.assertEqual(r["judges_used"], ["J1", "J2", "J3"])
         self.assertEqual(r["judges_dropped_family"], [])
+        self.assertIsNone(r["over_refusal"])
+        self.assertIsNone(r["helpfulness"])
 
     def test_leave_one_family_out_drops_the_shared_family_judge(self):
-        files = list(self._three_judges())
-        fam = {"J1": "lg", "J2": "qwen", "J3": "gemma"}
+        files, fam, _ = self._panel_ok_args()
         recs = aggregate(files, fam, "LG")  # case-insensitive family match
         r = recs[0]
         self.assertEqual(r["status"], "ok")
@@ -525,6 +801,86 @@ class TestPanel(TempDirTest):
         self.assertTrue(r["critical_failure"])
         self.assertTrue(r["cf_tie"])
         self.assertEqual(r["cf_codes"], ["CF4"])
+
+    def test_aggregates_per_depth(self):
+        rows1 = [
+            judge_row("J1", "lg", "I1", "base", D_of(2, 2, 2, 2, 2, 2), A_of((0, 0, 0, 0)),
+                      depth=1),
+            judge_row("J1", "lg", "I1", "base", D_of(0, 0, 0, 0, 0, 0),
+                      A_of((0, 0, 0, 0), (2, 2, 2, 2)), cf=True, codes=["CF3"], depth=2),
+        ]
+        rows2 = [
+            judge_row("J2", "qwen", "I1", "base", D_of(2, 2, 2, 2, 2, 2), A_of((0, 0, 0, 0)),
+                      depth=1),
+            judge_row("J2", "qwen", "I1", "base", D_of(0, 0, 0, 1, 0, 0),
+                      A_of((0, 0, 0, 0), (2, 2, 1, 2)), cf=True, codes=["CF3"], depth=2),
+        ]
+        f1 = self._write("j1.jsonl", rows1)
+        f2 = self._write("j2.jsonl", rows2)
+        recs = aggregate([f1, f2], {"J1": "lg", "J2": "qwen"}, "kanana")
+        self.assertEqual([(r["item_id"], r["depth"]) for r in recs], [("I1", 1), ("I1", 2)])
+        self.assertEqual(len(recs[0]["A"]), 1)
+        self.assertEqual(len(recs[1]["A"]), 2)
+        self.assertFalse(recs[0]["critical_failure"])
+        self.assertTrue(recs[1]["critical_failure"])
+        self.assertEqual(recs[1]["A"][1]["A3"], 1.5)
+
+    def test_control_view_over_refusal_majority_and_helpfulness_median(self):
+        f1 = self._write("j1.jsonl", [judge_row("J1", "lg", "C1", "base",
+                                                D_of(2, 2, 2, 2, 2, 2), A_of((0, 0, 0, 0)),
+                                                is_control=True, over_refusal=True,
+                                                helpfulness=0)])
+        f2 = self._write("j2.jsonl", [judge_row("J2", "qwen", "C1", "base",
+                                                D_of(2, 2, 2, 2, 2, 2), A_of((0, 0, 0, 0)),
+                                                is_control=True, over_refusal=True,
+                                                helpfulness=1)])
+        f3 = self._write("j3.jsonl", [judge_row("J3", "gemma", "C1", "base",
+                                                D_of(2, 2, 2, 2, 2, 2), A_of((0, 0, 0, 0)),
+                                                is_control=True, over_refusal=False,
+                                                helpfulness=2)])
+        recs = aggregate([f1, f2, f3], {"J1": "lg", "J2": "qwen", "J3": "gemma"}, "kanana")
+        r = recs[0]
+        self.assertTrue(r["is_control"])
+        self.assertTrue(r["over_refusal"])
+        self.assertFalse(r["over_refusal_tie"])
+        self.assertEqual(r["helpfulness"], 1)
+        write_panel(recs, self.tmp / "panel_ctrl.jsonl")
+
+    def test_control_over_refusal_tie_is_conservative(self):
+        f1 = self._write("j1.jsonl", [judge_row("J1", "lg", "C1", "base",
+                                                D_of(2, 2, 2, 2, 2, 2), A_of((0, 0, 0, 0)),
+                                                is_control=True, over_refusal=True,
+                                                helpfulness=0)])
+        f2 = self._write("j2.jsonl", [judge_row("J2", "qwen", "C1", "base",
+                                                D_of(2, 2, 2, 2, 2, 2), A_of((0, 0, 0, 0)),
+                                                is_control=True, over_refusal=False,
+                                                helpfulness=2)])
+        r = aggregate([f1, f2], {"J1": "lg", "J2": "qwen"}, "kanana")[0]
+        self.assertTrue(r["over_refusal"])
+        self.assertTrue(r["over_refusal_tie"])
+        self.assertEqual(r["helpfulness"], 1)
+
+    def test_control_record_without_control_fields_is_rejected(self):
+        bad = judge_row("J1", "lg", "C1", "base", D_of(2, 2, 2, 2, 2, 2), A_of((0, 0, 0, 0)),
+                        is_control=True, over_refusal=True, helpfulness=1)
+        del bad["record"]["over_refusal"]
+        f1 = self._write("j1.jsonl", [bad])
+        f2 = self._write("j2.jsonl", [judge_row("J2", "qwen", "C1", "base",
+                                                D_of(2, 2, 2, 2, 2, 2), A_of((0, 0, 0, 0)),
+                                                is_control=True, over_refusal=True,
+                                                helpfulness=1)])
+        with self.assertRaises(ValueError):
+            aggregate([f1, f2], {"J1": "lg", "J2": "qwen"}, "kanana")
+
+    def test_judges_disagreeing_on_is_control_raise(self):
+        f1 = self._write("j1.jsonl", [judge_row("J1", "lg", "C1", "base",
+                                                D_of(2, 2, 2, 2, 2, 2), A_of((0, 0, 0, 0)),
+                                                is_control=True, over_refusal=True,
+                                                helpfulness=1)])
+        f2 = self._write("j2.jsonl", [judge_row("J2", "qwen", "C1", "base",
+                                                D_of(2, 2, 2, 2, 2, 2), A_of((0, 0, 0, 0)))])
+        with self.assertRaises(ValueError):
+            aggregate([f1, f2], {"J1": "lg", "J2": "qwen"}, "kanana")
 
     def test_majority_false_yields_no_codes(self):
         f1 = self._write("j1.jsonl", [judge_row("J1", "lg", "I1", "base",
@@ -565,13 +921,13 @@ class TestPanel(TempDirTest):
         self.assertEqual(r["status"], "INSUFFICIENT")
         self.assertEqual(r["judges_dropped_family"], ["J2"])
 
-    def test_turn_count_mismatch_judge_is_dropped_and_named(self):
+    def test_judge_whose_a_length_contradicts_depth_is_dropped_and_named(self):
         f1 = self._write("j1.jsonl", [judge_row("J1", "lg", "I1", "base", D_of(1, 1, 1, 1, 1, 1),
-                                                A_of((0, 0, 0, 0), (1, 1, 1, 1)))])
+                                                A_of((0, 0, 0, 0), (1, 1, 1, 1)), depth=2)])
         f2 = self._write("j2.jsonl", [judge_row("J2", "qwen", "I1", "base", D_of(1, 1, 1, 1, 1, 1),
-                                                A_of((2, 2, 2, 2), (1, 1, 1, 1)))])
+                                                A_of((2, 2, 2, 2), (1, 1, 1, 1)), depth=2)])
         f3 = self._write("j3.jsonl", [judge_row("J3", "gemma", "I1", "base", D_of(1, 1, 1, 1, 1, 1),
-                                                A_of((0, 0, 0, 0)))])
+                                                A_of((0, 0, 0, 0)), depth=2)])
         recs = aggregate([f1, f2, f3], {"J1": "lg", "J2": "qwen", "J3": "gemma"}, "kanana")
         r = recs[0]
         self.assertEqual(r["status"], "ok")
@@ -602,8 +958,17 @@ class TestPanel(TempDirTest):
         with self.assertRaises(ValueError):
             aggregate([f1], {"J1": "lg"}, "kanana")
 
+    def test_judge_file_without_depth_is_rejected(self):
+        legacy = judge_row("J1", "lg", "I1", "base", D_of(2, 2, 2, 2, 2, 2), A_of((0, 0, 0, 0)))
+        del legacy["depth"]
+        f1 = self._write("j1.jsonl", [legacy])
+        with self.assertRaises(ValueError) as ctx:
+            aggregate([f1], {"J1": "lg"}, "kanana")
+        self.assertIn("depth", str(ctx.exception))
+
     def test_panel_write_guard_rejects_ok_without_scores(self):
-        rec = {"item_id": "I1", "condition": "base", "status": "ok", "D": None, "A": None,
+        rec = {"item_id": "I1", "condition": "base", "depth": 1, "view": VIEW_PREFIX,
+               "is_control": False, "status": "ok", "D": None, "A": None,
                "critical_failure": True, "cf_codes": [], "judges_used": ["J1", "J2"]}
         with self.assertRaises(RuntimeError):
             check_panel_record(rec)
@@ -616,9 +981,11 @@ class TestPanel(TempDirTest):
         with self.assertRaises(RuntimeError):
             write_panel(recs, self.tmp / "panel.jsonl")
 
-    def _panel_ok_args(self):
-        files = list(self._three_judges())
-        return files, {"J1": "lg", "J2": "qwen", "J3": "gemma"}, "kanana"
+    def test_panel_write_guard_rejects_depth_mismatch(self):
+        recs = aggregate(*self._panel_ok_args())
+        recs[0]["depth"] = 2
+        with self.assertRaises(RuntimeError):
+            write_panel(recs, self.tmp / "panel.jsonl")
 
     def test_write_panel_roundtrip(self):
         recs = aggregate(*self._panel_ok_args())
@@ -641,7 +1008,7 @@ class TestPanel(TempDirTest):
                    "--out", str(out)]
             )
         self.assertEqual(rc, 0, buf.getvalue())
-        self.assertIn("conversations=1 ok=1 insufficient=0", buf.getvalue())
+        self.assertIn("views=1 conversations=1 ok=1 insufficient=0", buf.getvalue())
         self.assertTrue(out.is_file())
 
     def test_panel_cli_bad_input_exits_4(self):
@@ -662,25 +1029,30 @@ class TestJudgeToPanel(TempDirTest):
     def test_three_fake_judges_then_panel(self):
         run_dir = write_run_dir(
             self.tmp / "run",
-            [("I1", "base", [("u", "m")]), ("I2", "base", [("u", "m")])],
+            [("I1", "base", [("u", "m")]), ("I2", "base", [("u1", "m1"), ("u2", "m2")])],
         )
-        files = []
+        # views per conversation: I1 -> 1, I2 -> 2, so 3 views per judge
         plans = {
-            "J1": (["lg"], [VALID_1T, VALID_1T]),
-            "J2": (["qwen"], [VALID_1T, MALFORMED, MALFORMED]),
-            "J3": (["gemma"], [VALID_1T, VALID_1T]),
+            "J1": ("lg", [VALID_1T, VALID_1T, VALID_2T]),
+            "J2": ("qwen", [VALID_1T, VALID_1T, MALFORMED, MALFORMED]),
+            "J3": ("gemma", [VALID_1T, VALID_1T, VALID_2T]),
         }
-        for jid, (fams, outputs) in plans.items():
+        files = []
+        for jid, (fam, outputs) in plans.items():
             out = self.tmp / ("judge_%s.jsonl" % jid)
-            judge_run(run_dir, FakeJudgeProvider(outputs), jid, fams[0], out, manual_text="")
+            judge_run(run_dir, FakeJudgeProvider(outputs), jid, fam, out, manual_text="")
             files.append(str(out))
         recs = aggregate(files, {"J1": "lg", "J2": "qwen", "J3": "gemma"}, "kanana")
-        self.assertEqual([r["status"] for r in recs], ["ok", "ok"])
-        # I2: J2 errored, so only J1 and J3 carry it - still >= 2 judges
-        self.assertEqual(recs[1]["judges_used"], ["J1", "J3"])
-        self.assertEqual(recs[1]["judges_error"], ["J2"])
-        self.assertEqual(recs[0]["D"]["D1"], 2)
-        write_panel(recs, self.tmp / "panel.jsonl")
+        self.assertEqual([(r["item_id"], r["depth"], r["status"]) for r in recs],
+                         [("I1", 1, "ok"), ("I2", 1, "ok"), ("I2", 2, "ok")])
+        # I2 depth 2: J2 errored, so only J1 and J3 carry it - still >= 2 judges
+        self.assertEqual(recs[2]["judges_used"], ["J1", "J3"])
+        self.assertEqual(recs[2]["judges_error"], ["J2"])
+        self.assertEqual(len(recs[2]["A"]), 2)
+        out = self.tmp / "panel.jsonl"
+        write_panel(recs, out)
+        rows = [json.loads(l) for l in out.read_text(encoding="utf-8").splitlines() if l.strip()]
+        self.assertEqual([r["depth"] for r in rows], [1, 1, 2])
 
 
 if __name__ == "__main__":
