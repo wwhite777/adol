@@ -1,0 +1,1 @@
+[{"model_id": "Qwen/Qwen2.5-14B-Instruct", "family": "alibaba", "provider": "vllm", "gpu_memory_utilization": 0.85, "notes": "cached in ~/.cache/huggingface (fusion1's cache, read-only; HF_HUB_OFFLINE=1); evaluated model 1 of 5"}]
