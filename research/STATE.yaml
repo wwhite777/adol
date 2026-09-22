@@ -8,7 +8,7 @@ venue:
   phase_a: "domestic — 한국정보통신학회 JKIICE or 한국융합학회 (PI 2026-09-22); no cross-family audit (PI rule 2026-09-11)"
   phase_b: "optional Q1 attempt (JMIR Formative / Sci Rep / JMIR MH) after co-author double rating; T1 conference only if H5 strong"
 stage: S3
-status: in_progress   # infrastructure: vLLM open-weight provider (coder running), then judge prompt + wrapper self-tests, G6 judge, analysis scripts; item authoring in parallel
+status: in_progress   # tooling complete; FIRST CONFIRMATORY GENERATION RUN LAUNCHED 2026-09-22 (Qwen2.5-14B); EXAONE-4.0-32B-AWQ downloaded; scoring waits on judges (Llama-3.1-8B cached + two 4-bit judges to download)
 stage_history:
   - {stage: S0, status: completed, date: "2026-09-16", gate: "PI approved D1-D4"}
   - {stage: S1, status: completed_with_waiver, date: "2026-09-22", gate: "PI decisions 1-6 approved (2026-09-22); r001/r002 AWAITING_PI, r003 FAIL on prose corrected in v4 (unverified by auditor); r004 WAIVED by venue change to domestic (PI rule 2026-09-11) — DECISION_LOG 2026-09-22"}
@@ -65,7 +65,8 @@ five_statuses:
   statistical_validity: null
   claim_scope: "frozen v2 (N1 escalation + length control; N2 localization replication; N3 judge reliability; CRRI descriptive)"
   scientific_promise: null
-jobs: []   # provider proven 2026-09-22: vLLM 0.19.0 in the adol venv (uv, hardlinked), EXAONE-4.0-1.2B smoke on GPU 1, 78 tests, MARKER; conductor-verified
+jobs:
+  - "2026-09-22 ~12:45Z: campaign run phaseA_T1, model Qwen/Qwen2.5-14B-Instruct (cached, offline), class confirmatory (freeze verified), GPU 1 pinned; 4 runs (main T=0 + 3 repeats T=0.7); log test/logs/campaign_phaseA_T1_qwen14b_*.log; marker result/raw/phaseA_T1_qwen14b.DONE on exit"
 s3_progress:
   provider: "DONE — src/kyra VLLMProvider + provenance fix (manifest records effective params + chat-template hash); smoke run result/raw/smoke_vllm/20260922T0817Z-3c5915 (sha manifest e201f60f…, responses 62bb9d8a…)"
   disk: "26 GB free on the shared volume after the install; one ≤20 GB checkpoint at a time; cached Qwen2.5-14B-Instruct + Llama-3.1-8B-Instruct (fusion1's, read-only) count as two of the needed models/judges"

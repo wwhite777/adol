@@ -1,18 +1,97 @@
 {
   "_note": "Phase-A model plan (draft v1, 2026-09-22). One checkpoint on disk at a time (26 GB free on the shared volume); download -> run -> delete with a REHYDRATE line. Cached Qwen2.5-14B and Llama-3.1-8B belong to fusion1 (read-only; never delete). Exact checkpoints/quantizations are frozen in each run manifest before the first confirmatory run; substitutions logged in DECISION_LOG beforehand (PREREGISTERED_kyra_v2.yaml splits.models). Facts fetched from Hugging Face cards on 2026-09-22.",
   "evaluated": [
-    {"model_id": "Qwen/Qwen2.5-14B-Instruct", "family": "alibaba", "provider": "vllm", "gpu_memory_utilization": 0.85, "path": "~/.cache/huggingface (fusion1's cache, read-only)", "disk_gb": 28, "status": "cached", "notes": "bf16 fits one L40S"},
-    {"model_id": "LGAI-EXAONE/EXAONE-4.0-32B-AWQ", "family": "lg", "provider": "vllm", "gpu_memory_utilization": 0.85, "path": "models/hf (to download)", "disk_gb": 18, "status": "not_downloaded", "notes": "official AWQ; base license 'EXAONE AI Model License Agreement 1.2 - NC'; vLLM >= 0.10 supports EXAONE 4.0; ungated"},
-    {"model_id": "kakaocorp/kanana-1.5-8b-instruct-2505", "family": "kakao", "provider": "vllm", "gpu_memory_utilization": 0.85, "path": "models/hf (to download)", "disk_gb": 16, "status": "not_downloaded", "notes": "ungated, 'Kanana' license; verify the exact 8B instruct repo id on HF before download (the 15.7B-A3B MoE is ~31 GB bf16 — too large unless a 4-bit variant exists)"},
-    {"model_id": "google/gemma-3-27b-it (4-bit) or google/gemma-3-12b-it", "family": "google", "provider": "vllm", "gpu_memory_utilization": 0.85, "path": "models/hf (to download)", "disk_gb": 24, "status": "not_downloaded", "notes": "gemma-3-12b-it bf16 ~24 GB is tight against the 20 GB floor; prefer an official/community 4-bit 27B if vLLM-loadable; Gemma terms acceptance required on HF"},
-    {"model_id": "naver-hyperclovax/HyperCLOVAX-SEED-Think-14B (4-bit) — or Kanana 15.7B-A3B 4-bit if the license is not accepted", "family": "naver", "provider": "vllm", "gpu_memory_utilization": 0.85, "path": "models/hf (to download)", "disk_gb": 9, "status": "blocked_on_pi_license", "notes": "gated: HyperCLOVA X SEED license agreement must be accepted under the PI's HF account; 32B Think is 33B params (too large in bf16)"}
+    {
+      "model_id": "Qwen/Qwen2.5-14B-Instruct",
+      "family": "alibaba",
+      "provider": "vllm",
+      "gpu_memory_utilization": 0.85,
+      "path": "~/.cache/huggingface (fusion1's cache, read-only)",
+      "disk_gb": 28,
+      "status": "cached",
+      "notes": "bf16 fits one L40S"
+    },
+    {
+      "model_id": "LGAI-EXAONE/EXAONE-4.0-32B-AWQ",
+      "family": "lg",
+      "provider": "vllm",
+      "gpu_memory_utilization": 0.85,
+      "path": "models/hf/hub/models--LGAI-EXAONE--EXAONE-4.0-32B-AWQ (snapshot 1ce84bc0)",
+      "disk_gb": 17,
+      "status": "downloaded",
+      "notes": "official AWQ; base license 'EXAONE AI Model License Agreement 1.2 - NC'; vLLM >= 0.10 supports EXAONE 4.0; ungated"
+    },
+    {
+      "model_id": "kakaocorp/kanana-1.5-8b-instruct-2505",
+      "family": "kakao",
+      "provider": "vllm",
+      "gpu_memory_utilization": 0.85,
+      "path": "models/hf (to download)",
+      "disk_gb": 16,
+      "status": "not_downloaded",
+      "notes": "ungated, 'Kanana' license; verify the exact 8B instruct repo id on HF before download (the 15.7B-A3B MoE is ~31 GB bf16 — too large unless a 4-bit variant exists)"
+    },
+    {
+      "model_id": "google/gemma-3-27b-it (4-bit) or google/gemma-3-12b-it",
+      "family": "google",
+      "provider": "vllm",
+      "gpu_memory_utilization": 0.85,
+      "path": "models/hf (to download)",
+      "disk_gb": 24,
+      "status": "not_downloaded",
+      "notes": "gemma-3-12b-it bf16 ~24 GB is tight against the 20 GB floor; prefer an official/community 4-bit 27B if vLLM-loadable; Gemma terms acceptance required on HF"
+    },
+    {
+      "model_id": "naver-hyperclovax/HyperCLOVAX-SEED-Think-14B (4-bit) — or Kanana 15.7B-A3B 4-bit if the license is not accepted",
+      "family": "naver",
+      "provider": "vllm",
+      "gpu_memory_utilization": 0.85,
+      "path": "models/hf (to download)",
+      "disk_gb": 9,
+      "status": "blocked_on_pi_license",
+      "notes": "gated: HyperCLOVA X SEED license agreement must be accepted under the PI's HF account; 32B Think is 33B params (too large in bf16)"
+    }
   ],
   "judges": [
-    {"model_id": "meta-llama/Llama-3.1-8B-Instruct", "family": "meta", "provider": "vllm", "gpu_memory_utilization": 0.5, "path": "~/.cache/huggingface (fusion1's cache, read-only)", "disk_gb": 15, "status": "cached", "notes": "judge J1; LOFO not needed (no Meta model evaluated)"},
-    {"model_id": "mistralai/Mistral-Small-3.2-24B-Instruct-2506 (4-bit)", "family": "mistral", "provider": "vllm", "gpu_memory_utilization": 0.5, "path": "models/hf (to download)", "disk_gb": 14, "status": "not_downloaded", "notes": "judge J2; needs a vLLM-loadable AWQ/GPTQ; verify Korean competence in the pilot reliability check"},
-    {"model_id": "microsoft/phi-4", "family": "microsoft", "provider": "vllm", "gpu_memory_utilization": 0.5, "path": "models/hf (to download)", "disk_gb": 29, "status": "not_downloaded", "notes": "judge J3 candidate; 14B bf16 ~29 GB is above the disk floor — needs a 4-bit variant or a different family (e.g., a 4-bit Qwen3 judge is excluded when scoring Qwen; LOFO would drop it)"}
+    {
+      "model_id": "meta-llama/Llama-3.1-8B-Instruct",
+      "family": "meta",
+      "provider": "vllm",
+      "gpu_memory_utilization": 0.5,
+      "path": "~/.cache/huggingface (fusion1's cache, read-only)",
+      "disk_gb": 15,
+      "status": "cached",
+      "notes": "judge J1; LOFO not needed (no Meta model evaluated)"
+    },
+    {
+      "model_id": "mistralai/Mistral-Small-3.2-24B-Instruct-2506 (4-bit)",
+      "family": "mistral",
+      "provider": "vllm",
+      "gpu_memory_utilization": 0.5,
+      "path": "models/hf (to download)",
+      "disk_gb": 14,
+      "status": "not_downloaded",
+      "notes": "judge J2; needs a vLLM-loadable AWQ/GPTQ; verify Korean competence in the pilot reliability check"
+    },
+    {
+      "model_id": "microsoft/phi-4",
+      "family": "microsoft",
+      "provider": "vllm",
+      "gpu_memory_utilization": 0.5,
+      "path": "models/hf (to download)",
+      "disk_gb": 29,
+      "status": "not_downloaded",
+      "notes": "judge J3 candidate; 14B bf16 ~29 GB is above the disk floor — needs a 4-bit variant or a different family (e.g., a 4-bit Qwen3 judge is excluded when scoring Qwen; LOFO would drop it)"
+    }
   ],
   "smoke_only": [
-    {"model_id": "LGAI-EXAONE/EXAONE-4.0-1.2B", "family": "lg", "path": "models/hf", "disk_gb": 2.4, "status": "cached", "notes": "loop probes only; never a scoring judge or an evaluated model"}
+    {
+      "model_id": "LGAI-EXAONE/EXAONE-4.0-1.2B",
+      "family": "lg",
+      "path": "models/hf",
+      "disk_gb": 2.4,
+      "status": "cached",
+      "notes": "loop probes only; never a scoring judge or an evaluated model"
+    }
   ]
 }
