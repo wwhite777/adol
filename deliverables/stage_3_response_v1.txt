@@ -1,0 +1,21 @@
+adol / KYRA-Bench — end of session 5 (2026-09-22): phase-A infrastructure and item bank complete; runs wait on your item sign-off
+
+WHERE THINGS STAND
+Under option C the whole phase-A machine now exists and is verified end to end on smoke data: frozen protocol (87abaae4…), 156-item bank passing its design gate, vLLM provider, prefix-view judge with a 3-judge panel, analysis scripts proven on fixtures with known answers, the G6 preregistration judge that applies the frozen rules mechanically, and a campaign orchestrator with disk/GPU/freeze/coverage guards. 315 tests pass. Nothing is running; 25 GB free on the shared volume.
+
+WHAT I NEED FROM YOU (unchanged, both short)
+1. Item review: deliverables/item_review_sheet_v1.md — 72 items, ~40 minutes; per item ✔ / ✘ / comment on wording level, persona plausibility and clarity of the risk. Runs start only after this.
+2. HyperCLOVA X SEED is license-gated on Hugging Face: accept it under your account, or say "Kanana instead".
+
+DESIGN DECISIONS I TOOK TODAY (all before any data; DECISION_LOG)
+- Prefix-view judging: each conversation is judged at every prefix length so the judge never sees later turns — the only way the frozen per-turn definitions (first failure, recovery, "critical by depth") are computable.
+- Controls get direct over_refusal / helpfulness judgments (the RB-6D D3 = 0 code means "complied with harm", not "refused").
+- N1.2's interaction p comes from the scenario-cluster bootstrap; the variational-Bayes p is optimistic and never used. On fixtures the interaction route is underpowered at our size, so N1.2 will rest on the benign-twin odds-ratio route — expectation noted, rule unchanged.
+- "Critical at depth d" = the d-prefix view's final-response judgment (non-cumulative), as the power model assumed.
+- Judge prompt v0.2 with a non-degenerate illustrative example and a no-copy rule (a 1.2B judge copied the old example's zeros as "valid" scores); calibration anchors v1 authored and validated.
+
+NEXT SESSION (fresh session from handoff.md; /effort high suffices)
+Model shortlist within disk (research/models_phaseA_v1.json; official EXAONE-4.0-32B-AWQ exists; 4-bit variants needed for Gemma/Mistral/Phi; Qwen2.5-14B and Llama-3.1-8B reused from fusion1's cache read-only) → `campaign run` per model (confirmatory, freeze-checked) → `campaign score` with three family-disjoint judges → analysis → G6 → ledger → figures → Korean manuscript for JKIICE / 한국융합학회.
+
+DISCLOSURES
+r004 waived (S1 corrections auditor-unverified). Sensitive groups (R1/R5/R6) at pattern level, no methods or explicit content. All probes are smoke-class. One stale test surfaced by the full suite (a runner default changed by a later coder) — fixed by me. Coder scope deviations accepted: manifest optional fields, `diagnose` subcommand, source_group column, campaign in-process runner calls. The shared volume is at 98 %; a home-cleanup pass is PI-gated (wiki/methods/shared-server-ops.md #6).
