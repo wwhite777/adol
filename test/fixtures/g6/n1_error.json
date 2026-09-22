@@ -1,0 +1,12 @@
+{
+  "analysis": "n1_escalation",
+  "benign_ci95": [
+    1.25,
+    2.6
+  ],
+  "benign_or": 1.8,
+  "claim": "N1 / N1.1 / N1.2",
+  "fixture_note": "N1.1 ERROR (ci95 absent); N1.2 ERROR (interaction_p absent; interaction_p_vb must not stand in for it)",
+  "interaction_p_vb": 0.001,
+  "or": 2.1
+}

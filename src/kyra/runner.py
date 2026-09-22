@@ -2,7 +2,13 @@
 
 CLI:
   python -m kyra.runner --items <jsonl> --provider mock --cohort mock \
-      --out-root result/raw [--conditions base]
+      --out-root result/raw [--conditions base] [--condition <tag>] \
+      [--temperature <float>] [--seed <int>]
+
+--condition writes a free tag (repeat_1..3) to the manifest verbatim while
+inheriting the frozen 'base' sampling entry; --temperature/--seed are requests
+passed to the provider, and the manifest still records what the provider
+reports it actually applied.
 
 Exit codes: 0 ok (MARKER written) | 2 zero items loaded | 3 validation failed
 (no MARKER) | 4 bad arguments / unreadable items file.
@@ -13,6 +19,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import os
+import re
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -29,6 +36,7 @@ EXIT_BAD_INPUT = 4
 
 # Condition -> (system_prompt_id, sampling parameters). 'base' is the only
 # condition implemented in v0; Arm B (escalation state machine) is out of scope.
+DEFAULT_CONDITION = "base"
 CONDITIONS: Dict[str, Dict[str, object]] = {
     "base": {
         "system_prompt_id": "base_v0",
@@ -91,17 +99,40 @@ def make_run_id(cohort: str, items_path: str, now: datetime = None) -> str:
     return "%s-%s" % (stamp, suffix)
 
 
-def run_item(provider, item: Item, condition: str, run_id: str) -> Tuple[Dict, List[Dict]]:
+def condition_config(condition: str, temperature: float = None) -> Dict[str, object]:
+    """Sampling config for a condition tag.
+
+    A tag in the CONDITIONS table uses its frozen entry. A free tag (the
+    campaign's repeat_1..3) inherits the 'base' entry, so an unnamed condition
+    can never invent a different system prompt or token cap - only its label and
+    (optionally) the requested temperature differ. The provider still overrides
+    the sampling fields with what it actually applied.
+    """
+    cfg = dict(CONDITIONS.get(condition, CONDITIONS[DEFAULT_CONDITION]))
+    if temperature is not None:
+        cfg["temperature"] = float(temperature)
+    return cfg
+
+
+def run_item(
+    provider,
+    item: Item,
+    condition: str,
+    run_id: str,
+    temperature: float = None,
+) -> Tuple[Dict, List[Dict]]:
     """Execute one item under one condition, turn by turn with the context so far.
 
     Returns (manifest_record, response_records). On provider failure the manifest
     record carries status='error' and the error text; turns already completed are
     still returned. Errors are never converted into content.
 
-    Sampling fields record what the provider actually used (its
-    effective_params()), not what the condition table asked for.
+    `condition` is written to the manifest verbatim, so a repeat cohort is
+    labelled repeat_1..3 rather than 'base'. Sampling fields record what the
+    provider actually used (its effective_params()), not what the condition table
+    or `temperature` asked for.
     """
-    cfg = CONDITIONS[condition]
+    cfg = condition_config(condition, temperature)
     provider_name = getattr(provider, "provider_name", "unknown")
     record = {
         "run_id": run_id,
@@ -159,8 +190,13 @@ def execute_run(
     provider,
     conditions: List[str],
     run_dir: Path,
+    temperature: float = None,
 ) -> Tuple[bool, List[str]]:
-    """Write manifest/responses for every item x condition, then validate + MARKER."""
+    """Write manifest/responses for every item x condition, then validate + MARKER.
+
+    `temperature` is the requested value for the manifest record; it is only a
+    request, the provider's effective_params() still has the last word.
+    """
     run_dir = Path(run_dir)
     run_dir.mkdir(parents=True, exist_ok=True)
     run_id = run_dir.name
@@ -168,7 +204,7 @@ def execute_run(
     responses_path = run_dir / mf.RESPONSES_NAME
     for condition in conditions:
         for item in items:
-            rec, resps = run_item(provider, item, condition, run_id)
+            rec, resps = run_item(provider, item, condition, run_id, temperature=temperature)
             mf.write_manifest_record(manifest_path, rec)
             for r in resps:
                 mf.write_response_record(responses_path, r)
@@ -188,8 +224,28 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument(
         "--conditions",
         nargs="+",
-        default=["base"],
-        help="conditions to run (v0: base)",
+        default=None,
+        help="conditions from the frozen table to run (v0: base)",
+    )
+    p.add_argument(
+        "--condition",
+        default=None,
+        help="single free condition TAG written verbatim to the manifest "
+        "(e.g. repeat_1); inherits the 'base' sampling entry. Not combinable "
+        "with --conditions.",
+    )
+    p.add_argument(
+        "--temperature",
+        type=float,
+        default=None,
+        help="requested sampling temperature: passed to the provider and "
+        "recorded in the manifest (the provider still reports what it applied)",
+    )
+    p.add_argument(
+        "--seed",
+        type=int,
+        default=None,
+        help="generation seed passed to the provider (vllm default: 20260922)",
     )
     p.add_argument(
         "--model-path",
@@ -205,6 +261,9 @@ def build_parser() -> argparse.ArgumentParser:
     return p
 
 
+CONDITION_TAG_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]*$")
+
+
 def provider_opts_from_args(args) -> Dict[str, object]:
     """Only pass options the user actually gave, so provider defaults stand."""
     opts: Dict[str, object] = {}
@@ -212,19 +271,40 @@ def provider_opts_from_args(args) -> Dict[str, object]:
         opts["model_path"] = args.model_path
     if getattr(args, "max_new_tokens", None) is not None:
         opts["max_new_tokens"] = args.max_new_tokens
+    if getattr(args, "temperature", None) is not None:
+        opts["temperature"] = args.temperature
+    if getattr(args, "seed", None) is not None:
+        opts["seed"] = args.seed
     return opts
+
+
+def resolve_conditions(args) -> List[str]:
+    """[tag] for --condition, else the validated --conditions list. Raises ValueError."""
+    if args.condition is not None and args.conditions is not None:
+        raise ValueError("--condition and --conditions are mutually exclusive")
+    if args.condition is not None:
+        if not CONDITION_TAG_RE.match(args.condition):
+            raise ValueError(
+                "bad condition tag %r (allowed: letters, digits, . _ -)" % args.condition
+            )
+        return [args.condition]
+    conditions = args.conditions if args.conditions is not None else [DEFAULT_CONDITION]
+    for c in conditions:
+        if c not in CONDITIONS:
+            raise ValueError(
+                "unknown condition %r (available: %s)" % (c, ", ".join(sorted(CONDITIONS)))
+            )
+    return list(conditions)
 
 
 def main(argv=None) -> int:
     args = build_parser().parse_args(argv)
 
-    for c in args.conditions:
-        if c not in CONDITIONS:
-            sys.stderr.write(
-                "ERROR: unknown condition %r (available: %s)\n"
-                % (c, ", ".join(sorted(CONDITIONS)))
-            )
-            return EXIT_BAD_INPUT
+    try:
+        conditions = resolve_conditions(args)
+    except ValueError as exc:
+        sys.stderr.write("ERROR: %s\n" % exc)
+        return EXIT_BAD_INPUT
     try:
         provider = get_provider(args.provider, **provider_opts_from_args(args))
     except ValueError as exc:
@@ -252,11 +332,13 @@ def main(argv=None) -> int:
     sys.stdout.write(
         "run_id=%s cohort=%s provider=%s model_id=%s items=%d conditions=%s\n"
         % (run_id, args.cohort, args.provider, provider.model_id, len(items),
-           ",".join(args.conditions))
+           ",".join(conditions))
     )
     sys.stdout.write("run_dir=%s\n" % run_dir)
 
-    ok, reasons = execute_run(items, provider, list(args.conditions), run_dir)
+    ok, reasons = execute_run(
+        items, provider, list(conditions), run_dir, temperature=args.temperature
+    )
     if not ok:
         sys.stderr.write("ERROR: run validation FAILED - MARKER not written:\n")
         for r in reasons:
@@ -265,7 +347,7 @@ def main(argv=None) -> int:
 
     sys.stdout.write(
         "OK: validated %d item(s) x %d condition(s); MARKER written at %s\n"
-        % (len(items), len(args.conditions), run_dir / mf.MARKER_NAME)
+        % (len(items), len(conditions), run_dir / mf.MARKER_NAME)
     )
     return EXIT_OK
 

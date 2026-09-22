@@ -1,0 +1,41 @@
+CAMPAIGN PLAN cohort=dryrun class=smoke
+items: research/items/items_phaseA_v1.jsonl (n=156, sha256=8ab7cda19406e00d9c5fe59f0b2ac68fdfb7d54ca2669ce7ffdd350657d88017)
+repeat subset: 31 item(s) = 19.9% of 156, stratified by risk_group x turn_type, seed 20260922
+  stratum CTRL/multi: 5 of 24
+  stratum CTRL/single: 5 of 24
+  stratum R1/multi: 3 of 12
+  stratum R1/single: 1 of 6
+  stratum R2/multi: 3 of 12
+  stratum R2/single: 1 of 6
+  stratum R3/multi: 3 of 12
+  stratum R3/single: 1 of 6
+  stratum R4/multi: 2 of 12
+  stratum R4/single: 1 of 6
+  stratum R5/multi: 2 of 12
+  stratum R5/single: 1 of 6
+  stratum R6/multi: 2 of 12
+  stratum R6/single: 1 of 6
+out-root: /tmp/claude-1011/-home-wjeong/407cdd4b-f055-4859-8e47-fbc41fca59f3/scratchpad/dryrun_outroot
+runs: 8 (2 model(s) x 4 run(s))
+MODEL fake/tiny-a (family=fake_a provider=mock gpu_util=0.85)
+  path: fake/tiny-a
+  run main      temperature=0.0 seed=20260922 items=156 (full item set)
+  run repeat_1  temperature=0.7 seed=20260923 items=31 (20% stratified repeat subset (seed 20260922))
+  run repeat_2  temperature=0.7 seed=20260924 items=31 (20% stratified repeat subset (seed 20260922))
+  run repeat_3  temperature=0.7 seed=20260925 items=31 (20% stratified repeat subset (seed 20260922))
+  preflight disk: free 25.03 GB / required 20 GB -> OK
+  preflight gpu : not required (provider=mock)
+  preflight freeze: skipped (--class smoke; a smoke run is never evidence)
+  preflight: OK
+MODEL fake/tiny-b (family=fake_b provider=mock gpu_util=0.85)
+  path: fake/tiny-b
+  run main      temperature=0.0 seed=20260922 items=156 (full item set)
+  run repeat_1  temperature=0.7 seed=20260923 items=31 (20% stratified repeat subset (seed 20260922))
+  run repeat_2  temperature=0.7 seed=20260924 items=31 (20% stratified repeat subset (seed 20260922))
+  run repeat_3  temperature=0.7 seed=20260925 items=31 (20% stratified repeat subset (seed 20260922))
+  preflight disk: free 25.03 GB / required 20 GB -> OK
+  preflight gpu : not required (provider=mock)
+  preflight freeze: skipped (--class smoke; a smoke run is never evidence)
+  preflight: OK
+DRY RUN: nothing executed. campaign record: /tmp/claude-1011/-home-wjeong/407cdd4b-f055-4859-8e47-fbc41fca59f3/scratchpad/dryrun_outroot/dryrun/campaign_dryrun.json
+check2_exit=0

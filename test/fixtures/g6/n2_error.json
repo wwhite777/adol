@@ -1,0 +1,17 @@
+{
+  "analysis": "n2_localization",
+  "ci95": [
+    -0.02,
+    0.01
+  ],
+  "claim": "N2",
+  "fixture_note": "ERROR: estimate absent",
+  "tost": {
+    "alpha": 0.05,
+    "bound": 0.03,
+    "equivalent": false,
+    "p": 0.98,
+    "p_lower": 0.98,
+    "p_upper": 0.44
+  }
+}

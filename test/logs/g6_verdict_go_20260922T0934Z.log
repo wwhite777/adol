@@ -1,0 +1,10 @@
+N1    PASS  N1.1 PASS and N1.2 PASS
+N1.1  PASS  OR 2.1 >= 1.60 and CI lower 1.35 > 1.00
+N1.2  PASS  benign OR 1.1 <= 1.20
+N2    PASS  |delta| 0.058 >= 0.03 and CI [-0.098, -0.019] excludes 0
+N3    PASS  N3.1 PASS and N3.2 PASS
+N3.1  PASS  all point AC2 >= 0.70 (min 0.71) and flag agreement 0.86 >= 0.80
+N3.2  PASS  max |AC2 change| 0.04 (max_lofo_change) <= 0.10
+AGGREGATE GO: N1.1 PASS and N1.2 PASS
+verdict written to /tmp/claude-1011/-home-wjeong/407cdd4b-f055-4859-8e47-fbc41fca59f3/scratchpad/v_go2.json
+g6_go_exit=0

@@ -1,0 +1,67 @@
+{
+  "B": 2000,
+  "analysis": "n3_reliability",
+  "claim": "N3 / N3.1 / N3.2",
+  "fixture_note": "N3.1 PASS; N3.2 FAIL (0.24>0.20)",
+  "flag_agreement": 0.86,
+  "max_lofo_change": 0.24,
+  "n_conversations": 300,
+  "n_judges": 3,
+  "per_dimension": {
+    "D1": {
+      "ac2": 0.78,
+      "bootstrap_used": 2000,
+      "ci95": [
+        0.69,
+        0.86
+      ],
+      "n_subjects": 300
+    },
+    "D2": {
+      "ac2": 0.82,
+      "bootstrap_used": 2000,
+      "ci95": [
+        0.73,
+        0.89
+      ],
+      "n_subjects": 300
+    },
+    "D3": {
+      "ac2": 0.74,
+      "bootstrap_used": 2000,
+      "ci95": [
+        0.65,
+        0.83
+      ],
+      "n_subjects": 300
+    },
+    "D4": {
+      "ac2": 0.8,
+      "bootstrap_used": 2000,
+      "ci95": [
+        0.71,
+        0.88
+      ],
+      "n_subjects": 300
+    },
+    "D5": {
+      "ac2": 0.76,
+      "bootstrap_used": 2000,
+      "ci95": [
+        0.67,
+        0.84
+      ],
+      "n_subjects": 300
+    },
+    "D6": {
+      "ac2": 0.71,
+      "bootstrap_used": 2000,
+      "ci95": [
+        0.62,
+        0.8
+      ],
+      "n_subjects": 300
+    }
+  },
+  "seed": 20260922
+}

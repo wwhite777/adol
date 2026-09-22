@@ -1,0 +1,17 @@
+[
+  {
+    "model_id": "fake/tiny-vllm-a",
+    "model_path": "fake/tiny-vllm-a",
+    "family": "fake_a",
+    "provider": "vllm",
+    "gpu_memory_utilization": 0.85,
+    "notes": "plan-only fixture: no weights exist, used for --dry-run pre-flight tests"
+  },
+  {
+    "model_id": "fake/tiny-vllm-b",
+    "model_path": "fake/tiny-vllm-b",
+    "family": "fake_b",
+    "provider": "vllm",
+    "notes": "plan-only fixture: gpu_memory_utilization omitted on purpose"
+  }
+]

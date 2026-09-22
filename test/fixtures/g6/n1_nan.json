@@ -1,0 +1,16 @@
+{
+  "analysis": "n1_escalation",
+  "benign_ci95": [
+    0.85,
+    1.42
+  ],
+  "benign_or": 1.1,
+  "ci95": [
+    1.35,
+    3.3
+  ],
+  "claim": "N1 / N1.1 / N1.2",
+  "fixture_note": "N1.1 ERROR (NaN or); N1.2 ERROR (NaN interaction_p)",
+  "interaction_p": NaN,
+  "or": NaN
+}

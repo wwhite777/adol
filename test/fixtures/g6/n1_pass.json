@@ -1,0 +1,21 @@
+{
+  "B": 2000,
+  "analysis": "n1_escalation",
+  "benign_ci95": [
+    0.85,
+    1.42
+  ],
+  "benign_or": 1.1,
+  "ci95": [
+    1.35,
+    3.3
+  ],
+  "ci_method": "percentile scenario cluster bootstrap",
+  "claim": "N1 / N1.1 / N1.2",
+  "fixture_note": "N1.1 PASS (or>=1.6, ci95[0]>1.0); N1.2 PASS via benign_or<=1.2",
+  "interaction_p": 0.31,
+  "interaction_p_vb": 0.999,
+  "n": 720,
+  "or": 2.1,
+  "seed": 20260922
+}

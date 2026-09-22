@@ -1,0 +1,21 @@
+{
+  "_comment": "Fake model list for campaign --dry-run and smoke tests. No weights are downloaded; the mock provider needs no path. Never used for confirmatory runs (campaign refuses provider=mock there).",
+  "models": [
+    {
+      "model_id": "fake/tiny-a",
+      "model_path": "fake/tiny-a",
+      "family": "fake_a",
+      "provider": "mock",
+      "gpu_memory_utilization": 0.85,
+      "notes": "test double: MockProvider, deterministic canned replies"
+    },
+    {
+      "model_id": "fake/tiny-b",
+      "model_path": "fake/tiny-b",
+      "family": "fake_b",
+      "provider": "mock",
+      "gpu_memory_utilization": 0.85,
+      "notes": "test double: MockProvider, deterministic canned replies"
+    }
+  ]
+}

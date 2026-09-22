@@ -1,0 +1,23 @@
+{
+  "B": 2000,
+  "analysis": "n2_localization",
+  "ci95": [
+    -0.098,
+    -0.019
+  ],
+  "ci_method": "paired_cluster_bootstrap_pairs",
+  "claim": "N2",
+  "components": "not_separable_in_phase_A",
+  "estimate": -0.058,
+  "fixture_note": "PASS: |estimate|>=0.03 and ci95 excludes 0",
+  "n_pairs": 180,
+  "seed": 20260922,
+  "tost": {
+    "alpha": 0.05,
+    "bound": 0.03,
+    "equivalent": false,
+    "p": 0.98,
+    "p_lower": 0.98,
+    "p_upper": 0.44
+  }
+}

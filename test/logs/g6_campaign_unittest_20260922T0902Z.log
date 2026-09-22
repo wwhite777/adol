@@ -1,0 +1,95 @@
+test_cli_dry_run_exits_zero (test_g6_campaign.TestCampaignDryRun) ... ok
+test_confirmatory_refuses_a_mismatched_freeze_hash (test_g6_campaign.TestCampaignDryRun) ... ERROR: pre-flight refused for fake/tiny-vllm-a
+  freeze: FREEZE_MISMATCH: /tmp/campaign_dry_99p38hda/PREREGISTERED_kyra_v2.yaml sha256=6396ec8483d664da97f2bf9a06c840d40d97aa6416a7c0fda1fa3a49c076d488 does not match frozen receipt sha256=87abaae4c16fb0efe3dad27ff464fcd86b6b48ff67a33f1414336ccc7ddd34a4
+campaign record: /tmp/campaign_dry_99p38hda/raw/dryrun/campaign_dryrun.json
+ok
+test_confirmatory_refuses_a_mock_provider (test_g6_campaign.TestCampaignDryRun) ... ERROR: models_fake.json[0] uses the mock provider; a mock run is never evidence and is refused for --class confirmatory
+ok
+test_dry_run_confirmatory_verifies_freeze_and_chooses_a_gpu (test_g6_campaign.TestCampaignDryRun) ... ok
+test_dry_run_plan_smoke (test_g6_campaign.TestCampaignDryRun) ... ok
+test_no_free_gpu_is_a_preflight_refusal (test_g6_campaign.TestCampaignDryRun) ... ERROR: pre-flight refused for fake/tiny-vllm-a
+  gpu: {'required': True, 'visible': [{'index': 0, 'used_mib': 40000}, {'index': 1, 'used_mib': 40000}, {'index': 2, 'used_mib': 40000}, {'index': 3, 'used_mib': 0}], 'error': None, 'chosen': None, 'allowed': [0, 1, 2], 'never': 3, 'criterion': 'first of GPUs 0-2 with < 4096 MiB used', 'ok': False}
+campaign record: /tmp/campaign_dry_r1hlp5ce/raw/dryrun/campaign_dryrun.json
+ok
+test_first_free_gpu_of_0_1_2 (test_g6_campaign.TestCampaignGpuGuard) ... ok
+test_gpu_three_is_never_chosen (test_g6_campaign.TestCampaignGpuGuard) ... ok
+test_gpu_zero_when_free (test_g6_campaign.TestCampaignGpuGuard) ... ok
+test_a_failed_run_stops_the_campaign (test_g6_campaign.TestCampaignSmokeRun) ... ERROR: run stoptest__fake-tiny-a__repeat_1__20260922T0902Z-0437d1 failed (missing file: responses.jsonl; manifest contains 1 record(s) with status=error: KYRA-SMK-001L; response record count mismatch: expected 1 response unit(s) (= 1 items x 1 conditions), found 0; no response records for item_id='KYRA-SMK-001L' condition='base'; input item_id 'KYRA-SMK-001L' missing from responses.jsonl); stopping the campaign - no later model is started.
+log: /tmp/campaign_run_ss1h59dq/raw/stoptest/logs/stoptest__fake-tiny-a__repeat_1__20260922T0902Z-0437d1.log
+campaign record: /tmp/campaign_run_ss1h59dq/raw/stoptest/campaign_stoptest.json
+/home/wjeong/adol/test/test_g6_campaign.py:729: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/campaign_run_ss1h59dq/EXPERIMENTS.csv' mode='r' encoding='utf-8'>
+  rows = list(csv.reader(self.csv.open(encoding="utf-8", newline="")))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_two_fake_models_end_to_end (test_g6_campaign.TestCampaignSmokeRun) ... /home/wjeong/adol/test/test_g6_campaign.py:656: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/campaign_run_ephutwpf/EXPERIMENTS.csv' mode='r' encoding='utf-8'>
+  before = list(csv.reader(self.csv.open(encoding="utf-8", newline="")))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/wjeong/adol/test/test_g6_campaign.py:681: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/campaign_run_ephutwpf/EXPERIMENTS.csv' mode='r' encoding='utf-8'>
+  after = list(csv.reader(self.csv.open(encoding="utf-8", newline="")))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_every_stratum_is_represented (test_g6_campaign.TestCampaignSubset) ... ok
+test_seed_change_changes_the_draw (test_g6_campaign.TestCampaignSubset) ... ok
+test_smoke_items_subset (test_g6_campaign.TestCampaignSubset) ... ok
+test_subset_is_twenty_percent_and_deterministic (test_g6_campaign.TestCampaignSubset) ... ok
+test_error_is_never_kill (test_g6_campaign.TestG6Aggregate) ... ok
+test_go (test_g6_campaign.TestG6Aggregate) ... ok
+test_inconclusive_on_miss (test_g6_campaign.TestG6Aggregate) ... ok
+test_inconclusive_when_n1_1_passes_but_n1_2_does_not (test_g6_campaign.TestG6Aggregate) ... ok
+test_kill (test_g6_campaign.TestG6Aggregate) ... ok
+test_kill_with_survivor_n2 (test_g6_campaign.TestG6Aggregate) ... ok
+test_kill_with_survivor_n3 (test_g6_campaign.TestG6Aggregate) ... ok
+test_go_verdict_carries_hashes_and_numbers (test_g6_campaign.TestG6CLI) ... ok
+test_inconclusive_verdict (test_g6_campaign.TestG6CLI) ... ok
+test_kill_verdict (test_g6_campaign.TestG6CLI) ... ok
+test_kill_with_survivor_verdict (test_g6_campaign.TestG6CLI) ... ok
+test_missing_input_file_is_error_not_kill (test_g6_campaign.TestG6CLI) ... ok
+test_missing_prereg_file (test_g6_campaign.TestG6CLI) ... ok
+test_refrozen_but_altered_table_is_an_error (test_g6_campaign.TestG6CLI)
+Hash matches its own receipt, yet the rules no longer match the code. ... ok
+test_tampered_prereg_refuses_before_any_reading (test_g6_campaign.TestG6CLI) ... ok
+test_n1_1_error_missing_field (test_g6_campaign.TestG6Readings) ... ok
+test_n1_1_error_nan (test_g6_campaign.TestG6Readings) ... ok
+test_n1_1_fail (test_g6_campaign.TestG6Readings) ... ok
+test_n1_1_fail_boundary_ci_upper_equals_1_2 (test_g6_campaign.TestG6Readings) ... ok
+test_n1_1_miss (test_g6_campaign.TestG6Readings) ... ok
+test_n1_1_pass (test_g6_campaign.TestG6Readings) ... ok
+test_n1_1_pass_needs_ci_lower_above_one (test_g6_campaign.TestG6Readings) ... ok
+test_n1_2_ci_including_one_is_not_a_fail (test_g6_campaign.TestG6Readings) ... ok
+test_n1_2_error (test_g6_campaign.TestG6Readings) ... ok
+test_n1_2_error_nan (test_g6_campaign.TestG6Readings) ... ok
+test_n1_2_fail (test_g6_campaign.TestG6Readings) ... ok
+test_n1_2_miss (test_g6_campaign.TestG6Readings) ... ok
+test_n1_2_pass_via_benign_or (test_g6_campaign.TestG6Readings) ... ok
+test_n1_2_pass_via_interaction (test_g6_campaign.TestG6Readings) ... ok
+test_n2_error (test_g6_campaign.TestG6Readings) ... ok
+test_n2_error_when_no_tost_decision_at_all (test_g6_campaign.TestG6Readings) ... ok
+test_n2_fail_explicit_equivalence (test_g6_campaign.TestG6Readings) ... ok
+test_n2_fail_from_two_one_sided_p_values (test_g6_campaign.TestG6Readings) ... ok
+test_n2_miss (test_g6_campaign.TestG6Readings) ... ok
+test_n2_pass (test_g6_campaign.TestG6Readings) ... ok
+test_n2_pass_needs_ci_excluding_zero (test_g6_campaign.TestG6Readings) ... ok
+test_n3_1_error (test_g6_campaign.TestG6Readings) ... ok
+test_n3_1_error_on_nan_flag_agreement (test_g6_campaign.TestG6Readings) ... ok
+test_n3_1_fail (test_g6_campaign.TestG6Readings) ... ok
+test_n3_1_flag_agreement_below_bar_is_not_pass (test_g6_campaign.TestG6Readings) ... ok
+test_n3_1_miss (test_g6_campaign.TestG6Readings) ... ok
+test_n3_1_miss_when_no_revision_yet (test_g6_campaign.TestG6Readings) ... ok
+test_n3_1_pass (test_g6_campaign.TestG6Readings) ... ok
+test_n3_2_error (test_g6_campaign.TestG6Readings) ... ok
+test_n3_2_fail (test_g6_campaign.TestG6Readings) ... ok
+test_n3_2_miss (test_g6_campaign.TestG6Readings) ... ok
+test_n3_2_pass (test_g6_campaign.TestG6Readings) ... ok
+test_parent_n1 (test_g6_campaign.TestG6Readings) ... ok
+test_parent_n3 (test_g6_campaign.TestG6Readings) ... ok
+test_aggregate_rule_mismatch_is_reported (test_g6_campaign.TestG6Table) ... ok
+test_claim_id_mismatch_is_reported (test_g6_campaign.TestG6Table) ... ok
+test_coded_table_matches_the_frozen_prereg (test_g6_campaign.TestG6Table) ... ok
+test_decision_rule_prose_mismatch_is_reported (test_g6_campaign.TestG6Table) ... ok
+test_threshold_mismatch_is_reported (test_g6_campaign.TestG6Table) ... ok
+
+----------------------------------------------------------------------
+Ran 69 tests in 0.956s
+
+OK
+check1_exit=0
