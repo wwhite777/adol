@@ -15,7 +15,7 @@ One model at a time, guarded. For each model, in the order given by models.json:
   row to EXPERIMENTS.csv. On any failed run the campaign stops and reports - it
   never continues silently.
 
-CLI (from the repo root):
+CLI (from the repo root) - generation:
     PYTHONPATH=src python -m kyra.campaign \
         --items research/items/items_phaseA_v1.jsonl \
         --models models.json --cohort phaseA_T1 \
@@ -36,6 +36,23 @@ models.json: a list (or {"models": [...]}) of
      "notes": "free text"}
 No model downloading happens here: the path must already be local or cached.
 
+CLI - scoring (a sub-command that cannot forget the item file):
+    PYTHONPATH=src python -m kyra.campaign score \
+        --items research/items/items_phaseA_v1.jsonl --models models.json \
+        --judges judges.json --cohort phaseA_T1 --runs <dirs or globs> \
+        [--anchors research/judge_anchors_v1.json] [--dry-run] \
+        [--class confirmatory|smoke] [--out-root ...] [--experiments-csv ...]
+For every run directory that carries a MARKER: each judge in judges.json is run
+as a child process (kyra.judge --views prefix --items <items>, so control ids
+come from risk_group CTRL and are never omitted), one judge model loaded at a
+time, writing judge_<judge_id>.jsonl into the run dir; an existing judge file is
+refused, never overwritten. Then kyra.panel aggregates that run's judge files
+with the family map built from models.json + judges.json and --evaluated-family
+= the run's model family, writing panel.jsonl. One EXPERIMENTS row per judge run
+and per panel (class inherited from the run's EXPERIMENTS row, or --class); the
+freeze hash is verified before any confirmatory scoring. Record:
+campaign_<cohort>_scoring.json. Any failure stops the batch.
+
 Runs go through runner.execute_run() in-process, with the condition tag (base /
 repeat_1..3) and the requested temperature passed as runner parameters, so the
 manifest's own `condition` field carries the real tag. The provider is built at
@@ -48,12 +65,14 @@ from __future__ import annotations
 
 import argparse
 import csv
+import glob
 import hashlib
 import json
 import math
 import os
 import random
 import re
+import shlex
 import shutil
 import subprocess
 import sys
@@ -745,6 +764,7 @@ def record_campaign_json(
     payload: Dict[str, Any],
     dry_run: bool,
     out_root_explicit: bool,
+    suffix: str = "",
 ):
     """Write the campaign record, except for a dry run with no explicit out-root.
 
@@ -753,11 +773,13 @@ def record_campaign_json(
     """
     if dry_run and not out_root_explicit:
         return None
-    return write_campaign_json(out_root, cohort, payload)
+    return write_campaign_json(out_root, cohort, payload, suffix=suffix)
 
 
-def write_campaign_json(out_root: Path, cohort: str, payload: Dict[str, Any]) -> Path:
-    path = out_root / cohort / ("campaign_%s.json" % cohort)
+def write_campaign_json(
+    out_root: Path, cohort: str, payload: Dict[str, Any], suffix: str = ""
+) -> Path:
+    path = out_root / cohort / ("campaign_%s%s.json" % (cohort, suffix))
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(
         json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
@@ -766,7 +788,635 @@ def write_campaign_json(out_root: Path, cohort: str, payload: Dict[str, Any]) ->
     return path
 
 
+# --------------------------------------------------------------------------
+# scoring sub-command: judges + panel over finished run directories
+# --------------------------------------------------------------------------
+JUDGE_VIEWS = "prefix"  # frozen: one record per (item_id, condition, depth)
+PANEL_NAME = "panel.jsonl"
+
+
+def load_judges(path) -> List[Dict[str, Any]]:
+    """Read and validate judges.json. Any problem is a hard refusal."""
+    p = Path(path)
+    if not p.is_file():
+        raise CampaignError("judges file not found: %s" % p, EXIT_BAD_INPUT)
+    try:
+        doc = json.loads(p.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise CampaignError("judges file unreadable: %s (%s)" % (p, exc), EXIT_BAD_INPUT)
+    if isinstance(doc, dict):
+        doc = doc.get("judges")
+    if not isinstance(doc, list) or not doc:
+        raise CampaignError(
+            "judges file must hold a non-empty list of judge objects: %s" % p, EXIT_BAD_INPUT
+        )
+
+    judges: List[Dict[str, Any]] = []
+    seen = set()
+    for index, entry in enumerate(doc):
+        where = "%s[%d]" % (p.name, index)
+        if not isinstance(entry, dict):
+            raise CampaignError("%s is not an object" % where, EXIT_BAD_INPUT)
+        judge_id = entry.get("judge_id")
+        if not isinstance(judge_id, str) or not judge_id.strip():
+            raise CampaignError("%s has no judge_id" % where, EXIT_BAD_INPUT)
+        if judge_id in seen:
+            raise CampaignError("%s duplicates judge_id %r" % (where, judge_id), EXIT_BAD_INPUT)
+        seen.add(judge_id)
+        family = entry.get("family")
+        if not isinstance(family, str) or not family.strip():
+            raise CampaignError("%s has no family" % where, EXIT_BAD_INPUT)
+        provider = entry.get("provider")
+        if provider not in ("vllm", "mock", "fake"):
+            raise CampaignError(
+                "%s has provider %r (expected 'vllm', or 'mock'/'fake' for smoke runs)"
+                % (where, provider),
+                EXIT_BAD_INPUT,
+            )
+        model_id = entry.get("model_id") or entry.get("model_path")
+        model_path = entry.get("model_path") or entry.get("model_id")
+        if provider == "vllm" and (not isinstance(model_path, str) or not model_path.strip()):
+            raise CampaignError(
+                "%s uses provider vllm but has no model_id/model_path" % where, EXIT_BAD_INPUT
+            )
+        gpu_util = entry.get("gpu_memory_utilization")
+        if gpu_util is not None and (
+            isinstance(gpu_util, bool) or not isinstance(gpu_util, (int, float))
+        ):
+            raise CampaignError(
+                "%s gpu_memory_utilization must be a number" % where, EXIT_BAD_INPUT
+            )
+        judges.append(
+            {
+                "judge_id": judge_id,
+                "model_id": model_id or judge_id,
+                "model_path": model_path,
+                "family": family,
+                "provider": provider,
+                "gpu_memory_utilization": float(gpu_util) if gpu_util is not None else None,
+                "fake_outputs": entry.get("fake_outputs"),
+                "notes": entry.get("notes", ""),
+            }
+        )
+    return judges
+
+
+def expand_runs(patterns: Sequence[str]) -> List[Path]:
+    """Resolve run-dir arguments: literal directories and/or globs."""
+    found: List[Path] = []
+    for pattern in patterns:
+        p = Path(pattern)
+        if p.is_dir():
+            found.append(p)
+            continue
+        matches = sorted(Path(m) for m in glob.glob(pattern))
+        matches = [m for m in matches if m.is_dir()]
+        if not matches:
+            raise CampaignError(
+                "no run directory matches %r (a missing run is never scored silently)"
+                % pattern,
+                EXIT_BAD_INPUT,
+            )
+        found.extend(matches)
+    unique: List[Path] = []
+    for path in found:
+        if path not in unique:
+            unique.append(path)
+    if not unique:
+        raise CampaignError("no run directories to score", EXIT_BAD_INPUT)
+    return unique
+
+
+def class_for_run(csv_path: Path, run_dir: Path, override: Optional[str]) -> Tuple[str, str]:
+    """Return (class, source). The run's own EXPERIMENTS row decides, else --class."""
+    if override:
+        return override, "--class flag"
+    target = str(run_dir).rstrip("/")
+    if Path(csv_path).is_file():
+        with Path(csv_path).open("r", encoding="utf-8", newline="") as fh:
+            for row in csv.DictReader(fh):
+                raw = str(row.get("raw", "")).rstrip("/")
+                if raw and raw == target:
+                    return str(row.get("class", "")).strip(), "EXPERIMENTS row %s" % row.get("run")
+    raise CampaignError(
+        "no EXPERIMENTS row has raw=%s and no --class was given: refusing to guess "
+        "whether this run is confirmatory" % target,
+        EXIT_BAD_INPUT,
+    )
+
+
+def model_for_run(run_dir: Path, models: List[Dict[str, Any]]) -> Tuple[Dict[str, Any], str]:
+    """Find the evaluated model (hence its family) for a run directory.
+
+    1. the manifest's model_id matches a models.json model_id;
+    2. else a path component matches a model's slug (campaign layout);
+    otherwise it is an error - the leave-one-family-out rule may not run on a
+    guessed family.
+    """
+    manifest_ids: List[str] = []
+    manifest_path = Path(run_dir) / mf.MANIFEST_NAME
+    if manifest_path.is_file():
+        with manifest_path.open("r", encoding="utf-8") as fh:
+            for line in fh:
+                if not line.strip():
+                    continue
+                try:
+                    rec = json.loads(line)
+                except json.JSONDecodeError:
+                    continue
+                mid = rec.get("model_id")
+                if isinstance(mid, str) and mid not in manifest_ids:
+                    manifest_ids.append(mid)
+    for model in models:
+        if model["model_id"] in manifest_ids:
+            return model, "manifest model_id=%s" % model["model_id"]
+    parts = set(Path(run_dir).resolve().parts)
+    for model in models:
+        if model["slug"] in parts:
+            return model, "run path component %s" % model["slug"]
+    raise CampaignError(
+        "cannot tell which model produced %s (manifest model_id(s): %s; models.json: %s) - "
+        "refusing to guess the evaluated family for leave-one-family-out"
+        % (run_dir, manifest_ids or "none", [m["model_id"] for m in models]),
+        EXIT_BAD_INPUT,
+    )
+
+
+def judge_command(
+    judge: Dict[str, Any],
+    run_dir: Path,
+    items_path: Path,
+    out_path: Path,
+    anchors: Optional[Path],
+) -> List[str]:
+    """The kyra.judge argv for one judge on one run (views=prefix, items given)."""
+    cmd = [
+        sys.executable,
+        "-m",
+        "kyra.judge",
+        "--run-dir",
+        str(run_dir),
+        "--provider",
+        judge["provider"],
+        "--judge-id",
+        judge["judge_id"],
+        "--family",
+        judge["family"],
+        "--views",
+        JUDGE_VIEWS,
+        "--items",
+        str(items_path),
+        "--out",
+        str(out_path),
+    ]
+    if judge["provider"] == "vllm":
+        cmd += ["--model-path", str(judge["model_path"])]
+        if judge["gpu_memory_utilization"] is not None:
+            cmd += ["--gpu-memory-utilization", str(judge["gpu_memory_utilization"])]
+    if judge["provider"] == "fake" and judge.get("fake_outputs"):
+        cmd += ["--fake-outputs", str(judge["fake_outputs"])]
+    if anchors is not None:
+        cmd += ["--anchors", str(anchors)]
+    return cmd
+
+
+def panel_command(
+    judge_files: List[Path], family_map_path: Path, evaluated_family: str, out_path: Path
+) -> List[str]:
+    return (
+        [sys.executable, "-m", "kyra.panel", "--judges"]
+        + [str(p) for p in judge_files]
+        + [
+            "--family-map",
+            str(family_map_path),
+            "--evaluated-family",
+            evaluated_family,
+            "--out",
+            str(out_path),
+        ]
+    )
+
+
+def shell_repr(cmd: Sequence[str]) -> str:
+    return "PYTHONPATH=src " + " ".join(shlex.quote(str(c)) for c in cmd)
+
+
+def run_subprocess(cmd: Sequence[str], log_path: Path, repo_root: Path, gpu: Optional[int]):
+    """Run one child process, tee its output to a log, return (returncode, text)."""
+    env = dict(os.environ)
+    src = str(repo_root / "src")
+    env["PYTHONPATH"] = src + (os.pathsep + env["PYTHONPATH"] if env.get("PYTHONPATH") else "")
+    if gpu is not None:
+        env["CUDA_VISIBLE_DEVICES"] = str(gpu)
+    proc = subprocess.run(
+        [str(c) for c in cmd],
+        cwd=str(repo_root),
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+    log_path.write_text(
+        "command: %s\nexit=%d\n--- stdout ---\n%s\n--- stderr ---\n%s\n"
+        % (shell_repr(cmd), proc.returncode, proc.stdout, proc.stderr),
+        encoding="utf-8",
+    )
+    return proc.returncode, (proc.stdout + proc.stderr).strip()
+
+
+def score_main(argv: List[str], gpu_probe=query_gpus) -> int:
+    """`kyra.campaign score ...`: judges then panel over finished run dirs."""
+    parser = build_score_parser()
+    args = parser.parse_args(argv)
+    command = "PYTHONPATH=src python -m kyra.campaign score " + " ".join(
+        shlex.quote(a) for a in argv
+    )
+    repo_root = Path(__file__).resolve().parents[2]
+    out_root = Path(args.out_root) if args.out_root else Path(DEFAULT_OUT_ROOT)
+    out_root_explicit = args.out_root is not None
+    items_path = Path(args.items)
+    experiments_csv = Path(args.experiments_csv)
+    prereg, sha = Path(args.prereg), Path(args.sha)
+    anchors_path = Path(args.anchors) if args.anchors else None
+
+    try:
+        models = load_models(args.models, "smoke")  # provider rules apply to runs, not scoring
+        judges = load_judges(args.judges)
+        if not items_path.is_file():
+            raise CampaignError("items file not found: %s" % items_path, EXIT_BAD_INPUT)
+        if anchors_path is not None and not anchors_path.is_file():
+            raise CampaignError("anchors file not found: %s" % anchors_path, EXIT_BAD_INPUT)
+        run_dirs = expand_runs(args.runs)
+    except CampaignError as exc:
+        sys.stderr.write("ERROR: %s\n" % exc)
+        return exc.code
+
+    anchors_sha = sha256_file(anchors_path) if anchors_path is not None else None
+    family_map = {j["judge_id"]: j["family"] for j in judges}
+    model_families = {m["model_id"]: m["family"] for m in models}
+
+    plan: Dict[str, Any] = {
+        "cohort": args.cohort,
+        "created_utc": utc_stamp(),
+        "items_path": str(items_path),
+        "items_sha256": sha256_file(items_path),
+        "views": JUDGE_VIEWS,
+        "anchors_path": str(anchors_path) if anchors_path else None,
+        "anchors_sha256": anchors_sha,
+        "judges": [
+            {k: j[k] for k in ("judge_id", "family", "provider", "model_id", "notes")}
+            for j in judges
+        ],
+        "family_map": family_map,
+        "model_families": model_families,
+        "out_root": str(out_root),
+        "runs": [],
+    }
+
+    # Per-run bookkeeping: MARKER, class, evaluated family, judge output paths.
+    try:
+        for run_dir in run_dirs:
+            marker = Path(run_dir) / mf.MARKER_NAME
+            if not marker.is_file():
+                raise CampaignError(
+                    "refusing to score %s: no MARKER (an unvalidated run is not data)"
+                    % run_dir,
+                    EXIT_PREFLIGHT,
+                )
+            run_class, class_source = class_for_run(experiments_csv, Path(run_dir), args.run_class)
+            if run_class not in RUN_CLASSES:
+                raise CampaignError(
+                    "run %s has class %r (expected one of %s)"
+                    % (run_dir, run_class, ", ".join(RUN_CLASSES)),
+                    EXIT_BAD_INPUT,
+                )
+            model, model_source = model_for_run(Path(run_dir), models)
+            judge_files = [
+                Path(run_dir) / ("judge_%s.jsonl" % j["judge_id"]) for j in judges
+            ]
+            existing = [str(p) for p in judge_files if p.exists()]
+            plan["runs"].append(
+                {
+                    "run_dir": str(run_dir),
+                    "marker_sha256": sha256_file(marker),
+                    "class": run_class,
+                    "class_source": class_source,
+                    "model_id": model["model_id"],
+                    "evaluated_family": model["family"],
+                    "model_source": model_source,
+                    "judge_files": [str(p) for p in judge_files],
+                    "existing_judge_files": existing,
+                    "panel_file": str(Path(run_dir) / PANEL_NAME),
+                }
+            )
+    except CampaignError as exc:
+        sys.stderr.write("ERROR: %s\n" % exc)
+        return exc.code
+
+    confirmatory = [r for r in plan["runs"] if r["class"] == "confirmatory"]
+    freeze: Dict[str, Any] = {
+        "required": bool(confirmatory),
+        "prereg": str(prereg),
+        "sha": str(sha),
+        "sha256": None,
+        "ok": True,
+        "error": None,
+    }
+    if freeze["required"]:
+        try:
+            freeze["sha256"] = verify(prereg, sha)
+        except FileNotFoundError as exc:
+            freeze["ok"], freeze["error"] = False, "MISSING_FILE: %s" % exc
+        except FreezeMismatch as exc:
+            freeze["ok"], freeze["error"] = False, "FREEZE_MISMATCH: %s" % exc
+    else:
+        freeze["error"] = "skipped (no confirmatory run in this scoring batch)"
+
+    needs_gpu = any(j["provider"] == "vllm" for j in judges)
+    gpus, gpu_error = (None, "not required (no vllm judge)")
+    if needs_gpu:
+        gpus, gpu_error = gpu_probe()
+    chosen = choose_gpu(gpus) if gpus else None
+    gpu = {
+        "required": needs_gpu,
+        "visible": gpus,
+        "error": gpu_error if gpus is None else None,
+        "chosen": chosen,
+        "allowed": list(ALLOWED_GPUS),
+        "never": FORBIDDEN_GPU,
+        "ok": (not needs_gpu) or chosen is not None,
+    }
+
+    payload: Dict[str, Any] = {
+        "plan": plan,
+        "command": command,
+        "dry_run": bool(args.dry_run),
+        "experiments_csv": str(experiments_csv),
+        "freeze": freeze,
+        "gpu": gpu,
+        "judge_runs": [],
+        "panel_runs": [],
+        "status": "planned",
+        "stopped_because": None,
+        "note": "judges run one model at a time as child processes (kyra.judge "
+        "--views prefix --items <items>, so control ids come from risk_group "
+        "CTRL); the panel is kyra.panel over this run's judge files",
+    }
+
+    print_score_plan(plan, freeze, gpu)
+
+    if not freeze["ok"] or not gpu["ok"]:
+        reason = "scoring pre-flight refused: %s" % (freeze["error"] or gpu["error"] or "no GPU")
+        payload["status"] = "refused"
+        payload["stopped_because"] = reason
+        path = record_campaign_json(
+            out_root, args.cohort, payload, args.dry_run, out_root_explicit, suffix="_scoring"
+        )
+        sys.stderr.write("ERROR: %s\ncampaign record: %s\n" % (reason, path))
+        return EXIT_FREEZE_MISMATCH if not freeze["ok"] else EXIT_PREFLIGHT
+
+    blocked = [r for r in plan["runs"] if r["existing_judge_files"]]
+    if blocked:
+        reason = "judge output already exists, refusing to overwrite: %s" % ", ".join(
+            blocked[0]["existing_judge_files"]
+        )
+        payload["status"] = "refused"
+        payload["stopped_because"] = reason
+        path = record_campaign_json(
+            out_root, args.cohort, payload, args.dry_run, out_root_explicit, suffix="_scoring"
+        )
+        sys.stderr.write("ERROR: %s\ncampaign record: %s\n" % (reason, path))
+        return EXIT_PREFLIGHT
+
+    if args.dry_run:
+        payload["status"] = "dry-run"
+        path = record_campaign_json(
+            out_root, args.cohort, payload, True, out_root_explicit, suffix="_scoring"
+        )
+        sys.stdout.write(
+            "DRY RUN: nothing scored. campaign record: %s\n"
+            % (path if path else "not written (pass --out-root to record the plan)")
+        )
+        return EXIT_OK
+
+    log_dir = out_root / args.cohort / "scoring_logs"
+    family_map_path = out_root / args.cohort / ("family_map_%s.json" % args.cohort)
+    family_map_path.parent.mkdir(parents=True, exist_ok=True)
+    family_map_path.write_text(
+        json.dumps(family_map, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+
+    def stop(reason: str, code: int) -> int:
+        payload["status"] = "failed"
+        payload["stopped_because"] = reason
+        path = write_campaign_json(out_root, args.cohort, payload, suffix="_scoring")
+        sys.stderr.write("ERROR: %s\ncampaign record: %s\n" % (reason, path))
+        return code
+
+    for run in plan["runs"]:
+        run_dir = Path(run["run_dir"])
+        run_key = "%s__%s" % (args.cohort, run_dir.name)
+        judge_files: List[Path] = []
+        for judge in judges:  # one judge model loaded at a time
+            out_path = run_dir / ("judge_%s.jsonl" % judge["judge_id"])
+            key = "%s__judge_%s" % (run_key, judge["judge_id"])
+            cmd = judge_command(judge, run_dir, items_path, out_path, anchors_path)
+            log_path = log_dir / ("%s.log" % key)
+            sys.stdout.write("JUDGE %s on %s\n" % (judge["judge_id"], run_dir))
+            code, output = run_subprocess(cmd, log_path, repo_root, gpu["chosen"])
+            ok = code == 0 and out_path.is_file()
+            record = {
+                "run_key": key,
+                "run_dir": str(run_dir),
+                "judge_id": judge["judge_id"],
+                "family": judge["family"],
+                "provider": judge["provider"],
+                "class": run["class"],
+                "out": str(out_path),
+                "log": str(log_path),
+                "exit_code": code,
+                "sha256": sha256_file(out_path) if out_path.is_file() else None,
+                "status": "completed" if ok else "failed",
+                "failure": None if ok else (output[-800:] or "kyra.judge exit %d" % code),
+                "anchors_sha256": anchors_sha,
+            }
+            payload["judge_runs"].append(record)
+            append_experiment_row(
+                experiments_csv,
+                {
+                    "run": key,
+                    "class": run["class"],
+                    "config": "judge=%s; family=%s; provider=%s; model=%s; views=%s; "
+                    "items=%s; anchors=%s; anchors_sha256=%s; evaluated_family=%s; "
+                    "run_dir=%s"
+                    % (
+                        judge["judge_id"],
+                        judge["family"],
+                        judge["provider"],
+                        judge["model_id"],
+                        JUDGE_VIEWS,
+                        items_path,
+                        anchors_path if anchors_path else "none",
+                        anchors_sha or "n/a",
+                        run["evaluated_family"],
+                        run_dir,
+                    ),
+                    "seed": "n/a (judge)",
+                    "command": shell_repr(cmd),
+                    "raw": str(out_path),
+                    "log": str(log_path),
+                    "marker": (
+                        "judge_file sha256 %s" % record["sha256"]
+                        if record["sha256"]
+                        else "n/a (no judge file)"
+                    ),
+                    "status": record["status"],
+                    "failure": record["failure"]
+                    or ("none (smoke: never evidence)" if run["class"] == "smoke" else "none"),
+                },
+            )
+            if not ok:
+                return stop(
+                    "judge %s failed on %s (exit %d); see %s"
+                    % (judge["judge_id"], run_dir, code, log_path),
+                    EXIT_RUN_FAILED,
+                )
+            judge_files.append(out_path)
+            sys.stdout.write("  OK %s\n" % out_path)
+
+        panel_out = run_dir / PANEL_NAME
+        key = "%s__panel" % run_key
+        cmd = panel_command(judge_files, family_map_path, run["evaluated_family"], panel_out)
+        log_path = log_dir / ("%s.log" % key)
+        code, output = run_subprocess(cmd, log_path, repo_root, None)
+        ok = code == 0 and panel_out.is_file()
+        record = {
+            "run_key": key,
+            "run_dir": str(run_dir),
+            "class": run["class"],
+            "evaluated_family": run["evaluated_family"],
+            "judges": [j["judge_id"] for j in judges],
+            "out": str(panel_out),
+            "log": str(log_path),
+            "exit_code": code,
+            "sha256": sha256_file(panel_out) if panel_out.is_file() else None,
+            "status": "completed" if ok else "failed",
+            "failure": None if ok else (output[-800:] or "kyra.panel exit %d" % code),
+        }
+        payload["panel_runs"].append(record)
+        append_experiment_row(
+            experiments_csv,
+            {
+                "run": key,
+                "class": run["class"],
+                "config": "panel over %s; family_map=%s; evaluated_family=%s; "
+                "anchors_sha256=%s; run_dir=%s"
+                % (
+                    ",".join(j["judge_id"] for j in judges),
+                    family_map_path,
+                    run["evaluated_family"],
+                    anchors_sha or "n/a",
+                    run_dir,
+                ),
+                "seed": "n/a (panel)",
+                "command": shell_repr(cmd),
+                "raw": str(panel_out),
+                "log": str(log_path),
+                "marker": (
+                    "panel sha256 %s" % record["sha256"]
+                    if record["sha256"]
+                    else "n/a (no panel file)"
+                ),
+                "status": record["status"],
+                "failure": record["failure"]
+                or ("none (smoke: never evidence)" if run["class"] == "smoke" else "none"),
+            },
+        )
+        if not ok:
+            return stop(
+                "panel failed on %s (exit %d); see %s" % (run_dir, code, log_path),
+                EXIT_RUN_FAILED,
+            )
+        sys.stdout.write("  PANEL %s\n" % panel_out)
+
+    payload["status"] = "completed"
+    path = write_campaign_json(out_root, args.cohort, payload, suffix="_scoring")
+    sys.stdout.write(
+        "SCORING %s completed: %d judge run(s), %d panel(s); record: %s\n"
+        % (args.cohort, len(payload["judge_runs"]), len(payload["panel_runs"]), path)
+    )
+    return EXIT_OK
+
+
+def print_score_plan(plan: Dict[str, Any], freeze: Dict[str, Any], gpu: Dict[str, Any], stream=None):
+    w = (stream or sys.stdout).write
+    w("SCORING PLAN cohort=%s\n" % plan["cohort"])
+    w("items: %s (sha256=%s)\n" % (plan["items_path"], plan["items_sha256"]))
+    w("views: %s (control ids = risk_group CTRL from the items file)\n" % plan["views"])
+    w(
+        "anchors: %s (sha256=%s)\n"
+        % (plan["anchors_path"] or "none", plan["anchors_sha256"] or "n/a")
+    )
+    w(
+        "judges: %s\n"
+        % ", ".join("%s/%s (%s)" % (j["judge_id"], j["family"], j["provider"]) for j in plan["judges"])
+    )
+    for run in plan["runs"]:
+        w(
+            "RUN %s class=%s (%s) model=%s evaluated_family=%s\n"
+            % (run["run_dir"], run["class"], run["class_source"], run["model_id"],
+               run["evaluated_family"])
+        )
+        w("  MARKER sha256=%s\n" % run["marker_sha256"])
+        for path in run["judge_files"]:
+            w("  judge -> %s%s\n" % (path, "  [EXISTS - refused]" if path in run["existing_judge_files"] else ""))
+        w("  panel -> %s\n" % run["panel_file"])
+    if freeze["required"]:
+        w("freeze: %s\n" % ("OK sha256=%s" % freeze["sha256"] if freeze["ok"] else "FAIL %s" % freeze["error"]))
+    else:
+        w("freeze: %s\n" % freeze["error"])
+    if not gpu["required"]:
+        w("gpu: not required (no vllm judge)\n")
+    elif gpu["chosen"] is not None:
+        w("gpu: chose GPU %d (GPU %d never used)\n" % (gpu["chosen"], FORBIDDEN_GPU))
+    else:
+        w("gpu: FAIL (%s)\n" % (gpu["error"] or "no free GPU among 0-2"))
+
+
+def build_score_parser() -> argparse.ArgumentParser:
+    p = argparse.ArgumentParser(
+        prog="kyra.campaign score",
+        description="Score finished run directories: one judge model at a time, "
+        "then the panel; the item file is required so control ids are never lost.",
+    )
+    p.add_argument("--items", required=True, help="items JSONL (risk_group CTRL = controls)")
+    p.add_argument("--models", required=True, help="models.json (evaluated families)")
+    p.add_argument("--judges", required=True, help="judges.json")
+    p.add_argument("--cohort", required=True, help="cohort name for the scoring record")
+    p.add_argument("--runs", nargs="+", required=True, help="run directories or globs")
+    p.add_argument("--anchors", default=None, help="judge calibration anchors JSON")
+    p.add_argument("--dry-run", action="store_true", help="print the plan only")
+    p.add_argument(
+        "--class",
+        dest="run_class",
+        default=None,
+        choices=list(RUN_CLASSES),
+        help="override the class; default: inherited from each run's EXPERIMENTS row",
+    )
+    p.add_argument("--out-root", default=None, help="root for the scoring record and logs")
+    p.add_argument(
+        "--experiments-csv", default="research/EXPERIMENTS.csv", help="EXPERIMENTS.csv to append to"
+    )
+    p.add_argument("--prereg", default="PREREGISTERED_kyra_v2.yaml", help="frozen preregistration")
+    p.add_argument("--sha", default="PREREGISTERED_kyra_v2.yaml.sha256", help="freeze receipt")
+    return p
+
+
 def main(argv: Optional[List[str]] = None, gpu_probe=query_gpus) -> int:
+    argv = list(argv) if argv is not None else list(sys.argv[1:])
+    if argv and argv[0] == "score":
+        return score_main(argv[1:], gpu_probe=gpu_probe)
     args = build_parser().parse_args(argv)
     command = command_string(argv)
     out_root = Path(args.out_root) if args.out_root else Path(DEFAULT_OUT_ROOT)

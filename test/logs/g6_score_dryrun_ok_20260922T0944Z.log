@@ -1,0 +1,14 @@
+SCORING PLAN cohort=dryrun
+items: test/fixtures/items_smoke.jsonl (sha256=d4303170ee85a3eba46edae13c751af6fd1279fea54ec73a12113178418bcc49)
+views: prefix (control ids = risk_group CTRL from the items file)
+anchors: research/judge_anchors_v1.json (sha256=7f54fdbded6071d7f5e202d1b7820fe4a64b454dc695b6eb39def227c3373679)
+judges: JF1/judge_x (fake), JF2/judge_y (fake)
+RUN result/raw/mock/20260921T1031Z-4daff6 class=smoke (--class flag) model=mock-v0 evaluated_family=mock
+  MARKER sha256=bda70895aeee7ea1a910fb34e1c2c516c7850af334ad655a835012dd4fbe7c53
+  judge -> result/raw/mock/20260921T1031Z-4daff6/judge_JF1.jsonl
+  judge -> result/raw/mock/20260921T1031Z-4daff6/judge_JF2.jsonl
+  panel -> result/raw/mock/20260921T1031Z-4daff6/panel.jsonl
+freeze: skipped (no confirmatory run in this scoring batch)
+gpu: not required (no vllm judge)
+DRY RUN: nothing scored. campaign record: /tmp/claude-1011/-home-wjeong/407cdd4b-f055-4859-8e47-fbc41fca59f3/scratchpad/score_outroot/dryrun/campaign_dryrun_scoring.json
+score_dryrun_ok_exit=0

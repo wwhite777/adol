@@ -785,6 +785,223 @@ class TestCampaignSmokeRun(unittest.TestCase):
 
 
 # ==========================================================================
+# campaign score: judges + panel over finished run directories
+# ==========================================================================
+ANCHORS = REPO / "research" / "judge_anchors_v1.json"
+
+
+def fake_judge_outputs(run_dir, items_path, offset=0):
+    """One canned judge reply per prefix view, in the order kyra.judge asks.
+
+    The A list must have exactly `depth` turn objects and control views (items
+    whose risk_group is CTRL) must carry over_refusal/helpfulness, else the
+    panel drops the judge - so the double is built from the run's own
+    responses.jsonl and the item file.
+    """
+    from kyra.judge import read_conversations
+
+    control = {it.item_id for it in load_items(items_path) if it.risk_group == "CTRL"}
+    outputs = []
+    for conv in read_conversations(run_dir):
+        is_control = conv["item_id"] in control
+        for depth in range(1, len(conv["turns"]) + 1):
+            rec = {
+                "D": {"D1": 2, "D2": 2, "D3": 1 + offset, "D4": 1, "D5": 2, "D6": 2},
+                "A": [{"A1": 0, "A2": 1, "A3": 0, "A4": 0} for _ in range(depth)],
+                "critical_failure": False,
+                "cf_codes": [],
+                "rationale": "canned fake judge reply (depth %d)" % depth,
+            }
+            if is_control:
+                rec["over_refusal"] = False
+                rec["helpfulness"] = 2
+            outputs.append(json.dumps(rec, ensure_ascii=False))
+    return outputs
+
+
+class TestCampaignScoring(unittest.TestCase):
+    """End-to-end: generate a smoke run with mock models, then score it."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.tmp = Path(tempfile.mkdtemp(prefix="campaign_score_"))
+        cls.out_root = cls.tmp / "raw"
+        cls.csv = cls.tmp / "EXPERIMENTS.csv"
+        shutil.copy2(REAL_CSV, cls.csv)
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            code = campaign.main(
+                ["--items", str(SMOKE_ITEMS), "--models", str(FIX / "models_fake.json"),
+                 "--cohort", "scoreme", "--class", "smoke",
+                 "--out-root", str(cls.out_root), "--experiments-csv", str(cls.csv)],
+                gpu_probe=fake_gpu_probe(),
+            )
+        assert code == 0, buf.getvalue()
+        record = json.loads(
+            (cls.out_root / "scoreme" / "campaign_scoreme.json").read_text(encoding="utf-8")
+        )
+        cls.runs = [r["run_dir"] for r in record["runs"]]
+        cls.main_run = cls.runs[0]          # fake/tiny-a, condition base
+        cls.second_run = cls.runs[1]        # fake/tiny-a, repeat_1
+        cls.judges_doc = json.loads((FIX / "judges_fake.json").read_text(encoding="utf-8"))
+
+    @classmethod
+    def tearDownClass(cls):
+        shutil.rmtree(cls.tmp, True)
+
+    def judges_file(self, run_dir, keep=None, offset=0):
+        """judges.json with fake_outputs generated for this run directory."""
+        doc = json.loads(json.dumps(self.judges_doc))
+        judges = doc["judges"] if keep is None else [
+            j for j in doc["judges"] if j["judge_id"] in keep
+        ]
+        for i, judge in enumerate(judges):
+            out = self.tmp / ("fake_outputs_%s_%s.json" % (judge["judge_id"], Path(run_dir).name))
+            out.write_text(
+                json.dumps(fake_judge_outputs(run_dir, SMOKE_ITEMS, offset=i + offset)),
+                encoding="utf-8",
+            )
+            judge["fake_outputs"] = str(out)
+        path = self.tmp / ("judges_%s.json" % Path(run_dir).name)
+        path.write_text(json.dumps({"judges": judges}), encoding="utf-8")
+        return path
+
+    def score(self, run_dir, judges_path, cohort, extra=None):
+        argv = [
+            "score",
+            "--items", str(SMOKE_ITEMS),
+            "--models", str(FIX / "models_fake.json"),
+            "--judges", str(judges_path),
+            "--cohort", cohort,
+            "--runs", str(run_dir),
+            "--anchors", str(ANCHORS),
+            "--out-root", str(self.out_root),
+            "--experiments-csv", str(self.csv),
+        ] + list(extra or [])
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            code = campaign.main(argv, gpu_probe=fake_gpu_probe())
+        return code, buf.getvalue()
+
+    def read_jsonl(self, path):
+        return [
+            json.loads(line)
+            for line in Path(path).read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        ]
+
+    def test_1_dry_run_prints_the_plan(self):
+        code, out = self.score(
+            self.main_run, self.judges_file(self.main_run), "scoredry", extra=["--dry-run"]
+        )
+        self.assertEqual(code, 0, out)
+        self.assertIn("SCORING PLAN cohort=scoredry", out)
+        self.assertIn("views: prefix", out)
+        self.assertIn(sha256(ANCHORS), out)
+        self.assertIn("judge -> ", out)
+        self.assertIn("panel -> ", out)
+        self.assertIn("class=smoke", out)
+        self.assertIn("evaluated_family=fake_a", out)
+        self.assertFalse((Path(self.main_run) / "judge_JF1.jsonl").exists())
+
+    def test_2_two_fake_judges_and_panel_end_to_end(self):
+        with self.csv.open(encoding="utf-8", newline="") as fh:
+            before = len(list(csv.reader(fh)))
+        code, out = self.score(self.main_run, self.judges_file(self.main_run), "scored")
+        self.assertEqual(code, 0, out)
+
+        run_dir = Path(self.main_run)
+        judge_records = {}
+        for judge_id in ("JF1", "JF2"):
+            path = run_dir / ("judge_%s.jsonl" % judge_id)
+            self.assertTrue(path.is_file(), out)
+            rows = self.read_jsonl(path)
+            judge_records[judge_id] = rows
+            self.assertTrue(all(r["view"] == "prefix" for r in rows))
+            self.assertTrue(all(r["status"] == "ok" for r in rows), rows[:1])
+            controls = [r for r in rows if r["is_control"]]
+            self.assertTrue(controls, "the items file must mark CTRL items as controls")
+            for r in controls:
+                self.assertIn("over_refusal", r["record"])
+                self.assertIn("helpfulness", r["record"])
+            for r in rows:
+                if not r["is_control"]:
+                    self.assertNotIn("over_refusal", r["record"])
+
+        panel_rows = self.read_jsonl(run_dir / "panel.jsonl")
+        self.assertEqual(len(panel_rows), len(judge_records["JF1"]))
+        depths = {(r["item_id"], r["depth"]) for r in panel_rows}
+        self.assertEqual(len(depths), len(panel_rows), "one panel record per (item, depth)")
+        self.assertTrue(all(r["status"] == "ok" for r in panel_rows), panel_rows[:1])
+        for r in panel_rows:
+            self.assertEqual(sorted(r["judges_used"]), ["JF1", "JF2"])
+            self.assertEqual(r["evaluated_family"], "fake_a")
+            self.assertEqual(len(r["A"]), r["depth"])
+            if r["is_control"]:
+                self.assertIsInstance(r["over_refusal"], bool)
+                self.assertIsNotNone(r["helpfulness"])
+            else:
+                self.assertIsNone(r["over_refusal"])
+        multi = [r for r in panel_rows if r["item_id"] == "KYRA-SMK-004"]
+        self.assertEqual(sorted(r["depth"] for r in multi), [1, 2, 3])
+
+        record = json.loads(
+            (self.out_root / "scored" / "campaign_scored_scoring.json").read_text(encoding="utf-8")
+        )
+        self.assertEqual(record["status"], "completed")
+        self.assertEqual(len(record["judge_runs"]), 2)
+        self.assertEqual(len(record["panel_runs"]), 1)
+        self.assertEqual(record["plan"]["anchors_sha256"], sha256(ANCHORS))
+        self.assertEqual(record["plan"]["family_map"], {"JF1": "judge_x", "JF2": "judge_y"})
+        self.assertTrue(all(j["anchors_sha256"] == sha256(ANCHORS) for j in record["judge_runs"]))
+        self.assertEqual(record["freeze"]["required"], False)
+
+        with self.csv.open(encoding="utf-8", newline="") as fh:
+            rows = list(csv.reader(fh))
+        self.assertEqual(len(rows) - before, 3)  # two judges + one panel
+        for row in rows[-3:]:
+            fields = dict(zip(campaign.EXPERIMENTS_HEADER, row))
+            self.assertEqual(fields["class"], "smoke")
+            self.assertEqual(fields["status"], "completed")
+            self.assertIn("anchors_sha256=%s" % sha256(ANCHORS), fields["config"])
+            self.assertTrue(Path(fields["log"]).is_file())
+        self.assertIn("--views prefix", rows[-3][4])
+        self.assertIn("--items", rows[-3][4])
+        self.assertIn("kyra.panel", rows[-1][4])
+
+    def test_3_existing_judge_file_is_refused(self):
+        code, out = self.score(self.main_run, self.judges_file(self.main_run), "scoreagain")
+        self.assertEqual(code, campaign.EXIT_PREFLIGHT, out)
+
+    def test_4_single_judge_panel_is_insufficient(self):
+        code, out = self.score(
+            self.second_run, self.judges_file(self.second_run, keep={"JF1"}), "scoreone"
+        )
+        self.assertEqual(code, 0, out)
+        panel_rows = self.read_jsonl(Path(self.second_run) / "panel.jsonl")
+        self.assertTrue(panel_rows)
+        for r in panel_rows:
+            self.assertEqual(r["status"], "INSUFFICIENT")
+            self.assertIsNone(r["D"])
+            self.assertIn("minimum 2", r["reason"])
+
+    def test_5_missing_marker_is_refused(self):
+        bare = self.tmp / "no_marker_run"
+        bare.mkdir()
+        shutil.copy2(Path(self.main_run) / "responses.jsonl", bare / "responses.jsonl")
+        shutil.copy2(Path(self.main_run) / "manifest.jsonl", bare / "manifest.jsonl")
+        code, out = self.score(bare, self.judges_file(self.main_run), "scorebare")
+        self.assertEqual(code, campaign.EXIT_PREFLIGHT, out)
+        self.assertFalse((bare / "judge_JF1.jsonl").exists())
+
+    def test_6_unknown_run_glob_is_refused(self):
+        code, out = self.score(
+            self.tmp / "nothing_here_*", self.judges_file(self.main_run), "scoreglob"
+        )
+        self.assertEqual(code, campaign.EXIT_BAD_INPUT, out)
+
+
+# ==========================================================================
 # runner: the condition tag / temperature / seed options the campaign uses
 # ==========================================================================
 class TestRunnerConditionOptions(unittest.TestCase):

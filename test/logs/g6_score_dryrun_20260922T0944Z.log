@@ -1,0 +1,2 @@
+ERROR: cannot tell which model produced result/raw/mock/20260921T1031Z-4daff6 (manifest model_id(s): ['mock-v0']; models.json: ['fake/tiny-a', 'fake/tiny-b']) - refusing to guess the evaluated family for leave-one-family-out
+score_dryrun_exit=2

@@ -1,0 +1,21 @@
+{
+  "_comment": "Two fake judges for the scoring smoke test. provider 'fake' replays canned outputs (kyra.judge --fake-outputs), so no weights and no GPU are needed. Families differ from each other and from the fake models' families, so the leave-one-family-out rule keeps both.",
+  "judges": [
+    {
+      "judge_id": "JF1",
+      "model_id": "fake/judge-1",
+      "family": "judge_x",
+      "provider": "fake",
+      "gpu_memory_utilization": 0.5,
+      "notes": "test double; fake_outputs is filled in by the test at run time"
+    },
+    {
+      "judge_id": "JF2",
+      "model_id": "fake/judge-2",
+      "family": "judge_y",
+      "provider": "fake",
+      "gpu_memory_utilization": 0.5,
+      "notes": "test double; fake_outputs is filled in by the test at run time"
+    }
+  ]
+}
