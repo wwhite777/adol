@@ -67,6 +67,8 @@ five_statuses:
   scientific_promise: null
 jobs:
   - "2026-09-22 ~12:45Z: campaign run phaseA_T1, model Qwen/Qwen2.5-14B-Instruct (cached, offline), class confirmatory (freeze verified), GPU 1 pinned; 4 runs (main T=0 + 3 repeats T=0.7); log test/logs/campaign_phaseA_T1_qwen14b_*.log; marker result/raw/phaseA_T1_qwen14b.DONE on exit"
+  - "2026-09-22 ~12:50Z: campaign run phaseA_T1, model LGAI-EXAONE/EXAONE-4.0-32B-AWQ (models/hf, offline), class confirmatory, --gpu 2; log test/logs/campaign_phaseA_T1_exaone32b_*.log; marker result/raw/phaseA_T1_exaone32b.DONE"
+  - "2026-09-22 ~12:52Z: download judge J2 Intel/Mistral-Small-3.2-24B-Instruct-2506-int4-AutoRound into models/hf; marker models/DOWNLOAD_mistral_small_int4.DONE"
 s3_progress:
   provider: "DONE — src/kyra VLLMProvider + provenance fix (manifest records effective params + chat-template hash); smoke run result/raw/smoke_vllm/20260922T0817Z-3c5915 (sha manifest e201f60f…, responses 62bb9d8a…)"
   disk: "26 GB free on the shared volume after the install; one ≤20 GB checkpoint at a time; cached Qwen2.5-14B-Instruct + Llama-3.1-8B-Instruct (fusion1's, read-only) count as two of the needed models/judges"

@@ -64,24 +64,24 @@
       "notes": "judge J1; LOFO not needed (no Meta model evaluated)"
     },
     {
-      "model_id": "mistralai/Mistral-Small-3.2-24B-Instruct-2506 (4-bit)",
+      "model_id": "Intel/Mistral-Small-3.2-24B-Instruct-2506-int4-AutoRound",
       "family": "mistral",
       "provider": "vllm",
       "gpu_memory_utilization": 0.5,
       "path": "models/hf (to download)",
       "disk_gb": 14,
-      "status": "not_downloaded",
-      "notes": "judge J2; needs a vLLM-loadable AWQ/GPTQ; verify Korean competence in the pilot reliability check"
+      "status": "downloading (2026-09-22)",
+      "notes": "judge J2; Intel AutoRound int4 of Mistral-Small-3.2-24B (organizational provenance chosen over a personal AWQ); vLLM-loadable; Korean competence checked in the N3 reliability run"
     },
     {
-      "model_id": "microsoft/phi-4",
+      "model_id": "cortecs/phi-4-FP8-Dynamic",
       "family": "microsoft",
       "provider": "vllm",
       "gpu_memory_utilization": 0.5,
       "path": "models/hf (to download)",
-      "disk_gb": 29,
-      "status": "not_downloaded",
-      "notes": "judge J3 candidate; 14B bf16 ~29 GB is above the disk floor — needs a 4-bit variant or a different family (e.g., a 4-bit Qwen3 judge is excluded when scoring Qwen; LOFO would drop it)"
+      "disk_gb": 15,
+      "status": "planned — download after EXAONE-AWQ weights are deleted post-run (disk floor)",
+      "notes": "judge J3; FP8 dynamic quant of microsoft/phi-4 (no reputable 4-bit build exists; only a 69-download personal GPTQ); L40S (Ada, cc 8.9) runs FP8 in vLLM; family microsoft disjoint from all evaluated families"
     }
   ],
   "smoke_only": [
