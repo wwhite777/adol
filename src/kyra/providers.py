@@ -1,12 +1,15 @@
 """Model providers for pipeline v0.
 
-Only a deterministic offline MockProvider is implemented. Real API providers are
-added later by subclassing Provider; nothing in this module touches the network.
+MockProvider is a deterministic offline double. VLLMProvider runs local
+open-weight models through the vllm offline engine (no server, no network at
+generate time: the weights must already be on disk). Importing this module never
+imports vllm and never loads a model - the engine is built on first generate().
 """
 
 from __future__ import annotations
 
 import hashlib
+import os
 from typing import Dict, List
 
 
@@ -27,6 +30,16 @@ class Provider:
 
     def generate(self, messages: List[Dict[str, str]]) -> str:
         raise NotImplementedError("Provider.generate must be implemented")
+
+    def effective_params(self) -> Dict[str, object]:
+        """The generation parameters this provider actually uses.
+
+        Keys are manifest field names (max_tokens / temperature / top_p). An
+        empty dict means "this provider declares nothing", and the runner then
+        falls back to the condition's configured values. A provider must never
+        report a parameter it does not in fact apply.
+        """
+        return {}
 
 
 # Canned replies. Index is chosen by a hash of the last user utterance, so a
@@ -58,6 +71,19 @@ class MockProvider(Provider):
     provider_name = "mock"
     model_id = "mock-v0"
     api_version = "0"
+    # The mock samples nothing: replies are canned, so temperature/top_p are
+    # nominal and there is no token cap at all (hence max_tokens=None, not a
+    # number we do not enforce).
+    temperature = 0.0
+    top_p = 1.0
+    max_tokens = None
+
+    def effective_params(self) -> Dict[str, object]:
+        return {
+            "max_tokens": self.max_tokens,
+            "temperature": self.temperature,
+            "top_p": self.top_p,
+        }
 
     def generate(self, messages: List[Dict[str, str]]) -> str:
         if not messages:
@@ -88,12 +114,211 @@ class FailingProvider(Provider):
         raise self._exc
 
 
-PROVIDERS = {"mock": MockProvider}
+def _vllm_version() -> str:
+    """vllm version string, or a marker if vllm is not importable.
+
+    Used for the manifest's api_version field. Kept separate from engine
+    construction: a missing vllm here degrades provenance, it never degrades a
+    generate() call into a fallback (generate raises instead).
+    """
+    try:
+        import vllm  # local import: importing this module must stay cheap
+    except Exception as exc:  # noqa: BLE001 - version lookup is best-effort
+        return "vllm-unavailable(%s)" % type(exc).__name__
+    return str(getattr(vllm, "__version__", "unknown"))
 
 
-def get_provider(name: str) -> Provider:
+def _derive_model_id(model_path: str) -> str:
+    """HF repo id verbatim, or the basename of a local directory."""
+    p = str(model_path).rstrip(os.sep)
+    if os.path.isdir(p):
+        return os.path.basename(os.path.abspath(p))
+    return p
+
+
+class VLLMProvider(Provider):
+    """Local open-weight model via the vllm offline engine (vllm.LLM).
+
+    Deterministic by construction: temperature 0.0, top_p 1.0, a fixed seed and a
+    fixed max_new_tokens, all passed to SamplingParams. The prompt is built with
+    the model's own chat template through its tokenizer; a model with no chat
+    template is an error, never a hand-rolled prompt format.
+
+    The engine is constructed lazily on the first generate() call. Any failure to
+    construct it (or to generate) is raised as ProviderError carrying the
+    original error text - there is no fallback to a mock.
+    """
+
+    provider_name = "vllm"
+    # top_p is not a constructor option in v0: greedy decoding is the frozen
+    # setting. It lives here so _sampling_params and effective_params cannot
+    # drift apart (the manifest must report the value actually sent).
+    top_p = 1.0
+
+    def __init__(
+        self,
+        model_path: str,
+        max_new_tokens: int = 350,
+        temperature: float = 0.0,
+        seed: int = 20260922,
+        gpu_memory_utilization: float = 0.85,
+    ) -> None:
+        if not model_path or not str(model_path).strip():
+            raise ValueError("VLLMProvider requires a non-empty model_path")
+        self.model_path = str(model_path)
+        self.max_new_tokens = int(max_new_tokens)
+        self.temperature = float(temperature)
+        self.seed = int(seed)
+        self.gpu_memory_utilization = float(gpu_memory_utilization)
+        self.model_id = _derive_model_id(self.model_path)
+        # Provenance of the prompt format, filled when the tokenizer is loaded.
+        self.chat_template_source = None
+        self.chat_template_sha256 = None
+        self._api_version = None
+        self._llm = None
+        self._tokenizer = None
+
+    @property
+    def api_version(self) -> str:  # type: ignore[override]
+        if self._api_version is None:
+            self._api_version = _vllm_version()
+        return self._api_version
+
+    # -- engine ---------------------------------------------------------------
+
+    def _build_engine(self):
+        """Construct vllm.LLM. Errors propagate as ProviderError + original text."""
+        try:
+            from vllm import LLM
+        except Exception as exc:
+            raise ProviderError(
+                "vllm import failed (%s: %s)" % (type(exc).__name__, exc)
+            ) from exc
+        try:
+            return LLM(
+                model=self.model_path,
+                seed=self.seed,
+                gpu_memory_utilization=self.gpu_memory_utilization,
+                trust_remote_code=True,
+            )
+        except Exception as exc:
+            raise ProviderError(
+                "vllm engine construction failed for %r (%s: %s)"
+                % (self.model_path, type(exc).__name__, exc)
+            ) from exc
+
+    def _load_tokenizer(self, llm):
+        """Prefer the engine's own tokenizer; else transformers.AutoTokenizer."""
+        getter = getattr(llm, "get_tokenizer", None)
+        if callable(getter):
+            try:
+                return getter()
+            except Exception as exc:
+                raise ProviderError(
+                    "vllm get_tokenizer failed for %r (%s: %s)"
+                    % (self.model_path, type(exc).__name__, exc)
+                ) from exc
+        try:
+            from transformers import AutoTokenizer
+
+            return AutoTokenizer.from_pretrained(self.model_path, trust_remote_code=True)
+        except Exception as exc:
+            raise ProviderError(
+                "tokenizer load failed for %r (%s: %s)"
+                % (self.model_path, type(exc).__name__, exc)
+            ) from exc
+
+    def _ensure_engine(self):
+        if self._llm is None:
+            llm = self._build_engine()
+            tokenizer = self._load_tokenizer(llm)
+            template = getattr(tokenizer, "chat_template", None)
+            if not template:
+                raise ProviderError(
+                    "model %r exposes no chat template; refusing to invent a prompt "
+                    "format" % self.model_path
+                )
+            self.chat_template_source = "tokenizer.chat_template"
+            self.chat_template_sha256 = hashlib.sha256(
+                str(template).encode("utf-8")
+            ).hexdigest()
+            self._llm = llm
+            self._tokenizer = tokenizer
+        return self._llm, self._tokenizer
+
+    # -- generation -----------------------------------------------------------
+
+    def _sampling_params(self):
+        try:
+            from vllm import SamplingParams
+        except Exception as exc:
+            raise ProviderError(
+                "vllm import failed (%s: %s)" % (type(exc).__name__, exc)
+            ) from exc
+        return SamplingParams(
+            temperature=self.temperature,
+            top_p=self.top_p,
+            max_tokens=self.max_new_tokens,
+            seed=self.seed,
+        )
+
+    def effective_params(self) -> Dict[str, object]:
+        """Exactly what goes into SamplingParams, for the manifest to copy."""
+        return {
+            "max_tokens": self.max_new_tokens,
+            "temperature": self.temperature,
+            "top_p": self.top_p,
+        }
+
+    def build_prompt(self, messages: List[Dict[str, str]]) -> str:
+        """Apply the model's chat template, with a generation prompt appended."""
+        _, tokenizer = self._ensure_engine()
+        try:
+            return tokenizer.apply_chat_template(
+                messages, tokenize=False, add_generation_prompt=True
+            )
+        except Exception as exc:
+            raise ProviderError(
+                "chat template application failed (%s: %s)" % (type(exc).__name__, exc)
+            ) from exc
+
+    def generate(self, messages: List[Dict[str, str]]) -> str:
+        if not messages:
+            raise ProviderError("VLLMProvider.generate called with no messages")
+        prompt = self.build_prompt(messages)
+        llm, _ = self._ensure_engine()
+        params = self._sampling_params()
+        try:
+            outputs = llm.generate([prompt], params)
+        except Exception as exc:
+            raise ProviderError(
+                "vllm generate failed (%s: %s)" % (type(exc).__name__, exc)
+            ) from exc
+        try:
+            text = outputs[0].outputs[0].text
+        except Exception as exc:
+            raise ProviderError(
+                "unexpected vllm output shape (%s: %s)" % (type(exc).__name__, exc)
+            ) from exc
+        if not isinstance(text, str) or not text.strip():
+            raise ProviderError(
+                "vllm returned an empty completion for %r" % self.model_id
+            )
+        return text.strip()
+
+
+PROVIDERS = {"mock": MockProvider, "vllm": VLLMProvider}
+
+
+def get_provider(name: str, **opts) -> Provider:
+    """Instantiate a provider by name; **opts are the provider's ctor kwargs."""
     if name not in PROVIDERS:
         raise ValueError(
             "unknown provider %r (available: %s)" % (name, ", ".join(sorted(PROVIDERS)))
         )
-    return PROVIDERS[name]()
+    try:
+        return PROVIDERS[name](**opts)
+    except TypeError as exc:
+        raise ValueError(
+            "bad options for provider %r: %s" % (name, exc)
+        ) from exc

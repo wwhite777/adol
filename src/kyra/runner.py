@@ -39,6 +39,45 @@ CONDITIONS: Dict[str, Dict[str, object]] = {
 }
 
 
+# Manifest fields a provider is allowed to overwrite with what it actually used.
+PROVIDER_PARAM_KEYS = ("max_tokens", "temperature", "top_p")
+# Optional provenance fields, copied only when the provider exposes them.
+PROVIDER_PROVENANCE_KEYS = ("chat_template_source", "chat_template_sha256")
+
+
+def provider_effective_params(provider) -> Dict[str, object]:
+    """Generation parameters the provider reports as actually applied.
+
+    The condition table is a request; the provider is the authority on what was
+    sent to the model. Only known manifest keys are accepted, so a provider
+    cannot inject arbitrary fields into the manifest. A provider without
+    effective_params() (or one returning a non-dict) contributes nothing and the
+    condition's values stand.
+    """
+    fn = getattr(provider, "effective_params", None)
+    if not callable(fn):
+        return {}
+    params = fn()
+    if not isinstance(params, dict):
+        return {}
+    return {k: v for k, v in params.items() if k in PROVIDER_PARAM_KEYS}
+
+
+def provider_provenance(provider) -> Dict[str, object]:
+    """Prompt-format provenance (chat template source + sha256), when exposed.
+
+    These are only known after the provider has loaded its tokenizer, so this is
+    read at the end of an item rather than at record creation. Absent values are
+    omitted entirely: a missing key is honest, a null is noise.
+    """
+    out: Dict[str, object] = {}
+    for key in PROVIDER_PROVENANCE_KEYS:
+        value = getattr(provider, key, None)
+        if value is not None:
+            out[key] = value
+    return out
+
+
 def utc_now_iso() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + "Z"
 
@@ -58,6 +97,9 @@ def run_item(provider, item: Item, condition: str, run_id: str) -> Tuple[Dict, L
     Returns (manifest_record, response_records). On provider failure the manifest
     record carries status='error' and the error text; turns already completed are
     still returned. Errors are never converted into content.
+
+    Sampling fields record what the provider actually used (its
+    effective_params()), not what the condition table asked for.
     """
     cfg = CONDITIONS[condition]
     provider_name = getattr(provider, "provider_name", "unknown")
@@ -78,6 +120,7 @@ def run_item(provider, item: Item, condition: str, run_id: str) -> Tuple[Dict, L
         "error_text": None,
         "n_turns": item.n_turns,
     }
+    record.update(provider_effective_params(provider))
     messages: List[Dict[str, str]] = []
     responses: List[Dict] = []
     for turn_index, user_text in enumerate(item.turns):
@@ -88,11 +131,13 @@ def run_item(provider, item: Item, condition: str, run_id: str) -> Tuple[Dict, L
             record["status"] = "error"
             record["error_text"] = "%s: %s" % (type(exc).__name__, exc)
             record["finished_utc"] = utc_now_iso()
+            record.update(provider_provenance(provider))
             return record, responses
         if not isinstance(model_text, str) or not model_text.strip():
             record["status"] = "error"
             record["error_text"] = "provider returned empty response at turn %d" % turn_index
             record["finished_utc"] = utc_now_iso()
+            record.update(provider_provenance(provider))
             return record, responses
         messages.append({"role": "assistant", "content": model_text})
         responses.append(
@@ -105,6 +150,7 @@ def run_item(provider, item: Item, condition: str, run_id: str) -> Tuple[Dict, L
             }
         )
     record["finished_utc"] = utc_now_iso()
+    record.update(provider_provenance(provider))
     return record, responses
 
 
@@ -145,7 +191,28 @@ def build_parser() -> argparse.ArgumentParser:
         default=["base"],
         help="conditions to run (v0: base)",
     )
+    p.add_argument(
+        "--model-path",
+        default=None,
+        help="local weights dir or HF repo id (required by --provider vllm)",
+    )
+    p.add_argument(
+        "--max-new-tokens",
+        type=int,
+        default=None,
+        help="generation cap passed to the provider (vllm default: 350)",
+    )
     return p
+
+
+def provider_opts_from_args(args) -> Dict[str, object]:
+    """Only pass options the user actually gave, so provider defaults stand."""
+    opts: Dict[str, object] = {}
+    if getattr(args, "model_path", None) is not None:
+        opts["model_path"] = args.model_path
+    if getattr(args, "max_new_tokens", None) is not None:
+        opts["max_new_tokens"] = args.max_new_tokens
+    return opts
 
 
 def main(argv=None) -> int:
@@ -159,7 +226,7 @@ def main(argv=None) -> int:
             )
             return EXIT_BAD_INPUT
     try:
-        provider = get_provider(args.provider)
+        provider = get_provider(args.provider, **provider_opts_from_args(args))
     except ValueError as exc:
         sys.stderr.write("ERROR: %s\n" % exc)
         return EXIT_BAD_INPUT

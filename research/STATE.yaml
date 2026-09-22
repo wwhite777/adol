@@ -65,8 +65,11 @@ five_statuses:
   statistical_validity: null
   claim_scope: "frozen v2 (N1 escalation + length control; N2 localization replication; N3 judge reliability; CRRI descriptive)"
   scientific_promise: null
-jobs:
-  - "coder (Opus 5) card: vLLM provider + small-model smoke test on GPU 0/1/2 — running 2026-09-22"
-next_action: "Verify the coder's provider receipt; then S3 cards: judge prompt v0 + judge_wrapper self-tests on fixtures, comparator/analysis scripts (GLMM, paired GLMM, AC2) with synthetic fixtures, G6 judge script that verifies the freeze hash; conductor authors the item bank (120 items + 36 localization twins + 24 benign twins + 24 lexical contrasts) as JSONL with a PI review checkpoint on the first risk group; select and download the 5 models sequentially within quota"
+jobs: []   # provider proven 2026-09-22: vLLM 0.19.0 in the adol venv (uv, hardlinked), EXAONE-4.0-1.2B smoke on GPU 1, 78 tests, MARKER; conductor-verified
+s3_progress:
+  provider: "DONE — src/kyra VLLMProvider + provenance fix (manifest records effective params + chat-template hash); smoke run result/raw/smoke_vllm/20260922T0817Z-3c5915 (sha manifest e201f60f…, responses 62bb9d8a…)"
+  disk: "26 GB free on the shared volume after the install; one ≤20 GB checkpoint at a time; cached Qwen2.5-14B-Instruct + Llama-3.1-8B-Instruct (fusion1's, read-only) count as two of the needed models/judges"
+  items: "R4 group v1 drafted (PI review sample); R1/R2/R3/R5/R6 pending"
+next_action: "FRESH SESSION (rules 15.4): (1) PI reviews research/items/R4_emotional_overdependence_v1.yaml; (2) conductor authors R3, R6, then R1, R2, R5 (pattern-level wording) + twins/controls, then a coder card converts YAML → items JSONL for the runner; (3) coder cards: judge prompt v0 + judge_wrapper self-tests on fixtures; analysis scripts (GLMM, paired GLMM, AC2) with synthetic fixtures; G6 judge verifying the freeze hash; (4) choose the 5 evaluated + 3 judge checkpoints within disk (4-bit for 30B-class; sequential download/delete)"
 blockers:
   - "none PI-side in phase A (PI review checkpoints only)"

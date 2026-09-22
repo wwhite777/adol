@@ -1,3 +1,4 @@
 .upload_pass
 research/sweeps/fulltext/
 __pycache__/
+models/

@@ -1,30 +1,33 @@
 # handoff.md — adol (rolling; overwritten each session)
 
-## 2026-09-22 — session 4: PI approved decisions 1–6; r003 = FAIL on prose, all corrected; S2 drafts + freeze gate ready; waiting for r004 authorization (Claude Code conductor Fable 5.1, Builder)
+## 2026-09-22 — session 5: option C adopted; r004 waived; S2 FROZEN; S3 provider proven; first item group drafted (Claude Code conductor Fable 5.1, Builder)
 
-State in one paragraph: Stage S1, status awaiting_pi (gate = auditor PASS or PI waiver on the corrected record). The PI approved the six r002 decisions (DECISION_LOG 2026-09-22) and authorized r003. r003 verified the r002 corrections (ROK numbers, CogManip, precision items) but returned FAIL on residual prose: two contradictory synthesis sentences (memo Q1(c), evidence secrecy line), a controls guideline weaker than the pitch (12/48 twins), an over-promised inference from added baselines, a stale K-Bench wording, CogManip's unsupported "adults", stale status language, and four propagation gaps — "PI decisions still required: none". Everything is corrected: NOVELTY_MATRIX v4 (v3 preserved), REJECT_MEMO, evidence record, CRRI_SPEC (defined comparators incl. refusal-only/recency/dialogue-level intensity/turn count; grouping rule; judge gate with risk coverage and CI bound ≥ 0.80; transition counts primary), safe_controls_guideline §3 (twin per escalation script, ±20% tokens, equal requests, control CRRI scoring, two reference labels), PREREGISTERED_kyra_v1.yaml (definitions.controls, comparator_inference, grouping_rule, judge_gate). S2 drafts (contract, prereg, CLAIM_LEDGER) pass my pre-check of the freeze conditions; the freeze gate (src/gates, coder Opus 5) is conductor-verified (18 tests; my planted violations refused with exits 3/4; one-byte change → verify exit 6). NOT frozen: by decision 4 the freeze follows a passing record. r004 is packaged (audit/r004/) but NOT launched — a further self-initiated successor round is not allowed (rules 12.4). No jobs running.
+State in one paragraph: Phase A is a DOMESTIC-FIRST paper (JKIICE / 한국융합학회) with Q1-grade methods, reduced design, $0, no human raters, no OSF/ETRI/IRB/API keys (PI option C, DECISION_LOG). S1 closed by PI waiver of the cross-family audit (domestic venue; v4 corrections auditor-unverified). S2 completed: CONTRIBUTION_CONTRACT v2 + PREREGISTERED_kyra_v2.yaml frozen by the gate — sha256 87abaae4c16fb0efe3dad27ff464fcd86b6b48ff67a33f1414336ccc7ddd34a4 (tag freeze/kyra-v2). S3 in progress: the open-weight provider is proven end to end (vLLM 0.19.0 via uv into the adol venv, EXAONE-4.0-1.2B smoke on GPU 1, 78 tests, MARKER, provenance fields in the manifest). Items: R4 group drafted as the PI review sample. Disk is the binding constraint (26 GB free on the shared volume). No jobs running.
 
 Done today (paths):
-- DECISION_LOG.md: decisions 1–6 approved with operationalization; STATE.yaml pi_decisions + audit block (r003 verdict_fail, r004 prepared_not_opened).
-- audit/r003/ (tag audit/kyra-r003; out/AUDIT_REPORT.md, out/VERDICT.md = FAIL, log, DONE). audit/r004/ package + AUDIT_REQUEST.md (not launched).
-- CONTRIBUTION_CONTRACT.md v1, PREREGISTERED_kyra_v1.yaml (unfrozen), CLAIM_LEDGER.md (13 claim rows + 3 registered secondaries).
-- src/gates/freeze.py + verify_freeze.py, test/gates/ (18 tests, 9 fixtures) — coder receipt re-verified (test/logs/conductor_verify_gates_*.log). Venv gained pyyaml.
-- Corrections per r003 (see ISSUES.csv rows F-r003-1..6, F-r003-P). Preserved copies: NOVELTY_MATRIX_v3_2026-09-22.md, REJECT_MEMO_v2b_2026-09-22.md.
-- CLAUDE.md refreshed (v3.2, venv, frozen-protocol pointers, traps); REHYDRATE.md (PDFs, venv, regenerable dirs); memory.md lessons.
+- DECISION_LOG.md: decisions 1–6 approved; option C + r004 waiver + reduced design; freeze receipt line. RESOURCE_CONTRACT.md amended; research/PAPER_PLAN.md option-C plan; STATE.yaml.
+- audit/r003/ (FAIL on prose → corrected in NOVELTY_MATRIX v4, memo, evidence record, CRRI_SPEC, controls guideline); audit/r004/ package prepared then WAIVED.
+- CONTRIBUTION_CONTRACT.md v2 (v1 full design preserved as CONTRIBUTION_CONTRACT_v1_fulldesign_2026-09-22.md), PREREGISTERED_kyra_v2.yaml + .sha256, CLAIM_LEDGER.md v2.
+- src/gates/ (freeze + verify, 18 tests; coder, conductor-verified with planted violations). src/kyra/ provider work (coder ×2; conductor-verified): VLLMProvider, --model-path/--max-new-tokens, effective_params provenance, manifest optional chat_template fields; test/ 78 tests; result/raw/smoke_vllm/…; REHYDRATE.md lines for the model, the vllm stack and the smoke run.
+- research/items/R4_emotional_overdependence_v1.yaml (6 single + 6 multi; 4 lexical contrasts; 4 long-horizon scripts with benign twins; literal/localized versions from English sources; failing/passing patterns).
+- deliverables/scope_decision_response_2026-09-22_v1.txt (cost, scope, T1 answers), stage_2_report_v1.md, stage_2_response_v1.txt. Hub page + shared-server-ops disk note (#6 pending).
 
-Exact next steps:
-1. [PI] Authorize r004 (Codex verifies the v4 corrections; package ready) or waive the verification. On PASS/EDITORIAL the conductor: marks S1 completed; runs `PYTHONPATH=src ~/envs/jeongwoncheol_adol/bin/python -m gates.freeze --prereg PREREGISTERED_kyra_v1.yaml --contract CONTRIBUTION_CONTRACT.md` (receipt written by the gate); logs the hash in DECISION_LOG; sets STATE protocol_freeze; S2 completed; writes stage_2 report/response.
-2. [PI] Register the frozen protocol on OSF (target 2026-10-31) — the local freeze is not a registration.
-3. [PI-side] ETRI 합의서 + IRB drafts (deliverables/); API keys (D2) — gate the pilot pipeline and S3 work.
-4. S3 (after keys): coder cards for the provider adapter, judge prompt v0 + wrapper self-tests, comparator implementations (recency, dialogue-level intensity, CRB count), G6 judge script that verifies the freeze hash first; Arm B state machine.
-5. G1 venue verification at official pages before any citation (pending since 09-21).
+Exact next steps (start a FRESH session from this file — rules 15.4; effort high is enough for building, max for contracts):
+1. [PI] Read research/items/R4_emotional_overdependence_v1.yaml (12 items, ~15 min): wording policy OK? persona/age bands OK? Anything too explicit or too mild? Reply in one line; the other five groups follow the same style.
+2. Conductor: author R3 (정체성 혼동·의인화), R6 (컴패니언 특화), then R1 (그루밍), R2 (경계침해·조종), R5 (자해·위기) at pattern level; then a coder card converting the YAML groups into the runner's items JSONL (schema src/kyra/schema.py) with a validation gate (counts per stratum, twin/control links).
+3. Coder cards (one at a time, same test tree): judge prompt v0 + judge_wrapper fixtures/self-tests; analysis scripts (logistic GLMM w/ cluster bootstrap, paired GLMM + TOST, Gwet's AC2) with synthetic fixtures whose answers are known; G6 judge that calls gates.verify_freeze first.
+4. Models within disk: evaluated = Qwen2.5-14B-Instruct (cached, fusion1's — read-only), EXAONE (7.8B or 4-bit 32B), HyperCLOVA X SEED (gated — PI must accept the HF license or pick Kanana instead), Gemma-3-12B/27B-4bit, one more; judges = Llama-3.1-8B-Instruct (cached) + two disjoint families (Mistral-Small-24B-4bit, Phi-4). One ≤20 GB checkpoint at a time; delete after its runs; REHYDRATE line each.
+5. [PI, separate session, optional] home-cleanup pass: home 174 GB vs 150 GB quota; shared volume 98 % full. Protected: ~/.cache/huggingface (fusion1 pilot Sep 26). Candidates are PI-gated (see wiki/methods/shared-server-ops.md).
+6. Venue: obtain the JKIICE / 한국융합학회 manuscript template before S8.
 
-Open blockers: r004 authorization or waiver; API keys.
+Open blockers: none PI-side except the R4 review nod; disk headroom for larger checkpoints.
 
 Disclosures:
-- r003 FAIL was on my documents' prose and propagation, not on facts the auditor re-checked (ROK, CogManip, precision items verified). Two of my "corrections" left contradictory sentences elsewhere in the same files — a corrections list does not supersede the prose (lesson in memory.md).
-- The freeze has NOT been run; no PREREGISTERED_kyra_v1.sha256 exists. The coder's informational run on the real files produced content hash 72671d66… on the PRE-edit YAML; the YAML changed since (definitions/comparators), so the eventual freeze hash will differ.
-- Audit r003 launched correctly (own command, scope line in the prompt); nothing under audit/ edited after launch.
-- All 21 full-text PDFs remain on disk (git-ignored, regenerable).
+- r004 waived (venue), so NOVELTY_MATRIX v4 / evidence record corrections were never verified by the auditor — every record says so.
+- The coder edited src/kyra/manifest.py (3 additive lines) outside its card scope to admit the two chat-template fields; accepted (needed, backward compatible). MockProvider now records max_tokens=None (it caps nothing) — honest, kept.
+- The uv install grew ~/.cache/uv by 10 GB (new wheels), not the venv; free space 38 → 26 GB. The 20 GB floor was never breached.
+- HyperCLOVA X SEED is a gated HF repo; EXAONE-4.0-1.2B was used for the smoke instead.
+- Smoke responses are not evidence (class smoke); EXPERIMENTS.csv row to be added when the real cohorts start.
+- Standing rule §7 (co-author → SCI Q1) is overridden by the PI's current instruction; logged in DECISION_LOG.
 
-Instruction conflicts: none identified. (Rules 12.4 vs "proceed": I read "proceed" as continue to the gate, not as blanket authorization for further self-initiated audit rounds — hence this stop-and-ask.)
+Instruction conflicts: none unresolved (the §7 venue rule vs the supervisor's domestic request is resolved by the PI's instruction, recorded).

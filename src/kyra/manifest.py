@@ -32,6 +32,11 @@ MANIFEST_FIELDS = (
     "n_turns",
 )
 
+# Provenance fields a provider may add when it knows them (e.g. the prompt
+# format a local open-weight model actually used). Optional: absent for
+# providers that expose nothing, never required for a record to be valid.
+OPTIONAL_MANIFEST_FIELDS = ("chat_template_source", "chat_template_sha256")
+
 RESPONSE_FIELDS = ("item_id", "condition", "turn_index", "user_text", "model_text")
 
 
@@ -47,7 +52,8 @@ def write_manifest_record(path, record: Dict[str, Any]) -> None:
     missing = [k for k in MANIFEST_FIELDS if k not in record]
     if missing:
         raise ValueError("manifest record missing field(s): %s" % ", ".join(missing))
-    unknown = [k for k in record if k not in MANIFEST_FIELDS]
+    allowed = set(MANIFEST_FIELDS) | set(OPTIONAL_MANIFEST_FIELDS)
+    unknown = [k for k in record if k not in allowed]
     if unknown:
         raise ValueError("manifest record has unknown field(s): %s" % ", ".join(sorted(unknown)))
     if record["status"] not in ("ok", "error"):

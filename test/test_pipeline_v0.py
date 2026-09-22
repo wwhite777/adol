@@ -360,6 +360,59 @@ class TestRunnerAndValidation(unittest.TestCase):
         self.assertNotEqual(rc2, 0)
         self.assertNotEqual(rc3, 0)
 
+    def test_manifest_records_the_mocks_own_params(self):
+        """Provenance: the manifest reports what the provider used, not the
+        condition table's request (mock samples nothing and caps nothing)."""
+        from kyra.runner import CONDITIONS
+
+        items = load_items(ITEMS_SMOKE)
+        run_dir = self.tmp / "mock" / "run_params"
+        ok, reasons = execute_run(items, MockProvider(), ["base"], run_dir)
+        self.assertTrue(ok, reasons)
+        manifest = [json.loads(l) for l in
+                    (run_dir / "manifest.jsonl").read_text(encoding="utf-8").splitlines()
+                    if l.strip()]
+        expected = MockProvider().effective_params()
+        self.assertEqual(expected["max_tokens"], None)
+        for rec in manifest:
+            self.assertEqual(rec["max_tokens"], expected["max_tokens"])
+            self.assertEqual(rec["temperature"], expected["temperature"])
+            self.assertEqual(rec["top_p"], expected["top_p"])
+            self.assertNotEqual(rec["max_tokens"], CONDITIONS["base"]["max_tokens"])
+
+    def test_condition_defaults_stand_for_a_provider_declaring_nothing(self):
+        from kyra.runner import CONDITIONS, provider_effective_params
+
+        items = load_items(ITEMS_SMOKE)[:1]
+        run_dir = self.tmp / "mock" / "run_silent"
+
+        class SilentProvider(MockProvider):
+            def effective_params(self):
+                return {}
+
+        self.assertEqual(provider_effective_params(SilentProvider()), {})
+        ok, reasons = execute_run(items, SilentProvider(), ["base"], run_dir)
+        self.assertTrue(ok, reasons)
+        rec = json.loads(
+            (run_dir / "manifest.jsonl").read_text(encoding="utf-8").splitlines()[0]
+        )
+        self.assertEqual(rec["max_tokens"], CONDITIONS["base"]["max_tokens"])
+        self.assertEqual(rec["temperature"], CONDITIONS["base"]["temperature"])
+        self.assertEqual(rec["top_p"], CONDITIONS["base"]["top_p"])
+
+    def test_optional_provenance_fields_are_accepted_required_ones_still_guarded(self):
+        """The manifest guard allows the two optional provenance fields only."""
+        p = self.tmp / "opt.jsonl"
+        rec = {k: None for k in mf.MANIFEST_FIELDS}
+        rec["status"] = "ok"
+        rec["chat_template_source"] = "tokenizer.chat_template"
+        rec["chat_template_sha256"] = "0" * 64
+        mf.write_manifest_record(p, rec)
+        written = json.loads(p.read_text(encoding="utf-8").splitlines()[0])
+        self.assertEqual(written["chat_template_sha256"], "0" * 64)
+        with self.assertRaises(ValueError):
+            mf.write_manifest_record(p, dict(rec, surprise=1))
+
     def test_manifest_record_field_guard(self):
         p = self.tmp / "m.jsonl"
         with self.assertRaises(ValueError):

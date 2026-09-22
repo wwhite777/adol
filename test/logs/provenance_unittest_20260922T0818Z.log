@@ -1,0 +1,88 @@
+test_crri_from_judge_record (test_pipeline_v0.TestCRRI) ... ok
+test_empty_raises (test_pipeline_v0.TestCRRI) ... ok
+test_known_value (test_pipeline_v0.TestCRRI) ... ok
+test_non_numeric_raises (test_pipeline_v0.TestCRRI) ... ok
+test_out_of_range_raises (test_pipeline_v0.TestCRRI) ... ok
+test_single_turn_equals_value (test_pipeline_v0.TestCRRI) ... ok
+test_turn_score (test_pipeline_v0.TestCRRI) ... ok
+test_empty_string_raises (test_pipeline_v0.TestJudgeWrapper) ... ok
+test_error_is_never_a_silent_zero (test_pipeline_v0.TestJudgeWrapper)
+Every bad input raises; nothing returns an all-zero JudgeRecord. ... ok
+test_known_critical (test_pipeline_v0.TestJudgeWrapper) ... ok
+test_known_fail (test_pipeline_v0.TestJudgeWrapper) ... ok
+test_known_safe (test_pipeline_v0.TestJudgeWrapper) ... ok
+test_malformed_json_raises (test_pipeline_v0.TestJudgeWrapper) ... ok
+test_out_of_range_and_missing_fields_raise (test_pipeline_v0.TestJudgeWrapper) ... ok
+test_deterministic (test_pipeline_v0.TestMockProvider) ... ok
+test_different_utterances_may_differ_but_are_stable (test_pipeline_v0.TestMockProvider) ... ok
+test_unknown_provider_raises (test_pipeline_v0.TestMockProvider) ... ok
+test_condition_defaults_stand_for_a_provider_declaring_nothing (test_pipeline_v0.TestRunnerAndValidation) ... ok
+test_item_id_missing_from_outputs_is_reported (test_pipeline_v0.TestRunnerAndValidation) ... ok
+test_manifest_record_field_guard (test_pipeline_v0.TestRunnerAndValidation) ... ok
+test_manifest_records_the_mocks_own_params (test_pipeline_v0.TestRunnerAndValidation)
+Provenance: the manifest reports what the provider used, not the ... ok
+test_marker_not_written_when_validation_fails (test_pipeline_v0.TestRunnerAndValidation) ... ok
+test_mock_run_produces_marker (test_pipeline_v0.TestRunnerAndValidation) ... ok
+test_optional_provenance_fields_are_accepted_required_ones_still_guarded (test_pipeline_v0.TestRunnerAndValidation)
+The manifest guard allows the two optional provenance fields only. ... ok
+test_planted_violation_dropped_turn_inside_multi_item (test_pipeline_v0.TestRunnerAndValidation) ... ok
+test_planted_violation_missing_response_record (test_pipeline_v0.TestRunnerAndValidation)
+A run directory with one response record removed must FAIL validation. ... ok
+test_provider_error_is_labelled_and_blocks_marker (test_pipeline_v0.TestRunnerAndValidation)
+API error / timeout: status=error, no MARKER, runner-level failure. ... ok
+test_runner_cli_bad_provider_and_condition_exit_nonzero (test_pipeline_v0.TestRunnerAndValidation) ... ok
+test_runner_cli_smoke_run_exits_zero (test_pipeline_v0.TestRunnerAndValidation) ... ok
+test_runner_cli_zero_items_exits_nonzero (test_pipeline_v0.TestRunnerAndValidation) ... ok
+test_empty_file_loads_zero_items (test_pipeline_v0.TestSchema) ... ok
+test_invalid_enum_and_turn_count_raise (test_pipeline_v0.TestSchema) ... ok
+test_load_smoke_items (test_pipeline_v0.TestSchema) ... ok
+test_missing_field_raises (test_pipeline_v0.TestSchema) ... ok
+test_failing_provider_untouched (test_providers_vllm.TestGetProviderWiring) ... ok
+test_get_provider_builds_a_vllm_provider_with_options (test_providers_vllm.TestGetProviderWiring) ... ok
+test_mock_still_works_with_no_options (test_providers_vllm.TestGetProviderWiring) ... ok
+test_unknown_option_is_a_value_error (test_providers_vllm.TestGetProviderWiring) ... ok
+test_unknown_provider_still_raises_value_error (test_providers_vllm.TestGetProviderWiring) ... ok
+test_vllm_is_registered (test_providers_vllm.TestGetProviderWiring) ... ok
+test_vllm_without_model_path_is_a_value_error (test_providers_vllm.TestGetProviderWiring) ... ok
+test_manifest_carries_the_chat_template_sha256 (test_providers_vllm.TestManifestProvenance) ... ok
+test_manifest_follows_a_non_default_generation_cap (test_providers_vllm.TestManifestProvenance) ... ok
+test_manifest_max_tokens_comes_from_the_provider_not_the_condition (test_providers_vllm.TestManifestProvenance) ... ok
+test_manifest_records_the_vllm_model_id_and_api_version (test_providers_vllm.TestManifestProvenance) ... ok
+test_provider_cannot_inject_arbitrary_manifest_fields (test_providers_vllm.TestManifestProvenance) ... ok
+test_template_provenance_is_absent_for_a_provider_without_it (test_providers_vllm.TestManifestProvenance) ... ok
+test_model_path_and_max_new_tokens_flags_parse (test_providers_vllm.TestRunnerWiring) ... ok
+test_no_new_flags_means_no_options_so_defaults_stand (test_providers_vllm.TestRunnerWiring) ... ok
+test_base_provider_declares_nothing (test_providers_vllm.TestVLLMEffectiveParams) ... ok
+test_effective_params_equal_the_sampling_params_actually_sent (test_providers_vllm.TestVLLMEffectiveParams) ... ok
+test_effective_params_follow_an_override (test_providers_vllm.TestVLLMEffectiveParams) ... ok
+test_effective_params_report_the_constructor_settings (test_providers_vllm.TestVLLMEffectiveParams) ... ok
+test_chat_template_provenance_is_recorded (test_providers_vllm.TestVLLMProviderChatTemplate) ... ok
+test_falls_back_to_transformers_tokenizer_when_engine_has_none (test_providers_vllm.TestVLLMProviderChatTemplate) ... ok
+test_missing_chat_template_is_an_error_not_a_hand_rolled_prompt (test_providers_vllm.TestVLLMProviderChatTemplate) ... ok
+test_prompt_is_built_with_the_models_chat_template (test_providers_vllm.TestVLLMProviderChatTemplate) ... ok
+test_engine_gets_seed_and_memory_utilisation (test_providers_vllm.TestVLLMProviderDeterminism) ... ok
+test_overrides_reach_the_sampling_params (test_providers_vllm.TestVLLMProviderDeterminism) ... ok
+test_returns_the_stripped_completion_text (test_providers_vllm.TestVLLMProviderDeterminism) ... ok
+test_sampling_params_carry_the_deterministic_settings (test_providers_vllm.TestVLLMProviderDeterminism) ... ok
+test_empty_completion_is_an_error (test_providers_vllm.TestVLLMProviderErrors) ... ok
+test_engine_construction_failure_propagates_original_text (test_providers_vllm.TestVLLMProviderErrors) ... ok
+test_generate_failure_propagates_original_text (test_providers_vllm.TestVLLMProviderErrors) ... ok
+test_missing_vllm_raises_rather_than_falling_back (test_providers_vllm.TestVLLMProviderErrors) ... ok
+test_no_messages_is_an_error (test_providers_vllm.TestVLLMProviderErrors) ... ok
+test_unexpected_output_shape_is_an_error (test_providers_vllm.TestVLLMProviderErrors) ... ok
+test_api_version_is_the_vllm_version_string (test_providers_vllm.TestVLLMProviderFields) ... ok
+test_api_version_marks_missing_vllm_without_raising (test_providers_vllm.TestVLLMProviderFields) ... ok
+test_defaults_match_the_preregistered_generation_settings (test_providers_vllm.TestVLLMProviderFields) ... ok
+test_empty_model_path_is_rejected (test_providers_vllm.TestVLLMProviderFields) ... ok
+test_is_a_provider_subclass (test_providers_vllm.TestVLLMProviderFields) ... ok
+test_model_id_is_basename_for_a_local_dir (test_providers_vllm.TestVLLMProviderFields) ... ok
+test_model_id_is_repo_id_when_not_a_local_dir (test_providers_vllm.TestVLLMProviderFields) ... ok
+test_provider_name_is_vllm (test_providers_vllm.TestVLLMProviderFields) ... ok
+test_constructing_the_provider_builds_no_engine (test_providers_vllm.TestVLLMProviderLaziness) ... ok
+test_engine_is_built_once_and_reused (test_providers_vllm.TestVLLMProviderLaziness) ... ok
+test_importing_the_module_does_not_import_vllm (test_providers_vllm.TestVLLMProviderLaziness) ... ok
+
+----------------------------------------------------------------------
+Ran 78 tests in 0.030s
+
+OK

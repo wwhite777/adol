@@ -1,0 +1,20 @@
+adol / KYRA-Bench — session 5 (2026-09-22): option C executed — S2 frozen, provider proven, first items drafted; one review nod needed
+
+WHAT HAPPENED
+- Your decisions: option C (domestic-first, reduced design, no OSF/ETRI/IRB/API keys, no human raters in phase A) is recorded in DECISION_LOG with the operationalization; r004 is waived (domestic venue → no cross-family audit, your 2026-09-11 rule) — so the S1 v4 corrections stay auditor-unverified and every record says so.
+- S2 FROZEN: CONTRIBUTION_CONTRACT v2 + PREREGISTERED_kyra_v2.yaml, receipt written by the fail-closed gate: sha256 87abaae4c16fb0efe3dad27ff464fcd86b6b48ff67a33f1414336ccc7ddd34a4 (tag freeze/kyra-v2). Claims: N1 escalation with the length control (OR(6 vs 1) ≥ 1.6; benign twins), N2 localization replication (|Δ| ≥ 0.03), N3 judge-panel reliability (AC2 ≥ 0.70); H4 Pareto, CRRI and transition tables descriptive; criterion validity deferred to an optional phase B. 120 items, 36 localization pairs, 5 open-weight models, 3 open-weight judges, $0. The v1 full-design contract/prereg are preserved unfrozen for phase B.
+- S3 started and proven: vLLM 0.19.0 installed into the project venv via uv (hardlinked wheels; the venv itself costs ~0), EXAONE-4.0-1.2B smoke run on GPU 1 with a validated MARKER, 78 tests passing, manifests now record the provider's real parameters and chat-template hash (a provenance defect the coder found and fixed). I re-ran every check and hash myself before accepting.
+- First item group drafted for your review: research/items/R4_emotional_overdependence_v1.yaml — 6 single + 6 multi items, 4 lexical benign contrasts, 4 long-horizon 6-turn scripts with item-paired benign twins, literal and localized Korean versions from English sources, failing/passing response patterns for judge anchors. Wording policy: pattern level only.
+
+WHAT I NEED FROM YOU (about 15 minutes)
+1. Read the R4 file and answer in one line: wording level OK? personas/age bands OK? anything too explicit or too mild? The other five groups (R3, R6, R1, R2, R5) will follow the same style.
+2. Optional: HyperCLOVA X SEED models on Hugging Face are license-gated — either accept the license under your HF account or I substitute Kakao's Kanana. No other PI-side item exists in phase A.
+
+DISK — the one real constraint
+The shared volume behind /, /home and /tmp is 98% full (26 GB free after the install); your home is 174 GB against the 150 GB quota. fusion1's handoff protects the 43 GB Hugging Face cache (Qwen2.5-14B, Llama-3.1-8B) for its Sep 26 pilot — adol will reuse those two read-only, which removes two downloads. Everything else runs one ≤20 GB checkpoint at a time, deleted after its runs. A home-cleanup pass is PI-gated and tabled (wiki/methods/shared-server-ops.md, cycle #6 pending) — only if you want it.
+
+NEXT SESSION (start fresh from handoff.md — this one is long and expensive to continue)
+Author the remaining five item groups → convert to the runner's JSONL with a validation gate → judge prompt + wrapper self-tests → analysis scripts with synthetic fixtures → G6 judge → pick the 8 checkpoints within disk → runs. Rough calendar: 3–4 weeks of sessions to a Korean manuscript draft; your time stays at review checkpoints.
+
+DISCLOSURES
+r004 waived, corrections unverified by an auditor; the coder made a 3-line out-of-scope manifest change (accepted, needed); MockProvider records max_tokens=None (honest); the uv install grew the shared uv cache by 10 GB (38 → 26 GB free overall); smoke responses are never evidence; standing rule §7 (co-author → SCI Q1) overridden by your instruction, logged. Everything is committed locally (adol + hub). No jobs running.
