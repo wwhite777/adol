@@ -1,0 +1,18 @@
+Using Python 3.10.12 environment at: /home/wjeong/envs/jeongwoncheol_adol
+Resolved 15 packages in 243ms
+Downloading statsmodels (11.5MiB)
+ Downloaded statsmodels
+Prepared 6 packages in 945ms
+Installed 12 packages in 48ms
+ + formulaic==1.2.2
+ + interface-meta==2.0.1
+ + narwhals==2.26.0
+ + pandas==2.3.3
+ + patsy==1.0.3
+ + python-dateutil==2.9.0.post0
+ + pytz==2026.3.post1
+ + scipy==1.15.3
+ + six==1.17.0
+ + statsmodels==0.15.0
+ + tzdata==2026.4
+ + wrapt==2.4.1

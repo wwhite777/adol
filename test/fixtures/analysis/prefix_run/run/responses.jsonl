@@ -1,0 +1,12 @@
+{"condition": "base", "item_id": "R1-M01-LOC", "model_text": "resp", "turn_index": 0, "user_text": "t1"}
+{"condition": "base", "item_id": "R1-M01-LOC", "model_text": "resp", "turn_index": 1, "user_text": "t2"}
+{"condition": "base", "item_id": "R1-M01-LOC", "model_text": "resp", "turn_index": 2, "user_text": "t3"}
+{"condition": "base", "item_id": "R1-M01-LOC", "model_text": "resp", "turn_index": 3, "user_text": "t4"}
+{"condition": "base", "item_id": "R1-M01-LOC", "model_text": "resp", "turn_index": 4, "user_text": "t5"}
+{"condition": "base", "item_id": "R1-M01-LOC", "model_text": "resp", "turn_index": 5, "user_text": "t6"}
+{"condition": "base", "item_id": "R1-M01-BEN", "model_text": "resp", "turn_index": 0, "user_text": "t1"}
+{"condition": "base", "item_id": "R1-M01-BEN", "model_text": "resp", "turn_index": 1, "user_text": "t2"}
+{"condition": "base", "item_id": "R1-M01-BEN", "model_text": "resp", "turn_index": 2, "user_text": "t3"}
+{"condition": "base", "item_id": "R1-M01-BEN", "model_text": "resp", "turn_index": 3, "user_text": "t4"}
+{"condition": "base", "item_id": "R1-M01-BEN", "model_text": "resp", "turn_index": 4, "user_text": "t5"}
+{"condition": "base", "item_id": "R1-M01-BEN", "model_text": "resp", "turn_index": 5, "user_text": "t6"}

@@ -1,0 +1,48 @@
+test_empty_input_exits_nonzero_with_a_message (test_analysis.TestCliContract) ... ok
+test_fixture_and_run_inputs_are_mutually_exclusive (test_analysis.TestCliContract) ... ok
+test_g6_facing_field_names (test_analysis.TestCliContract)
+The names the G6 coder aligned to must all be present. ... ok
+test_outputs_are_valid_json_naming_the_frozen_protocol (test_analysis.TestCliContract) ... ok
+test_regeneration_reproduces_every_csv (test_analysis.TestFixturesAreDeterministic) ... ok
+test_base_item_condition_and_crri (test_analysis.TestLoaderDerivations) ... ok
+test_failure_event_recovery_and_censoring (test_analysis.TestLoaderDerivations) ... ok
+test_inconsistent_flag_is_an_error (test_analysis.TestLoaderDerivations) ... ok
+test_panel_v0_record_yields_no_series (test_analysis.TestLoaderDerivations)
+A record without `depth` is panel v0: no invented per-turn series. ... ok
+test_prefix_view_over_refusal_and_helpfulness (test_analysis.TestLoaderDerivations) ... ok
+test_prefix_view_panel_records (test_analysis.TestLoaderDerivations)
+One panel record per (item_id, condition, depth) -> series columns. ... ok
+test_benign_twin_and_interaction_reported (test_analysis.TestN1) ... ok
+test_bootstrap_p_helper (test_analysis.TestN1) ... ok
+test_gee_sensitivity_present (test_analysis.TestN1) ... ok
+test_holm_adjustment (test_analysis.TestN1) ... ok
+test_interaction_p_is_the_bootstrap_p_holm_adjusted (test_analysis.TestN1) ... ok
+test_null_fixture_ci_includes_one (test_analysis.TestN1) ... ok
+test_recovers_designed_odds_ratio (test_analysis.TestN1) ... ok
+test_vb_p_is_anticonservative_and_is_not_the_headline (test_analysis.TestN1)
+The VB Wald p is kept only as a secondary reading. ... ok
+test_ci_method_is_named (test_analysis.TestN2) ... ok
+test_effect_fixture_does_not_pass_tost (test_analysis.TestN2) ... ok
+test_null_fixture_passes_tost (test_analysis.TestN2) ... ok
+test_recovers_paired_difference (test_analysis.TestN2) ... ok
+test_hand_case_flag_agreement (test_analysis.TestN3) ... ok
+test_hand_case_matches_the_explicit_formula (test_analysis.TestN3) ... ok
+test_identity_weights_reduce_to_ac1 (test_analysis.TestN3) ... ok
+test_leave_one_family_out_is_reported (test_analysis.TestN3) ... ok
+test_simulated_panel_lands_in_its_band (test_analysis.TestN3) ... ok
+test_cis_bracket_the_point_estimates (test_analysis.TestPareto) ... ok
+test_default_method_is_the_panel_flag (test_analysis.TestPareto) ... ok
+test_missing_flag_without_the_opt_in_is_an_error (test_analysis.TestPareto)
+No silent fallback: an old panel without the flag must fail loudly. ... ok
+test_proxy_fallback_is_opt_in_and_named (test_analysis.TestPareto) ... ok
+test_rates_match_hand_counts (test_analysis.TestPareto) ... ok
+test_first_failure_distribution (test_analysis.TestTransitions) ... ok
+test_hazard (test_analysis.TestTransitions) ... ok
+test_per_turn_counts (test_analysis.TestTransitions) ... ok
+test_recovery_counts_with_denominators (test_analysis.TestTransitions) ... ok
+
+----------------------------------------------------------------------
+Ran 37 tests in 383.641s
+
+OK
+CHECK1_EXIT=0

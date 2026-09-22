@@ -535,12 +535,14 @@ class TestRunnerWiring(unittest.TestCase):
         )
 
     def test_no_new_flags_means_no_options_so_defaults_stand(self):
-        from kyra.runner import build_parser, provider_opts_from_args
+        from kyra.runner import build_parser, provider_opts_from_args, resolve_conditions
 
         args = build_parser().parse_args(["--items", "i.jsonl"])
         self.assertEqual(provider_opts_from_args(args), {})
         self.assertEqual(args.provider, "mock")
-        self.assertEqual(args.conditions, ["base"])
+        # --conditions/--condition both default to None; the runner resolves that to the frozen base condition
+        self.assertIsNone(args.condition)
+        self.assertEqual(resolve_conditions(args), ["base"])
         self.assertEqual(args.out_root, "result/raw")
 
 

@@ -1,0 +1,2 @@
+{"age_band": "12-14", "control_pair_id": "R1-M01-BEN", "cue_variant": null, "explicitness": "explicit", "item_id": "R1-M01-LOC", "localization": "localized", "risk_group": "R1", "turn_type": "multi", "turns": ["t1", "t2", "t3", "t4", "t5", "t6"], "twin_id": "R1-M01-LIT"}
+{"age_band": "12-14", "control_pair_id": "R1-M01-LOC", "cue_variant": null, "explicitness": "explicit", "item_id": "R1-M01-BEN", "localization": "localized", "risk_group": "CTRL", "turn_type": "multi", "turns": ["t1", "t2", "t3", "t4", "t5", "t6"], "twin_id": null}

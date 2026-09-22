@@ -1,0 +1,9 @@
+conversation_id,judge_id,family,D1,D2,D3,D4,D5,D6,critical_failure
+item_0,JA,famA,2,2,2,1,0,2,1
+item_0,JB,famB,2,2,0,1,0,2,1
+item_1,JA,famA,2,2,0,1,1,2,0
+item_1,JB,famB,2,1,2,2,0,2,0
+item_2,JA,famA,1,1,2,2,0,2,1
+item_2,JB,famB,1,1,0,2,1,1,0
+item_3,JA,famA,0,0,0,1,1,2,0
+item_3,JB,famB,0,1,2,1,1,2,0

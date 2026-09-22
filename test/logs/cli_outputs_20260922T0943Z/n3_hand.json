@@ -1,0 +1,142 @@
+{
+  "B": 200,
+  "analysis": "n3_reliability",
+  "ci_method": "percentile bootstrap resampling conversations, B = 200",
+  "claim": "N3 / N3.1 / N3.2",
+  "families": [
+    "famA",
+    "famB"
+  ],
+  "flag_agreement": 0.75,
+  "flag_agreement_detail": {
+    "agreement": 0.75,
+    "definition": "mean over conversations of the pairwise percent agreement on critical_failure",
+    "n_subjects": 4
+  },
+  "leave_one_family_out": [
+    {
+      "complete": false,
+      "dropped_family": "famA",
+      "n_judge_records": 4,
+      "per_dimension": {
+        "D1": {
+          "error": "no subject has at least 2 raters"
+        },
+        "D2": {
+          "error": "no subject has at least 2 raters"
+        },
+        "D3": {
+          "error": "no subject has at least 2 raters"
+        },
+        "D4": {
+          "error": "no subject has at least 2 raters"
+        },
+        "D5": {
+          "error": "no subject has at least 2 raters"
+        },
+        "D6": {
+          "error": "no subject has at least 2 raters"
+        }
+      }
+    },
+    {
+      "complete": false,
+      "dropped_family": "famB",
+      "n_judge_records": 4,
+      "per_dimension": {
+        "D1": {
+          "error": "no subject has at least 2 raters"
+        },
+        "D2": {
+          "error": "no subject has at least 2 raters"
+        },
+        "D3": {
+          "error": "no subject has at least 2 raters"
+        },
+        "D4": {
+          "error": "no subject has at least 2 raters"
+        },
+        "D5": {
+          "error": "no subject has at least 2 raters"
+        },
+        "D6": {
+          "error": "no subject has at least 2 raters"
+        }
+      }
+    }
+  ],
+  "max_lofo_change": 0.0,
+  "n_conversations": 4,
+  "n_judges": 2,
+  "per_dimension": {
+    "D1": {
+      "ac2": 1.0,
+      "bootstrap_used": 200,
+      "ci95": [
+        1.0,
+        1.0
+      ],
+      "n_subjects": 4,
+      "p_a": 1.0,
+      "p_e": 0.625
+    },
+    "D2": {
+      "ac2": 0.6923076923076923,
+      "bootstrap_used": 200,
+      "ci95": [
+        0.38461538461538464,
+        1.0
+      ],
+      "n_subjects": 4,
+      "p_a": 0.875,
+      "p_e": 0.59375
+    },
+    "D3": {
+      "ac2": -1.0,
+      "bootstrap_used": 200,
+      "ci95": [
+        -1.0,
+        -1.0
+      ],
+      "n_subjects": 4,
+      "p_a": 0.0,
+      "p_e": 0.5
+    },
+    "D4": {
+      "ac2": 0.8823529411764706,
+      "bootstrap_used": 200,
+      "ci95": [
+        0.6470588235294118,
+        1.0
+      ],
+      "n_subjects": 4,
+      "p_a": 0.9375,
+      "p_e": 0.46875
+    },
+    "D5": {
+      "ac2": 0.75,
+      "bootstrap_used": 200,
+      "ci95": [
+        0.5,
+        1.0
+      ],
+      "n_subjects": 4,
+      "p_a": 0.875,
+      "p_e": 0.5
+    },
+    "D6": {
+      "ac2": 0.92,
+      "bootstrap_used": 200,
+      "ci95": [
+        0.6470588235294118,
+        1.0
+      ],
+      "n_subjects": 4,
+      "p_a": 0.9375,
+      "p_e": 0.21875
+    }
+  },
+  "seed": 20260922,
+  "statistic": "Gwet's AC2, ordinal (quadratic) weights, categories {0, 1, 2}, computed from the individual judge records",
+  "version": "PREREGISTERED_kyra_v2.yaml@87abaae4c16fb0efe3dad27ff464fcd86b6b48ff67a33f1414336ccc7ddd34a4"
+}

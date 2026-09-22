@@ -1,0 +1,97 @@
+### n1_effect
+$ PYTHONPATH=src /home/wjeong/envs/jeongwoncheol_adol/bin/python -m kyra.analysis.n1_escalation --fixture test/fixtures/analysis/n1_effect.csv --bootstrap 200 --out test/logs/cli_outputs_20260922T0943Z/n1_effect.json
+out=test/logs/cli_outputs_20260922T0943Z/n1_effect.json
+exit=0
+
+### n1_null
+$ PYTHONPATH=src /home/wjeong/envs/jeongwoncheol_adol/bin/python -m kyra.analysis.n1_escalation --fixture test/fixtures/analysis/n1_null.csv --bootstrap 200 --out test/logs/cli_outputs_20260922T0943Z/n1_null.json
+out=test/logs/cli_outputs_20260922T0943Z/n1_null.json
+exit=0
+
+### n1_interaction
+$ PYTHONPATH=src /home/wjeong/envs/jeongwoncheol_adol/bin/python -m kyra.analysis.n1_escalation --fixture test/fixtures/analysis/n1_interaction.csv --bootstrap 200 --out test/logs/cli_outputs_20260922T0943Z/n1_interaction.json
+out=test/logs/cli_outputs_20260922T0943Z/n1_interaction.json
+exit=0
+
+### n2_effect
+$ PYTHONPATH=src /home/wjeong/envs/jeongwoncheol_adol/bin/python -m kyra.analysis.n2_localization --fixture test/fixtures/analysis/n2_effect.csv --bootstrap 200 --out test/logs/cli_outputs_20260922T0943Z/n2_effect.json
+out=test/logs/cli_outputs_20260922T0943Z/n2_effect.json
+exit=0
+
+### n2_null
+$ PYTHONPATH=src /home/wjeong/envs/jeongwoncheol_adol/bin/python -m kyra.analysis.n2_localization --fixture test/fixtures/analysis/n2_null.csv --bootstrap 200 --out test/logs/cli_outputs_20260922T0943Z/n2_null.json
+out=test/logs/cli_outputs_20260922T0943Z/n2_null.json
+exit=0
+
+### n3_sim
+$ PYTHONPATH=src /home/wjeong/envs/jeongwoncheol_adol/bin/python -m kyra.analysis.n3_reliability --fixture test/fixtures/analysis/n3_sim.csv --bootstrap 200 --out test/logs/cli_outputs_20260922T0943Z/n3_sim.json
+out=test/logs/cli_outputs_20260922T0943Z/n3_sim.json
+exit=0
+
+### n3_hand
+$ PYTHONPATH=src /home/wjeong/envs/jeongwoncheol_adol/bin/python -m kyra.analysis.n3_reliability --fixture test/fixtures/analysis/n3_hand.csv --bootstrap 200 --out test/logs/cli_outputs_20260922T0943Z/n3_hand.json
+out=test/logs/cli_outputs_20260922T0943Z/n3_hand.json
+exit=0
+
+### transitions
+$ PYTHONPATH=src /home/wjeong/envs/jeongwoncheol_adol/bin/python -m kyra.analysis.transitions --fixture test/fixtures/analysis/transitions_small.csv --out test/logs/cli_outputs_20260922T0943Z/transitions.json
+out=test/logs/cli_outputs_20260922T0943Z/transitions.json
+exit=0
+
+### pareto
+$ PYTHONPATH=src /home/wjeong/envs/jeongwoncheol_adol/bin/python -m kyra.analysis.pareto --fixture test/fixtures/analysis/pareto_small.csv --bootstrap 200 --out test/logs/cli_outputs_20260922T0943Z/pareto.json
+out=test/logs/cli_outputs_20260922T0943Z/pareto.json
+exit=0
+
+### pareto_proxy
+$ PYTHONPATH=src /home/wjeong/envs/jeongwoncheol_adol/bin/python -m kyra.analysis.pareto --fixture test/fixtures/analysis/pareto_small.csv --bootstrap 200 --proxy-d3d4 --out test/logs/cli_outputs_20260922T0943Z/pareto_proxy_d3d4.json
+out=test/logs/cli_outputs_20260922T0943Z/pareto_proxy_d3d4.json
+exit=0
+
+### prefix_run_transitions
+$ PYTHONPATH=src /home/wjeong/envs/jeongwoncheol_adol/bin/python -m kyra.analysis.transitions --items test/fixtures/analysis/prefix_run/items.jsonl --runs test/fixtures/analysis/prefix_run/run --panels test/fixtures/analysis/prefix_run/run/panel.jsonl --out test/logs/cli_outputs_20260922T0943Z/transitions_prefix_run.json
+out=test/logs/cli_outputs_20260922T0943Z/transitions_prefix_run.json
+exit=0
+
+=== empty-input checks (every one must exit non-zero) ===
+### empty_n1
+$ PYTHONPATH=src /home/wjeong/envs/jeongwoncheol_adol/bin/python -m kyra.analysis.n1_escalation --fixture test/fixtures/analysis/empty_tidy.csv --out test/logs/cli_outputs_20260922T0943Z/empty_n1.json
+ERROR: fixture CSV has zero conversations: test/fixtures/analysis/empty_tidy.csv
+exit=5
+
+### empty_n2
+$ PYTHONPATH=src /home/wjeong/envs/jeongwoncheol_adol/bin/python -m kyra.analysis.n2_localization --fixture test/fixtures/analysis/empty_tidy.csv --out test/logs/cli_outputs_20260922T0943Z/empty_n2.json
+ERROR: fixture CSV has zero conversations: test/fixtures/analysis/empty_tidy.csv
+exit=5
+
+### empty_n3
+$ PYTHONPATH=src /home/wjeong/envs/jeongwoncheol_adol/bin/python -m kyra.analysis.n3_reliability --fixture test/fixtures/analysis/empty_judges.csv --out test/logs/cli_outputs_20260922T0943Z/empty_n3.json
+ERROR: fixture CSV has zero judge records: test/fixtures/analysis/empty_judges.csv
+exit=5
+
+### empty_tr
+$ PYTHONPATH=src /home/wjeong/envs/jeongwoncheol_adol/bin/python -m kyra.analysis.transitions --fixture test/fixtures/analysis/empty_tidy.csv --out test/logs/cli_outputs_20260922T0943Z/empty_transitions.json
+ERROR: fixture CSV has zero conversations: test/fixtures/analysis/empty_tidy.csv
+exit=5
+
+### empty_pa
+$ PYTHONPATH=src /home/wjeong/envs/jeongwoncheol_adol/bin/python -m kyra.analysis.pareto --fixture test/fixtures/analysis/empty_tidy.csv --out test/logs/cli_outputs_20260922T0943Z/empty_pareto.json
+ERROR: fixture CSV has zero conversations: test/fixtures/analysis/empty_tidy.csv
+exit=5
+
+=== files written ===
+total 64
+drwxrwxr-x 2 wjeong wjeong 4096 Sep 22 09:56 .
+drwxrwxr-x 3 wjeong wjeong 4096 Sep 22 09:50 ..
+-rw-rw-r-- 1 wjeong wjeong 3854 Sep 22 09:51 n1_effect.json
+-rw-rw-r-- 1 wjeong wjeong 3878 Sep 22 09:55 n1_interaction.json
+-rw-rw-r-- 1 wjeong wjeong 3743 Sep 22 09:53 n1_null.json
+-rw-rw-r-- 1 wjeong wjeong 2181 Sep 22 09:56 n2_effect.json
+-rw-rw-r-- 1 wjeong wjeong 2134 Sep 22 09:56 n2_null.json
+-rw-rw-r-- 1 wjeong wjeong 3154 Sep 22 09:56 n3_hand.json
+-rw-rw-r-- 1 wjeong wjeong 4695 Sep 22 09:56 n3_sim.json
+-rw-rw-r-- 1 wjeong wjeong 1561 Sep 22 09:56 pareto.json
+-rw-rw-r-- 1 wjeong wjeong 1742 Sep 22 09:56 pareto_proxy_d3d4.json
+-rw-rw-r-- 1 wjeong wjeong 5966 Sep 22 09:56 transitions.json
+-rw-rw-r-- 1 wjeong wjeong 5218 Sep 22 09:56 transitions_prefix_run.json
+CHECK2_4_EXIT=0

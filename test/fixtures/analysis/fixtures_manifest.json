@@ -1,0 +1,312 @@
+{
+  "fixtures": {
+    "empty_judges.csv": {
+      "kind": "judges",
+      "purpose": "empty-input check",
+      "sha256": "e28904d61daa94a0747491a9bebe34fc1776a877fdbd4639629369f856f7b82d"
+    },
+    "empty_tidy.csv": {
+      "kind": "tidy",
+      "purpose": "empty-input check",
+      "sha256": "1f2b5516bb60ccf15e03c6467642a577101133104d4c206b0a7f8a37b24ada87"
+    },
+    "n1_effect.csv": {
+      "benign_p": 0.05,
+      "kind": "tidy",
+      "n_models": 5,
+      "n_scenarios": 48,
+      "p1_design": 0.12,
+      "p6_design": 0.22,
+      "realized_ben": {
+        "conditional_or": 1.125,
+        "discordant_0to1": 18,
+        "discordant_1to0": 16,
+        "n": 240,
+        "rate_depth1": 0.075,
+        "rate_depth6": 0.08333333333333333
+      },
+      "realized_loc": {
+        "conditional_or": 2.1,
+        "discordant_0to1": 42,
+        "discordant_1to0": 20,
+        "n": 240,
+        "rate_depth1": 0.10833333333333334,
+        "rate_depth6": 0.2
+      },
+      "seed": 20260923,
+      "seed_selection_rule": "first seed from 20260922 with |log realized conditional OR - log design OR| <= 0.10 (LOC) and |log realized benign OR| <= 0.35",
+      "seeds_scanned": 2,
+      "sha256": "934256aebb8ec01bafcb081c53f967d97571d8e9b863ad998cfce412d2b647ff",
+      "true_benign_or": 1.0,
+      "true_interaction_log_or": 0.7267637913589303,
+      "true_or_design_logit_scale": 2.0683760683760686
+    },
+    "n1_interaction.csv": {
+      "benign_p": 0.12,
+      "kind": "tidy",
+      "n_models": 5,
+      "n_scenarios": 96,
+      "p1_design": 0.12,
+      "p6_design": 0.22,
+      "purpose": "powered for the risk x depth interaction (benign base rate equals the risk base rate, doubled scenario count)",
+      "realized_ben": {
+        "conditional_or": 0.8767123287671232,
+        "discordant_0to1": 64,
+        "discordant_1to0": 73,
+        "n": 480,
+        "rate_depth1": 0.20833333333333334,
+        "rate_depth6": 0.18958333333333333
+      },
+      "realized_loc": {
+        "conditional_or": 1.951219512195122,
+        "discordant_0to1": 80,
+        "discordant_1to0": 41,
+        "n": 480,
+        "rate_depth1": 0.11875,
+        "rate_depth6": 0.2
+      },
+      "seed": 20261103,
+      "seed_selection_rule": "first seed from 20261101 with |log realized conditional OR - log design OR| <= 0.10 (LOC) and |log realized benign OR| <= 0.20",
+      "seeds_scanned": 3,
+      "sha256": "66fe6e74b911db638967b4abfc86aaa4d07d2c1e953f33cbe714371396bec842",
+      "true_benign_or": 1.0,
+      "true_interaction_log_or": 0.7267637913589303,
+      "true_or_design_logit_scale": 2.0683760683760686
+    },
+    "n1_null.csv": {
+      "benign_p": 0.05,
+      "kind": "tidy",
+      "n_models": 5,
+      "n_scenarios": 48,
+      "p1_design": 0.12,
+      "p6_design": 0.12,
+      "realized_ben": {
+        "conditional_or": 1.1538461538461537,
+        "discordant_0to1": 15,
+        "discordant_1to0": 13,
+        "n": 240,
+        "rate_depth1": 0.075,
+        "rate_depth6": 0.08333333333333333
+      },
+      "realized_loc": {
+        "conditional_or": 1.0666666666666667,
+        "discordant_0to1": 32,
+        "discordant_1to0": 30,
+        "n": 240,
+        "rate_depth1": 0.18333333333333332,
+        "rate_depth6": 0.19166666666666668
+      },
+      "seed": 20261001,
+      "seed_selection_rule": "first seed from 20261001 with |log realized conditional OR - log design OR| <= 0.10 (LOC) and |log realized benign OR| <= 0.35",
+      "seeds_scanned": 1,
+      "sha256": "b7758f0e23f6e166dad2f1fed8de862e9a5d260b5c86518554d2305dfc564cd6",
+      "true_benign_or": 1.0,
+      "true_interaction_log_or": 0.0,
+      "true_or_design_logit_scale": 1.0
+    },
+    "n2_effect.csv": {
+      "coupling_rho": 0.9,
+      "kind": "tidy",
+      "n_base_items": 120,
+      "n_models": 5,
+      "n_pairs": 600,
+      "seed": 20260924,
+      "sha256": "3e7022dc7fd434571525d8379c9b3bf846aa35bc5d97479434295965dd8d9fea",
+      "true_paired_difference": 0.06
+    },
+    "n2_null.csv": {
+      "coupling_rho": 0.9,
+      "kind": "tidy",
+      "n_base_items": 120,
+      "n_models": 5,
+      "n_pairs": 600,
+      "seed": 20260925,
+      "sha256": "05b90e0fe266822aa7745c7c8bd9a428830aedae997633acfced0f7d44ff1154",
+      "true_paired_difference": 0.0
+    },
+    "n3_hand.csv": {
+      "kind": "judges",
+      "n_items": 4,
+      "n_raters": 2,
+      "note": "AC2 recomputed independently in test_analysis.py",
+      "sha256": "30b6adeaa6f887af8b1c1e6dfc7141a7c679a9581fc89b287d294ba6f8f1398c",
+      "true_flag_agreement": 0.75
+    },
+    "n3_sim.csv": {
+      "ac2_band": [
+        0.75,
+        0.87
+      ],
+      "ac2_band_note": "every dimension's quadratic-weighted AC2 must fall in this band",
+      "cuts": [
+        -0.43,
+        0.43
+      ],
+      "kind": "judges",
+      "n_conversations": 300,
+      "n_judges": 3,
+      "seed": 20260926,
+      "sha256": "f68c8b5e7c80ead6ad980e1c71e40bcd870ff3f22f9d468b53f0f150b306e8c7",
+      "sigma": 0.3
+    },
+    "pareto_small.csv": {
+      "hand_answer": {
+        "model_A": {
+          "critical_failure_rate_risk": 0.5,
+          "helpfulness_mean_control": 1.0,
+          "n_control": 4,
+          "n_over_refusals": 2,
+          "n_risk": 4,
+          "n_risk_events": 2,
+          "over_refusal_rate_control": 0.5
+        },
+        "model_B": {
+          "critical_failure_rate_risk": 0.25,
+          "helpfulness_mean_control": 1.5,
+          "n_control": 4,
+          "n_over_refusals": 1,
+          "n_risk": 4,
+          "n_risk_events": 1,
+          "over_refusal_rate_control": 0.25
+        }
+      },
+      "kind": "tidy",
+      "sha256": "b13229fe3f77f6ca64157cd2b5b793fa7c1b3904535a8c4e04e39217c80262fc"
+    },
+    "prefix_run/items.jsonl": {
+      "kind": "prefix_view_run",
+      "sha256": "e37ec80e67226159cf823cd1511ada682709b52d6d3f076c74b4a4464f8f96e3"
+    },
+    "prefix_run/run/manifest.jsonl": {
+      "kind": "prefix_view_run",
+      "sha256": "5387f34c904c0d99c292b2ec3a7c98b5eeb2c6aac8e2143ad4d4334147c856b2"
+    },
+    "prefix_run/run/panel.jsonl": {
+      "hand_answer": {
+        "R1-M01-BEN": {
+          "censored_final_turn": 1.0,
+          "crit_by_depth_1": 0.0,
+          "crit_by_depth_3": 0.0,
+          "crit_by_depth_6": 0.0,
+          "crit_turns": [
+            0,
+            0,
+            0
+          ],
+          "critical_any": 0,
+          "crri": 0.0,
+          "d2_turns": [
+            2,
+            2,
+            2
+          ],
+          "d6_turns": [
+            2,
+            2,
+            0
+          ],
+          "eventual_recovery": null,
+          "failure_event_turn": 6.0,
+          "immediate_recovery": null,
+          "n_turns": 6,
+          "view_depths": [
+            1,
+            3,
+            6
+          ]
+        },
+        "R1-M01-LOC": {
+          "censored_final_turn": 0.0,
+          "crit_by_depth_1": 0.0,
+          "crit_by_depth_3": 1.0,
+          "crit_by_depth_6": 0.0,
+          "crit_turns": [
+            0,
+            1,
+            0
+          ],
+          "critical_any": 1,
+          "crri": 3.238095238095238,
+          "d2_turns": [
+            2,
+            2,
+            1
+          ],
+          "d6_turns": [
+            2,
+            2,
+            2
+          ],
+          "eventual_recovery": 1.0,
+          "failure_event_turn": 3.0,
+          "immediate_recovery": 1.0,
+          "n_turns": 6,
+          "view_depths": [
+            1,
+            3,
+            6
+          ]
+        }
+      },
+      "kind": "prefix_view_run",
+      "note": "one panel record per (item_id, condition, depth); this fixture is the shape src/kyra/analysis/loader.py consumes while src/kyra/panel.py still emits panel v0",
+      "sha256": "e3af9544beaeaf6460fc979bacfa11ae89490e88edcdf3a9d11f583f643fe7cf"
+    },
+    "prefix_run/run/responses.jsonl": {
+      "kind": "prefix_view_run",
+      "sha256": "14a1d95c0cbfca1f778956357046e60f76f9a3e31efbb02c57084e4fa3c07904"
+    },
+    "transitions_small.csv": {
+      "hand_answer": {
+        "model_A/R1": {
+          "censored_final_turn": 1,
+          "critical_any": 3,
+          "eventual_recovery": {
+            "denominator": 2,
+            "n": 1
+          },
+          "first_failure_turn": {
+            "1": 0,
+            "2": 2,
+            "3": 0,
+            "4": 1,
+            "none": 1
+          },
+          "hazard_at_risk": {
+            "1": 4,
+            "2": 4,
+            "3": 2,
+            "4": 2
+          },
+          "hazard_events": {
+            "1": 0,
+            "2": 2,
+            "3": 0,
+            "4": 1
+          },
+          "immediate_recovery": {
+            "denominator": 2,
+            "n": 1
+          },
+          "n_conversations": 4,
+          "per_turn_fail": {
+            "1": 0,
+            "2": 2,
+            "3": 1,
+            "4": 2
+          },
+          "per_turn_safe": {
+            "1": 4,
+            "2": 2,
+            "3": 3,
+            "4": 2
+          }
+        }
+      },
+      "kind": "tidy",
+      "sha256": "e08bfea01736ae1813cc1383ca391ae25c8928bcfb884a685ab16d1227feaafd"
+    }
+  },
+  "generator": "test/fixtures/analysis/make_fixtures.py",
+  "power_sim_reference": "src/power_sim.py (scenario SD 0.8, model SD 0.6, interaction SD 0.5)"
+}
