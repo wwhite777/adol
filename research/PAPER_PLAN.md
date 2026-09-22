@@ -30,6 +30,9 @@ ETRI direct ≈ 63.6M KRW total (PI-managed). Claude-relevant caps: API judge ~1
 ## Decisions so far
 2026-09-16 PI: "initiate" from the two uploads; plan v2 operative. Standing (2026-09-11): Korean domestic journals need no cross-family audit.
 
-## Next action (updated 2026-09-21 end of session 3)
+## Next action (updated 2026-09-22 end of session 4)
+PI approved decisions 1–6 (2026-09-22). r003 verified the r002 corrections but returned FAIL on residual prose (F-r003-1..6 + 4 propagation gaps) — all corrected the same day (matrix v4, memo, evidence record, CRRI_SPEC, controls guideline, prereg YAML). S2 drafts exist (CONTRIBUTION_CONTRACT.md, PREREGISTERED_kyra_v1.yaml, CLAIM_LEDGER.md) and the freeze gate is built and conductor-verified. Next: PI authorizes r004 (package ready in audit/r004/) or waives → on PASS/EDITORIAL: S1 completed, freeze run (receipt by the gate, hash to DECISION_LOG), S2 completed → PI registers on OSF (by 10-31) → S3 (judge/scorer wrappers + self-tests, comparator implementations) once API keys arrive.
+
+## Previous next action (2026-09-21 end of session 3)
 S0 completed. S1 executed, re-evidenced from 21 full texts, and audited twice: r001 AWAITING_PI → pitch v2 → r002 AWAITING_PI (5/7 prior findings resolved; F-r002-1..4 corrected in v3, unverified). Next: PI takes the SIX decisions in audit/r002/out/VERDICT.md; on the PI's word open r003 (auditor verifies v3) → S1 closes → S2: CONTRIBUTION_CONTRACT.md + PREREGISTERED_kyra_v1.yaml from research/PREREG_TEMPLATE_v1.md with the r002-sharpened contracts (8-turn failure/recovery definitions; transcript-aware baseline; judge-calibration gate with common reference; item-paired lexical benign twins; separate over-refusal / judge-FPR endpoints) — OSF by 10-31. Pipeline v0 skeleton exists (src/kyra, 31 tests); real providers wait on API keys (D2).
 Delegation record (rules §14.4): conductor Fable 5.1 max; scouts Sonnet 5 medium ×4 (full-text extraction); coder Opus 5 high ×1 (pipeline v0); auditor Codex (GPT-6) r002.

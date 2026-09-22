@@ -48,9 +48,15 @@ audit:
       auditor_reported: "Codex / GPT-6"
     - id: r003
       purpose: "verify the builder's corrections to F-r002-1..4 (v3) against the PDFs; propagation check into CRRI_SPEC + safe-controls guideline"
-      status: open
+      status: "verdict_fail"
       opened: "2026-09-22 (PI: 'open r003 and proceed')"
       snapshot: "tag audit/kyra-r003"
+      verdict: "FAIL on the record/pitch prose (audit/r003/out/VERDICT.md): F-r002-2/3/4 verified, F-r002-1 still wrong in two synthesis sentences; new F-r003-1..6 (3 major, 3 minor) + 4 propagation gaps; 'PI decisions still required: none'"
+      builder_response: "2026-09-22: all corrected -> NOVELTY_MATRIX v4, REJECT_MEMO, evidence record, CRRI_SPEC, safe_controls_guideline (twin per script), PREREGISTERED yaml (definitions.controls, comparator_inference, grouping_rule, judge_gate risk coverage)"
+      auditor_reported: "Codex / GPT-6"
+    - id: r004
+      purpose: "verify the v4 corrections (F-r003-1..6 + propagation) — package prepared; NOT launched: a further self-initiated successor round is not allowed (rules 12.4); needs the PI's word"
+      status: "prepared_not_opened"
 gates: {}
 pi_decisions:
   - "2026-09-16: 'initiate' — initialize project from the two uploaded plans; plan v2 operative"
@@ -65,7 +71,7 @@ five_statuses:
   claim_scope: null
   scientific_promise: null
 jobs: []
-next_action: "PI takes decisions 1-6 in audit/r002/out/VERDICT.md (contribution level; measurement success + 8-turn failure/recovery contract + transcript-aware baseline incl. CogManip; ratify paired-rewrite localization replication; evidence threshold / conditional S2; claim contract + null path; NEW judge-calibration gate). On the PI's word: open r003 for auditor verification of v3, then close S1 and start S2 (CONTRIBUTION_CONTRACT + PREREGISTERED_kyra_v1.yaml; OSF by 10-31)"
+next_action: "PI authorizes r004 (verify v4 corrections) or waives; on PASS/EDITORIAL: S1 -> completed, run src/gates/freeze.py on PREREGISTERED_kyra_v1.yaml + CONTRIBUTION_CONTRACT.md (receipt written by the gate), log the hash in DECISION_LOG, S2 -> completed; PI registers on OSF (by 10-31). Drafts, gate and ledger are ready; freeze gate verified by the conductor (18 tests + planted violations)"
 blockers:
-  - "S1 gate: six PI decisions in audit/r002/out/VERDICT.md"
-  - "r003 (verification of v3 corrections) needs PI authorization"
+  - "S1 close and the S2 freeze wait for r004 PASS/EDITORIAL or a PI waiver (decision 4: verification before closing S1)"
+  - "API keys (D2) for pipeline providers and the Oct W2 pilot"
