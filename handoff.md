@@ -14,7 +14,7 @@ Exact next steps (FRESH SESSION from this file; `/effort high` for building):
 5. Open tooling notes: campaign calls execute_run in-process (runner CLI lacks --gpu-memory-utilization); the judge prompt's {{ANCHOR_*}} are filled at runtime from judge_anchors_v1.json; panel.jsonl overwrite needs --allow-panel-overwrite; `--no-items` is the explicit bare-probe opt-out.
 6. [PI, optional] home-cleanup pass (shared volume 98 %); protected: fusion1's HF cache.
 
-Open blockers: PI item sign-off; HF license choice; disk headroom for 27–32B-class checkpoints (4-bit only).
+Open blockers: PI item sign-off; HF license choice; DISK — at 2026-09-22 ~10:15Z the shared volume fell to 17 GB free (below the campaign's 20 GB floor) because the crossfam session (same user; judge run `run_judges.py --protocol PREREGISTERED_crossfam_v2_2.yaml`, VLLM::EngineCore on GPU 1, ~40 GB) grew the shared HF cache 43 → 51 GB. No adol model download or confirmatory run until ≥ 40 GB is free or the PI orders a cleanup; coordinate GPU 1/2 with crossfam (check `ps`/`nvidia-smi` before every run; never touch its processes or cache).
 
 Disclosures:
 - r004 waived (venue); S1 v4 corrections auditor-unverified — every record says so.

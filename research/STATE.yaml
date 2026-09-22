@@ -40,7 +40,7 @@ protocol_freeze:
   superseded_drafts: "PREREGISTERED_kyra_v1.yaml + CONTRIBUTION_CONTRACT_v1_fulldesign_2026-09-22.md (full design, never frozen; phase B basis)"
 caps:
   gpu: "L40S GPUs 0-2 only (GPU 3 = another user); open-weight inference only"
-  disk: "150 GB quota: weights downloaded sequentially and deleted after runs (REHYDRATE.md) or 4-bit; models/ git-ignored"
+  disk: "150 GB quota: weights downloaded sequentially and deleted after runs (REHYDRATE.md) or 4-bit; models/ git-ignored. 2026-09-22 10:15Z: shared volume 17 GB free (crossfam session grew the shared HF cache to 51 GB and holds GPU 1) — below the 20 GB campaign floor; adol downloads/confirmatory runs blocked until ≥ 40 GB free"
   money: "$0 in phase A (no API keys); phase B optional $30-300 personal credit"
   human_time: "PI ~5-8 h in phase A (review + submission); phase B ~30-45 h co-author rating"
 audit:
