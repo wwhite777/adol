@@ -341,15 +341,142 @@ def query_gpus() -> Tuple[Optional[List[Dict[str, int]]], Optional[str]]:
     return gpus, None
 
 
-def choose_gpu(gpus: Sequence[Dict[str, int]]) -> Optional[int]:
-    """First of GPUs 0-2 with < 4 GiB used. GPU 3 is never a candidate."""
+def parse_visible_devices(value: Optional[str]) -> Optional[List[int]]:
+    """Parse an inherited CUDA_VISIBLE_DEVICES into physical indices.
+
+    None means "not set" (all GPUs are candidates). An empty or unparseable
+    value means "no device": an empty list, which the caller reports as a
+    refusal rather than silently falling back to every GPU.
+    """
+    if value is None:
+        return None
+    tokens = [t.strip() for t in str(value).split(",") if t.strip() != ""]
+    indices: List[int] = []
+    for token in tokens:
+        try:
+            indices.append(int(token))
+        except ValueError:
+            continue  # UUID form: not a physical index we can reason about
+    return indices
+
+
+def gpu_candidates(inherited: Optional[List[int]]) -> List[int]:
+    """Candidate physical indices: GPUs 0-2, intersected with any inherited set."""
+    candidates = [i for i in ALLOWED_GPUS if i != FORBIDDEN_GPU]
+    if inherited is not None:
+        candidates = [i for i in candidates if i in inherited]
+    return candidates
+
+
+def choose_gpu(
+    gpus: Sequence[Dict[str, int]], candidates: Optional[Sequence[int]] = None
+) -> Optional[int]:
+    """First candidate GPU with < 4 GiB used. GPU 3 is never a candidate."""
     used = {g["index"]: g["used_mib"] for g in gpus}
-    for index in ALLOWED_GPUS:
+    for index in (candidates if candidates is not None else gpu_candidates(None)):
         if index == FORBIDDEN_GPU:
             continue
         if index in used and used[index] < GPU_FREE_MAX_USED_MIB:
             return index
     return None
+
+
+def pin_gpu(index: Optional[int]) -> Optional[str]:
+    """Restrict THIS process to one physical GPU, before any engine is built.
+
+    CUDA reads CUDA_VISIBLE_DEVICES once, when the driver is initialised, so
+    this must happen before a provider (and therefore a vLLM engine) is
+    constructed. Returns the value set, or None when no GPU was chosen.
+    """
+    if index is None:
+        return None
+    value = str(index)
+    os.environ["CUDA_VISIBLE_DEVICES"] = value
+    return value
+
+
+def select_gpu(
+    needs_gpu: bool,
+    gpu_probe=query_gpus,
+    override: Optional[int] = None,
+    env_value: Optional[str] = None,
+) -> Dict[str, Any]:
+    """Choose the physical GPU for this step and explain the choice.
+
+    Honours an inherited CUDA_VISIBLE_DEVICES (candidates are restricted to it),
+    applies the < 4 GiB-used rule and never selects GPU 3. `override` (--gpu) is
+    refused if it is GPU 3, outside 0-2, outside the inherited set, unknown to
+    nvidia-smi, or already carrying >= 4 GiB.
+    """
+    inherited = parse_visible_devices(env_value)
+    candidates = gpu_candidates(inherited)
+    record: Dict[str, Any] = {
+        "required": needs_gpu,
+        "visible": None,
+        "error": None,
+        "chosen": None,
+        "allowed": list(ALLOWED_GPUS),
+        "never": FORBIDDEN_GPU,
+        "candidates": candidates,
+        "inherited_cuda_visible_devices": env_value,
+        "inherited": inherited is not None,
+        "override": override,
+        "source": None,
+        "pinned_cuda_visible_devices": None,
+        "criterion": "first candidate GPU with < %d MiB used" % GPU_FREE_MAX_USED_MIB,
+        "ok": not needs_gpu,
+    }
+    if not needs_gpu:
+        record["error"] = "not required for this step"
+        return record
+
+    gpus, gpu_error = gpu_probe()
+    record["visible"] = gpus
+    if gpus is None:
+        record["error"] = gpu_error
+        return record
+    used = {g["index"]: g["used_mib"] for g in gpus}
+
+    if override is not None:
+        if override == FORBIDDEN_GPU or override not in gpu_candidates(None):
+            record["error"] = (
+                "--gpu %d refused: allowed GPUs are %s and GPU %d is another user's job"
+                % (override, list(ALLOWED_GPUS), FORBIDDEN_GPU)
+            )
+            return record
+        if inherited is not None and override not in candidates:
+            record["error"] = (
+                "--gpu %d refused: CUDA_VISIBLE_DEVICES=%s does not expose it"
+                % (override, env_value)
+            )
+            return record
+        if override not in used:
+            record["error"] = "--gpu %d refused: nvidia-smi does not report it" % override
+            return record
+        if used[override] >= GPU_FREE_MAX_USED_MIB:
+            record["error"] = (
+                "--gpu %d refused: %d MiB already in use (>= %d MiB)"
+                % (override, used[override], GPU_FREE_MAX_USED_MIB)
+            )
+            return record
+        record.update({"chosen": override, "source": "--gpu flag", "ok": True})
+        return record
+
+    if not candidates:
+        record["error"] = (
+            "no candidate GPU: CUDA_VISIBLE_DEVICES=%s leaves none of %s"
+            % (env_value, [i for i in ALLOWED_GPUS if i != FORBIDDEN_GPU])
+        )
+        return record
+    chosen = choose_gpu(gpus, candidates)
+    if chosen is None:
+        record["error"] = "no free GPU among %s (< %d MiB used)" % (
+            candidates,
+            GPU_FREE_MAX_USED_MIB,
+        )
+        return record
+    record.update({"chosen": chosen, "source": "first free candidate", "ok": True})
+    return record
 
 
 def preflight(
@@ -359,6 +486,7 @@ def preflight(
     prereg: Path,
     sha: Path,
     gpu_probe=query_gpus,
+    gpu_override: Optional[int] = None,
 ) -> Dict[str, Any]:
     """Disk, GPU and freeze checks for one model. Returns a record with ok flags."""
     free = free_gb(out_root)
@@ -371,20 +499,14 @@ def preflight(
     }
 
     needs_gpu = model["provider"] == "vllm"
-    gpus, gpu_error = (None, "not required (provider=%s)" % model["provider"])
-    if needs_gpu:
-        gpus, gpu_error = gpu_probe()
-    chosen = choose_gpu(gpus) if gpus else None
-    gpu = {
-        "required": needs_gpu,
-        "visible": gpus,
-        "error": gpu_error if gpus is None else None,
-        "chosen": chosen,
-        "allowed": list(ALLOWED_GPUS),
-        "never": FORBIDDEN_GPU,
-        "criterion": "first of GPUs 0-2 with < %d MiB used" % GPU_FREE_MAX_USED_MIB,
-        "ok": (not needs_gpu) or chosen is not None,
-    }
+    gpu = select_gpu(
+        needs_gpu,
+        gpu_probe=gpu_probe,
+        override=gpu_override,
+        env_value=os.environ.get("CUDA_VISIBLE_DEVICES"),
+    )
+    if not needs_gpu:
+        gpu["error"] = "not required (provider=%s)" % model["provider"]
 
     freeze: Dict[str, Any] = {
         "required": run_class == "confirmatory",
@@ -537,8 +659,12 @@ def print_plan(plan: Dict[str, Any], preflights: List[Dict[str, Any]], stream=No
             w("  preflight gpu : not required (provider=%s)\n" % model["provider"])
         elif g["chosen"] is not None:
             w(
-                "  preflight gpu : chose GPU %d (%s; GPU %d never used)\n"
-                % (g["chosen"], g["criterion"], FORBIDDEN_GPU)
+                "  preflight gpu : GPU %d via %s (%s; candidates %s%s; GPU %d never "
+                "used) -> CUDA_VISIBLE_DEVICES=%d\n"
+                % (g["chosen"], g["source"], g["criterion"], g["candidates"],
+                   "; inherited CUDA_VISIBLE_DEVICES=%s" % g["inherited_cuda_visible_devices"]
+                   if g["inherited"] else "",
+                   FORBIDDEN_GPU, g["chosen"])
             )
         else:
             w("  preflight gpu : FAIL (%s)\n" % (g["error"] or "no free GPU among 0-2"))
@@ -747,6 +873,14 @@ def build_parser() -> argparse.ArgumentParser:
     )
     p.add_argument(
         "--experiments-csv", default="research/EXPERIMENTS.csv", help="EXPERIMENTS.csv to append to"
+    )
+    p.add_argument(
+        "--gpu",
+        type=int,
+        default=None,
+        help="pin this physical GPU instead of choosing the first free one; "
+        "refused if it is GPU %d or already carries >= %d MiB"
+        % (FORBIDDEN_GPU, GPU_FREE_MAX_USED_MIB),
     )
     p.add_argument("--prereg", default="PREREGISTERED_kyra_v2.yaml", help="frozen preregistration")
     p.add_argument("--sha", default="PREREGISTERED_kyra_v2.yaml.sha256", help="freeze receipt")
@@ -1189,19 +1323,14 @@ def score_main(argv: List[str], gpu_probe=query_gpus) -> int:
         freeze["error"] = "skipped (no confirmatory run in this scoring batch)"
 
     needs_gpu = any(j["provider"] == "vllm" for j in judges)
-    gpus, gpu_error = (None, "not required (no vllm judge)")
-    if needs_gpu:
-        gpus, gpu_error = gpu_probe()
-    chosen = choose_gpu(gpus) if gpus else None
-    gpu = {
-        "required": needs_gpu,
-        "visible": gpus,
-        "error": gpu_error if gpus is None else None,
-        "chosen": chosen,
-        "allowed": list(ALLOWED_GPUS),
-        "never": FORBIDDEN_GPU,
-        "ok": (not needs_gpu) or chosen is not None,
-    }
+    gpu = select_gpu(
+        needs_gpu,
+        gpu_probe=gpu_probe,
+        override=args.gpu,
+        env_value=os.environ.get("CUDA_VISIBLE_DEVICES"),
+    )
+    if not needs_gpu:
+        gpu["error"] = "not required (no vllm judge)"
 
     payload: Dict[str, Any] = {
         "plan": plan,
@@ -1265,6 +1394,15 @@ def score_main(argv: List[str], gpu_probe=query_gpus) -> int:
         )
         return EXIT_OK
 
+    # Pin before the first judge child process starts; the chosen physical index
+    # is also passed into each child's environment explicitly.
+    gpu["pinned_cuda_visible_devices"] = pin_gpu(gpu["chosen"])
+    if gpu["chosen"] is not None:
+        sys.stdout.write(
+            "GPU: pinned CUDA_VISIBLE_DEVICES=%s (physical GPU %d)\n"
+            % (gpu["pinned_cuda_visible_devices"], gpu["chosen"])
+        )
+
     log_dir = out_root / args.cohort / "scoring_logs"
     family_map_path = out_root / args.cohort / ("family_map_%s.json" % args.cohort)
     family_map_path.parent.mkdir(parents=True, exist_ok=True)
@@ -1315,7 +1453,7 @@ def score_main(argv: List[str], gpu_probe=query_gpus) -> int:
                     "class": run["class"],
                     "config": "judge=%s; family=%s; provider=%s; model=%s; views=%s; "
                     "items=%s; anchors=%s; anchors_sha256=%s; evaluated_family=%s; "
-                    "run_dir=%s"
+                    "gpu=%s; run_dir=%s"
                     % (
                         judge["judge_id"],
                         judge["family"],
@@ -1326,6 +1464,7 @@ def score_main(argv: List[str], gpu_probe=query_gpus) -> int:
                         anchors_path if anchors_path else "none",
                         anchors_sha or "n/a",
                         run["evaluated_family"],
+                        gpu["chosen"],
                         run_dir,
                     ),
                     "seed": "n/a (judge)",
@@ -1377,12 +1516,13 @@ def score_main(argv: List[str], gpu_probe=query_gpus) -> int:
                 "run": key,
                 "class": run["class"],
                 "config": "panel over %s; family_map=%s; evaluated_family=%s; "
-                "anchors_sha256=%s; run_dir=%s"
+                "anchors_sha256=%s; gpu=%s; run_dir=%s"
                 % (
                     ",".join(j["judge_id"] for j in judges),
                     family_map_path,
                     run["evaluated_family"],
                     anchors_sha or "n/a",
+                    gpu["chosen"],
                     run_dir,
                 ),
                 "seed": "n/a (panel)",
@@ -1452,7 +1592,14 @@ def print_score_plan(plan: Dict[str, Any], freeze: Dict[str, Any], gpu: Dict[str
     if not gpu["required"]:
         w("gpu: not required (no vllm judge)\n")
     elif gpu["chosen"] is not None:
-        w("gpu: chose GPU %d (GPU %d never used)\n" % (gpu["chosen"], FORBIDDEN_GPU))
+        w(
+            "gpu: GPU %d via %s (candidates %s%s; GPU %d never used) -> "
+            "CUDA_VISIBLE_DEVICES=%d\n"
+            % (gpu["chosen"], gpu["source"], gpu["candidates"],
+               "; inherited CUDA_VISIBLE_DEVICES=%s" % gpu["inherited_cuda_visible_devices"]
+               if gpu["inherited"] else "",
+               FORBIDDEN_GPU, gpu["chosen"])
+        )
     else:
         w("gpu: FAIL (%s)\n" % (gpu["error"] or "no free GPU among 0-2"))
 
@@ -1485,6 +1632,14 @@ def build_score_parser() -> argparse.ArgumentParser:
     p.add_argument("--out-root", default=None, help="root for the scoring record and logs")
     p.add_argument(
         "--experiments-csv", default="research/EXPERIMENTS.csv", help="EXPERIMENTS.csv to append to"
+    )
+    p.add_argument(
+        "--gpu",
+        type=int,
+        default=None,
+        help="pin this physical GPU instead of choosing the first free one; "
+        "refused if it is GPU %d or already carries >= %d MiB"
+        % (FORBIDDEN_GPU, GPU_FREE_MAX_USED_MIB),
     )
     p.add_argument("--prereg", default="PREREGISTERED_kyra_v2.yaml", help="frozen preregistration")
     p.add_argument("--sha", default="PREREGISTERED_kyra_v2.yaml.sha256", help="freeze receipt")
@@ -1523,7 +1678,16 @@ def main(argv: Optional[List[str]] = None, gpu_probe=query_gpus) -> int:
     subset_items = [it for it in items if it.item_id in subset_ids]
 
     preflights = [
-        preflight(out_root, m, args.run_class, prereg, sha, gpu_probe=gpu_probe) for m in models
+        preflight(
+            out_root,
+            m,
+            args.run_class,
+            prereg,
+            sha,
+            gpu_probe=gpu_probe,
+            gpu_override=args.gpu,
+        )
+        for m in models
     ]
     print_plan(plan, preflights)
 
@@ -1577,6 +1741,15 @@ def main(argv: Optional[List[str]] = None, gpu_probe=query_gpus) -> int:
     log_dir = out_root / args.cohort / "logs"
     for model, pre in zip(models, preflights):
         gpu_index = pre["gpu"]["chosen"]
+        # Pin BEFORE the provider (and therefore any vLLM engine) is built:
+        # CUDA reads CUDA_VISIBLE_DEVICES once, at driver initialisation.
+        pinned = pin_gpu(gpu_index)
+        pre["gpu"]["pinned_cuda_visible_devices"] = pinned
+        if pinned is not None:
+            sys.stdout.write(
+                "GPU: pinned CUDA_VISIBLE_DEVICES=%s (physical GPU %d) for %s\n"
+                % (pinned, gpu_index, model["model_id"])
+            )
         for spec in next(m for m in plan["models"] if m["model_id"] == model["model_id"])["runs"]:
             spec = dict(spec)
             spec["items_path"] = items_path

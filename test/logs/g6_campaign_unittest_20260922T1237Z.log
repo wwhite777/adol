@@ -1,0 +1,122 @@
+test_cli_dry_run_exits_zero (test_g6_campaign.TestCampaignDryRun) ... ok
+test_confirmatory_refuses_a_mismatched_freeze_hash (test_g6_campaign.TestCampaignDryRun) ... ERROR: pre-flight refused for fake/tiny-vllm-a
+  freeze: FREEZE_MISMATCH: /tmp/campaign_dry_g39ewqe9/PREREGISTERED_kyra_v2.yaml sha256=6396ec8483d664da97f2bf9a06c840d40d97aa6416a7c0fda1fa3a49c076d488 does not match frozen receipt sha256=87abaae4c16fb0efe3dad27ff464fcd86b6b48ff67a33f1414336ccc7ddd34a4
+campaign record: /tmp/campaign_dry_g39ewqe9/raw/dryrun/campaign_dryrun.json
+ok
+test_confirmatory_refuses_a_mock_provider (test_g6_campaign.TestCampaignDryRun) ... ERROR: models_fake.json[0] uses the mock provider; a mock run is never evidence and is refused for --class confirmatory
+ok
+test_dry_run_confirmatory_verifies_freeze_and_chooses_a_gpu (test_g6_campaign.TestCampaignDryRun) ... ok
+test_dry_run_plan_smoke (test_g6_campaign.TestCampaignDryRun) ... ok
+test_dry_run_without_out_root_writes_nothing (test_g6_campaign.TestCampaignDryRun) ... ok
+test_no_free_gpu_is_a_preflight_refusal (test_g6_campaign.TestCampaignDryRun) ... ERROR: pre-flight refused for fake/tiny-vllm-a
+  gpu: no free GPU among [0, 1, 2] (< 4096 MiB used)
+campaign record: /tmp/campaign_dry_aly3lmj4/raw/dryrun/campaign_dryrun.json
+ok
+test_first_free_gpu_of_0_1_2 (test_g6_campaign.TestCampaignGpuGuard) ... ok
+test_gpu_three_is_never_chosen (test_g6_campaign.TestCampaignGpuGuard) ... ok
+test_gpu_zero_when_free (test_g6_campaign.TestCampaignGpuGuard) ... ok
+test_chosen_gpu_is_pinned_before_the_provider_is_built (test_g6_campaign.TestCampaignGpuPinning) ... ok
+test_cli_gpu_override_refusal_is_exit_7 (test_g6_campaign.TestCampaignGpuPinning) ... ERROR: pre-flight refused for fake/tiny-vllm-a
+  gpu: --gpu 3 refused: allowed GPUs are [0, 1, 2] and GPU 3 is another user's job
+campaign record: /tmp/campaign_gpu_ucsjolbl/raw2/gpubad/campaign_gpubad.json
+ok
+test_gpu_override_is_refused_when_busy_or_forbidden (test_g6_campaign.TestCampaignGpuPinning) ... ok
+test_inherited_cuda_visible_devices_restricts_the_candidates (test_g6_campaign.TestCampaignGpuPinning) ... ok
+test_1_dry_run_prints_the_plan (test_g6_campaign.TestCampaignScoring) ... ok
+test_2_two_fake_judges_and_panel_end_to_end (test_g6_campaign.TestCampaignScoring) ... ok
+test_3_existing_judge_file_is_refused (test_g6_campaign.TestCampaignScoring) ... ERROR: judge output already exists, refusing to overwrite: /tmp/campaign_score_pms840gx/raw/scoreme/fake-tiny-a/main/20260922T1237Z-c54fbf/judge_JF1.jsonl, /tmp/campaign_score_pms840gx/raw/scoreme/fake-tiny-a/main/20260922T1237Z-c54fbf/judge_JF2.jsonl
+campaign record: /tmp/campaign_score_pms840gx/raw/scoreagain/campaign_scoreagain_scoring.json
+ok
+test_4_single_judge_panel_is_insufficient (test_g6_campaign.TestCampaignScoring) ... ok
+test_5_missing_marker_is_refused (test_g6_campaign.TestCampaignScoring) ... ERROR: refusing to score /tmp/campaign_score_pms840gx/no_marker_run: no MARKER (an unvalidated run is not data)
+ok
+test_6_unknown_run_glob_is_refused (test_g6_campaign.TestCampaignScoring) ... ERROR: no run directory matches '/tmp/campaign_score_pms840gx/nothing_here_*' (a missing run is never scored silently)
+ok
+test_6a_items_not_covering_the_run_is_refused (test_g6_campaign.TestCampaignScoring)
+The mistake this guard exists for: scoring a smoke run against the ... ERROR: refusing to score /tmp/campaign_score_pms840gx/raw/scoreme/fake-tiny-a/repeat_2/20260922T1237Z-aeb787: 1 item_id(s) in responses.jsonl are absent from /home/wjeong/adol/research/items/items_phaseA_v1.jsonl, so their risk_group (and therefore which views are CTRL controls) is unknown: KYRA-SMK-001L
+ok
+test_6b_panel_overwrite_is_refused_without_the_flag (test_g6_campaign.TestCampaignScoring) ... ERROR: panel output already exists, refusing to overwrite: /tmp/campaign_score_pms840gx/raw/scoreme/fake-tiny-a/repeat_3/20260922T1237Z-e03e72/panel.jsonl (pass --allow-panel-overwrite to replace it)
+campaign record: /tmp/campaign_score_pms840gx/raw/scorepanel2/campaign_scorepanel2_scoring.json
+ok
+test_a_failed_run_stops_the_campaign (test_g6_campaign.TestCampaignSmokeRun) ... ERROR: run stoptest__fake-tiny-a__repeat_1__20260922T1237Z-5f8740 failed (missing file: responses.jsonl; manifest contains 1 record(s) with status=error: KYRA-SMK-001L; response record count mismatch: expected 1 response unit(s) (= 1 items x 1 conditions), found 0; no response records for item_id='KYRA-SMK-001L' condition='repeat_1'; input item_id 'KYRA-SMK-001L' missing from responses.jsonl); stopping the campaign - no later model is started.
+log: /tmp/campaign_run_p9aqh_io/raw/stoptest/logs/stoptest__fake-tiny-a__repeat_1__20260922T1237Z-5f8740.log
+campaign record: /tmp/campaign_run_p9aqh_io/raw/stoptest/campaign_stoptest.json
+ok
+test_two_fake_models_end_to_end (test_g6_campaign.TestCampaignSmokeRun) ... ok
+test_every_stratum_is_represented (test_g6_campaign.TestCampaignSubset) ... ok
+test_seed_change_changes_the_draw (test_g6_campaign.TestCampaignSubset) ... ok
+test_smoke_items_subset (test_g6_campaign.TestCampaignSubset) ... ok
+test_subset_is_twenty_percent_and_deterministic (test_g6_campaign.TestCampaignSubset) ... ok
+test_error_is_never_kill (test_g6_campaign.TestG6Aggregate) ... ok
+test_go (test_g6_campaign.TestG6Aggregate) ... ok
+test_inconclusive_on_miss (test_g6_campaign.TestG6Aggregate) ... ok
+test_inconclusive_when_n1_1_passes_but_n1_2_does_not (test_g6_campaign.TestG6Aggregate) ... ok
+test_kill (test_g6_campaign.TestG6Aggregate) ... ok
+test_kill_with_survivor_n2 (test_g6_campaign.TestG6Aggregate) ... ok
+test_kill_with_survivor_n3 (test_g6_campaign.TestG6Aggregate) ... ok
+test_go_verdict_carries_hashes_and_numbers (test_g6_campaign.TestG6CLI) ... ok
+test_inconclusive_verdict (test_g6_campaign.TestG6CLI) ... ok
+test_kill_verdict (test_g6_campaign.TestG6CLI) ... ok
+test_kill_with_survivor_verdict (test_g6_campaign.TestG6CLI) ... ok
+test_missing_input_file_is_error_not_kill (test_g6_campaign.TestG6CLI) ... ok
+test_missing_prereg_file (test_g6_campaign.TestG6CLI) ... ok
+test_n3_revisions_is_recorded_and_changes_only_the_fail_branch (test_g6_campaign.TestG6CLI) ... ok
+test_refrozen_but_altered_table_is_an_error (test_g6_campaign.TestG6CLI)
+Hash matches its own receipt, yet the rules no longer match the code. ... ok
+test_tampered_prereg_refuses_before_any_reading (test_g6_campaign.TestG6CLI) ... ok
+test_n1_1_error_missing_field (test_g6_campaign.TestG6Readings) ... ok
+test_n1_1_error_nan (test_g6_campaign.TestG6Readings) ... ok
+test_n1_1_fail (test_g6_campaign.TestG6Readings) ... ok
+test_n1_1_fail_boundary_ci_upper_equals_1_2 (test_g6_campaign.TestG6Readings) ... ok
+test_n1_1_miss (test_g6_campaign.TestG6Readings) ... ok
+test_n1_1_pass (test_g6_campaign.TestG6Readings) ... ok
+test_n1_1_pass_needs_ci_lower_above_one (test_g6_campaign.TestG6Readings) ... ok
+test_n1_2_ci_including_one_is_not_a_fail (test_g6_campaign.TestG6Readings) ... ok
+test_n1_2_error (test_g6_campaign.TestG6Readings) ... ok
+test_n1_2_error_nan (test_g6_campaign.TestG6Readings) ... ok
+test_n1_2_fail (test_g6_campaign.TestG6Readings) ... ok
+test_n1_2_miss (test_g6_campaign.TestG6Readings) ... ok
+test_n1_2_pass_via_benign_or (test_g6_campaign.TestG6Readings) ... ok
+test_n1_2_pass_via_interaction (test_g6_campaign.TestG6Readings) ... ok
+test_n2_error (test_g6_campaign.TestG6Readings) ... ok
+test_n2_error_when_no_tost_decision_at_all (test_g6_campaign.TestG6Readings) ... ok
+test_n2_fail_explicit_equivalence (test_g6_campaign.TestG6Readings) ... ok
+test_n2_fail_from_two_one_sided_p_values (test_g6_campaign.TestG6Readings) ... ok
+test_n2_miss (test_g6_campaign.TestG6Readings) ... ok
+test_n2_pass (test_g6_campaign.TestG6Readings) ... ok
+test_n2_pass_needs_ci_excluding_zero (test_g6_campaign.TestG6Readings) ... ok
+test_n3_1_error (test_g6_campaign.TestG6Readings) ... ok
+test_n3_1_error_on_nan_flag_agreement (test_g6_campaign.TestG6Readings) ... ok
+test_n3_1_fail_after_one_revision (test_g6_campaign.TestG6Readings) ... ok
+test_n3_1_flag_agreement_below_bar_is_not_pass (test_g6_campaign.TestG6Readings) ... ok
+test_n3_1_miss (test_g6_campaign.TestG6Readings) ... ok
+test_n3_1_miss_when_no_revision_yet (test_g6_campaign.TestG6Readings) ... ok
+test_n3_1_pass (test_g6_campaign.TestG6Readings) ... ok
+test_n3_2_error (test_g6_campaign.TestG6Readings) ... ok
+test_n3_2_fail (test_g6_campaign.TestG6Readings) ... ok
+test_n3_2_miss (test_g6_campaign.TestG6Readings) ... ok
+test_n3_2_pass (test_g6_campaign.TestG6Readings) ... ok
+test_n3_2_pass_derived_from_the_lofo_block (test_g6_campaign.TestG6Readings) ... ok
+test_parent_n1 (test_g6_campaign.TestG6Readings) ... ok
+test_parent_n3 (test_g6_campaign.TestG6Readings) ... ok
+test_aggregate_rule_mismatch_is_reported (test_g6_campaign.TestG6Table) ... ok
+test_claim_id_mismatch_is_reported (test_g6_campaign.TestG6Table) ... ok
+test_coded_table_matches_the_frozen_prereg (test_g6_campaign.TestG6Table) ... ok
+test_decision_rule_prose_mismatch_is_reported (test_g6_campaign.TestG6Table) ... ok
+test_threshold_mismatch_is_reported (test_g6_campaign.TestG6Table) ... ok
+test_cli_condition_and_conditions_are_mutually_exclusive (test_g6_campaign.TestRunnerConditionOptions) ... ERROR: --condition and --conditions are mutually exclusive
+ok
+test_cli_rejects_a_malformed_condition_tag (test_g6_campaign.TestRunnerConditionOptions) ... ERROR: bad condition tag 'repeat 1!' (allowed: letters, digits, . _ -)
+ok
+test_cli_runs_a_tagged_condition (test_g6_campaign.TestRunnerConditionOptions) ... ok
+test_cli_temperature_seed_reach_the_provider_constructor (test_g6_campaign.TestRunnerConditionOptions)
+--temperature/--seed are provider options: a provider that does not ... ERROR: bad options for provider 'mock': MockProvider() takes no arguments
+ok
+test_free_condition_tag_reaches_the_manifest (test_g6_campaign.TestRunnerConditionOptions) ... ok
+test_requested_temperature_is_recorded_when_the_provider_declares_nothing (test_g6_campaign.TestRunnerConditionOptions) ... ok
+
+----------------------------------------------------------------------
+Ran 90 tests in 1.986s
+
+OK
+check1_exit=0

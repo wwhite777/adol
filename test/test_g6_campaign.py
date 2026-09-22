@@ -18,6 +18,7 @@ import csv
 import hashlib
 import io
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -510,6 +511,111 @@ class TestCampaignSubset(unittest.TestCase):
         self.assertEqual(len(ids), round(0.2 * len(items)))
 
 
+class TestCampaignGpuPinning(unittest.TestCase):
+    """The chosen physical GPU must be pinned before any engine is constructed."""
+
+    def setUp(self):
+        self.tmp = Path(tempfile.mkdtemp(prefix="campaign_gpu_"))
+        self.addCleanup(shutil.rmtree, self.tmp, True)
+        self.csv = self.tmp / "EXPERIMENTS.csv"
+        shutil.copy2(REAL_CSV, self.csv)
+        self.saved_env = os.environ.get("CUDA_VISIBLE_DEVICES")
+        self.addCleanup(self.restore_env)
+
+    def restore_env(self):
+        if self.saved_env is None:
+            os.environ.pop("CUDA_VISIBLE_DEVICES", None)
+        else:
+            os.environ["CUDA_VISIBLE_DEVICES"] = self.saved_env
+
+    def test_chosen_gpu_is_pinned_before_the_provider_is_built(self):
+        from kyra.providers import MockProvider
+
+        os.environ.pop("CUDA_VISIBLE_DEVICES", None)
+        seen = []
+
+        def spy_provider(model, temperature, seed, gpu_index):
+            seen.append((model["model_id"], os.environ.get("CUDA_VISIBLE_DEVICES"), gpu_index))
+            return MockProvider()
+
+        original = campaign.make_provider
+        campaign.make_provider = spy_provider
+        self.addCleanup(setattr, campaign, "make_provider", original)
+
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            code = campaign.main(
+                ["--items", str(SMOKE_ITEMS), "--models", str(FIX / "models_fake_vllm.json"),
+                 "--cohort", "gpupin", "--class", "smoke",
+                 "--out-root", str(self.tmp / "raw"), "--experiments-csv", str(self.csv)],
+                gpu_probe=fake_gpu_probe(),
+            )
+        self.assertEqual(code, 0, buf.getvalue())
+        self.assertTrue(seen)
+        for model_id, env_at_build, gpu_index in seen:
+            self.assertEqual(env_at_build, "1", "%s built without the GPU pinned" % model_id)
+            self.assertEqual(gpu_index, 1)
+        self.assertIn("pinned CUDA_VISIBLE_DEVICES=1", buf.getvalue())
+
+        record = json.loads(
+            (self.tmp / "raw" / "gpupin" / "campaign_gpupin.json").read_text(encoding="utf-8")
+        )
+        for pre in record["preflight"]:
+            self.assertEqual(pre["gpu"]["chosen"], 1)
+            self.assertEqual(pre["gpu"]["pinned_cuda_visible_devices"], "1")
+        self.assertEqual({r["gpu"] for r in record["runs"]}, {1})
+        with self.csv.open(encoding="utf-8", newline="") as fh:
+            rows = list(csv.reader(fh))
+        self.assertTrue(all("gpu=1" in row[2] for row in rows[-8:]), rows[-1][2])
+
+    def test_inherited_cuda_visible_devices_restricts_the_candidates(self):
+        gpus = [{"index": i, "used_mib": 4} for i in range(4)]
+        rec = campaign.select_gpu(
+            True, gpu_probe=fake_gpu_probe(gpus=gpus), env_value="2,3"
+        )
+        self.assertEqual(rec["candidates"], [2])
+        self.assertEqual(rec["chosen"], 2)
+        self.assertTrue(rec["inherited"])
+        self.assertEqual(rec["inherited_cuda_visible_devices"], "2,3")
+
+        only_three = campaign.select_gpu(
+            True, gpu_probe=fake_gpu_probe(gpus=gpus), env_value="3"
+        )
+        self.assertEqual(only_three["candidates"], [])
+        self.assertIsNone(only_three["chosen"])
+        self.assertFalse(only_three["ok"])
+
+    def test_gpu_override_is_refused_when_busy_or_forbidden(self):
+        gpus = [
+            {"index": 0, "used_mib": 18779},
+            {"index": 1, "used_mib": 4},
+            {"index": 2, "used_mib": 4},
+            {"index": 3, "used_mib": 4},
+        ]
+        busy = campaign.select_gpu(True, gpu_probe=fake_gpu_probe(gpus=gpus), override=0)
+        self.assertFalse(busy["ok"])
+        self.assertIn("already in use", busy["error"])
+        forbidden = campaign.select_gpu(True, gpu_probe=fake_gpu_probe(gpus=gpus), override=3)
+        self.assertFalse(forbidden["ok"])
+        self.assertIn("another user's job", forbidden["error"])
+        good = campaign.select_gpu(True, gpu_probe=fake_gpu_probe(gpus=gpus), override=2)
+        self.assertTrue(good["ok"])
+        self.assertEqual((good["chosen"], good["source"]), (2, "--gpu flag"))
+
+    def test_cli_gpu_override_refusal_is_exit_7(self):
+        os.environ.pop("CUDA_VISIBLE_DEVICES", None)
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            code = campaign.main(
+                ["--items", str(SMOKE_ITEMS), "--models", str(FIX / "models_fake_vllm.json"),
+                 "--cohort", "gpubad", "--class", "smoke", "--dry-run", "--gpu", "3",
+                 "--out-root", str(self.tmp / "raw2"), "--experiments-csv", str(self.csv)],
+                gpu_probe=fake_gpu_probe(),
+            )
+        self.assertEqual(code, campaign.EXIT_PREFLIGHT, buf.getvalue())
+        self.assertIsNone(os.environ.get("CUDA_VISIBLE_DEVICES"))
+
+
 class TestCampaignGpuGuard(unittest.TestCase):
     def test_first_free_gpu_of_0_1_2(self):
         gpus = [
@@ -595,7 +701,8 @@ class TestCampaignDryRun(unittest.TestCase):
     def test_dry_run_confirmatory_verifies_freeze_and_chooses_a_gpu(self):
         code, out = self.dry_run(FIX / "models_fake_vllm.json", "confirmatory")
         self.assertEqual(code, 0, out)
-        self.assertIn("chose GPU 1", out)
+        self.assertIn("GPU 1 via first free candidate", out)
+        self.assertIn("CUDA_VISIBLE_DEVICES=1", out)
         self.assertIn("preflight freeze: OK sha256=%s" % sha256(PREREG), out)
         record = json.loads(
             (self.out_root / "dryrun" / "campaign_dryrun.json").read_text(encoding="utf-8")
