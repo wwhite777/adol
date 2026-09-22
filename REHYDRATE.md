@@ -7,4 +7,7 @@
 - Upload provenance (sha256, recorded 2026-09-16):
   d714c2a0426967337572cedbe7ff0c0f0d560df42d97ad03c5d8178e135c4c51  upload/1.docx.gpg  (plan v2, operative)
   3fbb72e559a4eb72328d57939e20f9680117e8b1f11e9ee62bb0a869d335384b  upload/2.docx.gpg  (plan v1, superseded)
+- research/sweeps/fulltext/*.pdf (21 papers, ~50 MB, git-ignored): regenerable with `curl -sSL -A "adol-sweep/1.0" -o research/sweeps/fulltext/<id>.pdf https://arxiv.org/pdf/<id>` for the ids listed in research/REFERENCES.csv (space calls ≥3 s). Deletable after S8 once REFERENCES.csv and the extraction record carry what the paper needs.
+- Venv ~/envs/jeongwoncheol_adol: python3 -m venv + pip install pypdf pyyaml (nothing else). Rebuild: `python3 -m venv ~/envs/jeongwoncheol_adol && ~/envs/jeongwoncheol_adol/bin/python -m pip install pypdf pyyaml`.
+- audit/r002/out/pdf_text/ (auditor's text exports) and result/raw/mock/ (smoke run) are regenerable: pypdf extraction; `PYTHONPATH=src ~/envs/jeongwoncheol_adol/bin/python -m kyra.runner --items test/fixtures/items_smoke.jsonl --provider mock --cohort mock --out-root result/raw`.
 - Nothing else has been deleted from this project yet.

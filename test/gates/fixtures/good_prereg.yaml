@@ -1,0 +1,60 @@
+# SYNTHETIC fixture for the freeze gate — not a real preregistration.
+# Accepting case: parses, matches the schema, agrees with good_contract.md.
+topic: synthetic gate fixture (toy benchmark)
+version: "1.0"
+frozen_by: gate test fixture
+claims:
+  - id: N1
+    text: Toy metric A increases from condition 1 to condition 3.
+    type: primary
+    metric: toy_metric_a_trend
+    threshold: 0.80
+    falsifier: No monotone increase, or the increase is within the null band.
+    decision_rule:
+      pass: trend estimate above threshold with CI excluding 0
+      fail: trend estimate at or below 0 with CI excluding the threshold
+      miss: CI spans the threshold
+  - id: N1.1
+    text: The same trend holds in the toy control arm.
+    type: supporting
+    metric: toy_metric_a_trend_control
+    threshold: 0.5
+    falsifier: Control arm shows an equal or larger increase.
+    decision_rule:
+      pass: control trend below the risk-arm trend
+      fail: control trend at or above the risk-arm trend
+      miss: intervals overlap
+  - id: N2
+    text: Toy index B adds discrimination over the toy baseline.
+    type: supporting
+    metric: toy_index_b_auc
+    threshold: 0.75
+    falsifier: AUC below threshold, or no increment over the toy baseline.
+    decision_rule:
+      pass: AUC at or above threshold and increment positive
+      fail: AUC below threshold
+      miss: increment CI spans 0
+baselines:
+  - toy baseline one (final value only)
+  - toy baseline two (unweighted mean)
+splits:
+  derivation: 60 percent of toy scenarios
+  validation: 40 percent of toy scenarios
+statistics:
+  model: toy logistic mixed model
+  ci: cluster bootstrap over toy scenarios
+  multiplicity: Holm within the claim family
+decision_rules:
+  pass_fail_miss: judged by the toy judge script, never by hand
+  error: any run without a verified freeze hash stops with ERROR
+interim_look_rule: one interim look at the first 20 percent, trigger decision only
+kill_rules:
+  - toy reliability below 0.70 stops the toy claim
+  - fewer than 10 toy items per cell stops the toy claim
+forbidden_wording:
+  - first toy benchmark of its kind
+  - guaranteed toy safety
+fallback: toy judge replaced by two human raters if the judge bar is missed
+definitions:
+  toy_metric_a: synthetic count of toy events per condition
+  toy_index_b: synthetic weighted sum over toy turns

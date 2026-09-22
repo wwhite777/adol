@@ -1,0 +1,10 @@
+# SYNTHETIC reject fixture: invalid YAML (unclosed flow sequence + bad indent).
+# Expected: gates.freeze exits 2 (PARSE_ERROR) and writes no receipt.
+topic: synthetic gate fixture (parse failure)
+version: "1.0"
+frozen_by: gate test fixture
+claims: [
+  - id: N1
+   text: "unterminated flow sequence starts here
+    type: primary
+baselines: - toy baseline one

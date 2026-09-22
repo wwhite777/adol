@@ -1,0 +1,44 @@
+# SYNTHETIC reject fixture: two top-level primary claims (N1 and N2).
+# Expected: gates.freeze exits 3 (SCHEMA_ERROR) and writes no receipt.
+topic: synthetic gate fixture (two primary claims)
+version: "1.0"
+frozen_by: gate test fixture
+claims:
+  - id: N1
+    text: Toy metric A increases from condition 1 to condition 3.
+    type: primary
+    metric: toy_metric_a_trend
+    threshold: 0.80
+    falsifier: No monotone increase.
+    decision_rule:
+      pass: trend above threshold
+      fail: trend at or below 0
+      miss: CI spans the threshold
+  - id: N2
+    text: Toy index B adds discrimination over the toy baseline.
+    type: primary
+    metric: toy_index_b_auc
+    threshold: 0.75
+    falsifier: AUC below threshold.
+    decision_rule:
+      pass: AUC at or above threshold
+      fail: AUC below threshold
+      miss: increment CI spans 0
+baselines:
+  - toy baseline one (final value only)
+splits:
+  derivation: 60 percent of toy scenarios
+  validation: 40 percent of toy scenarios
+statistics:
+  model: toy logistic mixed model
+decision_rules:
+  pass_fail_miss: judged by the toy judge script
+interim_look_rule: one interim look at the first 20 percent
+kill_rules:
+  - toy reliability below 0.70 stops the toy claim
+forbidden_wording:
+  - first toy benchmark of its kind
+  - guaranteed toy safety
+fallback: toy judge replaced by two human raters
+definitions:
+  toy_metric_a: synthetic count of toy events per condition

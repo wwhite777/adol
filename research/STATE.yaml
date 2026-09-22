@@ -47,14 +47,17 @@ audit:
       builder_response: "2026-09-21: F-r002-1..4 corrected in NOVELTY_MATRIX v3 + evidence record + REJECT_MEMO + CRRI_SPEC; auditor verification pending r003"
       auditor_reported: "Codex / GPT-6"
     - id: r003
-      purpose: "verify v3 corrections (F-r002-1..4) — NOT opened: successor rounds beyond one need the PI's word (rules 12.4)"
-      status: "not_opened"
+      purpose: "verify the builder's corrections to F-r002-1..4 (v3) against the PDFs; propagation check into CRRI_SPEC + safe-controls guideline"
+      status: open
+      opened: "2026-09-22 (PI: 'open r003 and proceed')"
+      snapshot: "tag audit/kyra-r003"
 gates: {}
 pi_decisions:
   - "2026-09-16: 'initiate' — initialize project from the two uploaded plans; plan v2 operative"
   - "2026-09-16: 'D1-D4 all approved. proceed' — roles confirmed, API caps authorized, drafts + D4 scope granted (DECISION_LOG.md)"
   - "2026-09-16: 'stop work and record today's work' — S1 gate decision NOT yet taken"
   - "2026-09-21: 'apply the orchestration of agents ... resume work' — process only; S1 gate decision still NOT taken"
+  - "2026-09-22: 'decisions 1-6 all approved. open r003 and proceed' — S1 gate decisions 1-6 APPROVED (operationalization in DECISION_LOG.md); r003 authorized"
 five_statuses:
   artifact_integrity: null
   numerical_reproduction: null

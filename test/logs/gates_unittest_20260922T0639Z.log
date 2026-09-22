@@ -1,0 +1,29 @@
+test_freezing_twice_is_idempotent (test_freeze.FreezeGateTest) ... ok
+test_good_pair_freezes_and_receipt_matches_independent_hash (test_freeze.FreezeGateTest) ... ok
+test_missing_prereg_file_is_refused (test_freeze.FreezeGateTest) ... ok
+test_out_sha_option_places_receipt_where_asked (test_freeze.FreezeGateTest) ... ok
+test_planted_violation_demonstration (test_freeze.FreezeGateTest) ... 
+PLANTED-VIOLATION DEMO -- gates.freeze on reject_schema_threshold_string.yaml (threshold is the string "0.80")
+  exit code      : 3 (expected 3 = SCHEMA_ERROR)
+  receipt exists : False (expected False)
+  stderr         : ERROR SCHEMA_ERROR: claim N1 threshold '0.80' is str, expected a number
+REFUSED to freeze reject_schema_threshold_string.yaml; no receipt written.
+ok
+test_reject_contract_missing_claim_id (test_freeze.FreezeGateTest) ... ok
+test_reject_contract_missing_forbidden_phrase (test_freeze.FreezeGateTest) ... ok
+test_reject_contract_version_mismatch (test_freeze.FreezeGateTest) ... ok
+test_reject_parse (test_freeze.FreezeGateTest) ... ok
+test_reject_schema_missing_rule (test_freeze.FreezeGateTest) ... ok
+test_reject_schema_threshold_string (test_freeze.FreezeGateTest) ... ok
+test_reject_two_primary (test_freeze.FreezeGateTest) ... ok
+test_verify_cli_exits_six_on_tampered_file_and_never_prints_ok (test_freeze.VerifyFreezeTest) ... ok
+test_verify_cli_exits_two_when_a_file_is_missing (test_freeze.VerifyFreezeTest) ... ok
+test_verify_cli_exits_zero_on_match (test_freeze.VerifyFreezeTest) ... ok
+test_verify_raises_on_tampered_file (test_freeze.VerifyFreezeTest) ... ok
+test_verify_refuses_a_malformed_receipt (test_freeze.VerifyFreezeTest) ... ok
+test_verify_returns_hash_on_good_pair (test_freeze.VerifyFreezeTest) ... ok
+
+----------------------------------------------------------------------
+Ran 18 tests in 1.429s
+
+OK
