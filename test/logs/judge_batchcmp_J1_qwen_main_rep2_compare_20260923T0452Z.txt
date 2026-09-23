@@ -1,0 +1,10 @@
+batched1 vs batched2 | views 564 / 564, common 564 | identical prompts 564
+status pairs: {('ERROR', 'ERROR'): 151, ('ok', 'ok'): 411, ('ok', 'ERROR'): 2}
+byte-identical judge text: 427 / 564 = 75.7%
+both ok 411 | identical scores 340 (82.7%)
+differing-field counts among differing views: {'D4': 20, 'D5': 29, 'A': 27, 'D2': 18, 'D6': 21, 'critical': 6, 'D1': 13, 'D3': 15}
+sequential vs batched2 | views 564 / 564, common 564 | identical prompts 564
+status pairs: {('ERROR', 'ERROR'): 147, ('ok', 'ok'): 410, ('ok', 'ERROR'): 6, ('ERROR', 'ok'): 1}
+byte-identical judge text: 291 / 564 = 51.6%
+both ok 410 | identical scores 261 (63.7%)
+differing-field counts among differing views: {'D1': 40, 'D2': 48, 'D3': 38, 'D4': 47, 'D5': 69, 'D6': 54, 'critical': 22, 'A': 56}
