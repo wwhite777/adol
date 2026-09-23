@@ -24,7 +24,7 @@ Exact next steps (FRESH SESSION from this file; `/effort high` for building):
 3. HyperCLOVA (last): after Kanana + Gemma + EXAONE weights are deleted (need ≥ 80 GB free), download `naver-hyperclovax/HyperCLOVAX-SEED-Think-14B` (59 GB; REHYDRATE line), write research/models_run5.json with `"chat_template_kwargs": {"skip_reasoning": true}, "stop_token_ids": [100273, 100275, 100274]`, run a class=smoke probe on test/fixtures/items_smoke.jsonl (check: no reasoning text, clean stops, Korean), then the confirmatory campaign.
 4. Analysis: kyra.analysis.{n1_escalation,n2_localization,n3_reliability,transitions,pareto} over the panels → G6 (`--n3-revisions 0` unless a manual revision happened) → CLAIM_LEDGER rows → figures → stage_3 report v2 → Korean manuscript (JKIICE / 한국융합학회 template still needed).
 5. Optional (decide before any scoring, never after): add a Qwen3 checkpoint (non-thinking) as a sixth model if GPU time allows (DECISION_LOG 2026-09-23 item 1).
-6. [PI] nothing blocking; the HyperCLOVA license click is no longer needed (ungated as of 2026-09-23).
+6. [PI] DONE 2026-09-23 05:40Z: the PI said "go ahead" to the 59 GB HyperCLOVA download (DECISION_LOG); it is downloading (marker models/DOWNLOAD_hyperclova_think14b.DONE). Nothing else is blocking on the PI.
 
 Disclosures:
 - r004 waived (venue); S1 v4 corrections auditor-unverified — every record says so.
