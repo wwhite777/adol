@@ -28,7 +28,7 @@
       "gpu_memory_utilization": 0.85,
       "path": "models/hf (to download)",
       "disk_gb": 16,
-      "status": "downloaded 2026-09-23 (snapshot c963a5f4; 16.1 GB, 4 shards, LlamaForCausalLM, eos <|eot_id|>)",
+      "status": "RUNS COMPLETE 2026-09-23 02:38Z (4 MARKERs; main 156/156, repeats 31/31); weights deleted 02:39Z (REHYDRATE.md)",
       "notes": "repo id verified via the HF API 2026-09-23: ungated, license apache-2.0, 16.1 GB bf16; research/models_run3.json; the 15.7B-A3B MoE (31 GB, license 'other') and the kanana-2 series were not chosen"
     },
     {

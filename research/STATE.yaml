@@ -8,7 +8,7 @@ venue:
   phase_a: domestic — 한국정보통신학회 JKIICE or 한국융합학회 (PI 2026-09-22); no cross-family audit (PI rule 2026-09-11)
   phase_b: optional Q1 attempt (JMIR Formative / Sci Rep / JMIR MH) after co-author double rating; T1 conference only if H5 strong
 stage: S3
-status: 'in_progress   # generation: Qwen2.5-14B DONE, EXAONE-32B-AWQ DONE (re-run), Kanana finishing, Gemma running; HyperCLOVA waits for the PI''s download go; scoring next (judges on disk)'
+status: 'in_progress   # generation: Qwen, EXAONE, Kanana DONE; Gemma running; HyperCLOVA waits for the PI''s download go. Scoring: Qwen in progress (3 judges)'
 stage_history:
 - stage: S0
   status: completed
@@ -94,10 +94,11 @@ jobs:
 - '2026-09-22 12:38Z-15:00Z DONE: campaign run phaseA_T1 Qwen/Qwen2.5-14B-Instruct, confirmatory, GPU 1 — 4 runs with MARKERs (main 156/156; repeat_1..3 31/31 at T=0.7); marker result/raw/phaseA_T1_qwen14b.DONE exit=0'
 - '2026-09-22 12:39Z FAILED: campaign run phaseA_T1 LGAI-EXAONE/EXAONE-4.0-32B-AWQ, GPU 2 — exit 8, no MARKER (an external cleanup deleted /tmp/torchinductor_wjeong mid-compile; 155/156 items generated but unvalidated; kept unscored; DECISION_LOG 2026-09-22/23)'
 - '2026-09-23 ~01:00Z DONE: downloads into models/hf — J2 Mistral-Small int4 (re-download, snapshot 21907bf9), J3 cortecs/phi-4-FP8-Dynamic (7014f998), kakaocorp/kanana-1.5-8b-instruct-2505 (c963a5f4), RedHatAI/gemma-3-27b-it-quantized.w4a16 (2b537554); markers models/DOWNLOAD_*.DONE'
-- '2026-09-23 01:17Z RUNNING: campaign run phaseA_T1 kakaocorp/kanana-1.5-8b-instruct-2505 (research/models_run3.json; commit 1917ed7), confirmatory, --gpu 2; log test/logs/campaign_phaseA_T1_kanana8b_20260923T0117Z.log; marker result/raw/phaseA_T1_kanana8b.DONE on exit; expected end ~03:15Z'
 - '2026-09-23 00:53Z-02:35Z DONE: campaign run phaseA_T1 LGAI-EXAONE/EXAONE-4.0-32B-AWQ re-run, GPU 1 — 4 MARKERs (main 156/156 T=0; repeat_1..3 31/31 T=0.7); marker result/raw/phaseA_T1_exaone32b_rerun.DONE exit=0; record campaign_phaseA_T1__20260923T0053Z-232bc4.json; greedy texts identical to the failed attempt on 563/563 common turns; weights deleted 02:38Z'
 - '2026-09-23 02:37Z RUNNING: campaign run phaseA_T1 RedHatAI/gemma-3-27b-it-quantized.w4a16 (research/models_run4.json), confirmatory, --gpu 1; log test/logs/campaign_phaseA_T1_gemma27b_20260923T0237Z.log; marker result/raw/phaseA_T1_gemma27b.DONE on exit; expected end ~05:00Z'
-- '2026-09-23 PENDING: Kanana verify (marker + 4 MARKERs) → delete its weights → campaign score Qwen on GPU 2, then Kanana, then EXAONE; Gemma verify → delete → score; HyperCLOVA download (59 GB) ONLY after the PI''s explicit go (hub note 2026-09-23 01:36Z) and after the Gemma/Kanana weights are gone → models_run5.json smoke probe → run → score'
+- '2026-09-23 01:17Z-02:38Z DONE: campaign run phaseA_T1 kakaocorp/kanana-1.5-8b-instruct-2505, GPU 2 — 4 MARKERs (main 156/156; repeat_1..3 31/31); marker result/raw/phaseA_T1_kanana8b.DONE exit=0; record campaign_phaseA_T1__20260923T0117Z-62f57a.json; weights deleted 02:39Z'
+- '2026-09-23 02:39Z RUNNING: campaign score phaseA_T1 — Qwen2.5-14B runs (4) x judges J1 Llama-3.1-8B / J2 Mistral-Small int4 / J3 Phi-4 FP8, prefix views, anchors; --gpu 2; log test/logs/score_phaseA_T1_qwen14b_20260923T0239Z.log; marker result/raw/phaseA_T1_score_qwen14b.DONE; outputs judge_J*.jsonl + panel.jsonl per run dir'
+- '2026-09-23 PENDING: score Kanana, then EXAONE (four dated dirs, never main/20260922T1239Z-b936cd) on the free GPU; Gemma verify (~05:00Z) → delete weights → score; HyperCLOVA download ONLY after the PI''s explicit go (59 GB) → models_run5.json smoke probe → run → score; then analysis CLIs → G6'
 s3_progress:
   provider: DONE — src/kyra VLLMProvider + provenance fix (manifest records effective params + chat-template hash); smoke run result/raw/smoke_vllm/20260922T0817Z-3c5915 (sha manifest e201f60f…, responses 62bb9d8a…)
   disk: 26 GB free on the shared volume after the install; one ≤20 GB checkpoint at a time; cached Qwen2.5-14B-Instruct + Llama-3.1-8B-Instruct (fusion1's, read-only) count as two of the needed models/judges
