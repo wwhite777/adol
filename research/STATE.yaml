@@ -8,7 +8,7 @@ venue:
   phase_a: domestic — 한국정보통신학회 JKIICE or 한국융합학회 (PI 2026-09-22); no cross-family audit (PI rule 2026-09-11)
   phase_b: optional Q1 attempt (JMIR Formative / Sci Rep / JMIR MH) after co-author double rating; T1 conference only if H5 strong
 stage: S3
-status: 'in_progress   # generation COMPLETE 5/5; judge procedure PINNED (sequential, prefix caching off, batch-invariant env; reproducible 88/88 for J1/J2/J3; sharding verified 88/88); SCORING RUNNING: Qwen (GPU 1, single engine), Kanana (GPU 2, 2 engines); no outcome read'
+status: 'in_progress   # generation COMPLETE 5/5; procedure pinned (sequential, caching off, batch-invariant; sharded 2×, J3 @0.45; --resume); SCORING RUNNING: Qwen (GPU 1, single engine, ends ~20:40Z), Kanana resume (GPU 2, ~23:00Z); EXAONE/Gemma/HyperCLOVA queued; projected end ≈ 2026-09-24 06:00Z; no outcome read'
 stage_history:
 - stage: S0
   status: completed
@@ -125,6 +125,7 @@ jobs:
 - '2026-09-23 18:00Z-18:25Z DONE: `campaign score --resume` committed (d6e7507; 506 tests OK; conductor dry runs on the real Kanana dirs: J1/J2 reused, J3 to run; tampered sidecar refused) — launch source for all remaining scoring = frozen snapshot4 (git archive d6e7507 src manual + symlinked research/, result/)'
 - '2026-09-23 18:05Z-18:46Z DONE: J3 two-engine test at 0.45 — engines ready on attempt 1; merged == single-engine 88/88 (DECISION_LOG ~18:05Z entry, result appended)'
 - '2026-09-23 18:46Z RUNNING: Kanana scoring --resume (GPU 2, snapshot4; J1/J2 main reused; J3 main + all repeats sharded 2×): log test/logs/score_phaseA_T1_kanana8b_20260923T1846Z.log; marker result/raw/phaseA_T1_score_kanana8b.DONE; expected ≈ 4 h (~23:00Z)'
+- '2026-09-23 18:47Z QUEUED (this session''s background; gated on the predecessor''s exit marker + a free GPU): EXAONE scoring on GPU 1 after Qwen (models_run2.json; four dated dirs; marker result/raw/phaseA_T1_score_exaone32b.DONE) → HyperCLOVA on GPU 1 after EXAONE (models_run5.json; marker …_score_hyperclova14b.DONE); Gemma on GPU 2 after Kanana (models_run4.json; marker …_score_gemma27b.DONE). All from snapshot4. If this session ended before a queue fired, launch it manually with the same launcher line.'
 s3_progress:
   provider: DONE — src/kyra VLLMProvider + provenance fix (manifest records effective params + chat-template hash); smoke run result/raw/smoke_vllm/20260922T0817Z-3c5915 (sha manifest e201f60f…, responses 62bb9d8a…)
   disk: 26 GB free on the shared volume after the install; one ≤20 GB checkpoint at a time; cached Qwen2.5-14B-Instruct + Llama-3.1-8B-Instruct (fusion1's, read-only) count as two of the needed models/judges
