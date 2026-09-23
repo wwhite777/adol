@@ -29,9 +29,9 @@
       "model_path": "/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1",
       "family": "microsoft",
       "provider": "vllm",
-      "gpu_memory_utilization": 0.42,
+      "gpu_memory_utilization": 0.45,
       "batch_size": 1,
-      "notes": "compressed-tensors FP8-dynamic of microsoft/phi-4 (Phi3ForCausalLM), 15.7 GB; snapshot 7014f998",
+      "notes": "compressed-tensors FP8-dynamic of microsoft/phi-4 (Phi3ForCausalLM), 15.7 GB; snapshot 7014f998; gpu_memory_utilization 0.45 per engine (not 0.42): at 0.42 the FP8 engine had 2.63 GiB free for KV cache after 14.74 GiB weights + 0.66 GiB CUDA graphs, below the ~3.1 GiB a 16,384-token window needs → engine never started (Kanana main, 2026-09-23 17:52Z); two J3 engines = 0.90 of the GPU",
       "shards": 2
     }
   ]
