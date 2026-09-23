@@ -1,5 +1,5 @@
 {
-  "_comment": "Phase-A judge panel (2026-09-23). Three open-weight judges from families disjoint from every evaluated family (alibaba, lg, kakao, google, naver); leave-one-family-out therefore removes no judge. Local snapshot paths are used because the judges live in two HF caches (Llama in fusion1's read-only ~/.cache/huggingface; Mistral and Phi-4 in adol's models/hf). gpu_memory_utilization 0.85: judges run one at a time on a pinned, otherwise idle GPU. Manual and anchors are shared (judge_prompt_v0.md v0.2; research/judge_anchors_v1.json).",
+  "_comment": "Phase-A judge panel (2026-09-23). Three open-weight judges from families disjoint from every evaluated family (alibaba, lg, kakao, google, naver); leave-one-family-out therefore removes no judge. Local snapshot paths are used because the judges live in two HF caches (Llama in fusion1's read-only ~/.cache/huggingface; Mistral and Phi-4 in adol's models/hf). gpu_memory_utilization 0.85: judges run one at a time on a pinned, otherwise idle GPU. Manual and anchors are shared (judge prompt v0.3 = src/kyra/judge_prompt_v0_3.md, the protocol's one revision; research/judge_anchors_v1.json). DECODE PATH (DECISION_LOG 2026-09-23 ~05:15Z): batch_size 64 per judge (below) + the scoring process must export VLLM_BATCH_INVARIANT=1 and KYRA_VLLM_ENGINE_KWARGS='{\"attention_backend\": \"FLASH_ATTN\"}' — both are recorded in each judge's sidecar meta (provider_effective_params.vllm_env / engine_kwargs); a scoring run whose sidecars lack them is not the pinned procedure.",
   "judges": [
     {
       "judge_id": "J1",
@@ -8,6 +8,7 @@
       "family": "meta",
       "provider": "vllm",
       "gpu_memory_utilization": 0.85,
+      "batch_size": 64,
       "notes": "bf16, 16 GB; fusion1's cache (read-only, protected for pilot B); snapshot 0e9e39f2"
     },
     {
@@ -17,6 +18,7 @@
       "family": "mistral",
       "provider": "vllm",
       "gpu_memory_utilization": 0.85,
+      "batch_size": 64,
       "notes": "Intel AutoRound int4 of Mistral-Small-3.2-24B-Instruct-2506 (Mistral3ForConditionalGeneration), 15.1 GB; snapshot 21907bf9"
     },
     {
@@ -26,6 +28,7 @@
       "family": "microsoft",
       "provider": "vllm",
       "gpu_memory_utilization": 0.85,
+      "batch_size": 64,
       "notes": "compressed-tensors FP8-dynamic of microsoft/phi-4 (Phi3ForCausalLM), 15.7 GB; snapshot 7014f998"
     }
   ]
