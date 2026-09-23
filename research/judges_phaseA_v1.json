@@ -1,0 +1,32 @@
+{
+  "_comment": "Phase-A judge panel (2026-09-23). Three open-weight judges from families disjoint from every evaluated family (alibaba, lg, kakao, google, naver); leave-one-family-out therefore removes no judge. Local snapshot paths are used because the judges live in two HF caches (Llama in fusion1's read-only ~/.cache/huggingface; Mistral and Phi-4 in adol's models/hf). gpu_memory_utilization 0.85: judges run one at a time on a pinned, otherwise idle GPU. Manual and anchors are shared (judge_prompt_v0.md v0.2; research/judge_anchors_v1.json).",
+  "judges": [
+    {
+      "judge_id": "J1",
+      "model_id": "meta-llama/Llama-3.1-8B-Instruct",
+      "model_path": "/home/wjeong/.cache/huggingface/hub/models--meta-llama--Llama-3.1-8B-Instruct/snapshots/0e9e39f249a16976918f6564b8830bc894c89659",
+      "family": "meta",
+      "provider": "vllm",
+      "gpu_memory_utilization": 0.85,
+      "notes": "bf16, 16 GB; fusion1's cache (read-only, protected for pilot B); snapshot 0e9e39f2"
+    },
+    {
+      "judge_id": "J2",
+      "model_id": "Intel/Mistral-Small-3.2-24B-Instruct-2506-int4-AutoRound",
+      "model_path": "/home/wjeong/adol/models/hf/hub/models--Intel--Mistral-Small-3.2-24B-Instruct-2506-int4-AutoRound/snapshots/21907bf9a442ec05c91e059ef17b08a8b44983f5",
+      "family": "mistral",
+      "provider": "vllm",
+      "gpu_memory_utilization": 0.85,
+      "notes": "Intel AutoRound int4 of Mistral-Small-3.2-24B-Instruct-2506 (Mistral3ForConditionalGeneration), 15.1 GB; snapshot 21907bf9"
+    },
+    {
+      "judge_id": "J3",
+      "model_id": "cortecs/phi-4-FP8-Dynamic",
+      "model_path": "/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1",
+      "family": "microsoft",
+      "provider": "vllm",
+      "gpu_memory_utilization": 0.85,
+      "notes": "compressed-tensors FP8-dynamic of microsoft/phi-4 (Phi3ForCausalLM), 15.7 GB; snapshot 7014f998"
+    }
+  ]
+}

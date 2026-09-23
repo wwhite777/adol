@@ -28,28 +28,28 @@
       "gpu_memory_utilization": 0.85,
       "path": "models/hf (to download)",
       "disk_gb": 16,
-      "status": "not_downloaded",
-      "notes": "ungated, 'Kanana' license; verify the exact 8B instruct repo id on HF before download (the 15.7B-A3B MoE is ~31 GB bf16 — too large unless a 4-bit variant exists)"
+      "status": "downloaded 2026-09-23 (snapshot c963a5f4; 16.1 GB, 4 shards, LlamaForCausalLM, eos <|eot_id|>)",
+      "notes": "repo id verified via the HF API 2026-09-23: ungated, license apache-2.0, 16.1 GB bf16; research/models_run3.json; the 15.7B-A3B MoE (31 GB, license 'other') and the kanana-2 series were not chosen"
     },
     {
-      "model_id": "google/gemma-3-27b-it (4-bit) or google/gemma-3-12b-it",
+      "model_id": "RedHatAI/gemma-3-27b-it-quantized.w4a16",
       "family": "google",
       "provider": "vllm",
       "gpu_memory_utilization": 0.85,
       "path": "models/hf (to download)",
-      "disk_gb": 24,
-      "status": "not_downloaded",
-      "notes": "gemma-3-12b-it bf16 ~24 GB is tight against the 20 GB floor; prefer an official/community 4-bit 27B if vLLM-loadable; Gemma terms acceptance required on HF"
+      "disk_gb": 20,
+      "status": "downloaded 2026-09-23 (snapshot 2b537554; 19.7 GB, 4 shards, Gemma3ForConditionalGeneration, eos [1, 106]); research/models_run4.json",
+      "notes": "compressed-tensors W4A16 of google/gemma-3-27b-it by Red Hat AI (vLLM maintainers); ungated; 19.7 GB; Gemma Terms of Use apply; alternatives ISTA-DASLab/gemma-3-27b-it-GPTQ-4b-128g (16.9 GB) and gaunernst/gemma-3-27b-it-int4-awq (personal) — DECISION_LOG 2026-09-23"
     },
     {
-      "model_id": "naver-hyperclovax/HyperCLOVAX-SEED-Think-14B (4-bit) — or Kanana 15.7B-A3B 4-bit if the license is not accepted",
+      "model_id": "naver-hyperclovax/HyperCLOVAX-SEED-Think-14B",
       "family": "naver",
       "provider": "vllm",
       "gpu_memory_utilization": 0.85,
-      "path": "models/hf (to download)",
-      "disk_gb": 9,
-      "status": "blocked_on_pi_license",
-      "notes": "gated: HyperCLOVA X SEED license agreement must be accepted under the PI's HF account; 32B Think is 33B params (too large in bf16)"
+      "path": "models/hf (to download LAST, after Kanana/Gemma/EXAONE weights are deleted)",
+      "disk_gb": 59,
+      "status": "planned — ungated as of 2026-09-23 (HF API gated=False; no click-through needed); waits for the provider options chat_template_kwargs={\"skip_reasoning\": true} + stop_token_ids=[100273, 100275, 100274] (coder card 2026-09-23) and a class=smoke probe on the real checkpoint",
+      "notes": "official checkpoint, fp32 on disk (12 shards, 59 GB), fp16 in vLLM (architecture HyperCLOVAXForCausalLM supported by vLLM 0.19.0); license 'HyperCLOVA X SEED 14B Think Model License Agreement' (attribution notice required); non-reasoning mode pinned in DECISION_LOG 2026-09-23; 32B Think (66.6 GB) too large"
     }
   ],
   "judges": [
@@ -70,7 +70,7 @@
       "gpu_memory_utilization": 0.5,
       "path": "models/hf (Intel int4 AutoRound snapshot 21907bf9; DELETED 2026-09-22 13:47Z to lift the disk floor for the EXAONE re-run — re-download per REHYDRATE.md before scoring)",
       "disk_gb": 14,
-      "status": "deleted_regenerable",
+      "status": "downloaded (re-downloaded 2026-09-23, snapshot 21907bf9, 15.1 GB; Mistral3ForConditionalGeneration, auto-round 4-bit)",
       "notes": "judge J2; Intel AutoRound int4 of Mistral-Small-3.2-24B (organizational provenance chosen over a personal AWQ); vLLM-loadable; Korean competence checked in the N3 reliability run"
     },
     {
@@ -80,7 +80,7 @@
       "gpu_memory_utilization": 0.5,
       "path": "models/hf (to download)",
       "disk_gb": 15,
-      "status": "planned — download after EXAONE-AWQ weights are deleted post-run (disk floor)",
+      "status": "downloaded 2026-09-23 (snapshot 7014f998; 15.7 GB, 4 shards, Phi3ForCausalLM, compressed-tensors FP8)",
       "notes": "judge J3; FP8 dynamic quant of microsoft/phi-4 (no reputable 4-bit build exists; only a 69-download personal GPTQ); L40S (Ada, cc 8.9) runs FP8 in vLLM; family microsoft disjoint from all evaluated families"
     }
   ],
