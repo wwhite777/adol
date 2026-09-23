@@ -1464,6 +1464,500 @@ class TestCampaignScoring(unittest.TestCase):
 
 
 # ==========================================================================
+# campaign score --resume: reuse verified judge output, run only what is missing
+# ==========================================================================
+ENGINE_ENV_NAMES = ("KYRA_VLLM_ENGINE_KWARGS", "VLLM_BATCH_INVARIANT", "VLLM_ATTENTION_BACKEND")
+
+
+class TestCampaignScoringResume(unittest.TestCase):
+    """The Kanana situation: judges J1/J2 finished, J3's engines failed. A second
+    pass with --resume must keep the finished judge files (provenance-checked,
+    no subprocess), run only the missing judge, and refuse loudly on any
+    provenance difference. Fake judge providers only; no GPU, no weights."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.tmp = Path(tempfile.mkdtemp(prefix="campaign_resume_"))
+        cls.out_root = cls.tmp / "raw"
+        cls.csv = cls.tmp / "EXPERIMENTS.csv"
+        shutil.copy2(REAL_CSV, cls.csv)
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            code = campaign.main(
+                ["--items", str(SMOKE_ITEMS), "--models", str(FIX / "models_fake.json"),
+                 "--cohort", "resumeme", "--class", "smoke",
+                 "--out-root", str(cls.out_root), "--experiments-csv", str(cls.csv)],
+                gpu_probe=fake_gpu_probe(),
+            )
+        assert code == 0, buf.getvalue()
+        record = json.loads(
+            one_campaign_record(cls.out_root / "resumeme", "resumeme").read_text(encoding="utf-8")
+        )
+        cls.runs = [r["run_dir"] for r in record["runs"]]
+        cls.judges_doc = json.loads((FIX / "judges_fake.json").read_text(encoding="utf-8"))
+
+    @classmethod
+    def tearDownClass(cls):
+        shutil.rmtree(cls.tmp, True)
+
+    def setUp(self):
+        # --resume compares the engine knobs only when this process exports them,
+        # so every test starts from "not exported" and puts back what it found.
+        for name in ENGINE_ENV_NAMES:
+            if name in os.environ:
+                self.addCleanup(os.environ.__setitem__, name, os.environ[name])
+                del os.environ[name]
+            else:
+                self.addCleanup(os.environ.pop, name, None)
+
+    # -- fixtures ------------------------------------------------------------
+
+    def judges_file(self, run_dir, keep=None):
+        """judges.json with fake_outputs generated for this run directory."""
+        doc = json.loads(json.dumps(self.judges_doc))
+        judges = doc["judges"] if keep is None else [
+            j for j in doc["judges"] if j["judge_id"] in keep
+        ]
+        for i, judge in enumerate(judges):
+            out = self.tmp / ("fake_outputs_%s_%s.json" % (judge["judge_id"], Path(run_dir).name))
+            out.write_text(
+                json.dumps(fake_judge_outputs(run_dir, SMOKE_ITEMS, offset=i)),
+                encoding="utf-8",
+            )
+            judge["fake_outputs"] = str(out)
+        path = self.tmp / ("judges_%s.json" % Path(run_dir).name)
+        path.write_text(json.dumps({"judges": judges}), encoding="utf-8")
+        return path
+
+    def score(self, run_dir, judges_path, cohort, extra=None):
+        argv = [
+            "score",
+            "--items", str(SMOKE_ITEMS),
+            "--models", str(FIX / "models_fake.json"),
+            "--judges", str(judges_path),
+            "--cohort", cohort,
+            "--runs", str(run_dir),
+            "--anchors", str(ANCHORS),
+            "--out-root", str(self.out_root),
+            "--experiments-csv", str(self.csv),
+        ] + list(extra or [])
+        buf = io.StringIO()
+        with redirect_stdout(buf), redirect_stderr(buf):
+            code = campaign.main(argv, gpu_probe=fake_gpu_probe())
+        return code, buf.getvalue()
+
+    def read_jsonl(self, path):
+        return [
+            json.loads(line)
+            for line in Path(path).read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        ]
+
+    def make_judge_output(self, run_dir, judges_path, judge_id, extra=None):
+        """Produce judge_<id>.jsonl + its sidecar exactly as the campaign would.
+
+        Same argv kyra.campaign.judge_command builds for a fake judge (views
+        prefix, the items file, the anchors file, no --batch-size), so the
+        sidecar this leaves IS a finished judge of the plan under test.
+        """
+        from kyra.judge import main as judge_main
+
+        entries = {
+            j["judge_id"]: j
+            for j in json.loads(judges_path.read_text(encoding="utf-8"))["judges"]
+        }
+        judge = entries[judge_id]
+        out_path = Path(run_dir) / ("judge_%s.jsonl" % judge_id)
+        argv = [
+            "--run-dir", str(run_dir), "--provider", "fake", "--judge-id", judge_id,
+            "--family", judge["family"], "--views", "prefix", "--items", str(SMOKE_ITEMS),
+            "--out", str(out_path), "--fake-outputs", str(judge["fake_outputs"]),
+            "--anchors", str(ANCHORS),
+        ] + list(extra or [])
+        buf = io.StringIO()
+        with redirect_stdout(buf), redirect_stderr(buf):
+            rc = judge_main(argv)
+        self.assertEqual(rc, 0, buf.getvalue())
+        return out_path
+
+    def spy_on_judges(self):
+        """Record every judge that actually starts a subprocess."""
+        calls = []
+        real = campaign.run_one_judge
+
+        def spy(judge, *args, **kwargs):
+            calls.append(judge["judge_id"])
+            return real(judge, *args, **kwargs)
+
+        campaign.run_one_judge = spy
+        self.addCleanup(setattr, campaign, "run_one_judge", real)
+        return calls
+
+    def refusal_line(self, out):
+        """The ERROR line the pass refused with (not the plan echo above it)."""
+        lines = [l for l in out.splitlines() if l.startswith("ERROR: --resume refused")]
+        self.assertEqual(len(lines), 1, out)
+        return lines[0]
+
+    def edit_meta(self, meta_path, **changes):
+        meta = json.loads(Path(meta_path).read_text(encoding="utf-8"))
+        meta.update(changes)
+        Path(meta_path).write_text(json.dumps(meta, indent=2, sort_keys=True), encoding="utf-8")
+
+    # -- 1. reuse one judge, run the other -----------------------------------
+
+    def test_1_complete_judge_is_reused_and_only_the_missing_one_runs(self):
+        run_dir = Path(self.runs[0])
+        judges_path = self.judges_file(run_dir)
+        j1 = self.make_judge_output(run_dir, judges_path, "JF1")
+        j1_meta = run_dir / "judge_JF1.meta.json"
+        j1_sha, meta_sha = sha256(j1), sha256(j1_meta)
+        j1_stat = (j1.stat().st_mtime_ns, j1.stat().st_size)
+        n_views = len(self.read_jsonl(j1))
+        calls = self.spy_on_judges()
+        with self.csv.open(encoding="utf-8", newline="") as fh:
+            before = len(list(csv.reader(fh)))
+
+        code, out = self.score(run_dir, judges_path, "resumeone", extra=["--resume"])
+        self.assertEqual(code, 0, out)
+
+        # the reused judge never ran and its file was not touched
+        self.assertEqual(calls, ["JF2"], out)
+        self.assertEqual(sha256(j1), j1_sha)
+        self.assertEqual((j1.stat().st_mtime_ns, j1.stat().st_size), j1_stat)
+        logs = sorted(p.name for p in (self.out_root / "resumeone" / "scoring_logs").iterdir())
+        self.assertFalse([n for n in logs if "judge_JF1" in n], logs)
+        self.assertTrue([n for n in logs if "judge_JF2" in n], logs)
+        self.assertIn("REUSED", out)
+        self.assertIn("(1 reused)", out)
+
+        # the missing judge and the panel were built
+        j2 = run_dir / "judge_JF2.jsonl"
+        self.assertEqual(len(self.read_jsonl(j2)), n_views)
+        panel_rows = self.read_jsonl(run_dir / "panel.jsonl")
+        self.assertEqual(len(panel_rows), n_views)
+        self.assertTrue(all(sorted(r["judges_used"]) == ["JF1", "JF2"] for r in panel_rows))
+
+        record = json.loads(
+            one_campaign_record(self.out_root / "resumeone", "resumeone", "_scoring")
+            .read_text(encoding="utf-8")
+        )
+        self.assertTrue(record["resume"])
+        self.assertTrue(record["plan"]["resume"])
+        self.assertEqual(record["status"], "completed")
+        runs = {r["judge_id"]: r for r in record["judge_runs"]}
+        self.assertEqual(runs["JF1"]["status"], "reused")
+        self.assertEqual(runs["JF1"]["sha256"], j1_sha)
+        self.assertEqual(runs["JF1"]["meta_sha256"], meta_sha)
+        self.assertIsNone(runs["JF1"]["exit_code"])
+        self.assertEqual(runs["JF1"]["n_views"], n_views)
+        self.assertEqual(runs["JF2"]["status"], "completed")
+        self.assertEqual(record["panel_runs"][0]["status"], "completed")
+
+        with self.csv.open(encoding="utf-8", newline="") as fh:
+            rows = list(csv.reader(fh))
+        self.assertEqual(len(rows) - before, 3)  # reused judge + run judge + panel
+        fields = {}
+        for row in rows[-3:]:
+            f = dict(zip(campaign.EXPERIMENTS_HEADER, row))
+            fields[f["run"].split("__")[-1]] = f
+        jf1 = fields["judge_JF1"]
+        self.assertEqual(jf1["status"], "reused")
+        self.assertIn(j1_sha, jf1["marker"])
+        self.assertIn("reused", jf1["marker"])
+        self.assertIn(meta_sha, jf1["marker"])
+        self.assertIn("no subprocess", jf1["command"])
+        self.assertEqual(fields["judge_JF2"]["status"], "completed")
+        self.assertEqual(fields["panel"]["status"], "completed")
+        # the config cell of a reused judge is the cell the pass would have written
+        self.assertEqual(
+            jf1["config"].replace("judge=JF1; family=judge_x; provider=fake; model=fake/judge-1",
+                                  "X"),
+            fields["judge_JF2"]["config"].replace(
+                "judge=JF2; family=judge_y; provider=fake; model=fake/judge-2", "X"),
+        )
+
+    # -- 2. a finished run: every judge and the panel are reused --------------
+
+    def test_2_a_finished_run_reuses_every_judge_and_the_panel(self):
+        run_dir = Path(self.runs[1])
+        judges_path = self.judges_file(run_dir)
+        code, out = self.score(run_dir, judges_path, "resumefull1")  # normal pass
+        self.assertEqual(code, 0, out)
+        before = {
+            name: sha256(run_dir / name)
+            for name in ("judge_JF1.jsonl", "judge_JF2.jsonl", "panel.jsonl")
+        }
+        calls = self.spy_on_judges()
+
+        code, out = self.score(run_dir, judges_path, "resumefull2", extra=["--resume"])
+        self.assertEqual(code, 0, out)
+        self.assertEqual(calls, [], out)
+        self.assertIn("PANEL REUSED", out)
+        self.assertIn("(2 reused)", out)
+        self.assertEqual({n: sha256(run_dir / n) for n in before}, before)
+        record = json.loads(
+            one_campaign_record(self.out_root / "resumefull2", "resumefull2", "_scoring")
+            .read_text(encoding="utf-8")
+        )
+        self.assertEqual(
+            [r["status"] for r in record["judge_runs"]], ["reused", "reused"]
+        )
+        self.assertEqual(record["panel_runs"][0]["status"], "reused")
+        self.assertEqual(record["panel_runs"][0]["sha256"], before["panel.jsonl"])
+        # no panel subprocess either: not one log file was written
+        logs = self.out_root / "resumefull2" / "scoring_logs"
+        self.assertFalse(
+            sorted(p.name for p in logs.iterdir()) if logs.is_dir() else [],
+            "a fully reused pass runs no child process at all",
+        )
+
+    # -- 3. any provenance difference refuses the whole pass ------------------
+
+    def test_3_a_provenance_difference_refuses_naming_the_field(self):
+        run_dir = Path(self.runs[2])
+        judges_path = self.judges_file(run_dir)
+        j1 = self.make_judge_output(run_dir, judges_path, "JF1")
+        meta_path = run_dir / "judge_JF1.meta.json"
+        original_meta = meta_path.read_text(encoding="utf-8")
+        original_jsonl = j1.read_text(encoding="utf-8")
+        n_views = len(self.read_jsonl(j1))
+        cases = [
+            ("prompt_template_sha256", {"prompt_template_sha256": "0" * 64}),
+            ("anchors_sha256", {"anchors_sha256": "0" * 64}),
+            ("items_sha256", {"items_sha256": "0" * 64}),
+            ("batch_size", {"batch_size": 1}),
+            ("model_path", {"model_path": "/models/some-other-model"}),
+            ("n_views", {"n_views": n_views - 1}),
+            ("decode_mode", {"decode_mode": "sequential"}),
+        ]
+        for field, change in cases:
+            with self.subTest(field=field):
+                self.edit_meta(meta_path, **change)
+                code, out = self.score(
+                    run_dir, judges_path, "resumebad", extra=["--resume", "--dry-run"]
+                )
+                self.assertEqual(code, campaign.EXIT_PREFLIGHT, out)
+                line = self.refusal_line(out)
+                self.assertIn(str(run_dir), line)
+                self.assertIn("judge JF1", line)
+                self.assertIn(field, line)
+                meta_path.write_text(original_meta, encoding="utf-8")
+
+        # a judge file that lost a record is refused too (the sidecar still agrees)
+        j1.write_text(
+            "\n".join(original_jsonl.splitlines()[:-1]) + "\n", encoding="utf-8"
+        )
+        code, out = self.score(run_dir, judges_path, "resumebad", extra=["--resume", "--dry-run"])
+        self.assertEqual(code, campaign.EXIT_PREFLIGHT, out)
+        self.assertIn("records", self.refusal_line(out))
+        j1.write_text(original_jsonl, encoding="utf-8")
+
+        # a missing sidecar is a refusal, not a silent re-run
+        meta_path.unlink()
+        code, out = self.score(run_dir, judges_path, "resumebad", extra=["--resume", "--dry-run"])
+        self.assertEqual(code, campaign.EXIT_PREFLIGHT, out)
+        self.assertIn("sidecar", self.refusal_line(out))
+        meta_path.write_text(original_meta, encoding="utf-8")
+
+        # and with the sidecar restored the same pass is accepted
+        code, out = self.score(run_dir, judges_path, "resumeok", extra=["--resume", "--dry-run"])
+        self.assertEqual(code, 0, out)
+        self.assertIn("[EXISTS - reused", out)
+
+    def test_3b_a_refusal_runs_nothing_and_overwrites_nothing(self):
+        run_dir = Path(self.runs[3])
+        judges_path = self.judges_file(run_dir)
+        j1 = self.make_judge_output(run_dir, judges_path, "JF1")
+        before = sha256(j1)
+        self.edit_meta(run_dir / "judge_JF1.meta.json", prompt_template_sha256="0" * 64)
+        calls = self.spy_on_judges()
+
+        code, out = self.score(run_dir, judges_path, "resumehard", extra=["--resume"])
+        self.assertEqual(code, campaign.EXIT_PREFLIGHT, out)
+        self.assertEqual(calls, [], out)
+        self.assertIn("prompt_template_sha256", self.refusal_line(out))
+        self.assertEqual(sha256(j1), before)
+        self.assertFalse((run_dir / "judge_JF2.jsonl").exists())
+        self.assertFalse((run_dir / "panel.jsonl").exists())
+        record = json.loads(
+            one_campaign_record(self.out_root / "resumehard", "resumehard", "_scoring")
+            .read_text(encoding="utf-8")
+        )
+        self.assertEqual(record["status"], "refused")
+        self.assertIn("prompt_template_sha256", record["stopped_because"])
+
+    # -- 4. engine knobs are compared only when this process exports them -----
+
+    def test_4_engine_kwargs_and_vllm_env_are_compared_when_set(self):
+        run_dir = Path(self.runs[4])
+        judges_path = self.judges_file(run_dir)
+        self.make_judge_output(run_dir, judges_path, "JF1")
+        meta_path = run_dir / "judge_JF1.meta.json"
+        self.edit_meta(
+            meta_path,
+            provider_effective_params={
+                "engine_kwargs": {"attention_backend": "FLASH_ATTN"},
+                "vllm_env": {"VLLM_BATCH_INVARIANT": "1"},
+            },
+        )
+        dry = ["--resume", "--dry-run"]
+
+        # (a) nothing exported: the knobs are not compared at all
+        code, out = self.score(run_dir, judges_path, "resumeenv_a", extra=dry)
+        self.assertEqual(code, 0, out)
+        self.assertIn("[EXISTS - reused", out)
+        self.assertIn("not exported (not compared)", out)
+
+        # (b) exported and equal: still reused
+        os.environ["KYRA_VLLM_ENGINE_KWARGS"] = '{"attention_backend": "FLASH_ATTN"}'
+        os.environ["VLLM_BATCH_INVARIANT"] = "1"
+        code, out = self.score(run_dir, judges_path, "resumeenv_b", extra=dry)
+        self.assertEqual(code, 0, out)
+        self.assertIn("[EXISTS - reused", out)
+
+        # (c) exported and different engine kwargs: refused, naming the field
+        os.environ["KYRA_VLLM_ENGINE_KWARGS"] = '{"attention_backend": "TRITON_ATTN"}'
+        code, out = self.score(run_dir, judges_path, "resumeenv_c", extra=dry)
+        self.assertEqual(code, campaign.EXIT_PREFLIGHT, out)
+        self.assertIn("provider_effective_params.engine_kwargs", self.refusal_line(out))
+
+        # (d) exported and different vllm env: refused, naming that field
+        os.environ["KYRA_VLLM_ENGINE_KWARGS"] = '{"attention_backend": "FLASH_ATTN"}'
+        os.environ["VLLM_BATCH_INVARIANT"] = "0"
+        code, out = self.score(run_dir, judges_path, "resumeenv_d", extra=dry)
+        self.assertEqual(code, campaign.EXIT_PREFLIGHT, out)
+        self.assertIn("provider_effective_params.vllm_env", self.refusal_line(out))
+
+    # -- 5. a failed sharded attempt: shards archived, the judge runs ---------
+
+    def test_5_stray_shard_files_are_archived_and_the_judge_re_runs(self):
+        run_dir = Path(self.runs[5])
+        judges_path = self.judges_file(run_dir)
+        # a crashed sharded attempt: shard 1 of 2 on disk, no merged judge file
+        stray = run_dir / "judge_JF1.shard1of2.jsonl"
+        self.make_judge_output(
+            run_dir, judges_path, "JF1", extra=["--shard", "1/2", "--out", str(stray)]
+        )
+        # --out is given twice; the last wins, so confirm where it landed
+        self.assertTrue(stray.is_file())
+        stray_sha = sha256(stray)
+        self.assertFalse((run_dir / "judge_JF1.jsonl").exists())
+
+        code, out = self.score(run_dir, judges_path, "resumeshard", extra=["--resume"])
+        self.assertEqual(code, 0, out)
+        self.assertIn("archived 1 stray shard file(s) of judge JF1", out)
+        self.assertFalse(stray.exists(), "the stray shard must leave the run dir root")
+        archived = sorted((run_dir / "shards").glob("failed_*/judge_JF1.shard1of2.jsonl"))
+        self.assertEqual(len(archived), 1, sorted(p.name for p in (run_dir / "shards").iterdir()))
+        self.assertEqual(sha256(archived[0]), stray_sha, "the evidence is kept verbatim")
+        self.assertTrue(
+            archived[0].with_name("judge_JF1.shard1of2.meta.json").is_file(),
+            "the shard's sidecar goes with it",
+        )
+        merged = run_dir / "judge_JF1.jsonl"
+        self.assertTrue(merged.is_file())
+        self.assertEqual(
+            len(self.read_jsonl(merged)), campaign.expected_view_count(run_dir)
+        )
+        record = json.loads(
+            one_campaign_record(self.out_root / "resumeshard", "resumeshard", "_scoring")
+            .read_text(encoding="utf-8")
+        )
+        self.assertEqual(
+            [r["status"] for r in record["judge_runs"]], ["completed", "completed"]
+        )
+
+    # -- 6. without --resume nothing changed ---------------------------------
+
+    def test_6_without_resume_the_existing_refusal_is_unchanged(self):
+        run_dir = Path(self.runs[6])
+        judges_path = self.judges_file(run_dir)
+        j1 = self.make_judge_output(run_dir, judges_path, "JF1")
+        before = sha256(j1)
+        calls = self.spy_on_judges()
+
+        code, out = self.score(run_dir, judges_path, "resumeoff")
+        self.assertEqual(code, campaign.EXIT_PREFLIGHT, out)
+        self.assertIn("judge output already exists, refusing to overwrite", out)
+        self.assertIn(str(j1), out)
+        self.assertEqual(calls, [])
+        self.assertEqual(sha256(j1), before)
+        self.assertFalse((run_dir / "judge_JF2.jsonl").exists())
+        record = json.loads(
+            one_campaign_record(self.out_root / "resumeoff", "resumeoff", "_scoring")
+            .read_text(encoding="utf-8")
+        )
+        self.assertFalse(record["resume"])
+        self.assertNotIn("resume", record["plan"])
+        self.assertNotIn("resume_judges", record["plan"]["runs"][0])
+
+    def test_5b_a_shard_beside_a_reusable_judge_file_is_refused_by_name(self):
+        """An unmerged shard in the run dir ROOT next to a merged judge file is an
+        inconsistent state - nobody can tell whether the merge contains it, and
+        kyra.analysis.n3_reliability's judge_*.jsonl glob would count it as an
+        extra judge. Under <run_dir>/shards/ the same file is the archive a
+        finished merge leaves, and the judge is reused."""
+        run_dir = Path(self.runs[2])
+        judges_path = self.judges_file(run_dir)
+        j1 = run_dir / "judge_JF1.jsonl"
+        if not j1.is_file():   # test_3 leaves one behind; do not depend on order
+            self.make_judge_output(run_dir, judges_path, "JF1")
+        before = sha256(j1)
+        dry = ["--resume", "--dry-run"]
+        stray = run_dir / "judge_JF1.shard1of2.jsonl"
+        stray_meta = run_dir / "judge_JF1.shard1of2.meta.json"
+        stray.write_text("", encoding="utf-8")
+        stray_meta.write_text("{}", encoding="utf-8")
+        calls = self.spy_on_judges()
+
+        code, out = self.score(run_dir, judges_path, "resumerootshard", extra=dry)
+        self.assertEqual(code, campaign.EXIT_PREFLIGHT, out)
+        line = self.refusal_line(out)
+        self.assertIn(str(stray), line, "the refusal must name the file")
+        self.assertIn("judge JF1", line)
+        self.assertIn("root_shard_file", line)
+        self.assertEqual(calls, [])
+        self.assertEqual(sha256(j1), before)
+        self.assertTrue(stray.is_file(), "the shard is named, never moved or deleted")
+
+        # the sidecar alone is refused as well
+        stray.unlink()
+        code, out = self.score(run_dir, judges_path, "resumerootshard2", extra=dry)
+        self.assertEqual(code, campaign.EXIT_PREFLIGHT, out)
+        self.assertIn(str(stray_meta), self.refusal_line(out))
+
+        # the very same files under shards/ are the archive of a finished merge
+        stray.write_text("", encoding="utf-8")
+        archive = run_dir / "shards"
+        archive.mkdir(exist_ok=True)
+        for path in (stray, stray_meta):
+            path.rename(archive / path.name)
+        code, out = self.score(run_dir, judges_path, "resumerootshard3", extra=dry)
+        self.assertEqual(code, 0, out)
+        self.assertIn("[EXISTS - reused", out)
+        for path in (stray, stray_meta):
+            (archive / path.name).unlink()
+
+    def test_6b_a_stray_shard_without_resume_is_still_refused(self):
+        run_dir = Path(self.runs[7])
+        judges_path = self.judges_file(run_dir)
+        doc = json.loads(judges_path.read_text(encoding="utf-8"))
+        for judge in doc["judges"]:
+            judge["shards"] = 2
+        judges_path.write_text(json.dumps(doc), encoding="utf-8")
+        stray = run_dir / "judge_JF1.shard1of2.jsonl"
+        self.make_judge_output(
+            run_dir, judges_path, "JF1", extra=["--shard", "1/2", "--out", str(stray)]
+        )
+        code, out = self.score(run_dir, judges_path, "resumeoffshard")
+        self.assertEqual(code, campaign.EXIT_PREFLIGHT, out)
+        self.assertIn("judge output already exists, refusing to overwrite", out)
+        self.assertIn(str(stray), out)
+        self.assertTrue(stray.is_file(), "no --resume: the shard is left exactly where it is")
+
+
+# ==========================================================================
 # runner: the condition tag / temperature / seed options the campaign uses
 # ==========================================================================
 class TestRunnerConditionOptions(unittest.TestCase):

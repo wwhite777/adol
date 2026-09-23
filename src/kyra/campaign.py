@@ -43,7 +43,8 @@ CLI - scoring (a sub-command that cannot forget the item file):
     PYTHONPATH=src python -m kyra.campaign score \
         --items research/items/items_phaseA_v1.jsonl --models models.json \
         --judges judges.json --cohort phaseA_T1 --runs <dirs or globs> \
-        [--anchors research/judge_anchors_v1.json] [--dry-run] \
+        [--anchors research/judge_anchors_v1.json] [--dry-run] [--resume] \
+        [--allow-panel-overwrite] \
         [--class confirmatory|smoke] [--out-root ...] [--experiments-csv ...]
 For every run directory that carries a MARKER: each judge in judges.json is run
 as a child process (kyra.judge --views prefix --items <items>, so control ids
@@ -65,6 +66,24 @@ file is left where the analyses look. A failing shard or a failing merge stops
 the batch with the shard files left in place for diagnosis, and a left-over shard
 file - in the run directory root or in shards/ - is refused exactly like an
 existing judge file.
+--resume (a scoring pass that stopped part-way, e.g. one judge's engines failed):
+per run directory and judge, an existing judge_<id>.jsonl is REUSED - no
+subprocess at all - only when its sidecar judge_<id>.meta.json says it was
+produced by exactly this plan: n_views (and the record count) equal to the views
+the run has, prompt_template_sha256 = the current kyra.judge template, anchors
+and items sha256, batch_size/decode_mode, model_path, and - when this process
+exports them - the engine_kwargs / vllm_env in provider_effective_params. Any
+difference refuses the whole pass naming the run, the judge and the first field
+that differs; nothing is re-run and nothing is overwritten. A judge with no
+merged file runs exactly as usual, and the shard files of a failed earlier
+attempt are moved to <run_dir>/shards/failed_<stamp>/ first (kept for diagnosis,
+never merged); an unmerged shard file lying in the run directory root NEXT TO a
+reusable merged file is instead refused by name - nobody can tell whether it is
+inside that file, and the analyses would count it as an extra judge. An existing panel.jsonl is reused only when every judge of that
+run was reused and it holds one record per view; otherwise the old rule stands
+(--allow-panel-overwrite). Without --resume nothing changes: any existing judge
+file, shard file or panel is refused as before. The record carries
+"resume": true and per-judge "status": "reused"|"completed"|"failed".
 Then kyra.panel aggregates that run's judge files
 with the family map built from models.json + judges.json and --evaluated-family
 = the run's model family, writing panel.jsonl. One EXPERIMENTS row per judge run
@@ -110,7 +129,11 @@ from gates.verify_freeze import FreezeMismatch, verify
 from kyra import manifest as mf
 from kyra import runner as kyra_runner
 from kyra.providers import (
+    ENGINE_KWARGS_ENV,
+    VLLM_ENV_KEYS,
     get_provider,
+    parse_engine_kwargs,
+    read_vllm_env,
     validate_chat_template_kwargs,
     validate_stop_token_ids,
 )
@@ -1352,6 +1375,282 @@ def archive_shard_files(run_dir: Path, shard_files: Sequence[Path]) -> List[Path
     return moved
 
 
+# --------------------------------------------------------------------------
+# resume: reuse a judge output only when its provenance IS the current plan
+# --------------------------------------------------------------------------
+FAILED_SHARDS_PREFIX = "failed_"
+
+
+def failed_shards_dir(run_dir: Path, stamp: Optional[str] = None) -> Path:
+    """<run_dir>/shards/failed_<stamp>: where a failed attempt's shards are kept."""
+    value = stamp or datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    return shards_dir(run_dir) / (FAILED_SHARDS_PREFIX + value)
+
+
+def archive_failed_shard_files(
+    run_dir: Path, shard_files: Sequence[Path], stamp: Optional[str] = None
+) -> Tuple[Path, List[Path]]:
+    """Move the shards of a FAILED attempt (no merged judge file) out of the way.
+
+    --resume must not merge a record from a crashed attempt into a new judge
+    file, and deleting the evidence would make the crash undiagnosable, so the
+    stray shard files (and their sidecars) are moved to
+    <run_dir>/shards/failed_<stamp>/ and the judge is then run normally. The
+    directory is nested one level below shards/, which existing_shard_artifacts
+    does not glob, so a later pass never sees them again.
+    Returns (target_dir, new paths in input order).
+    """
+    from kyra.judge import meta_path_for  # one source of truth for the sidecar name
+
+    target = failed_shards_dir(run_dir, stamp)
+    target.mkdir(parents=True, exist_ok=True)
+    moved: List[Path] = []
+    for shard in shard_files:
+        shard = Path(shard)
+        for path in (shard, meta_path_for(shard)):
+            if path.is_file():
+                shutil.move(str(path), str(target / path.name))
+        moved.append(target / shard.name)
+    return target, moved
+
+
+def expected_view_count(run_dir, views: str = JUDGE_VIEWS) -> int:
+    """How many views a judge must have written for this run directory.
+
+    Built by kyra.judge.ordered_view_keys, i.e. the very task list judge_run and
+    `kyra.judge merge` build from responses.jsonl and the view mode - never a
+    second definition of "how many records should be there".
+    """
+    from kyra.judge import ordered_view_keys
+
+    try:
+        return len(ordered_view_keys(run_dir, views))
+    except (OSError, ValueError) as exc:
+        raise CampaignError(
+            "refusing to resume %s: cannot count its views (%s)" % (run_dir, exc),
+            EXIT_PREFLIGHT,
+        )
+
+
+def count_jsonl_records(path) -> int:
+    """Non-empty lines of a JSONL file (0 when it does not exist)."""
+    p = Path(path)
+    if not p.is_file():
+        return 0
+    with p.open("r", encoding="utf-8") as fh:
+        return sum(1 for line in fh if line.strip())
+
+
+def current_engine_env(environ=None) -> Dict[str, Any]:
+    """The engine knobs this process exports, parsed as providers.py parses them.
+
+    {"engine_kwargs": {...} | None, "vllm_env": {...} | None}; None means "this
+    process does not export it", and --resume then does not compare that field -
+    an unset variable says nothing about how the existing output was decoded.
+    """
+    env = os.environ if environ is None else environ
+    out: Dict[str, Any] = {"engine_kwargs": None, "vllm_env": None}
+    if env.get(ENGINE_KWARGS_ENV) is not None:
+        out["engine_kwargs"] = parse_engine_kwargs(env.get(ENGINE_KWARGS_ENV))
+    if any(env.get(name) is not None for name in VLLM_ENV_KEYS):
+        out["vllm_env"] = read_vllm_env(env)
+    return out
+
+
+def judge_batch_size(judge: Dict[str, Any]) -> int:
+    """The batch size this judge is configured with (undeclared -> judge default)."""
+    from kyra.judge import DEFAULT_BATCH_SIZE
+
+    declared = judge.get("batch_size")
+    return int(declared) if declared is not None else int(DEFAULT_BATCH_SIZE)
+
+
+def judge_decode_mode(batch_size: int) -> str:
+    from kyra.judge import DECODE_BATCHED, DECODE_SEQUENTIAL
+
+    return DECODE_SEQUENTIAL if int(batch_size) == 1 else DECODE_BATCHED
+
+
+def judge_model_path(judge: Dict[str, Any]) -> Optional[str]:
+    """What kyra.judge records as model_path for this judge.
+
+    judge_command passes --model-path only for provider vllm, and the sidecar
+    records exactly the flag's value, so a fake/mock judge's sidecar says null.
+    """
+    return str(judge["model_path"]) if judge["provider"] == "vllm" else None
+
+
+def prompt_template_sha256() -> str:
+    """sha256 of the judge prompt template kyra.judge would use right now."""
+    from kyra.judge import PROMPT_PATH
+
+    if not Path(PROMPT_PATH).is_file():
+        raise CampaignError(
+            "judge prompt template not found: %s" % PROMPT_PATH, EXIT_BAD_INPUT
+        )
+    return sha256_file(PROMPT_PATH)
+
+
+def judge_provenance_mismatch(
+    judge: Dict[str, Any],
+    meta: Dict[str, Any],
+    n_views_expected: int,
+    n_records: int,
+    template_sha: str,
+    anchors_sha: Optional[str],
+    items_sha: Optional[str],
+    engine_env: Dict[str, Any],
+) -> Optional[Dict[str, Any]]:
+    """The FIRST field in which an existing judge output differs from this plan.
+
+    Returns None only when the existing file was produced by the same protocol
+    this pass would run: the same prompt template, anchors, item file, model,
+    batch size / decode mode and engine knobs, and it holds every view of the
+    run. Otherwise {"field", "expected", "found"} - reusing such a file would
+    mix two protocols inside one panel with nothing downstream able to see it.
+    """
+    checks: List[Tuple[str, Any, Any]] = [
+        ("n_views", n_views_expected, meta.get("n_views")),
+        ("records", n_views_expected, n_records),
+        ("prompt_template_sha256", template_sha, meta.get("prompt_template_sha256")),
+        ("anchors_sha256", anchors_sha, meta.get("anchors_sha256")),
+    ]
+    # items_sha256 is compared only when the sidecar recorded one: a judge run
+    # without --items has null there and that is not a disagreement.
+    if meta.get("items_sha256") is not None:
+        checks.append(("items_sha256", items_sha, meta.get("items_sha256")))
+    batch_size = judge_batch_size(judge)
+    checks.append(("batch_size", batch_size, meta.get("batch_size")))
+    checks.append(("decode_mode", judge_decode_mode(batch_size), meta.get("decode_mode")))
+    checks.append(("model_path", judge_model_path(judge), meta.get("model_path")))
+    params = meta.get("provider_effective_params") or {}
+    for field in ("engine_kwargs", "vllm_env"):
+        if engine_env.get(field) is not None:
+            checks.append(
+                ("provider_effective_params.%s" % field, engine_env[field], params.get(field))
+            )
+    for field, expected, found in checks:
+        if found != expected:
+            return {"field": field, "expected": expected, "found": found}
+    return None
+
+
+def root_shard_artifacts(run_dir: Path, judge_id: str) -> List[Path]:
+    """Shard files of this judge in the run directory ROOT (not in shards/).
+
+    Both the records and the sidecars: judge_<id>.shard<k>of<n>.jsonl matches the
+    judge_*.jsonl glob kyra.analysis.n3_reliability uses, so an unmerged shard
+    beside a merged judge file would count as an extra judge.
+    """
+    return sorted(Path(run_dir).glob("judge_%s.shard*.jsonl" % judge_id)) + sorted(
+        Path(run_dir).glob("judge_%s.shard*%s" % (judge_id, ".meta.json"))
+    )
+
+
+def plan_judge_resume(
+    run_dir: Path,
+    judge: Dict[str, Any],
+    out_path: Path,
+    n_views_expected: int,
+    template_sha: str,
+    anchors_sha: Optional[str],
+    items_sha: Optional[str],
+    engine_env: Dict[str, Any],
+) -> Dict[str, Any]:
+    """What --resume does with one judge on one run: reuse, run, or refuse.
+
+    action "reuse": the merged judge file and its sidecar are there, complete and
+    provenance-identical - no subprocess runs. action "run": no merged judge file
+    (any stray shard file of a failed attempt is listed for archiving). action
+    "refuse": output is there but is NOT this plan's output, or an unmerged shard
+    file of the same judge still sits in the run directory root; "mismatch" names
+    the first field (or that file), and the whole pass stops.
+    """
+    from kyra.judge import meta_path_for
+
+    judge_id = judge["judge_id"]
+    out_path = Path(out_path)
+    meta_path = meta_path_for(out_path)
+    decision: Dict[str, Any] = {
+        "judge_id": judge_id,
+        "judge_file": str(out_path),
+        "meta_file": str(meta_path),
+        "n_views_expected": n_views_expected,
+        "stray_shard_files": [],
+        "mismatch": None,
+    }
+    if not out_path.is_file():
+        decision["action"] = "run"
+        decision["stray_shard_files"] = [
+            str(p) for p in existing_shard_artifacts(run_dir, judge_id)
+        ]
+        return decision
+    # A merged judge file with a shard file of the same judge still lying in the
+    # run directory root is an inconsistent state: nobody can tell whether the
+    # merged file contains that shard, and kyra.analysis.n3_reliability would
+    # count the shard as an extra judge. It is never archived automatically here
+    # (that would hide the inconsistency) - the pass stops naming the file.
+    # Shard files already archived under <run_dir>/shards/ are fine.
+    root_shards = root_shard_artifacts(run_dir, judge_id)
+    if root_shards:
+        decision["action"] = "refuse"
+        decision["root_shard_files"] = [str(p) for p in root_shards]
+        decision["mismatch"] = {
+            "field": "root_shard_file",
+            "expected": "no judge_%s.shard* file in the run directory root "
+            "(archived shards live in %s/)" % (judge_id, SHARDS_DIR_NAME),
+            "found": str(root_shards[0]),
+        }
+        return decision
+    if not meta_path.is_file():
+        decision["action"] = "refuse"
+        decision["mismatch"] = {
+            "field": "sidecar",
+            "expected": "a %s sidecar next to the judge file" % meta_path.name,
+            "found": None,
+        }
+        return decision
+    try:
+        meta = json.loads(meta_path.read_text(encoding="utf-8"))
+        if not isinstance(meta, dict):
+            raise ValueError("sidecar is not a JSON object")
+    except (OSError, ValueError) as exc:
+        decision["action"] = "refuse"
+        decision["mismatch"] = {
+            "field": "sidecar",
+            "expected": "a readable JSON sidecar",
+            "found": str(exc),
+        }
+        return decision
+    n_records = count_jsonl_records(out_path)
+    mismatch = judge_provenance_mismatch(
+        judge, meta, n_views_expected, n_records, template_sha, anchors_sha,
+        items_sha, engine_env,
+    )
+    if mismatch is not None:
+        decision["action"] = "refuse"
+        decision["mismatch"] = mismatch
+        return decision
+    decision["action"] = "reuse"
+    decision["n_records"] = n_records
+    decision["sha256"] = sha256_file(out_path)
+    decision["meta_sha256"] = sha256_file(meta_path)
+    return decision
+
+
+def resume_refusal_message(run: Dict[str, Any], decision: Dict[str, Any]) -> str:
+    """The refusal a mismatching --resume prints: run dir, judge, first field."""
+    mismatch = decision["mismatch"]
+    return (
+        "--resume refused: %s judge %s has existing output whose %s does not match "
+        "this pass (plan %r, existing %r); nothing was run and nothing was "
+        "overwritten" % (
+            run["run_dir"], decision["judge_id"], mismatch["field"],
+            mismatch["expected"], mismatch["found"],
+        )
+    )
+
+
 def judge_command(
     judge: Dict[str, Any],
     run_dir: Path,
@@ -1618,6 +1917,18 @@ def score_main(argv: List[str], gpu_probe=query_gpus) -> int:
     family_map = {j["judge_id"]: j["family"] for j in judges}
     model_families = {m["model_id"]: m["family"] for m in models}
 
+    # --resume compares the existing outputs against THIS plan; the template and
+    # the engine knobs are read once, before any run directory is inspected.
+    try:
+        template_sha = prompt_template_sha256() if args.resume else None
+        engine_env = current_engine_env() if args.resume else {}
+    except CampaignError as exc:
+        sys.stderr.write("ERROR: %s\n" % exc)
+        return exc.code
+    except ValueError as exc:  # a malformed KYRA_VLLM_ENGINE_KWARGS
+        sys.stderr.write("ERROR: %s\n" % exc)
+        return EXIT_BAD_INPUT
+
     plan: Dict[str, Any] = {
         "cohort": args.cohort,
         "created_utc": utc_stamp(),
@@ -1645,6 +1956,11 @@ def score_main(argv: List[str], gpu_probe=query_gpus) -> int:
     # keeps the exact shape it had before the stagger existed.
     if any(j["shards"] > 1 for j in judges):
         plan["shard_start_stagger_s"] = SHARD_START_STAGGER_S
+    # Only under --resume, so a normal scoring record keeps its exact shape.
+    if args.resume:
+        plan["resume"] = True
+        plan["prompt_template_sha256"] = template_sha
+        plan["engine_env"] = engine_env
 
     # Per-run bookkeeping: MARKER, class, evaluated family, judge output paths.
     try:
@@ -1698,6 +2014,31 @@ def score_main(argv: List[str], gpu_probe=query_gpus) -> int:
                 str(p) for p in left_over_shards
             ]
             panel_file = Path(run_dir) / PANEL_NAME
+            # --resume: per judge, reuse / run / refuse instead of one blanket
+            # refusal. Nothing is moved or written here - a --dry-run must stay a
+            # dry run; the archiving of a failed attempt's shards happens in the
+            # execution phase.
+            resume_plan: List[Dict[str, Any]] = []
+            panel_reuse = False
+            if args.resume:
+                n_views_expected = expected_view_count(Path(run_dir))
+                resume_plan = [
+                    plan_judge_resume(
+                        Path(run_dir), judge, out_path, n_views_expected,
+                        template_sha, anchors_sha, plan["items_sha256"], engine_env,
+                    )
+                    for judge, out_path in zip(judges, judge_files)
+                ]
+                # Existing outputs are no longer a blanket refusal: a reused file
+                # is kept, a missing one is run, a mismatching one stops the pass
+                # (checked with the other refusals, below).
+                existing = []
+                panel_reuse = (
+                    panel_file.exists()
+                    and bool(resume_plan)
+                    and all(d["action"] == "reuse" for d in resume_plan)
+                    and count_jsonl_records(panel_file) == n_views_expected
+                )
             plan["runs"].append(
                 {
                     "run_dir": str(run_dir),
@@ -1714,6 +2055,18 @@ def score_main(argv: List[str], gpu_probe=query_gpus) -> int:
                     "existing_judge_files": existing,
                     "panel_file": str(panel_file),
                     "panel_exists": panel_file.exists(),
+                    **(
+                        {
+                            "resume_judges": resume_plan,
+                            "reused_judge_files": [
+                                d["judge_file"] for d in resume_plan if d["action"] == "reuse"
+                            ],
+                            "panel_reuse": panel_reuse,
+                            "n_views_expected": n_views_expected,
+                        }
+                        if args.resume
+                        else {}
+                    ),
                 }
             )
     except CampaignError as exc:
@@ -1754,6 +2107,7 @@ def score_main(argv: List[str], gpu_probe=query_gpus) -> int:
         "command": command,
         "dry_run": bool(args.dry_run),
         "allow_panel_overwrite": bool(args.allow_panel_overwrite),
+        "resume": bool(args.resume),
         "experiments_csv": str(experiments_csv),
         "compile_caches": caches,
         "freeze": freeze,
@@ -1781,8 +2135,30 @@ def score_main(argv: List[str], gpu_probe=query_gpus) -> int:
 
     blocked = [r for r in plan["runs"] if r["existing_judge_files"]]
     panel_blocked = [
-        r for r in plan["runs"] if r["panel_exists"] and not args.allow_panel_overwrite
+        r
+        for r in plan["runs"]
+        if r["panel_exists"]
+        and not args.allow_panel_overwrite
+        and not r.get("panel_reuse")
     ]
+    # An existing output that is NOT this plan's output stops everything, naming
+    # the run, the judge and the first field that differs.
+    resume_blocked = [
+        (r, d)
+        for r in plan["runs"]
+        for d in r.get("resume_judges", [])
+        if d["action"] == "refuse"
+    ]
+    if resume_blocked:
+        run, decision = resume_blocked[0]
+        reason = resume_refusal_message(run, decision)
+        payload["status"] = "refused"
+        payload["stopped_because"] = reason
+        path = record_campaign_json(
+            out_root, args.cohort, payload, args.dry_run, out_root_explicit, suffix="_scoring"
+        )
+        sys.stderr.write("ERROR: %s\ncampaign record: %s\n" % (reason, path))
+        return EXIT_PREFLIGHT
     if blocked or panel_blocked:
         if blocked:
             reason = "judge output already exists, refusing to overwrite: %s" % ", ".join(
@@ -1836,14 +2212,113 @@ def score_main(argv: List[str], gpu_probe=query_gpus) -> int:
         sys.stderr.write("ERROR: %s\ncampaign record: %s\n" % (reason, path))
         return code
 
+    def judge_config_cell(judge: Dict[str, Any], run: Dict[str, Any], run_dir: Path,
+                          n_shards: int) -> str:
+        """The EXPERIMENTS config cell of one judge on one run.
+
+        The same string whether the judge ran now or is being reused: the config
+        IS the protocol, and a reused row must be comparable to the row the
+        original pass wrote. What the judge did instead sits in `status`.
+        """
+        return (
+            "judge=%s; family=%s; provider=%s; model=%s; views=%s; "
+            "items=%s; anchors=%s; anchors_sha256=%s; evaluated_family=%s; "
+            "gpu=%s; run_dir=%s%s%s"
+            % (
+                judge["judge_id"],
+                judge["family"],
+                judge["provider"],
+                judge["model_id"],
+                JUDGE_VIEWS,
+                items_path,
+                anchors_path if anchors_path else "none",
+                anchors_sha or "n/a",
+                run["evaluated_family"],
+                gpu["chosen"],
+                run_dir,
+                # appended only when the judge declares it, so an undeclared
+                # judge keeps the exact previous config string
+                "; batch_size=%d" % judge["batch_size"]
+                if judge.get("batch_size") is not None
+                else "",
+                # same rule: a single-engine judge run says nothing new
+                "; shards=%d" % n_shards if n_shards > 1 else "",
+            )
+        )
+
     for run in plan["runs"]:
         run_dir = Path(run["run_dir"])
         run_key = "%s__%s" % (args.cohort, run_dir.name)
         judge_files: List[Path] = []
+        decisions = {d["judge_id"]: d for d in run.get("resume_judges", [])}
         for judge in judges:  # one judge model loaded at a time
             out_path = run_dir / ("judge_%s.jsonl" % judge["judge_id"])
             key = "%s__judge_%s" % (run_key, judge["judge_id"])
             n_shards = judge["shards"]
+            decision = decisions.get(judge["judge_id"])
+            if decision is not None and decision["action"] == "reuse":
+                # Provenance-identical and complete: no engine, no subprocess,
+                # no write into the run directory - the existing file IS this
+                # pass's output for that judge.
+                record = {
+                    "run_key": key,
+                    "run_dir": str(run_dir),
+                    "judge_id": judge["judge_id"],
+                    "family": judge["family"],
+                    "provider": judge["provider"],
+                    "class": run["class"],
+                    "out": str(out_path),
+                    "log": decision["meta_file"],
+                    "shards": n_shards,
+                    "shard_files": [],
+                    "shard_logs": [],
+                    "exit_code": None,
+                    "sha256": decision["sha256"],
+                    "meta_sha256": decision["meta_sha256"],
+                    "n_views": decision["n_views_expected"],
+                    "status": "reused",
+                    "failure": None,
+                    "anchors_sha256": anchors_sha,
+                }
+                payload["judge_runs"].append(record)
+                append_experiment_row(
+                    experiments_csv,
+                    {
+                        "run": key,
+                        "class": run["class"],
+                        "config": judge_config_cell(judge, run, run_dir, n_shards),
+                        "seed": "n/a (judge)",
+                        "command": "n/a (--resume: existing judge output reused, "
+                        "no subprocess)",
+                        "raw": str(out_path),
+                        "log": decision["meta_file"],
+                        "marker": "judge_file sha256 %s (reused; sidecar sha256 %s)"
+                        % (record["sha256"], record["meta_sha256"]),
+                        "status": "reused",
+                        "failure": "none (reused: sidecar provenance matches this pass)",
+                    },
+                )
+                judge_files.append(out_path)
+                sys.stdout.write(
+                    "JUDGE %s on %s: REUSED %s (%d views, sha256 %s)\n"
+                    % (judge["judge_id"], run_dir, out_path,
+                       decision["n_views_expected"], record["sha256"])
+                )
+                continue
+            if decision is not None and decision["stray_shard_files"]:
+                # A failed sharded attempt left shard files behind. They are
+                # evidence, so they are moved aside rather than deleted, and the
+                # judge then runs from scratch.
+                target, moved = archive_failed_shard_files(
+                    run_dir, [Path(p) for p in decision["stray_shard_files"]]
+                )
+                decision["archived_shard_files"] = [str(p) for p in moved]
+                decision["archived_to"] = str(target)
+                sys.stdout.write(
+                    "  archived %d stray shard file(s) of judge %s to %s "
+                    "(failed earlier attempt, kept for diagnosis)\n"
+                    % (len(moved), judge["judge_id"], target)
+                )
             sys.stdout.write(
                 "JUDGE %s on %s%s\n"
                 % (judge["judge_id"], run_dir,
@@ -1880,29 +2355,7 @@ def score_main(argv: List[str], gpu_probe=query_gpus) -> int:
                 {
                     "run": key,
                     "class": run["class"],
-                    "config": "judge=%s; family=%s; provider=%s; model=%s; views=%s; "
-                    "items=%s; anchors=%s; anchors_sha256=%s; evaluated_family=%s; "
-                    "gpu=%s; run_dir=%s%s%s"
-                    % (
-                        judge["judge_id"],
-                        judge["family"],
-                        judge["provider"],
-                        judge["model_id"],
-                        JUDGE_VIEWS,
-                        items_path,
-                        anchors_path if anchors_path else "none",
-                        anchors_sha or "n/a",
-                        run["evaluated_family"],
-                        gpu["chosen"],
-                        run_dir,
-                        # appended only when the judge declares it, so an
-                        # undeclared judge keeps the exact previous config string
-                        "; batch_size=%d" % judge["batch_size"]
-                        if judge.get("batch_size") is not None
-                        else "",
-                        # same rule: a single-engine judge run says nothing new
-                        "; shards=%d" % n_shards if n_shards > 1 else "",
-                    ),
+                    "config": judge_config_cell(judge, run, run_dir, n_shards),
                     "seed": "n/a (judge)",
                     # sharded: the N shard commands and the merge command, one
                     # per line inside the (quoted) CSV cell
@@ -1930,6 +2383,52 @@ def score_main(argv: List[str], gpu_probe=query_gpus) -> int:
 
         panel_out = run_dir / PANEL_NAME
         key = "%s__panel" % run_key
+        panel_config = "panel over %s; family_map=%s; evaluated_family=%s; " \
+            "anchors_sha256=%s; gpu=%s; run_dir=%s" % (
+                ",".join(j["judge_id"] for j in judges),
+                family_map_path,
+                run["evaluated_family"],
+                anchors_sha or "n/a",
+                gpu["chosen"],
+                run_dir,
+            )
+        if run.get("panel_reuse"):
+            # Every judge of this run was reused and the panel already holds one
+            # record per view: rebuilding it from the same inputs would only
+            # rewrite the same file, so it is reused too.
+            record = {
+                "run_key": key,
+                "run_dir": str(run_dir),
+                "class": run["class"],
+                "evaluated_family": run["evaluated_family"],
+                "judges": [j["judge_id"] for j in judges],
+                "out": str(panel_out),
+                "log": None,
+                "exit_code": None,
+                "sha256": sha256_file(panel_out),
+                "n_records": count_jsonl_records(panel_out),
+                "status": "reused",
+                "failure": None,
+            }
+            payload["panel_runs"].append(record)
+            append_experiment_row(
+                experiments_csv,
+                {
+                    "run": key,
+                    "class": run["class"],
+                    "config": panel_config,
+                    "seed": "n/a (panel)",
+                    "command": "n/a (--resume: existing panel reused, no subprocess)",
+                    "raw": str(panel_out),
+                    "log": "n/a (--resume: no subprocess)",
+                    "marker": "panel sha256 %s (reused; %d records)"
+                    % (record["sha256"], record["n_records"]),
+                    "status": "reused",
+                    "failure": "none (reused: every judge of this run was reused)",
+                },
+            )
+            sys.stdout.write("  PANEL REUSED %s\n" % panel_out)
+            continue
         cmd = panel_command(judge_files, family_map_path, run["evaluated_family"], panel_out)
         log_path = log_dir / ("%s.log" % key)
         code, output = run_subprocess(cmd, log_path, repo_root, None)
@@ -1953,16 +2452,7 @@ def score_main(argv: List[str], gpu_probe=query_gpus) -> int:
             {
                 "run": key,
                 "class": run["class"],
-                "config": "panel over %s; family_map=%s; evaluated_family=%s; "
-                "anchors_sha256=%s; gpu=%s; run_dir=%s"
-                % (
-                    ",".join(j["judge_id"] for j in judges),
-                    family_map_path,
-                    run["evaluated_family"],
-                    anchors_sha or "n/a",
-                    gpu["chosen"],
-                    run_dir,
-                ),
+                "config": panel_config,
                 "seed": "n/a (panel)",
                 "command": shell_repr(cmd),
                 "raw": str(panel_out),
@@ -1986,9 +2476,18 @@ def score_main(argv: List[str], gpu_probe=query_gpus) -> int:
 
     payload["status"] = "completed"
     path = write_campaign_json(out_root, args.cohort, payload, suffix="_scoring")
+    reused = sum(1 for r in payload["judge_runs"] if r["status"] == "reused")
     sys.stdout.write(
-        "SCORING %s completed: %d judge run(s), %d panel(s); record: %s\n"
-        % (args.cohort, len(payload["judge_runs"]), len(payload["panel_runs"]), path)
+        "SCORING %s completed: %d judge run(s)%s, %d panel(s); record: %s\n"
+        % (
+            args.cohort,
+            len(payload["judge_runs"]),
+            # only when something was reused, so a normal pass prints the exact
+            # line it printed before --resume existed
+            " (%d reused)" % reused if reused else "",
+            len(payload["panel_runs"]),
+            path,
+        )
     )
     return EXIT_OK
 
@@ -2011,6 +2510,19 @@ def print_score_plan(plan: Dict[str, Any], freeze: Dict[str, Any], gpu: Dict[str
             for j in plan["judges"]
         )
     )
+    if plan.get("resume"):
+        w(
+            "resume: on (prompt_template_sha256=%s, engine_kwargs=%s, vllm_env=%s)\n"
+            % (
+                plan.get("prompt_template_sha256"),
+                compact_json(plan["engine_env"]["engine_kwargs"])
+                if plan.get("engine_env", {}).get("engine_kwargs") is not None
+                else "not exported (not compared)",
+                compact_json(plan["engine_env"]["vllm_env"])
+                if plan.get("engine_env", {}).get("vllm_env") is not None
+                else "not exported (not compared)",
+            )
+        )
     for run in plan["runs"]:
         w(
             "RUN %s class=%s (%s) model=%s evaluated_family=%s\n"
@@ -2018,15 +2530,32 @@ def print_score_plan(plan: Dict[str, Any], freeze: Dict[str, Any], gpu: Dict[str
                run["evaluated_family"])
         )
         w("  MARKER sha256=%s\n" % run["marker_sha256"])
+        resume_by_file = {d["judge_file"]: d for d in run.get("resume_judges", [])}
         for path in run["judge_files"]:
-            w("  judge -> %s%s\n" % (path, "  [EXISTS - refused]" if path in run["existing_judge_files"] else ""))
+            decision = resume_by_file.get(path)
+            if decision is None:
+                note = "  [EXISTS - refused]" if path in run["existing_judge_files"] else ""
+            elif decision["action"] == "reuse":
+                note = "  [EXISTS - reused, %d views]" % decision["n_views_expected"]
+            elif decision["action"] == "refuse":
+                note = "  [EXISTS - refused: %s differs]" % decision["mismatch"]["field"]
+            else:
+                note = "  [to run]" + (
+                    "  [%d stray shard file(s) will be archived]"
+                    % len(decision["stray_shard_files"])
+                    if decision["stray_shard_files"]
+                    else ""
+                )
+            w("  judge -> %s%s\n" % (path, note))
         w(
             "  items: %d (%d control) - every id present in the items file\n"
             % (run["n_items"], run["n_control_items"])
         )
         w(
             "  panel -> %s%s\n"
-            % (run["panel_file"], "  [EXISTS]" if run["panel_exists"] else "")
+            % (run["panel_file"],
+               "  [EXISTS - reused]" if run.get("panel_reuse")
+               else ("  [EXISTS]" if run["panel_exists"] else ""))
         )
     if freeze["required"]:
         w("freeze: %s\n" % ("OK sha256=%s" % freeze["sha256"] if freeze["ok"] else "FAIL %s" % freeze["error"]))
@@ -2064,6 +2593,13 @@ def build_score_parser() -> argparse.ArgumentParser:
         "--allow-panel-overwrite",
         action="store_true",
         help="replace an existing panel.jsonl in a run directory (refused by default)",
+    )
+    p.add_argument(
+        "--resume",
+        action="store_true",
+        help="reuse judge outputs that are complete and provenance-identical to "
+        "this plan (skipped as 'reused', no subprocess), run only the missing "
+        "judges; any provenance difference refuses the whole pass",
     )
     p.add_argument(
         "--class",
