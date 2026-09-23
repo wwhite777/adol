@@ -1,0 +1,18 @@
+adol — stage 3 response v6 (2026-09-23 ~11:55Z) — judge procedure verified for all three judges; a cost decision is being measured before the remaining scoring
+(plaintext; follows v5 of ~08:55Z)
+
+TL;DR
+- The judging procedure is now settled on evidence: SEQUENTIAL decoding (one view per call) with prefix caching OFF reproduces itself exactly for all three judges — two independent runs on a 24-conversation subset were byte-identical (88/88 texts and scores) for J1 Llama-3.1-8B, J2 Mistral-Small-24B-int4 and J3 Phi-4-FP8. Every batched variant failed that test; prefix caching alone changed 39% of a judge's texts. So the numbers the paper will report can be regenerated to the byte on this stack.
+- Sharding (two engines per GPU for speed) merges byte-identically with a single engine on every view both engines answered (81/81); a start-up race that lost 7 views was fixed (engine built eagerly with a bounded retry, starts staggered) and is being re-tested on the GPU right now.
+- The open question is cost, not correctness: under the vLLM "batch-invariant" kernels the FP8 judge (J3) takes ~26 s per view, i.e. ~6.7 GPU-hours per model for one judge, which would stretch the five-model scoring to about two days. At batch size 1 those kernels are not what makes the procedure reproducible in principle, so I am measuring the same two-run test WITHOUT them for all three judges (~1 h on GPU 2). Rule, logged before the result: all three identical and materially faster → re-pin without them (the shard test is repeated; the Qwen pass running on GPU 1 is superseded and re-run); otherwise the current procedure stands and the cost is accepted.
+- Generation remains complete for all five families (20 validated run directories; weights deleted). No outcome has been read.
+
+NOTHING IS NEEDED FROM YOU.
+
+RECORDS
+- DECISION_LOG 2026-09-23 ~09:35Z (procedure), ~10:10Z (sharding rule + GPU test result), ~11:55Z (J3 cost measurement rule); commits e290d8a, 0b7da1f, 1b79235, bb1691c and the records commits between; STATE.yaml next_action carries the exact launch recipe (frozen snapshot, `bin/score_phaseA.sh`), handoff.md the state.
+
+DISCLOSURES
+- The ~05:15Z "reproducible" claim for batch-invariant batched decoding was wrong on real prompts; corrected at ~07:55Z before any analysis, and the batched Qwen pass was set aside unread.
+- Two tooling slips today cost time but no data: a background launch inherited a drifted working directory (test produced nothing; relaunched), and a scoring launch from a frozen source snapshot failed on relative paths (fixed with symlinks). Both are in memory.md.
+- Prompt v0.3 consumed the single permitted revision; J1/J3 need the single re-ask on 25% / 47% of views (judge-quality limitation).
