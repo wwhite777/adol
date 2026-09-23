@@ -1,0 +1,8 @@
+run_key=phaseA_T1__Qwen-Qwen2.5-14B-Instruct__repeat_3__20260922T1428Z-709a14
+started_utc=2026-09-22T14:28:00Z
+model_id=Qwen/Qwen2.5-14B-Instruct family=alibaba provider=vllm path=Qwen/Qwen2.5-14B-Instruct
+tag=repeat_3 condition=repeat_3 temperature=0.7 seed=20260925
+items=31 gpu=1 run_dir=result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/repeat_3/20260922T1428Z-709a14
+provider_ready model_id=Qwen/Qwen2.5-14B-Instruct api_version=0.19.0
+MARKER sha256=65f788a822e2ba41a8678efc13ac695eb4ce67f0eb460366db01c7876408c14d
+finished_utc=2026-09-22T14:45:32Z

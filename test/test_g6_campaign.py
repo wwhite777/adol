@@ -56,6 +56,22 @@ def load_fixture(name):
     return json.loads((FIX / name).read_text(encoding="utf-8"))
 
 
+def campaign_records(cohort_dir, cohort, suffix=""):
+    """Per-invocation record files: campaign_<cohort>__<launch_stamp><suffix>.json."""
+    return sorted(Path(cohort_dir).glob("campaign_%s__*%s.json" % (cohort, suffix)))
+
+
+def one_campaign_record(cohort_dir, cohort, suffix=""):
+    """The single record file one invocation must have left; fails otherwise."""
+    paths = campaign_records(cohort_dir, cohort, suffix)
+    if len(paths) != 1:
+        raise AssertionError(
+            "expected exactly one campaign_%s__*%s.json in %s, found %s"
+            % (cohort, suffix, cohort_dir, [p.name for p in paths])
+        )
+    return paths[0]
+
+
 def run_cli(module, args, cwd=REPO):
     env = {"PYTHONPATH": str(SRC)}
     import os
@@ -558,7 +574,7 @@ class TestCampaignGpuPinning(unittest.TestCase):
         self.assertIn("pinned CUDA_VISIBLE_DEVICES=1", buf.getvalue())
 
         record = json.loads(
-            (self.tmp / "raw" / "gpupin" / "campaign_gpupin.json").read_text(encoding="utf-8")
+            one_campaign_record(self.tmp / "raw" / "gpupin", "gpupin").read_text(encoding="utf-8")
         )
         for pre in record["preflight"]:
             self.assertEqual(pre["gpu"]["chosen"], 1)
@@ -691,7 +707,7 @@ class TestCampaignDryRun(unittest.TestCase):
         self.assertIn("temperature=0.7", out)
         self.assertIn("runs: 8 (2 model(s) x 4 run(s))", out)
         record = json.loads(
-            (self.out_root / "dryrun" / "campaign_dryrun.json").read_text(encoding="utf-8")
+            one_campaign_record(self.out_root / "dryrun", "dryrun").read_text(encoding="utf-8")
         )
         self.assertEqual(record["status"], "dry-run")
         self.assertEqual(record["runs"], [])
@@ -705,7 +721,7 @@ class TestCampaignDryRun(unittest.TestCase):
         self.assertIn("CUDA_VISIBLE_DEVICES=1", out)
         self.assertIn("preflight freeze: OK sha256=%s" % sha256(PREREG), out)
         record = json.loads(
-            (self.out_root / "dryrun" / "campaign_dryrun.json").read_text(encoding="utf-8")
+            one_campaign_record(self.out_root / "dryrun", "dryrun").read_text(encoding="utf-8")
         )
         for pre in record["preflight"]:
             self.assertEqual(pre["gpu"]["chosen"], 1)
@@ -723,7 +739,7 @@ class TestCampaignDryRun(unittest.TestCase):
         )
         self.assertEqual(code, campaign.EXIT_FREEZE_MISMATCH, out)
         record = json.loads(
-            (self.out_root / "dryrun" / "campaign_dryrun.json").read_text(encoding="utf-8")
+            one_campaign_record(self.out_root / "dryrun", "dryrun").read_text(encoding="utf-8")
         )
         self.assertEqual(record["status"], "refused")
         self.assertIn("FREEZE_MISMATCH", record["preflight"][0]["freeze"]["error"])
@@ -803,7 +819,7 @@ class TestCampaignSmokeRun(unittest.TestCase):
         self.assertEqual(code, 0, out)
 
         record = json.loads(
-            (self.out_root / "smoketest" / "campaign_smoketest.json").read_text(encoding="utf-8")
+            one_campaign_record(self.out_root / "smoketest", "smoketest").read_text(encoding="utf-8")
         )
         self.assertEqual(record["status"], "completed")
         self.assertEqual(len(record["runs"]), 8)  # 2 models x (main + 3 repeats)
@@ -878,7 +894,7 @@ class TestCampaignSmokeRun(unittest.TestCase):
             )
         self.assertEqual(code, campaign.EXIT_RUN_FAILED, buf.getvalue())
         record = json.loads(
-            (self.out_root / "stoptest" / "campaign_stoptest.json").read_text(encoding="utf-8")
+            one_campaign_record(self.out_root / "stoptest", "stoptest").read_text(encoding="utf-8")
         )
         self.assertEqual(record["status"], "failed")
         self.assertEqual(len(record["runs"]), 2)
@@ -945,7 +961,7 @@ class TestCampaignScoring(unittest.TestCase):
             )
         assert code == 0, buf.getvalue()
         record = json.loads(
-            (cls.out_root / "scoreme" / "campaign_scoreme.json").read_text(encoding="utf-8")
+            one_campaign_record(cls.out_root / "scoreme", "scoreme").read_text(encoding="utf-8")
         )
         cls.runs = [r["run_dir"] for r in record["runs"]]
         cls.main_run = cls.runs[0]          # fake/tiny-a, condition base
@@ -1054,7 +1070,7 @@ class TestCampaignScoring(unittest.TestCase):
         self.assertEqual(sorted(r["depth"] for r in multi), [1, 2, 3])
 
         record = json.loads(
-            (self.out_root / "scored" / "campaign_scored_scoring.json").read_text(encoding="utf-8")
+            one_campaign_record(self.out_root / "scored", "scored", "_scoring").read_text(encoding="utf-8")
         )
         self.assertEqual(record["status"], "completed")
         self.assertEqual(len(record["judge_runs"]), 2)
@@ -1123,8 +1139,8 @@ class TestCampaignScoring(unittest.TestCase):
             code = campaign.main(argv, gpu_probe=fake_gpu_probe())
         self.assertEqual(code, campaign.EXIT_PREFLIGHT, buf.getvalue())
         self.assertFalse((Path(self.runs[2]) / "judge_JF1.jsonl").exists())
-        self.assertFalse(
-            (self.out_root / "scorecover" / "campaign_scorecover_scoring.json").exists()
+        self.assertEqual(
+            campaign_records(self.out_root / "scorecover", "scorecover", "_scoring"), []
         )
         with self.csv.open(encoding="utf-8", newline="") as fh:
             self.assertEqual(len(list(csv.reader(fh))), before)
@@ -1149,7 +1165,7 @@ class TestCampaignScoring(unittest.TestCase):
         )
         self.assertEqual(code, 0, out)
         record = json.loads(
-            (self.out_root / "scorepanel3" / "campaign_scorepanel3_scoring.json")
+            one_campaign_record(self.out_root / "scorepanel3", "scorepanel3", "_scoring")
             .read_text(encoding="utf-8")
         )
         self.assertTrue(record["allow_panel_overwrite"])

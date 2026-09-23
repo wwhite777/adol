@@ -2,7 +2,10 @@
 
 One model at a time, guarded. For each model, in the order given by models.json:
 
-  1. pre-flight   disk free >= 20 GB at the output root; a GPU chosen from
+  1. pre-flight   disk free >= 20 GB at the output root (--min-free-gb lowers or
+                  raises that floor, and the override is logged and recorded);
+                  the torch.compile/Triton caches pinned inside the project
+                  (never /tmp, which cleanup passes delete); a GPU chosen from
                   0/1/2 (first with < 4 GiB used) - GPU 3 is another user's job
                   and is never selected; the frozen protocol hash verified via
                   gates.verify_freeze (skipped only for --class smoke).
@@ -15,11 +18,11 @@ One model at a time, guarded. For each model, in the order given by models.json:
   row to EXPERIMENTS.csv. On any failed run the campaign stops and reports - it
   never continues silently.
 
-CLI (from the repo root) - generation:
-    PYTHONPATH=src python -m kyra.campaign \
+CLI (from the repo root) - generation (the leading `run` word is optional):
+    PYTHONPATH=src python -m kyra.campaign [run] \
         --items research/items/items_phaseA_v1.jsonl \
         --models models.json --cohort phaseA_T1 \
-        --class confirmatory|smoke [--dry-run] \
+        --class confirmatory|smoke [--dry-run] [--min-free-gb 20] \
         [--out-root result/raw] [--experiments-csv research/EXPERIMENTS.csv] \
         [--prereg PREREGISTERED_kyra_v2.yaml] [--sha PREREGISTERED_kyra_v2.yaml.sha256]
 
@@ -51,7 +54,12 @@ with the family map built from models.json + judges.json and --evaluated-family
 = the run's model family, writing panel.jsonl. One EXPERIMENTS row per judge run
 and per panel (class inherited from the run's EXPERIMENTS row, or --class); the
 freeze hash is verified before any confirmatory scoring. Record:
-campaign_<cohort>_scoring.json. Any failure stops the batch.
+campaign_<cohort>__<launch_stamp>_scoring.json. Any failure stops the batch.
+
+Every invocation writes its own record file,
+campaign_<cohort>__<launch_stamp>[_scoring].json (launch_stamp = UTC
+%Y%m%dT%H%MZ plus 6 hex chars, fixed once per process), so two campaigns on the
+same cohort can no longer overwrite each other's record.
 
 Runs go through runner.execute_run() in-process, with the condition tag (base /
 repeat_1..3) and the requested temperature passed as runner parameters, so the
@@ -395,6 +403,50 @@ def pin_gpu(index: Optional[int]) -> Optional[str]:
     return value
 
 
+def pin_compile_caches(project_root: Path, environ=os.environ) -> Dict[str, Any]:
+    """Point the torch.compile / Triton caches inside the project, not /tmp.
+
+    Reason: the defaults are /tmp/torchinductor_<user> and ~/.triton, which
+    cleanup passes delete as "regenerable". Deleting them while an engine is
+    compiling kills that engine mid-build (seen 2026-09-22: InductorError /
+    FileNotFoundError on .../triton/0/<hash>/triton_.source, the cache directory
+    having been re-created in the same second). The values set here never point
+    under /tmp; a value already set in the environment is left alone and
+    reported as inherited.
+
+    Returns {"TORCHINDUCTOR_CACHE_DIR": v, "TRITON_CACHE_DIR": v,
+             "inherited": [names that were already set]}.
+    """
+    root = Path(project_root)
+    defaults = OrderedDict(
+        (
+            ("TORCHINDUCTOR_CACHE_DIR", root / ".cache" / "torchinductor"),
+            ("TRITON_CACHE_DIR", root / ".cache" / "triton"),
+        )
+    )
+    out: Dict[str, Any] = {}
+    inherited: List[str] = []
+    for name, default in defaults.items():
+        current = environ.get(name)
+        if current is not None and str(current).strip() != "":
+            inherited.append(name)
+            out[name] = str(current)
+            continue
+        default.mkdir(parents=True, exist_ok=True)
+        environ[name] = str(default)
+        out[name] = str(default)
+    out["inherited"] = inherited
+    return out
+
+
+def compile_caches_line(caches: Dict[str, Any]) -> str:
+    return "compile caches: TORCHINDUCTOR_CACHE_DIR=%s TRITON_CACHE_DIR=%s (inherited: %s)\n" % (
+        caches["TORCHINDUCTOR_CACHE_DIR"],
+        caches["TRITON_CACHE_DIR"],
+        ",".join(caches["inherited"]) if caches["inherited"] else "none",
+    )
+
+
 def select_gpu(
     needs_gpu: bool,
     gpu_probe=query_gpus,
@@ -487,14 +539,22 @@ def preflight(
     sha: Path,
     gpu_probe=query_gpus,
     gpu_override: Optional[int] = None,
+    min_free_gb: float = MIN_FREE_GB,
 ) -> Dict[str, Any]:
-    """Disk, GPU and freeze checks for one model. Returns a record with ok flags."""
+    """Disk, GPU and freeze checks for one model. Returns a record with ok flags.
+
+    `min_free_gb` is the floor actually applied (--min-free-gb); an override of
+    the MIN_FREE_GB default is recorded, never silent.
+    """
     free = free_gb(out_root)
+    required = float(min_free_gb)
     disk = {
         "path": str(out_root),
         "free_gb": round(free, 2),
-        "required_gb": MIN_FREE_GB,
-        "ok": free >= MIN_FREE_GB,
+        "required_gb": required,
+        "min_free_gb_overridden": required != MIN_FREE_GB,
+        "default_required_gb": MIN_FREE_GB,
+        "ok": free >= required,
         "enforced": run_class == "confirmatory",
     }
 
@@ -539,7 +599,7 @@ def preflight(
     }
     if not disk["ok"] and run_class == "smoke":
         disk["note"] = (
-            "below %.0f GB but not enforced for a smoke run (never evidence)" % MIN_FREE_GB
+            "below %.2f GB but not enforced for a smoke run (never evidence)" % required
         )
     return record
 
@@ -650,9 +710,12 @@ def print_plan(plan: Dict[str, Any], preflights: List[Dict[str, Any]], stream=No
             )
         d = pre["disk"]
         w(
-            "  preflight disk: free %.2f GB / required %.0f GB -> %s%s\n"
+            "  preflight disk: free %.2f GB / required %.2f GB -> %s%s%s\n"
             % (d["free_gb"], d["required_gb"], "OK" if d["ok"] else "FAIL",
-               "" if d["ok"] or d["enforced"] else " (not enforced for smoke)")
+               "" if d["ok"] or d["enforced"] else " (not enforced for smoke)",
+               " [min_free_gb_overridden=True: --min-free-gb %.2f replaces the "
+               "%.2f GB default]" % (d["required_gb"], d.get("default_required_gb", MIN_FREE_GB))
+               if d.get("min_free_gb_overridden") else "")
         )
         g = pre["gpu"]
         if not g["required"]:
@@ -882,6 +945,14 @@ def build_parser() -> argparse.ArgumentParser:
         "refused if it is GPU %d or already carries >= %d MiB"
         % (FORBIDDEN_GPU, GPU_FREE_MAX_USED_MIB),
     )
+    p.add_argument(
+        "--min-free-gb",
+        type=float,
+        default=MIN_FREE_GB,
+        help="disk floor for the pre-flight in GB (default %.0f); a different "
+        "value is recorded as min_free_gb_overridden in the record and the plan"
+        % MIN_FREE_GB,
+    )
     p.add_argument("--prereg", default="PREREGISTERED_kyra_v2.yaml", help="frozen preregistration")
     p.add_argument("--sha", default="PREREGISTERED_kyra_v2.yaml.sha256", help="freeze receipt")
     return p
@@ -890,6 +961,26 @@ def build_parser() -> argparse.ArgumentParser:
 def command_string(argv: Optional[List[str]]) -> str:
     args = list(argv) if argv is not None else list(sys.argv[1:])
     return "PYTHONPATH=src python -m kyra.campaign " + " ".join(args)
+
+
+_LAUNCH_STAMP: Optional[str] = None
+
+
+def new_launch_stamp() -> str:
+    """A stamp in the run-id style: UTC %Y%m%dT%H%MZ + '-' + 6 hex chars."""
+    return kyra_runner.make_run_id("campaign-launch", "pid-%d" % os.getpid())
+
+
+def set_launch_stamp(value: Optional[str] = None) -> str:
+    """Fix this process's launch stamp (called once at CLI entry)."""
+    global _LAUNCH_STAMP
+    _LAUNCH_STAMP = value or new_launch_stamp()
+    return _LAUNCH_STAMP
+
+
+def launch_stamp() -> str:
+    """The launch stamp of this invocation; generated on first use if unset."""
+    return _LAUNCH_STAMP or set_launch_stamp()
 
 
 def record_campaign_json(
@@ -913,7 +1004,16 @@ def record_campaign_json(
 def write_campaign_json(
     out_root: Path, cohort: str, payload: Dict[str, Any], suffix: str = ""
 ) -> Path:
-    path = out_root / cohort / ("campaign_%s%s.json" % (cohort, suffix))
+    """Write this invocation's record: campaign_<cohort>__<launch_stamp><suffix>.json.
+
+    The stamp is fixed per process, so every call of one invocation rewrites the
+    same file while two concurrent campaigns on the same cohort can no longer
+    overwrite each other's record.
+    """
+    stamp = launch_stamp()
+    path = out_root / cohort / ("campaign_%s__%s%s.json" % (cohort, stamp, suffix))
+    payload["launch_stamp"] = stamp
+    payload["record_path"] = str(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(
         json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
@@ -1199,6 +1299,9 @@ def score_main(argv: List[str], gpu_probe=query_gpus) -> int:
         shlex.quote(a) for a in argv
     )
     repo_root = Path(__file__).resolve().parents[2]
+    # Before any GPU selection/pinning and before any judge engine is built.
+    caches = pin_compile_caches(repo_root)
+    sys.stdout.write(compile_caches_line(caches))
     out_root = Path(args.out_root) if args.out_root else Path(DEFAULT_OUT_ROOT)
     out_root_explicit = args.out_root is not None
     items_path = Path(args.items)
@@ -1338,6 +1441,7 @@ def score_main(argv: List[str], gpu_probe=query_gpus) -> int:
         "dry_run": bool(args.dry_run),
         "allow_panel_overwrite": bool(args.allow_panel_overwrite),
         "experiments_csv": str(experiments_csv),
+        "compile_caches": caches,
         "freeze": freeze,
         "gpu": gpu,
         "judge_runs": [],
@@ -1648,10 +1752,13 @@ def build_score_parser() -> argparse.ArgumentParser:
 
 def main(argv: Optional[List[str]] = None, gpu_probe=query_gpus) -> int:
     argv = list(argv) if argv is not None else list(sys.argv[1:])
+    set_launch_stamp()  # one stamp per invocation: the record file name carries it
     if argv and argv[0] == "score":
         return score_main(argv[1:], gpu_probe=gpu_probe)
-    args = build_parser().parse_args(argv)
     command = command_string(argv)
+    if argv and argv[0] == "run":  # optional sub-command word, mirrors `score`
+        argv = argv[1:]
+    args = build_parser().parse_args(argv)
     out_root = Path(args.out_root) if args.out_root else Path(DEFAULT_OUT_ROOT)
     out_root_explicit = args.out_root is not None
     items_path = Path(args.items)
@@ -1677,6 +1784,10 @@ def main(argv: Optional[List[str]] = None, gpu_probe=query_gpus) -> int:
     subset_ids = set(plan["subset"]["item_ids"])
     subset_items = [it for it in items if it.item_id in subset_ids]
 
+    # Before any GPU selection/pinning and before any provider engine is built.
+    caches = pin_compile_caches(Path(__file__).resolve().parents[2])
+    sys.stdout.write(compile_caches_line(caches))
+
     preflights = [
         preflight(
             out_root,
@@ -1686,6 +1797,7 @@ def main(argv: Optional[List[str]] = None, gpu_probe=query_gpus) -> int:
             sha,
             gpu_probe=gpu_probe,
             gpu_override=args.gpu,
+            min_free_gb=args.min_free_gb,
         )
         for m in models
     ]
@@ -1696,6 +1808,7 @@ def main(argv: Optional[List[str]] = None, gpu_probe=query_gpus) -> int:
         "command": command,
         "dry_run": bool(args.dry_run),
         "experiments_csv": str(experiments_csv),
+        "compile_caches": caches,
         "preflight": preflights,
         "runs": [],
         "status": "planned",
