@@ -48,7 +48,7 @@
       "gpu_memory_utilization": 0.85,
       "path": "models/hf (to download LAST, after Kanana/Gemma/EXAONE weights are deleted)",
       "disk_gb": 59,
-      "status": "downloaded 2026-09-23 05:45Z (snapshot 9b74e35d; 59.0 GB, 12 fp32 shards, all present per the index) on the PI's 'go ahead'; smoke probe launched 05:47Z on GPU 2 (result/raw/smoke_hyperclova); next: confirmatory campaign → scoring with the pinned judge procedure → delete weights",
+      "status": "RUNS COMPLETE 2026-09-23 08:47Z (4 MARKERs; main 156/156, repeats 31/31; 0 reasoning markers, 0 leaked tokens; manifests carry max_model_len 8192 + skip_reasoning); weights + patched dir deleted 08:49Z (REHYDRATE.md); smoke attempts 1–2 failed on the dropped remote-code config / KV sizing, attempt 3 passed",
       "notes": "official checkpoint, fp32 on disk (12 shards, 59 GB), fp16 in vLLM (architecture HyperCLOVAXForCausalLM supported by vLLM 0.19.0); license 'HyperCLOVA X SEED 14B Think Model License Agreement' (attribution notice required); non-reasoning mode pinned in DECISION_LOG 2026-09-23; 32B Think (66.6 GB) too large"
     }
   ],
