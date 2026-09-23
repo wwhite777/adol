@@ -1,8 +1,11 @@
 """Verify one model's scoring pass against the pinned procedure (no score values are printed).
 
-    ~/envs/jeongwoncheol_adol/bin/python bin/verify_scoring_pass.py <label> <model_dir> [--marker result/raw/phaseA_T1_score_<label>.DONE]
+    ~/envs/jeongwoncheol_adol/bin/python bin/verify_scoring_pass.py <label> <model_dir> [--marker <file>] [--record <campaign_*_scoring.json>]
 
-Checks: marker exit=0; every run dir with a MARKER has judge_J1/J2/J3.jsonl + .meta.json and panel.jsonl;
+Run from the repo root. Receipt: the launcher marker (exit=0), or — when the marker is stale or missing — the campaign's
+own scoring record (--record): status "completed" and exit-0 judge_runs for J1/J2/J3 plus an exit-0 panel_run for every
+marked run dir (the record is written by the scoring process itself, never by hand; the marker's staleness is printed).
+Checks: receipt; every run dir with a MARKER has judge_J1/J2/J3.jsonl + .meta.json and panel.jsonl;
 each sidecar records the pinned procedure (batch_size 1, decode_mode sequential, enable_prefix_caching false,
 attention_backend FLASH_ATTN, max_model_len 16384, VLLM_BATCH_INVARIANT=1, template sha 65460efc…, anchors sha
 7f54fdbd…); n_views equals the panel record count; no unmerged shard file in a run-dir root; per-judge ERROR
@@ -19,17 +22,35 @@ def main(argv):
     if len(argv) < 2:
         print(__doc__); return 2
     label, model_dir = argv[0], argv[1].rstrip("/")
-    marker = argv[3] if len(argv) > 3 and argv[2] == "--marker" else "result/raw/phaseA_T1_score_%s.DONE" % label
+    opts = dict(zip(argv[2::2], argv[3::2]))
+    marker = opts.get("--marker", "result/raw/phaseA_T1_score_%s.DONE" % label)
+    record = opts.get("--record")
     failures = []
-    if os.path.isfile(marker):
-        text = open(marker, encoding="utf-8").read().strip()
-        print("marker:", text)
-        if "exit=0" not in text: failures.append("marker exit != 0")
-    else:
-        failures.append("marker missing: %s" % marker)
     run_dirs = sorted(d for d in glob.glob(os.path.join(model_dir, "*", "*")) if os.path.isfile(os.path.join(d, "MARKER")))
     print("run dirs with MARKER:", len(run_dirs), "(expect 4)")
     if len(run_dirs) != 4: failures.append("expected 4 marked run dirs, found %d" % len(run_dirs))
+    receipt_ok, why = False, []
+    if os.path.isfile(marker):
+        text = open(marker, encoding="utf-8").read().strip()
+        print("marker:", text)
+        receipt_ok = "exit=0" in text
+        if not receipt_ok: why.append("marker exit != 0")
+    else:
+        why.append("marker missing: %s" % marker)
+    if not receipt_ok and record:
+        r = json.load(open(record, encoding="utf-8"))
+        want = sorted(os.path.abspath(d) for d in run_dirs)
+        ok_j = {(os.path.abspath(j.get("run_dir", "")), j.get("judge_id")) for j in r.get("judge_runs", []) if j.get("exit_code") == 0 and not j.get("failure")}
+        ok_p = {os.path.abspath(p.get("run_dir", "")) for p in r.get("panel_runs", []) if p.get("exit_code") == 0 and not p.get("failure")}
+        tag = lambda d: d.split(os.sep)[-2]
+        missing = ["%s/%s" % (tag(d), jid) for d in want for jid in ("J1", "J2", "J3") if (d, jid) not in ok_j]
+        missing += ["%s/panel" % tag(d) for d in want if d not in ok_p]
+        if r.get("status") == "completed" and not missing and len(want) == 4:
+            receipt_ok = True
+            print("receipt: campaign record %s status=completed; exit-0 entries cover all 4 run dirs x (J1,J2,J3,panel) [%d judge, %d panel]; marker stale: %s" % (record, len(ok_j), len(ok_p), "; ".join(why)))
+        else:
+            why.append("record %s: status=%s, missing exit-0 entries: %s" % (record, r.get("status"), ", ".join(missing) or "none"))
+    if not receipt_ok: failures.extend(why)
     for d in run_dirs:
         tag = d.split(os.sep)[-2]
         panel = os.path.join(d, "panel.jsonl")
