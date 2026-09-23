@@ -1,0 +1,8 @@
+run_key=smoke_hyperclova__naver-hyperclovax-HyperCLOVAX-SEED-Think-14B__main__20260923T0554Z-9fa972
+started_utc=2026-09-23T05:54:55Z
+model_id=naver-hyperclovax/HyperCLOVAX-SEED-Think-14B family=naver provider=vllm path=/home/wjeong/adol/models/hf/patched/HyperCLOVAX-SEED-Think-14B
+tag=main condition=base temperature=0.0 seed=20260922
+items=7 gpu=2 run_dir=result/raw/smoke_hyperclova/naver-hyperclovax-HyperCLOVAX-SEED-Think-14B/main/20260923T0554Z-9fa972
+provider_ready model_id=HyperCLOVAX-SEED-Think-14B api_version=0.19.0
+MARKER sha256=bda70895aeee7ea1a910fb34e1c2c516c7850af334ad655a835012dd4fbe7c53
+finished_utc=2026-09-23T05:57:06Z
