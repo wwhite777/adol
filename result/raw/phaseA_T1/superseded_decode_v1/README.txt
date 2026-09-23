@@ -1,0 +1,1 @@
+Batched judge outputs of the 2026-09-23 06:18-07:52Z Qwen scoring pass (VLLM_BATCH_INVARIANT=1, FLASH_ATTN, batch 64), superseded by the SEQUENTIAL procedure (DECISION_LOG ~09:35Z) because batched decoding was not self-reproducible; never analysed.
