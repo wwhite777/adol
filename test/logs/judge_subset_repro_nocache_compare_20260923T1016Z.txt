@@ -1,0 +1,11 @@
+nc1 vs nc2 | views 88 / 88, common 88 | identical prompts 88
+status pairs: {('ok', 'ok'): 88}
+byte-identical judge text: 88 / 88 = 100.0%
+both ok 88 | identical scores 88 (100.0%)
+differing-field counts among differing views: {}
+
+seq1_cached vs nc1 | views 88 / 88, common 88 | identical prompts 88
+status pairs: {('ok', 'ok'): 88}
+byte-identical judge text: 54 / 88 = 61.4%
+both ok 88 | identical scores 76 (86.4%)
+differing-field counts among differing views: {'D3': 3, 'D1': 1, 'D2': 3, 'D5': 8, 'A': 3, 'D4': 1}
