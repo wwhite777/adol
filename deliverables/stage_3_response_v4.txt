@@ -1,0 +1,25 @@
+adol — stage 3 response v4 (2026-09-23 ~05:45Z) — HyperCLOVA approved and downloading; judge procedure pinned; prompt v0.3 passing its gate
+(plaintext; follows v3 of ~04:35Z)
+
+YOUR DECISION, RECORDED
+- "go ahead" → HyperCLOVAX-SEED-Think-14B (official, ungated, 59 GB fp32) is downloading since 05:40Z (DECISION_LOG 2026-09-23 ~05:40Z; marker models/DOWNLOAD_hyperclova_think14b.DONE). Sequence after it lands: class=smoke probe in non-reasoning mode (pass = no reasoning text, clean turn endings, Korean) → confirmatory campaign (~2 h on one GPU) → scoring with the same judge procedure as the other four → weights deleted. Cost to you: none.
+
+WHAT CHANGED SINCE v3 (all logged before any outcome was read)
+1. Judge decoding is now a pinned, reproducible procedure. Plain batched vLLM decoding turned out NOT to reproduce itself (two identical runs of the 8B judge agreed byte-for-byte on 75.7% of 564 views and on scores for 82.7%), so it was rejected. vLLM's batch-invariant mode with a fixed attention backend (FLASH_ATTN) reproduces itself exactly (two runs on two different GPUs: 564/564 identical) at 7.5 min per judge-run instead of 65 min sequential — that is the pinned path (DECISION_LOG ~05:15Z/~05:20Z; launcher bin/score_phaseA.sh; every judge sidecar records it). Honest caveat for the paper: on identical prompts the pinned path agrees with the one-view-per-call path on only 49% of judge texts and 63% of score sets — kernel choice alone changes this 8B judge's scores on about a third of views. That is reported as a judge-stability limitation; the three-judge median is the mitigation.
+2. Judge prompt v0.3 (the protocol's one permitted revision) is committed (32762d0): the example is sized to the view, the control-item obligation is stated unconditionally, a parser guard rejects copied example rationales, the retry re-ask is rendered per item type, raw judge text is kept on errors, and the judge refuses to run without the manual (a fail-open loader was found and fixed). Rubric text unchanged; the exact wording changes are in DECISION_LOG.
+3. Parse-rate gate on the Qwen main run (564 views; frozen bar 2% after the one revision, else the judge is replaced):
+   - J2 Mistral-Small-24B int4: 0/564 = 0.00% → PASS (was 30.1% under v0.2); all 168 control records carry both control fields.
+   - J1 Llama-3.1-8B: 10/564 = 1.77% → PASS (was 26.2%), but 25% of views needed the single permitted re-ask, mostly single-turn views (disclosed as a judge-quality limitation).
+   - J3 Phi-4 FP8: running now; result decides whether Phi-4 stays or is replaced.
+4. Generation remains complete for four models (weights deleted, recipes recorded); disk is at ~97 GB free with the HyperCLOVA download in flight.
+
+NEXT (no PI action needed)
+- J3 verdict → scoring of Qwen + Kanana (one per GPU), then EXAONE + Gemma (~45 min per model per GPU) → panels → HyperCLOVA smoke/run/score → analysis CLIs → G6 (revision count 1) → CLAIM_LEDGER → figures → Korean manuscript.
+
+RECORDS
+- Commits since v3: c42cf33 (batched judge), 61f344f (engine kwargs), ead5aca (pinned procedure), 32762d0 (prompt v0.3), d32a294 / 8cc5026 (gate J1/J2), 51ca5a9 / 39cea5b (your decision). DECISION_LOG entries 2026-09-23 ~04:50Z–~05:40Z; ISSUES OPS-2 (engine re-init loop), OPS-3 (fail-open manual); memory.md lessons; handoff.md; STATE.yaml jobs.
+
+DISCLOSURES
+- Two batch-invariant probe runs were launched from a source snapshot that lacked manual/ and therefore judged without the manual excerpt; they are kept only as reproducibility evidence (their prompts were identical to each other) and the sequential comparison was re-measured with the manual (run C). Loader now fails closed.
+- v0.3 consumes the single prompt revision: N3.1 reads FAIL (not MISS) if any dimension's AC2 CI upper bound is below 0.70.
+- Late substitution log (Qwen2.5 for Qwen3); r004 waived (domestic venue); no outcome has been read.
