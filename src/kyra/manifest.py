@@ -38,11 +38,17 @@ MANIFEST_FIELDS = (
 # Extended explicitly (never by widening the guard): chat_template_kwargs is the
 # dict passed to apply_chat_template and stop_token_ids the extra end-of-turn
 # ids handed to SamplingParams, both reported by VLLMProvider.effective_params().
+# engine_kwargs (the extra vllm engine constructor arguments) and vllm_env (the
+# vllm environment variables in force at construction) are engine provenance,
+# also reported by VLLMProvider.effective_params(); both are dicts, empty when
+# nothing was set.
 OPTIONAL_MANIFEST_FIELDS = (
     "chat_template_source",
     "chat_template_sha256",
     "chat_template_kwargs",
     "stop_token_ids",
+    "engine_kwargs",
+    "vllm_env",
 )
 
 RESPONSE_FIELDS = ("item_id", "condition", "turn_index", "user_text", "model_text")

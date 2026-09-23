@@ -436,6 +436,30 @@ class TestRunnerAndValidation(unittest.TestCase):
         self.assertIn("chat_template_kwargs", mf.OPTIONAL_MANIFEST_FIELDS)
         self.assertIn("stop_token_ids", mf.OPTIONAL_MANIFEST_FIELDS)
 
+    def test_engine_provenance_fields_are_accepted_unknown_ones_still_rejected(self):
+        """engine_kwargs / vllm_env are on the explicit allow-list, as dicts."""
+        p = self.tmp / "engineprov.jsonl"
+        old_format = {k: None for k in mf.MANIFEST_FIELDS}
+        old_format["status"] = "ok"
+        mf.write_manifest_record(p, old_format)  # a manifest without the new keys
+        rec = dict(old_format)
+        rec["engine_kwargs"] = {"max_model_len": 8192}
+        rec["vllm_env"] = {"VLLM_BATCH_INVARIANT": "1"}
+        mf.write_manifest_record(p, rec)
+        written = [
+            json.loads(line)
+            for line in p.read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        ]
+        self.assertNotIn("engine_kwargs", written[0])
+        self.assertNotIn("vllm_env", written[0])
+        self.assertEqual(written[1]["engine_kwargs"], {"max_model_len": 8192})
+        self.assertEqual(written[1]["vllm_env"], {"VLLM_BATCH_INVARIANT": "1"})
+        with self.assertRaises(ValueError):
+            mf.write_manifest_record(p, dict(rec, engine_env={"a": 1}))
+        self.assertIn("engine_kwargs", mf.OPTIONAL_MANIFEST_FIELDS)
+        self.assertIn("vllm_env", mf.OPTIONAL_MANIFEST_FIELDS)
+
     def test_manifest_record_field_guard(self):
         p = self.tmp / "m.jsonl"
         with self.assertRaises(ValueError):

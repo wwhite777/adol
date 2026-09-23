@@ -830,6 +830,49 @@ class TestManifestProvenance(VLLMProviderBaseTest):
         self.assertEqual(rec["chat_template_kwargs"], {})
         self.assertEqual(rec["stop_token_ids"], [])
 
+    def test_manifest_carries_the_engine_provenance(self):
+        """engine_kwargs / vllm_env reach the manifest unchanged."""
+        os.environ[ENGINE_KWARGS_ENV] = '{"max_model_len": 8192}'
+        os.environ["VLLM_BATCH_INVARIANT"] = "1"
+        install_fake_vllm(self)
+        p = VLLMProvider(model_path="x/y")
+        self.assertEqual(p.effective_params()["engine_kwargs"], {"max_model_len": 8192})
+        self.assertEqual(
+            p.effective_params()["vllm_env"], {"VLLM_BATCH_INVARIANT": "1"}
+        )
+        rec = self._run(p)
+        self.assertEqual(rec["engine_kwargs"], {"max_model_len": 8192})
+        self.assertEqual(rec["vllm_env"], {"VLLM_BATCH_INVARIANT": "1"})
+
+    def test_manifest_carries_the_engine_provenance_when_unset(self):
+        install_fake_vllm(self)
+        rec = self._run(VLLMProvider(model_path="x/y"))
+        self.assertEqual(rec["engine_kwargs"], {})
+        self.assertEqual(rec["vllm_env"], {})
+
+    def test_provider_effective_params_pass_the_engine_provenance_through(self):
+        from kyra.runner import PROVIDER_PARAM_KEYS, provider_effective_params
+
+        class Engined(MockProvider):
+            def effective_params(self):
+                return {
+                    "engine_kwargs": {"max_model_len": 8192},
+                    "vllm_env": {"VLLM_BATCH_INVARIANT": "1"},
+                }
+
+        self.assertIn("engine_kwargs", PROVIDER_PARAM_KEYS)
+        self.assertIn("vllm_env", PROVIDER_PARAM_KEYS)
+        self.assertEqual(
+            provider_effective_params(Engined()),
+            {
+                "engine_kwargs": {"max_model_len": 8192},
+                "vllm_env": {"VLLM_BATCH_INVARIANT": "1"},
+            },
+        )
+        rec = self._run(Engined())
+        self.assertEqual(rec["engine_kwargs"], {"max_model_len": 8192})
+        self.assertEqual(rec["vllm_env"], {"VLLM_BATCH_INVARIANT": "1"})
+
     def test_template_provenance_is_absent_for_a_provider_without_it(self):
         rec = self._run(MockProvider())
         self.assertNotIn("chat_template_sha256", rec)

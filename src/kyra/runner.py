@@ -51,13 +51,17 @@ CONDITIONS: Dict[str, Dict[str, object]] = {
 # Manifest fields a provider is allowed to overwrite with what it actually used.
 # chat_template_kwargs / stop_token_ids are per-model generation options: a
 # provider that declares them reports them here, so the manifest says what was
-# applied.
+# applied. engine_kwargs / vllm_env are engine provenance (what the vllm engine
+# was built with, and the vllm environment in force): the frozen protocol
+# requires each run manifest to carry them, so they travel the same path.
 PROVIDER_PARAM_KEYS = (
     "max_tokens",
     "temperature",
     "top_p",
     "chat_template_kwargs",
     "stop_token_ids",
+    "engine_kwargs",
+    "vllm_env",
 )
 # Optional provenance fields, copied only when the provider exposes them.
 PROVIDER_PROVENANCE_KEYS = ("chat_template_source", "chat_template_sha256")
