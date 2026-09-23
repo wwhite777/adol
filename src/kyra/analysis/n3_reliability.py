@@ -250,12 +250,31 @@ def long_from_fixture(path) -> pd.DataFrame:
 
 
 def discover_judge_files(run_dirs: Sequence[str]) -> List[str]:
+    """The judge files of each run directory (its root only, never a shard file).
+
+    A sharded judge run (kyra.judge --shard K/N) leaves judge_<id>.shard<k>of<N>.jsonl
+    beside the merged judge_<id>.jsonl until the campaign moves them into
+    <run_dir>/shards/ after a successful merge. Counting a shard file here would
+    add a partial copy of one judge as if it were another judge, so a shard file
+    still lying in the run directory root stops the analysis and is named: it
+    means that judge's merge did not complete.
+    """
     out: List[str] = []
     for d in run_dirs:
         p = Path(d)
         if not p.is_dir():
             raise ValueError("run directory not found: %s" % p)
-        out.extend(sorted(str(f) for f in p.glob("judge_*.jsonl")))
+        found = sorted(p.glob("judge_*.jsonl"))
+        stray = [f for f in found if ".shard" in f.name]
+        if stray:
+            raise ValueError(
+                "%s still holds %d unmerged shard file(s): %s - a shard file in the "
+                "run directory root means that judge's merge did not complete "
+                "(merge them with `python -m kyra.judge merge`; the campaign moves "
+                "merged shards into %s)"
+                % (p, len(stray), ", ".join(f.name for f in stray), p / "shards")
+            )
+        out.extend(str(f) for f in found)
     if not out:
         raise ValueError("no judge_*.jsonl found in: %s" % ", ".join(map(str, run_dirs)))
     return out

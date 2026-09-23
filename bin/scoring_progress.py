@@ -12,6 +12,8 @@ for run_dir in sorted(glob.glob(os.path.join(root, "*", "*", "*"))):
     model = run_dir.split(os.sep)[-3]; tag = run_dir.split(os.sep)[-2]
     judges = {}
     for meta in sorted(glob.glob(os.path.join(run_dir, "judge_*.meta.json"))):
+        if ".shard" in os.path.basename(meta):
+            continue  # judge_<id>.shard<k>of<N>.*: a slice, counted via the merged file
         m = json.load(open(meta, encoding="utf-8"))
         jid = m.get("judge_id") or os.path.basename(meta)[6:-10]
         n = m.get("n_views") or 0; e = m.get("n_error_final") or 0

@@ -52,6 +52,17 @@ time, writing judge_<judge_id>.jsonl into the run dir; an existing judge file is
 refused, never overwritten. A judge entry may carry "batch_size": <int >= 1>,
 which is passed through as kyra.judge --batch-size (view prompts per provider
 call); undeclared, no flag is passed and kyra.judge's own default applies.
+A judge entry may also carry "shards": <int >= 1> (default 1). With N > 1 that
+judge's pass over a run directory is split across N kyra.judge child processes
+started at the same time on the same pinned GPU (--shard k/N, one engine each,
+writing judge_<id>.shard<k>of<N>.jsonl); when all N have finished,
+`kyra.judge merge` interleaves them into the single judge_<id>.jsonl, which is
+byte-identical to what one engine would have written, and the shard files (with
+their sidecars) are moved into <run_dir>/shards/ so that only the merged judge
+file is left where the analyses look. A failing shard or a failing merge stops
+the batch with the shard files left in place for diagnosis, and a left-over shard
+file - in the run directory root or in shards/ - is refused exactly like an
+existing judge file.
 Then kyra.panel aggregates that run's judge files
 with the family map built from models.json + judges.json and --evaluated-family
 = the run's model family, writing panel.jsonl. One EXPERIMENTS row per judge run
@@ -88,6 +99,7 @@ import shutil
 import subprocess
 import sys
 from collections import OrderedDict
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Sequence, Tuple
@@ -1146,6 +1158,14 @@ def load_judges(path) -> List[Dict[str, Any]]:
             raise CampaignError(
                 "%s batch_size must be an int >= 1" % where, EXIT_BAD_INPUT
             )
+        # Optional sharded judging: N concurrent engines for this judge on one
+        # GPU, merged back into one judge file. Undeclared (or 1) -> exactly the
+        # single child process, argv and records this judge had before.
+        shards = entry.get("shards")
+        if shards is not None and (
+            isinstance(shards, bool) or not isinstance(shards, int) or shards < 1
+        ):
+            raise CampaignError("%s shards must be an int >= 1" % where, EXIT_BAD_INPUT)
         judges.append(
             {
                 "judge_id": judge_id,
@@ -1155,6 +1175,7 @@ def load_judges(path) -> List[Dict[str, Any]]:
                 "provider": provider,
                 "gpu_memory_utilization": float(gpu_util) if gpu_util is not None else None,
                 "batch_size": int(batch_size) if batch_size is not None else None,
+                "shards": int(shards) if shards is not None else 1,
                 "fake_outputs": entry.get("fake_outputs"),
                 "notes": entry.get("notes", ""),
             }
@@ -1276,14 +1297,67 @@ def run_item_ids(run_dir: Path) -> List[str]:
     return ids
 
 
+SHARDS_DIR_NAME = "shards"
+
+
+def shard_out_path(run_dir: Path, judge_id: str, k: int, n: int) -> Path:
+    """Where shard k of n writes: judge_<id>.shard<k>of<n>.jsonl in the run dir."""
+    return Path(run_dir) / ("judge_%s.shard%dof%d.jsonl" % (judge_id, k, n))
+
+
+def shards_dir(run_dir: Path) -> Path:
+    """<run_dir>/shards: where a judge's shard files go once they are merged."""
+    return Path(run_dir) / SHARDS_DIR_NAME
+
+
+def existing_shard_artifacts(run_dir: Path, judge_id: str) -> List[Path]:
+    """Every shard file of this judge already on disk - run dir root and shards/.
+
+    A left-over shard, merged or not, is refused like a left-over judge file: the
+    merge must never mix a record from an earlier attempt into a new judge file.
+    """
+    root = sorted(Path(run_dir).glob("judge_%s.shard*.jsonl" % judge_id))
+    stored = sorted(shards_dir(run_dir).glob("judge_%s.shard*.jsonl" % judge_id))
+    return root + stored
+
+
+def archive_shard_files(run_dir: Path, shard_files: Sequence[Path]) -> List[Path]:
+    """Move merged shard files and their sidecars into <run_dir>/shards/.
+
+    Called only after the merge succeeded: the run directory root then holds one
+    judge_<id>.jsonl per judge and nothing that looks like one (kyra.panel is
+    given explicit paths, but kyra.analysis.n3_reliability globs the root and a
+    shard file there would count as an extra judge). A failed merge leaves every
+    shard where it is, for diagnosis. Returns the new paths, in input order.
+    """
+    from kyra.judge import meta_path_for  # one source of truth for the sidecar name
+
+    target = shards_dir(run_dir)
+    target.mkdir(parents=True, exist_ok=True)
+    moved: List[Path] = []
+    for shard in shard_files:
+        shard = Path(shard)
+        for path in (shard, meta_path_for(shard)):
+            if path.is_file():
+                shutil.move(str(path), str(target / path.name))
+        moved.append(target / shard.name)
+    return moved
+
+
 def judge_command(
     judge: Dict[str, Any],
     run_dir: Path,
     items_path: Path,
     out_path: Path,
     anchors: Optional[Path],
+    shard: Optional[Tuple[int, int]] = None,
 ) -> List[str]:
-    """The kyra.judge argv for one judge on one run (views=prefix, items given)."""
+    """The kyra.judge argv for one judge on one run (views=prefix, items given).
+
+    shard=(k, n) with n > 1 appends --shard k/n: this child judges only that
+    slice of the run's views. shard=None (or n == 1) is the unsharded argv, which
+    is exactly the argv this function produced before sharding existed.
+    """
     cmd = [
         sys.executable,
         "-m",
@@ -1309,11 +1383,34 @@ def judge_command(
             cmd += ["--gpu-memory-utilization", str(judge["gpu_memory_utilization"])]
     if judge.get("batch_size") is not None:
         cmd += ["--batch-size", str(judge["batch_size"])]
+    if shard is not None and int(shard[1]) > 1:
+        cmd += ["--shard", "%d/%d" % (int(shard[0]), int(shard[1]))]
     if judge["provider"] == "fake" and judge.get("fake_outputs"):
         cmd += ["--fake-outputs", str(judge["fake_outputs"])]
     if anchors is not None:
         cmd += ["--anchors", str(anchors)]
     return cmd
+
+
+def judge_merge_command(
+    run_dir: Path, shard_files: Sequence[Path], out_path: Path
+) -> List[str]:
+    """`kyra.judge merge`: the shard files of one judge back into one judge file."""
+    return (
+        [
+            sys.executable,
+            "-m",
+            "kyra.judge",
+            "merge",
+            "--run-dir",
+            str(run_dir),
+            "--views",
+            JUDGE_VIEWS,
+            "--shards",
+        ]
+        + [str(p) for p in shard_files]
+        + ["--out", str(out_path)]
+    )
 
 
 def panel_command(
@@ -1358,6 +1455,115 @@ def run_subprocess(cmd: Sequence[str], log_path: Path, repo_root: Path, gpu: Opt
         encoding="utf-8",
     )
     return proc.returncode, (proc.stdout + proc.stderr).strip()
+
+
+def run_subprocesses(
+    cmds: Sequence[Sequence[str]],
+    log_paths: Sequence[Path],
+    repo_root: Path,
+    gpu: Optional[int],
+) -> List[Tuple[int, str]]:
+    """Run several child processes at the same time; results keep the input order.
+
+    One thread per child, each blocking in run_subprocess, so every child gets its
+    own log file and its own drained pipes. Used for the shards of one judge: they
+    share the pinned GPU on purpose (two engines at gpu_memory_utilization ~0.42
+    fit on one 46 GB card), and the batch may not continue until all of them have
+    finished.
+    """
+    if len(cmds) != len(log_paths):
+        raise ValueError("run_subprocesses needs one log path per command")
+    if len(cmds) == 1:
+        return [run_subprocess(cmds[0], log_paths[0], repo_root, gpu)]
+    with ThreadPoolExecutor(max_workers=len(cmds)) as pool:
+        futures = [
+            pool.submit(run_subprocess, cmd, log_path, repo_root, gpu)
+            for cmd, log_path in zip(cmds, log_paths)
+        ]
+        return [f.result() for f in futures]
+
+
+def run_one_judge(
+    judge: Dict[str, Any],
+    run_dir: Path,
+    items_path: Path,
+    out_path: Path,
+    anchors_path: Optional[Path],
+    key: str,
+    log_dir: Path,
+    repo_root: Path,
+    gpu_index: Optional[int],
+) -> Dict[str, Any]:
+    """Score one run dir with one judge, sharded or not.
+
+    shards == 1: one kyra.judge child, exactly as before.
+    shards == N > 1: N kyra.judge children started together (--shard k/N, one
+    file each), then `kyra.judge merge` into out_path. A failing shard means the
+    merge is not attempted and the shard files stay on disk for diagnosis; a
+    successful merge moves them (and their sidecars) into <run_dir>/shards/, so
+    the run directory root holds only the merged judge file.
+
+    Returns {code, output, log, shard_files, shard_logs, command_cell}: code 0
+    only when every child and the merge succeeded. shard_files are the paths the
+    artifacts ended up at (<run_dir>/shards/ after a merge, the run directory
+    root otherwise).
+    """
+    n_shards = int(judge.get("shards") or 1)
+    log_path = log_dir / ("%s.log" % key)
+    if n_shards == 1:
+        cmd = judge_command(judge, run_dir, items_path, out_path, anchors_path)
+        code, output = run_subprocess(cmd, log_path, repo_root, gpu_index)
+        return {
+            "code": code,
+            "output": output,
+            "log": log_path,
+            "shard_files": [],
+            "shard_logs": [],
+            "command_cell": shell_repr(cmd),
+        }
+
+    shard_files = [
+        shard_out_path(run_dir, judge["judge_id"], k, n_shards)
+        for k in range(1, n_shards + 1)
+    ]
+    shard_logs = [
+        log_dir / ("%s.shard%dof%d.log" % (key, k, n_shards))
+        for k in range(1, n_shards + 1)
+    ]
+    cmds = [
+        judge_command(judge, run_dir, items_path, shard_files[k - 1], anchors_path,
+                      shard=(k, n_shards))
+        for k in range(1, n_shards + 1)
+    ]
+    merge_cmd = judge_merge_command(run_dir, shard_files, out_path)
+    command_cell = "\n".join([shell_repr(c) for c in cmds] + [shell_repr(merge_cmd)])
+    results = run_subprocesses(cmds, shard_logs, repo_root, gpu_index)
+    failed = [
+        (k, results[k - 1], shard_logs[k - 1])
+        for k in range(1, n_shards + 1)
+        if results[k - 1][0] != 0 or not shard_files[k - 1].is_file()
+    ]
+    if failed:
+        k, (code, output), failed_log = failed[0]
+        return {
+            "code": code or 1,
+            "output": "shard %d/%d failed: %s" % (k, n_shards, output),
+            "log": failed_log,
+            "shard_files": shard_files,
+            "shard_logs": shard_logs,
+            "command_cell": command_cell,
+        }
+    code, output = run_subprocess(merge_cmd, log_path, repo_root, None)
+    merged = code == 0 and Path(out_path).is_file()
+    return {
+        "code": code,
+        "output": output,
+        "log": log_path,
+        # after a successful merge the shards live in <run_dir>/shards/
+        "shard_files": archive_shard_files(run_dir, shard_files) if merged else shard_files,
+        "shard_logs": shard_logs,
+        "command_cell": command_cell,
+    }
 
 
 def score_main(argv: List[str], gpu_probe=query_gpus) -> int:
@@ -1414,7 +1620,8 @@ def score_main(argv: List[str], gpu_probe=query_gpus) -> int:
             dict(
                 {k: j[k] for k in ("judge_id", "family", "provider", "model_id", "notes")},
                 # only when declared: an undeclared judge entry keeps its old shape
-                **({"batch_size": j["batch_size"]} if j.get("batch_size") is not None else {})
+                **({"batch_size": j["batch_size"]} if j.get("batch_size") is not None else {}),
+                **({"shards": j["shards"]} if j.get("shards", 1) > 1 else {}),
             )
             for j in judges
         ],
@@ -1456,7 +1663,25 @@ def score_main(argv: List[str], gpu_probe=query_gpus) -> int:
             judge_files = [
                 Path(run_dir) / ("judge_%s.jsonl" % j["judge_id"]) for j in judges
             ]
-            existing = [str(p) for p in judge_files if p.exists()]
+            # A left-over shard file is refused like a left-over judge file: the
+            # merge would otherwise pick up records from an earlier attempt. Both
+            # the run directory root and <run_dir>/shards/ (where a finished merge
+            # moves them) are searched, for every judge that asks for shards.
+            shard_files = [
+                shard_out_path(Path(run_dir), j["judge_id"], k, j["shards"])
+                for j in judges
+                if j["shards"] > 1
+                for k in range(1, j["shards"] + 1)
+            ]
+            left_over_shards = [
+                p
+                for j in judges
+                if j["shards"] > 1
+                for p in existing_shard_artifacts(Path(run_dir), j["judge_id"])
+            ]
+            existing = [str(p) for p in judge_files if p.exists()] + [
+                str(p) for p in left_over_shards
+            ]
             panel_file = Path(run_dir) / PANEL_NAME
             plan["runs"].append(
                 {
@@ -1470,6 +1695,7 @@ def score_main(argv: List[str], gpu_probe=query_gpus) -> int:
                     "n_items": len(run_ids),
                     "n_control_items": sum(1 for i in run_ids if i in control_item_ids),
                     "judge_files": [str(p) for p in judge_files],
+                    "shard_files": [str(p) for p in shard_files],
                     "existing_judge_files": existing,
                     "panel_file": str(panel_file),
                     "panel_exists": panel_file.exists(),
@@ -1602,10 +1828,18 @@ def score_main(argv: List[str], gpu_probe=query_gpus) -> int:
         for judge in judges:  # one judge model loaded at a time
             out_path = run_dir / ("judge_%s.jsonl" % judge["judge_id"])
             key = "%s__judge_%s" % (run_key, judge["judge_id"])
-            cmd = judge_command(judge, run_dir, items_path, out_path, anchors_path)
-            log_path = log_dir / ("%s.log" % key)
-            sys.stdout.write("JUDGE %s on %s\n" % (judge["judge_id"], run_dir))
-            code, output = run_subprocess(cmd, log_path, repo_root, gpu["chosen"])
+            n_shards = judge["shards"]
+            sys.stdout.write(
+                "JUDGE %s on %s%s\n"
+                % (judge["judge_id"], run_dir,
+                   "" if n_shards == 1 else " (%d concurrent shards)" % n_shards)
+            )
+            outcome = run_one_judge(
+                judge, run_dir, items_path, out_path, anchors_path, key, log_dir,
+                repo_root, gpu["chosen"],
+            )
+            code, output, log_path = outcome["code"], outcome["output"], outcome["log"]
+            cmd = outcome["command_cell"]
             ok = code == 0 and out_path.is_file()
             record = {
                 "run_key": key,
@@ -1616,6 +1850,9 @@ def score_main(argv: List[str], gpu_probe=query_gpus) -> int:
                 "class": run["class"],
                 "out": str(out_path),
                 "log": str(log_path),
+                "shards": n_shards,
+                "shard_files": [str(p) for p in outcome["shard_files"]],
+                "shard_logs": [str(p) for p in outcome["shard_logs"]],
                 "exit_code": code,
                 "sha256": sha256_file(out_path) if out_path.is_file() else None,
                 "status": "completed" if ok else "failed",
@@ -1630,7 +1867,7 @@ def score_main(argv: List[str], gpu_probe=query_gpus) -> int:
                     "class": run["class"],
                     "config": "judge=%s; family=%s; provider=%s; model=%s; views=%s; "
                     "items=%s; anchors=%s; anchors_sha256=%s; evaluated_family=%s; "
-                    "gpu=%s; run_dir=%s%s"
+                    "gpu=%s; run_dir=%s%s%s"
                     % (
                         judge["judge_id"],
                         judge["family"],
@@ -1648,9 +1885,13 @@ def score_main(argv: List[str], gpu_probe=query_gpus) -> int:
                         "; batch_size=%d" % judge["batch_size"]
                         if judge.get("batch_size") is not None
                         else "",
+                        # same rule: a single-engine judge run says nothing new
+                        "; shards=%d" % n_shards if n_shards > 1 else "",
                     ),
                     "seed": "n/a (judge)",
-                    "command": shell_repr(cmd),
+                    # sharded: the N shard commands and the merge command, one
+                    # per line inside the (quoted) CSV cell
+                    "command": cmd,
                     "raw": str(out_path),
                     "log": str(log_path),
                     "marker": (
@@ -1748,7 +1989,12 @@ def print_score_plan(plan: Dict[str, Any], freeze: Dict[str, Any], gpu: Dict[str
     )
     w(
         "judges: %s\n"
-        % ", ".join("%s/%s (%s)" % (j["judge_id"], j["family"], j["provider"]) for j in plan["judges"])
+        % ", ".join(
+            "%s/%s (%s%s)"
+            % (j["judge_id"], j["family"], j["provider"],
+               ", %d shards" % j["shards"] if j.get("shards", 1) > 1 else "")
+            for j in plan["judges"]
+        )
     )
     for run in plan["runs"]:
         w(

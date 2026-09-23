@@ -1,0 +1,34 @@
+.....................................ERROR: pre-flight refused for fake/tiny-vllm-a
+  disk: {'path': '/tmp/campaign_harden_xj5fqu4y/raw', 'free_gb': 5.0, 'required_gb': 20.0, 'min_free_gb_overridden': False, 'default_required_gb': 20.0, 'ok': False, 'enforced': True}
+campaign record: /tmp/campaign_harden_xj5fqu4y/raw/hardenfloor/campaign_hardenfloor__20260923T1014Z-dee06b.json
+...ERROR: pre-flight refused for fake/tiny-vllm-a
+  disk: {'path': '/tmp/campaign_harden_x4q9fvcd/raw', 'free_gb': 5.0, 'required_gb': 20.0, 'min_free_gb_overridden': False, 'default_required_gb': 20.0, 'ok': False, 'enforced': True}
+campaign record: /tmp/campaign_harden_x4q9fvcd/raw/hardensame/campaign_hardensame__20260923T1014Z-65ab11.json
+.....ERROR: pre-flight refused for fake/tiny-vllm-a
+  freeze: FREEZE_MISMATCH: /tmp/campaign_dry_b1liphxq/PREREGISTERED_kyra_v2.yaml sha256=6396ec8483d664da97f2bf9a06c840d40d97aa6416a7c0fda1fa3a49c076d488 does not match frozen receipt sha256=87abaae4c16fb0efe3dad27ff464fcd86b6b48ff67a33f1414336ccc7ddd34a4
+campaign record: /tmp/campaign_dry_b1liphxq/raw/dryrun/campaign_dryrun__20260923T1014Z-e0590e.json
+.ERROR: models_fake.json[0] uses the mock provider; a mock run is never evidence and is refused for --class confirmatory
+....ERROR: pre-flight refused for fake/tiny-vllm-a
+  gpu: no free GPU among [0, 1, 2] (< 4096 MiB used)
+campaign record: /tmp/campaign_dry_grk50pg2/raw/dryrun/campaign_dryrun__20260923T1014Z-590abb.json
+...........ERROR: pre-flight refused for fake/tiny-vllm-a
+  gpu: --gpu 3 refused: allowed GPUs are [0, 1, 2] and GPU 3 is another user's job
+campaign record: /tmp/campaign_gpu_9q01j92a/raw2/gpubad/campaign_gpubad__20260923T1014Z-1919ea.json
+.....ERROR: judge output already exists, refusing to overwrite: /tmp/campaign_score_xrzlivcm/raw/scoreme/fake-tiny-a/main/20260923T1014Z-1fa90f/judge_JF1.jsonl, /tmp/campaign_score_xrzlivcm/raw/scoreme/fake-tiny-a/main/20260923T1014Z-1fa90f/judge_JF2.jsonl
+campaign record: /tmp/campaign_score_xrzlivcm/raw/scoreagain/campaign_scoreagain__20260923T1014Z-24a11e_scoring.json
+..ERROR: refusing to score /tmp/campaign_score_xrzlivcm/no_marker_run: no MARKER (an unvalidated run is not data)
+.ERROR: no run directory matches '/tmp/campaign_score_xrzlivcm/nothing_here_*' (a missing run is never scored silently)
+.ERROR: refusing to score /tmp/campaign_score_xrzlivcm/raw/scoreme/fake-tiny-a/repeat_2/20260923T1014Z-2c52dd: 1 item_id(s) in responses.jsonl are absent from /home/wjeong/adol/research/items/items_phaseA_v1.jsonl, so their risk_group (and therefore which views are CTRL controls) is unknown: KYRA-SMK-001L
+.ERROR: panel output already exists, refusing to overwrite: /tmp/campaign_score_xrzlivcm/raw/scoreme/fake-tiny-a/repeat_3/20260923T1014Z-798b2d/panel.jsonl (pass --allow-panel-overwrite to replace it)
+campaign record: /tmp/campaign_score_xrzlivcm/raw/scorepanel2/campaign_scorepanel2__20260923T1014Z-14f7c6_scoring.json
+..ERROR: run stoptest__fake-tiny-a__repeat_1__20260923T1014Z-9c49f2 failed (missing file: responses.jsonl; manifest contains 1 record(s) with status=error: KYRA-SMK-001L; response record count mismatch: expected 1 response unit(s) (= 1 items x 1 conditions), found 0; no response records for item_id='KYRA-SMK-001L' condition='repeat_1'; input item_id 'KYRA-SMK-001L' missing from responses.jsonl); stopping the campaign - no later model is started.
+log: /tmp/campaign_run_bff0ulkn/raw/stoptest/logs/stoptest__fake-tiny-a__repeat_1__20260923T1014Z-9c49f2.log
+campaign record: /tmp/campaign_run_bff0ulkn/raw/stoptest/campaign_stoptest__20260923T1014Z-d8808b.json
+..............................................................ERROR: --condition and --conditions are mutually exclusive
+.ERROR: bad condition tag 'repeat 1!' (allowed: letters, digits, . _ -)
+..ERROR: bad options for provider 'mock': MockProvider() takes no arguments
+............................s..................................................................................................................................................................................................................................................................................................................
+----------------------------------------------------------------------
+Ran 473 tests in 380.262s
+
+OK (skipped=1)

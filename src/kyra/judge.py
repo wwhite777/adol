@@ -22,13 +22,25 @@ CLI:
   python -m kyra.judge --run-dir <run_dir> --provider vllm|mock|fake \
       --model-path <path> --judge-id J1 --family <family> [--anchors <json>] \
       [--views prefix|final] [--items <items.jsonl> | --control-ids ID,ID] \
-      [--batch-size N]
+      [--batch-size N] [--shard K/N]
+  python -m kyra.judge merge --run-dir <run_dir> --shards <f1> <f2> ... \
+      --out <judge_file> [--views prefix|final]
 
 --batch-size N (default 64) decodes N view prompts per provider call; N=1 is the
 sequential path (one call per view). The records and their order do not depend on
 N. Every run also writes judge_<id>.meta.json beside the JSONL with the decode
 mode, the batch size, the retry counts, the prompt template (path + sha256) and
 the provider's effective parameters; no consumer reads that sidecar.
+
+--shard K/N (default 1/1, 2026-09-23) splits ONE judge's sequential pass over a
+run directory across N engines on the same GPU: the ordered task list is built
+exactly as always and this process handles only the views whose 0-based index i
+satisfies i % N == K-1, writing only those records to --out in their original
+relative order. `merge` rebuilds the same ordered key list from the run dir,
+checks that the shard files cover every (item_id, condition, depth) exactly once,
+and writes the shard lines back in that order - so the merged file is
+byte-identical to what one engine would have written, view for view. With N = 1
+nothing changes at all (the sidecar keeps the shape it had before this option).
 
 Judge prompt v0.3 (DECISION_LOG 2026-09-23, the protocol's one in-scoring prompt
 revision; format compliance only, no rubric/anchor/threshold text changed): the
@@ -231,6 +243,26 @@ DECODE_BATCHED = "batched"
 DECODE_SEQUENTIAL = "sequential"
 META_SUFFIX = ".meta.json"
 
+# Sharded judging (2026-09-23). A shard is a slice of the SAME ordered task list,
+# not a different task list: shard K of N takes the views whose 0-based index i
+# satisfies i % N == K-1. Round-robin rather than contiguous blocks so every shard
+# sees the same mix of depths and finishes at about the same time.
+DEFAULT_SHARD = "1/1"
+# Sidecar fields that every shard of one judge run must agree on before their
+# records may be merged into one file (kyra.judge merge).
+SHARD_META_AGREE = (
+    "judge_id",
+    "family",
+    "views",
+    "prompt_template_sha256",
+    "anchors_sha256",
+    "items_sha256",
+    "model_path",
+    "batch_size",
+)
+# The same, inside provider_effective_params (the engine's own knobs).
+SHARD_PARAM_AGREE = ("engine_kwargs", "vllm_env")
+
 
 def _sha256_text(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
@@ -244,6 +276,29 @@ def meta_path_for(out_path) -> Path:
     """judge_J1.jsonl -> judge_J1.meta.json (sidecar, never read by the panel)."""
     out = Path(out_path)
     return out.with_name(out.stem + META_SUFFIX)
+
+
+def parse_shard(text: str) -> Tuple[int, int]:
+    """'K/N' -> (K, N): 1-based shard index K of N shards (N >= 1, 1 <= K <= N).
+
+    Anything else is a ValueError naming the value: a mistyped shard would either
+    judge the wrong views or, worse, judge none of them silently.
+    """
+    if not isinstance(text, str):
+        raise ValueError("--shard must be K/N, got %r" % (text,))
+    parts = text.strip().split("/")
+    if len(parts) != 2 or not all(p.strip().isdigit() for p in parts):
+        raise ValueError("--shard must be K/N with positive integers, got %r" % (text,))
+    k, n = int(parts[0]), int(parts[1])
+    if n < 1:
+        raise ValueError("--shard N must be >= 1, got %r" % (text,))
+    if not 1 <= k <= n:
+        raise ValueError("--shard K must be in 1..%d, got %r" % (n, text))
+    return k, n
+
+
+def shard_str(shard: int, n_shards: int) -> str:
+    return "%d/%d" % (int(shard), int(n_shards))
 
 
 def sha256_file(path) -> str:
@@ -819,6 +874,8 @@ def judge_run(
     batch_size: int = 1,
     provenance: Optional[Dict[str, Any]] = None,
     write_meta: bool = True,
+    shard: int = 1,
+    n_shards: int = 1,
 ) -> Dict[str, Any]:
     """Score every view of every conversation with one judge; write judge_<id>.jsonl.
 
@@ -837,11 +894,19 @@ def judge_run(
     is the default here for direct library callers, while the CLI defaults to
     DEFAULT_BATCH_SIZE.
 
+    shard=K / n_shards=N (default 1/1) keeps only the views whose 0-based index in
+    that ordered list satisfies i % N == K-1, in their original relative order;
+    the other views are not prompted at all. The records this process writes are
+    exactly the records the unsharded run would have written for those views, so
+    `kyra.judge merge` can interleave the N files back into the single-engine
+    file. N=1 is the unsharded path, unchanged down to the sidecar's key set.
+
     Returns counts: conversations, total (= records written = views judged), ok,
     error, parse_error, provider_error, parse_error_rate (= parse_error / total
     views, the denominator the protocol's <= 2% judge kill rule uses) and
     error_rate (= error / total), plus the batching provenance also written to
-    the <out>.meta.json sidecar.
+    the <out>.meta.json sidecar. With N > 1 every count describes THIS shard;
+    n_views_total is the run's full view count.
     """
     if not judge_id or not str(judge_id).strip():
         raise ValueError("judge_run requires a non-empty judge_id")
@@ -853,6 +918,10 @@ def judge_run(
         raise ValueError("max_retries must be >= 0")
     if isinstance(batch_size, bool) or not isinstance(batch_size, int) or batch_size < 1:
         raise ValueError("batch_size must be an int >= 1, got %r" % (batch_size,))
+    if isinstance(n_shards, bool) or not isinstance(n_shards, int) or n_shards < 1:
+        raise ValueError("n_shards must be an int >= 1, got %r" % (n_shards,))
+    if isinstance(shard, bool) or not isinstance(shard, int) or not 1 <= shard <= n_shards:
+        raise ValueError("shard must be an int in 1..%d, got %r" % (n_shards, shard))
     control = set(control_item_ids or ())
     conversations = read_conversations(run_dir)
     if not conversations:
@@ -907,6 +976,19 @@ def judge_run(
                     "error": None,
                 }
             )
+
+    # -- pass (a2): keep only this shard's views. The slice happens AFTER the full
+    # ordered list exists, so a view's prompt (and therefore its record) is the
+    # same object it would be in an unsharded run; only the set of views this
+    # process decodes changes.
+    n_views_total = len(tasks)
+    if n_shards > 1:
+        tasks = [t for i, t in enumerate(tasks) if i % n_shards == shard - 1]
+        # A shard with no views still writes its (empty) file: a missing file is
+        # how the campaign and the merge report a failed shard.
+        if not tasks:
+            out.parent.mkdir(parents=True, exist_ok=True)
+            out.touch()
 
     # -- passes (b)-(d): decode, parse, re-ask only the views that failed to parse.
     n_parse_errors_first_pass = 0
@@ -989,6 +1071,8 @@ def judge_run(
     counts["n_parse_errors_first_pass"] = n_parse_errors_first_pass
     counts["n_retried"] = n_retried
     counts["n_error_final"] = counts["error"]
+    counts["shard"] = shard_str(shard, n_shards)
+    counts["n_views_total"] = n_views_total
 
     if write_meta:
         meta = build_judge_meta(
@@ -1005,6 +1089,10 @@ def judge_run(
             provenance=provenance,
             template_path=template_path,
             template_sha256=template_sha256,
+            # only when this really is a shard: an unsharded run keeps the exact
+            # sidecar key set it had before sharding existed
+            shard=counts["shard"] if n_shards > 1 else None,
+            n_views_total=n_views_total if n_shards > 1 else None,
         )
         counts["meta_path"] = str(write_judge_meta(out, meta))
     return counts
@@ -1027,19 +1115,29 @@ def build_judge_meta(
     provenance: Optional[Dict[str, Any]] = None,
     template_path: Optional[str] = None,
     template_sha256: Optional[str] = None,
+    shard: Optional[str] = None,
+    n_views_total: Optional[int] = None,
 ) -> Dict[str, Any]:
     """The <out>.meta.json payload: how this judge file was decoded, with which prompt.
 
     Pure provenance - neither kyra.panel nor kyra.campaign reads it (both address
     judge_<id>.jsonl by name), so a missing sidecar can never change a score.
     Unknown provenance is written as null rather than omitted.
+
+    shard ("K/N") and n_views_total are added ONLY for an actual shard (N > 1):
+    an unsharded run keeps the exact key set it had before sharding existed, and
+    `kyra.judge merge` needs the two fields to describe the merged file. n_views
+    is then this shard's view count.
     """
     extra = dict(provenance or {})
     try:
         effective = provider.effective_params()
     except Exception as exc:  # noqa: BLE001 - provenance is best-effort, never fatal
         effective = {"error": "%s: %s" % (type(exc).__name__, exc)}
-    return {
+    shard_fields: Dict[str, Any] = {}
+    if shard is not None:
+        shard_fields = {"shard": shard, "n_views_total": n_views_total}
+    return dict(shard_fields, **{
         "judge_id": judge_id,
         "family": family,
         "provider": str(getattr(provider, "provider_name", "unknown")),
@@ -1065,7 +1163,7 @@ def build_judge_meta(
         "anchors_sha256": extra.get("anchors_sha256"),
         "started_utc": started_utc,
         "finished_utc": finished_utc,
-    }
+    })
 
 
 def write_judge_meta(out_path, meta: Dict[str, Any]) -> Path:
@@ -1077,6 +1175,260 @@ def write_judge_meta(out_path, meta: Dict[str, Any]) -> Path:
         encoding="utf-8",
     )
     return p
+
+
+# -- merging shards -----------------------------------------------------------
+
+
+def ordered_view_keys(run_dir, views: str = VIEW_PREFIX) -> List[Tuple[str, str, int]]:
+    """The (item_id, condition, depth) keys of a run, in the order judge_run writes.
+
+    Built the same way judge_run builds its task list (read_conversations, then
+    make_views per conversation), so the merge order IS the single-engine order.
+    """
+    if views not in VIEW_MODES:
+        raise ValueError("unknown view mode %r (available: %s)" % (views, ", ".join(VIEW_MODES)))
+    keys: List[Tuple[str, str, int]] = []
+    for conv in read_conversations(run_dir):
+        for depth, _turns in make_views(conv["turns"], views):
+            keys.append((conv["item_id"], conv["condition"], int(depth)))
+    return keys
+
+
+def read_shard_records(path) -> List[Tuple[Tuple[str, str, int], str]]:
+    """[(key, line)] of one shard file; the line is kept verbatim.
+
+    The merged file must be byte-identical to the single-engine file, so a record
+    is copied as the bytes the shard wrote, never re-serialised. Each record is
+    still put through check_record_fail_closed first: the merge is the last gate
+    before the panel reads the file.
+    """
+    p = Path(path)
+    if not p.is_file():
+        raise ValueError("shard file not found: %s" % p)
+    out: List[Tuple[Tuple[str, str, int], str]] = []
+    with p.open("r", encoding="utf-8") as fh:
+        for lineno, line in enumerate(fh, start=1):
+            text = line.rstrip("\n")
+            if not text.strip():
+                continue
+            where = "%s:%d" % (p, lineno)
+            try:
+                rec = json.loads(text)
+            except json.JSONDecodeError as exc:
+                raise ValueError("%s: invalid JSON (%s)" % (where, exc)) from exc
+            if not isinstance(rec, dict):
+                raise ValueError("%s: judge record must be a JSON object" % where)
+            try:
+                check_record_fail_closed(rec)
+            except RuntimeError as exc:
+                raise ValueError("%s: %s" % (where, exc)) from exc
+            for field in ("item_id", "condition", "depth"):
+                if rec.get(field) is None:
+                    raise ValueError("%s: missing field %r" % (where, field))
+            out.append(((rec["item_id"], rec["condition"], int(rec["depth"])), text))
+    return out
+
+
+def _fmt_keys(keys: Sequence[Tuple[str, str, int]], limit: int = 20) -> str:
+    shown = ", ".join("%s/%s/d%d" % k for k in keys[:limit])
+    return shown + (" ... (%d more)" % (len(keys) - limit) if len(keys) > limit else "")
+
+
+def read_shard_metas(shard_paths: Sequence[Any]) -> List[Dict[str, Any]]:
+    """The sidecar of every shard; a missing one stops the merge."""
+    metas: List[Dict[str, Any]] = []
+    for path in shard_paths:
+        meta_path = meta_path_for(path)
+        if not meta_path.is_file():
+            raise ValueError("shard sidecar not found: %s" % meta_path)
+        try:
+            meta = json.loads(meta_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError) as exc:
+            raise ValueError("shard sidecar unreadable: %s (%s)" % (meta_path, exc)) from exc
+        if not isinstance(meta, dict):
+            raise ValueError("shard sidecar must be a JSON object: %s" % meta_path)
+        metas.append(meta)
+    return metas
+
+
+def check_shard_provenance(shard_paths: Sequence[Any], metas: Sequence[Dict[str, Any]]) -> None:
+    """Every shard must have been produced by the same judge, prompt and engine.
+
+    Merging a shard decoded with a different prompt template, item file, anchor
+    file, model or engine configuration would build one judge file out of two
+    protocols, and nothing downstream could see it. So any disagreement on
+    SHARD_META_AGREE or on the engine knobs in SHARD_PARAM_AGREE is fatal.
+    """
+    first, first_path = metas[0], shard_paths[0]
+    for field in SHARD_META_AGREE:
+        want = first.get(field)
+        for meta, path in zip(metas[1:], shard_paths[1:]):
+            got = meta.get(field)
+            if got != want:
+                raise ValueError(
+                    "shards disagree on %s: %s has %r but %s has %r"
+                    % (field, first_path, want, path, got)
+                )
+    for field in SHARD_PARAM_AGREE:
+        want = (first.get("provider_effective_params") or {}).get(field)
+        for meta, path in zip(metas[1:], shard_paths[1:]):
+            got = (meta.get("provider_effective_params") or {}).get(field)
+            if got != want:
+                raise ValueError(
+                    "shards disagree on provider_effective_params.%s: %s has %r "
+                    "but %s has %r" % (field, first_path, want, path, got)
+                )
+
+
+def build_merged_meta(
+    shard_paths: Sequence[Any],
+    metas: Sequence[Dict[str, Any]],
+    out_path,
+    run_dir,
+    views: str,
+    counts: Dict[str, Any],
+) -> Dict[str, Any]:
+    """The merged file's sidecar: one judge run, N engines, per-shard timings."""
+    first = metas[0]
+    batch_sizes = [m.get("batch_size") for m in metas]
+    decode_mode = (
+        DECODE_SEQUENTIAL
+        if all(b == 1 for b in batch_sizes)
+        else first.get("decode_mode")
+    )
+    shard_runs = []
+    for path, meta in zip(shard_paths, metas):
+        shard_runs.append(
+            {
+                "shard": meta.get("shard"),
+                "path": str(path),
+                "sha256": sha256_file(path),
+                "n_views": meta.get("n_views"),
+                "n_ok": meta.get("n_ok"),
+                "n_error_final": meta.get("n_error_final"),
+                "n_parse_errors_first_pass": meta.get("n_parse_errors_first_pass"),
+                "n_retried": meta.get("n_retried"),
+                "started_utc": meta.get("started_utc"),
+                "finished_utc": meta.get("finished_utc"),
+            }
+        )
+    started = [s["started_utc"] for s in shard_runs if isinstance(s["started_utc"], str)]
+    finished = [s["finished_utc"] for s in shard_runs if isinstance(s["finished_utc"], str)]
+
+    def _sum(field):
+        values = [m.get(field) for m in metas]
+        return sum(v for v in values if isinstance(v, int)) if values else None
+
+    return {
+        "judge_id": first.get("judge_id"),
+        "family": first.get("family"),
+        "provider": first.get("provider"),
+        "model_id": first.get("model_id"),
+        "model_path": first.get("model_path"),
+        "provider_effective_params": first.get("provider_effective_params"),
+        "decode_mode": decode_mode,
+        "batch_size": first.get("batch_size"),
+        "shards": len(metas),
+        "shard_runs": shard_runs,
+        "max_retries": first.get("max_retries"),
+        "views": views,
+        "prompt_template_path": first.get("prompt_template_path"),
+        "prompt_template_sha256": first.get("prompt_template_sha256"),
+        "run_dir": str(run_dir),
+        "out_path": str(out_path),
+        "n_views": counts["total"],
+        "n_ok": counts["ok"],
+        "n_parse_errors_first_pass": _sum("n_parse_errors_first_pass"),
+        "n_retried": _sum("n_retried"),
+        "n_error_final": counts["error"],
+        "items_path": first.get("items_path"),
+        "items_sha256": first.get("items_sha256"),
+        "anchors_path": first.get("anchors_path"),
+        "anchors_sha256": first.get("anchors_sha256"),
+        "started_utc": min(started) if started else None,
+        "finished_utc": max(finished) if finished else None,
+        "merged_utc": _utc_stamp(),
+    }
+
+
+def merge_shards(
+    run_dir,
+    shard_paths: Sequence[Any],
+    out_path,
+    views: str = VIEW_PREFIX,
+    write_meta: bool = True,
+) -> Dict[str, Any]:
+    """Interleave N shard files back into the single-engine judge file.
+
+    The ordered key list is rebuilt from the run directory exactly as judge_run
+    builds it; the shards must cover every key exactly once (a missing, duplicate
+    or unknown key stops the merge and is named), and the shard lines are written
+    back in that order, verbatim. Returns the merged counts.
+    """
+    if not shard_paths:
+        raise ValueError("merge needs at least one shard file")
+    out = Path(out_path)
+    if out.exists():
+        raise ValueError("merged judge output already exists, refusing to overwrite: %s" % out)
+    expected = ordered_view_keys(run_dir, views)
+
+    lines: Dict[Tuple[str, str, int], List[Tuple[str, str]]] = {}
+    for path in shard_paths:
+        for key, text in read_shard_records(path):
+            lines.setdefault(key, []).append((str(path), text))
+
+    expected_set = set(expected)
+    if len(expected_set) != len(expected):
+        raise ValueError("run %s produced duplicate view keys - refusing to merge" % run_dir)
+    missing = [k for k in expected if k not in lines]
+    duplicate = [k for k in expected if len(lines.get(k, ())) > 1]
+    unknown = sorted(k for k in lines if k not in expected_set)
+    problems = []
+    if missing:
+        problems.append("%d view(s) in no shard: %s" % (len(missing), _fmt_keys(missing)))
+    if duplicate:
+        problems.append(
+            "%d view(s) in more than one shard: %s" % (len(duplicate), _fmt_keys(duplicate))
+        )
+    if unknown:
+        problems.append(
+            "%d record(s) for views this run does not have: %s"
+            % (len(unknown), _fmt_keys(unknown))
+        )
+    if problems:
+        raise ValueError(
+            "shard files do not cover %s exactly once (%d view(s) expected): %s"
+            % (run_dir, len(expected), "; ".join(problems))
+        )
+
+    metas = read_shard_metas(shard_paths)
+    check_shard_provenance(shard_paths, metas)
+
+    counts = {
+        "conversations": None,
+        "views": views,
+        "total": 0,
+        "ok": 0,
+        "error": 0,
+        "shards": len(shard_paths),
+    }
+    out.parent.mkdir(parents=True, exist_ok=True)
+    with out.open("w", encoding="utf-8") as fh:
+        for key in expected:
+            text = lines[key][0][1]
+            fh.write(text + "\n")
+            counts["total"] += 1
+            if json.loads(text).get("status") == STATUS_OK:
+                counts["ok"] += 1
+            else:
+                counts["error"] += 1
+    counts["out_path"] = str(out)
+    counts["sha256"] = sha256_file(out)
+    if write_meta:
+        meta = build_merged_meta(shard_paths, metas, out, run_dir, views, counts)
+        counts["meta_path"] = str(write_judge_meta(out, meta))
+    return counts
 
 
 # -- CLI ---------------------------------------------------------------------
@@ -1131,6 +1483,13 @@ def build_parser() -> argparse.ArgumentParser:
         default=DEFAULT_BATCH_SIZE,
         help="view prompts per provider call (default %d; 1 = one call per view, "
         "the sequential path)" % DEFAULT_BATCH_SIZE,
+    )
+    p.add_argument(
+        "--shard",
+        default=DEFAULT_SHARD,
+        help="K/N: judge only the views whose 0-based index i has i %% N == K-1, "
+        "in their original order (default %s = every view; merge the N files with "
+        "`python -m kyra.judge merge`)" % DEFAULT_SHARD,
     )
     p.add_argument("--max-new-tokens", type=int, default=700, help="judge generation cap (vllm)")
     p.add_argument(
@@ -1194,6 +1553,13 @@ def control_ids_from_args(args, run_item_ids=None) -> set:
 
 
 def _make_provider(args):
+    """Build the judge provider for this process (test doubles included).
+
+    --fake-outputs is a canned reply per view in ask order, so a shard replays the
+    same subsequence of that list as the views it was given (outputs[K-1::N]).
+    That keeps a sharded smoke run comparable with the unsharded one; it says
+    nothing about the real providers, which are asked per view either way.
+    """
     if args.provider == "fake":
         outputs = _FAKE_DEFAULT_OUTPUTS
         if args.fake_outputs:
@@ -1201,6 +1567,9 @@ def _make_provider(args):
             if not isinstance(loaded, list):
                 raise ValueError("--fake-outputs must contain a JSON list")
             outputs = loaded
+        shard, n_shards = parse_shard(getattr(args, "shard", DEFAULT_SHARD))
+        if n_shards > 1:
+            outputs = outputs[shard - 1::n_shards]
         return FakeJudgeProvider(outputs)
     opts: Dict[str, Any] = {}
     if args.provider == "vllm":
@@ -1212,7 +1581,49 @@ def _make_provider(args):
     return get_provider(args.provider, **opts)
 
 
+def build_merge_parser() -> argparse.ArgumentParser:
+    p = argparse.ArgumentParser(
+        prog="kyra.judge merge",
+        description="Merge the shard files of ONE judge run back into the single "
+        "judge file: the view order is rebuilt from the run directory, the shards "
+        "must cover every view exactly once, and the records are copied verbatim.",
+    )
+    p.add_argument("--run-dir", required=True, help="run directory containing responses.jsonl")
+    p.add_argument(
+        "--shards", nargs="+", required=True, help="the shard JSONL files (any order)"
+    )
+    p.add_argument("--out", required=True, help="merged judge file (refused if it exists)")
+    p.add_argument(
+        "--views",
+        default=VIEW_PREFIX,
+        choices=list(VIEW_MODES),
+        help="the view mode the shards were judged with (default prefix)",
+    )
+    return p
+
+
+def merge_main(argv=None) -> int:
+    """`python -m kyra.judge merge ...`: exit 0 merged, 4 bad input / bad coverage."""
+    args = build_merge_parser().parse_args(argv)
+    try:
+        counts = merge_shards(args.run_dir, args.shards, args.out, views=args.views)
+    except ValueError as exc:
+        sys.stderr.write("ERROR: %s\n" % exc)
+        return EXIT_BAD_INPUT
+    sys.stdout.write(
+        "merged shards=%d total=%d ok=%d error=%d out=%s\n"
+        % (counts["shards"], counts["total"], counts["ok"], counts["error"],
+           counts["out_path"])
+    )
+    sys.stdout.write("judge_file_sha256=%s\n" % counts["sha256"])
+    sys.stdout.write("meta=%s\n" % counts.get("meta_path", "not written"))
+    return EXIT_OK
+
+
 def main(argv=None) -> int:
+    argv = list(sys.argv[1:] if argv is None else argv)
+    if argv and argv[0] == "merge":
+        return merge_main(argv[1:])
     args = build_parser().parse_args(argv)
     # The manual excerpt is read BEFORE the provider is built: judging without the
     # rubric excerpt is a different protocol, and an engine loaded first would make
@@ -1220,6 +1631,12 @@ def main(argv=None) -> int:
     try:
         manual_text = load_manual_text(args.manual)
     except (OSError, ValueError) as exc:
+        sys.stderr.write("ERROR: %s\n" % exc)
+        return EXIT_BAD_INPUT
+    # Also before the engine: a mistyped --shard would otherwise cost an engine load.
+    try:
+        shard, n_shards = parse_shard(args.shard)
+    except ValueError as exc:
         sys.stderr.write("ERROR: %s\n" % exc)
         return EXIT_BAD_INPUT
     try:
@@ -1264,11 +1681,13 @@ def main(argv=None) -> int:
         % (PROMPT_PATH, sha256_file(PROMPT_PATH) if PROMPT_PATH.is_file() else "missing")
     )
     sys.stdout.write(
-        "decode_mode=%s batch_size=%d max_retries=%d\n"
+        "decode_mode=%s batch_size=%d max_retries=%d shard=%s shard_views=%d\n"
         % (
             DECODE_SEQUENTIAL if args.batch_size == 1 else DECODE_BATCHED,
             args.batch_size,
             args.max_retries,
+            shard_str(shard, n_shards),
+            len(range(shard - 1, n_views, n_shards)),
         )
     )
     provenance = {
@@ -1297,6 +1716,8 @@ def main(argv=None) -> int:
             control_unknown=bool(args.no_items and not (args.items or args.control_ids)),
             batch_size=args.batch_size,
             provenance=provenance,
+            shard=shard,
+            n_shards=n_shards,
         )
     except ValueError as exc:
         sys.stderr.write("ERROR: %s\n" % exc)
