@@ -1,0 +1,20 @@
+[
+  {
+    "model_id": "fake/tiny-vllm-think",
+    "model_path": "fake/tiny-vllm-think",
+    "family": "fake_a",
+    "provider": "vllm",
+    "gpu_memory_utilization": 0.85,
+    "chat_template_kwargs": {"skip_reasoning": true},
+    "stop_token_ids": [100273, 100275, 100274],
+    "notes": "plan-only fixture: hybrid-thinking model declaring both generation options"
+  },
+  {
+    "model_id": "fake/tiny-vllm-plain",
+    "model_path": "fake/tiny-vllm-plain",
+    "family": "fake_b",
+    "provider": "vllm",
+    "gpu_memory_utilization": 0.85,
+    "notes": "plan-only fixture: neither option declared, must keep the previous row format"
+  }
+]

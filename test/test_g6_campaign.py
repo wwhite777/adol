@@ -24,7 +24,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
-from contextlib import redirect_stdout
+from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
 
 import yaml
@@ -905,6 +905,226 @@ class TestCampaignSmokeRun(unittest.TestCase):
         self.assertEqual(rows[-1][0].split("__")[1], "fake-tiny-a")
         self.assertEqual(rows[-1][8], "failed")
         self.assertNotIn("fake-tiny-b", "".join(r[0] for r in rows))
+
+
+# ==========================================================================
+# campaign - per-model generation options (chat_template_kwargs / stop_token_ids)
+# ==========================================================================
+OPTIONS_MODELS = FIX / "models_fake_vllm_options.json"
+
+
+class TestCampaignGenerationOptions(unittest.TestCase):
+    """Optional per-model vLLM options: models.json -> provider, plan, record, CSV."""
+
+    def setUp(self):
+        self.tmp = Path(tempfile.mkdtemp(prefix="campaign_opts_"))
+        self.addCleanup(shutil.rmtree, self.tmp, True)
+        self.out_root = self.tmp / "raw"
+        self.csv = self.tmp / "EXPERIMENTS.csv"
+        shutil.copy2(REAL_CSV, self.csv)
+        self.real_csv_sha = sha256(REAL_CSV)
+        self.saved_env = os.environ.get("CUDA_VISIBLE_DEVICES")
+        self.addCleanup(self.restore_env)
+
+    def restore_env(self):
+        if self.saved_env is None:
+            os.environ.pop("CUDA_VISIBLE_DEVICES", None)
+        else:
+            os.environ["CUDA_VISIBLE_DEVICES"] = self.saved_env
+
+    def tearDown(self):
+        self.assertEqual(sha256(REAL_CSV), self.real_csv_sha, "real EXPERIMENTS.csv changed")
+
+    def write_models(self, name, models):
+        path = self.tmp / name
+        path.write_text(json.dumps(models), encoding="utf-8")
+        return path
+
+    def run_campaign(self, models_path, cohort, extra=(), spy=None):
+        if spy is not None:
+            original = campaign.make_provider
+            campaign.make_provider = spy
+            self.addCleanup(setattr, campaign, "make_provider", original)
+        argv = [
+            "--items", str(SMOKE_ITEMS),
+            "--models", str(models_path),
+            "--cohort", cohort,
+            "--class", "smoke",
+            "--out-root", str(self.out_root),
+            "--experiments-csv", str(self.csv),
+        ] + list(extra)
+        out, err = io.StringIO(), io.StringIO()
+        with redirect_stdout(out), redirect_stderr(err):
+            code = campaign.main(argv, gpu_probe=fake_gpu_probe())
+        return code, out.getvalue(), err.getvalue()
+
+    # -- models.json ------------------------------------------------------
+    def test_load_models_keeps_the_options_and_nulls_when_absent(self):
+        models = campaign.load_models(OPTIONS_MODELS, "smoke")
+        self.assertEqual(models[0]["chat_template_kwargs"], {"skip_reasoning": True})
+        self.assertEqual(models[0]["stop_token_ids"], [100273, 100275, 100274])
+        self.assertIsNone(models[1]["chat_template_kwargs"])
+        self.assertIsNone(models[1]["stop_token_ids"])
+
+    def test_make_provider_passes_the_options_to_the_vllm_provider(self):
+        from kyra.providers import VLLMProvider
+
+        model = campaign.load_models(OPTIONS_MODELS, "smoke")[0]
+        provider = campaign.make_provider(model, 0.0, 20260922, None)  # builds no engine
+        self.assertIsInstance(provider, VLLMProvider)
+        self.assertEqual(provider.chat_template_kwargs, {"skip_reasoning": True})
+        self.assertEqual(provider.stop_token_ids, [100273, 100275, 100274])
+        plain = campaign.make_provider(
+            campaign.load_models(OPTIONS_MODELS, "smoke")[1], 0.0, 20260922, None
+        )
+        self.assertEqual(plain.chat_template_kwargs, {})
+        self.assertEqual(plain.stop_token_ids, [])
+
+    def test_a_non_vllm_provider_warns_and_ignores_the_options(self):
+        from kyra.providers import MockProvider
+
+        models = self.write_models(
+            "mock_with_options.json",
+            [
+                {
+                    "model_id": "fake/tiny-a",
+                    "model_path": "fake/tiny-a",
+                    "family": "fake_a",
+                    "provider": "mock",
+                    "chat_template_kwargs": {"skip_reasoning": True},
+                }
+            ],
+        )
+        model = campaign.load_models(models, "smoke")[0]
+        err = io.StringIO()
+        with redirect_stderr(err):
+            provider = campaign.make_provider(model, 0.0, 20260922, None)
+        self.assertIsInstance(provider, MockProvider)
+        self.assertIn("WARNING", err.getvalue())
+        self.assertIn("fake/tiny-a", err.getvalue())
+
+    # -- plan + record ----------------------------------------------------
+    def test_dry_run_plan_prints_the_options_and_the_record_carries_them(self):
+        code, out, _ = self.run_campaign(OPTIONS_MODELS, "optdry", extra=["--dry-run"])
+        self.assertEqual(code, 0, out)
+        self.assertIn('chat_template_kwargs: {"skip_reasoning":true}', out)
+        self.assertIn("stop_token_ids: [100273,100275,100274]", out)
+        # the model declaring nothing prints neither line
+        self.assertEqual(out.count("chat_template_kwargs: "), 1)
+        self.assertEqual(out.count("stop_token_ids: "), 1)
+        record = json.loads(
+            one_campaign_record(self.out_root / "optdry", "optdry").read_text(encoding="utf-8")
+        )
+        plan_models = {m["model_id"]: m for m in record["plan"]["models"]}
+        self.assertEqual(
+            plan_models["fake/tiny-vllm-think"]["chat_template_kwargs"],
+            {"skip_reasoning": True},
+        )
+        self.assertEqual(
+            plan_models["fake/tiny-vllm-think"]["stop_token_ids"],
+            [100273, 100275, 100274],
+        )
+        self.assertIsNone(plan_models["fake/tiny-vllm-plain"]["chat_template_kwargs"])
+        self.assertIsNone(plan_models["fake/tiny-vllm-plain"]["stop_token_ids"])
+
+    # -- EXPERIMENTS config string ---------------------------------------
+    def test_config_string_carries_the_options_only_when_declared(self):
+        from kyra.providers import MockProvider
+
+        seen = []
+
+        def spy(model, temperature, seed, gpu_index):
+            seen.append(
+                (model["model_id"], model["chat_template_kwargs"], model["stop_token_ids"])
+            )
+            return MockProvider()
+
+        code, out, _ = self.run_campaign(OPTIONS_MODELS, "optrun", spy=spy)
+        self.assertEqual(code, 0, out)
+        self.assertEqual(len(seen), 8)  # 2 models x (main + 3 repeats)
+        self.assertEqual(
+            seen[0], ("fake/tiny-vllm-think", {"skip_reasoning": True}, [100273, 100275, 100274])
+        )
+        self.assertEqual(seen[-1], ("fake/tiny-vllm-plain", None, None))
+
+        with self.csv.open(encoding="utf-8", newline="") as fh:
+            rows = list(csv.reader(fh))
+        configs = {}
+        for row in rows[-8:]:
+            fields = dict(zip(campaign.EXPERIMENTS_HEADER, row))
+            configs.setdefault(fields["run"].split("__")[1], []).append(fields["config"])
+
+        think_main = configs["fake-tiny-vllm-think"][0]
+        self.assertEqual(
+            think_main,
+            "model=fake/tiny-vllm-think; family=fake_a; provider=vllm; temperature=0.0; "
+            "seed=20260922; condition=base; items=7; gpu=1; cohort=optrun; "
+            "item_scope=full item set; "
+            'chat_template_kwargs={"skip_reasoning":true}; '
+            "stop_token_ids=[100273,100275,100274]",
+        )
+        # a model without the options keeps exactly the previous config format
+        plain_main = configs["fake-tiny-vllm-plain"][0]
+        self.assertEqual(
+            plain_main,
+            "model=fake/tiny-vllm-plain; family=fake_b; provider=vllm; temperature=0.0; "
+            "seed=20260922; condition=base; items=7; gpu=1; cohort=optrun; "
+            "item_scope=full item set",
+        )
+        self.assertNotIn("chat_template_kwargs", plain_main)
+        self.assertNotIn("stop_token_ids", plain_main)
+
+    # -- refusals ---------------------------------------------------------
+    def test_invalid_options_are_bad_input_naming_the_model(self):
+        bad_kwargs = self.write_models(
+            "bad_kwargs.json",
+            [
+                {
+                    "model_id": "fake/bad-kwargs",
+                    "model_path": "fake/bad-kwargs",
+                    "family": "fake_a",
+                    "provider": "vllm",
+                    "chat_template_kwargs": {"opts": {"nested": 1}},
+                }
+            ],
+        )
+        code, out, err = self.run_campaign(bad_kwargs, "optbad1", extra=["--dry-run"])
+        self.assertEqual(code, campaign.EXIT_BAD_INPUT, out)
+        self.assertIn("fake/bad-kwargs", err)
+        self.assertIn("chat_template_kwargs", err)
+
+        bad_ids = self.write_models(
+            "bad_ids.json",
+            [
+                {
+                    "model_id": "fake/bad-ids",
+                    "model_path": "fake/bad-ids",
+                    "family": "fake_a",
+                    "provider": "vllm",
+                    "stop_token_ids": [100273, "100275"],
+                }
+            ],
+        )
+        code, out, err = self.run_campaign(bad_ids, "optbad2", extra=["--dry-run"])
+        self.assertEqual(code, campaign.EXIT_BAD_INPUT, out)
+        self.assertIn("fake/bad-ids", err)
+        self.assertIn("stop_token_ids", err)
+
+        not_a_list = self.write_models(
+            "bad_ids2.json",
+            [
+                {
+                    "model_id": "fake/bad-ids-2",
+                    "model_path": "fake/bad-ids-2",
+                    "family": "fake_a",
+                    "provider": "vllm",
+                    "stop_token_ids": 100273,
+                }
+            ],
+        )
+        code, out, err = self.run_campaign(not_a_list, "optbad3", extra=["--dry-run"])
+        self.assertEqual(code, campaign.EXIT_BAD_INPUT, out)
+        self.assertIn("fake/bad-ids-2", err)
 
 
 # ==========================================================================

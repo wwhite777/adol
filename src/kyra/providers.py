@@ -10,7 +10,7 @@ from __future__ import annotations
 
 import hashlib
 import os
-from typing import Dict, List
+from typing import Any, Dict, List, Optional
 
 
 class ProviderError(RuntimeError):
@@ -128,6 +128,63 @@ def _vllm_version() -> str:
     return str(getattr(vllm, "__version__", "unknown"))
 
 
+def validate_chat_template_kwargs(value: Any) -> Dict[str, Any]:
+    """Normalise per-model chat-template kwargs; ValueError names the offender.
+
+    Accepts None (-> {}) or a dict with non-empty str keys and bool/int/str
+    values - exactly what a chat template can branch on (e.g. skip_reasoning=True
+    or enable_thinking=False). Anything else is refused rather than forwarded
+    blindly into apply_chat_template.
+    """
+    if value is None:
+        return {}
+    if not isinstance(value, dict):
+        raise ValueError(
+            "chat_template_kwargs must be a dict, got %s" % type(value).__name__
+        )
+    out: Dict[str, Any] = {}
+    for key, val in value.items():
+        if not isinstance(key, str) or not key.strip():
+            raise ValueError(
+                "chat_template_kwargs key %r must be a non-empty string" % (key,)
+            )
+        if not isinstance(val, (bool, int, str)):
+            raise ValueError(
+                "chat_template_kwargs[%r] must be a bool, int or str, got %s"
+                % (key, type(val).__name__)
+            )
+        out[key] = val
+    return out
+
+
+def validate_stop_token_ids(value: Any) -> List[int]:
+    """Normalise per-model stop token ids; ValueError names the offending value.
+
+    Accepts None (-> []) or a list/tuple of distinct non-negative ints (booleans
+    are not ints here). Token ids that a tokenizer does not report as eos still
+    have to end a turn, so they are declared rather than guessed.
+    """
+    if value is None:
+        return []
+    if not isinstance(value, (list, tuple)):
+        raise ValueError(
+            "stop_token_ids must be a list of ints, got %s" % type(value).__name__
+        )
+    out: List[int] = []
+    for val in value:
+        if isinstance(val, bool) or not isinstance(val, int):
+            raise ValueError(
+                "stop_token_ids entry %r must be an int, got %s"
+                % (val, type(val).__name__)
+            )
+        if val < 0:
+            raise ValueError("stop_token_ids entry %d must be non-negative" % val)
+        if val in out:
+            raise ValueError("stop_token_ids entry %d is duplicated" % val)
+        out.append(val)
+    return out
+
+
 def _derive_model_id(model_path: str) -> str:
     """HF repo id verbatim, or the basename of a local directory."""
     p = str(model_path).rstrip(os.sep)
@@ -143,6 +200,12 @@ class VLLMProvider(Provider):
     fixed max_new_tokens, all passed to SamplingParams. The prompt is built with
     the model's own chat template through its tokenizer; a model with no chat
     template is an error, never a hand-rolled prompt format.
+
+    Two optional per-model generation options exist for hybrid-thinking models:
+    chat_template_kwargs (forwarded to apply_chat_template, e.g.
+    skip_reasoning=True / enable_thinking=False) and stop_token_ids (extra
+    end-of-turn ids for models whose turn enders are not the tokenizer's eos).
+    Both are validated at construction and always reported by effective_params().
 
     The engine is constructed lazily on the first generate() call. Any failure to
     construct it (or to generate) is raised as ProviderError carrying the
@@ -162,9 +225,14 @@ class VLLMProvider(Provider):
         temperature: float = 0.0,
         seed: int = 20260922,
         gpu_memory_utilization: float = 0.85,
+        chat_template_kwargs: Optional[Dict[str, Any]] = None,
+        stop_token_ids: Optional[List[int]] = None,
     ) -> None:
         if not model_path or not str(model_path).strip():
             raise ValueError("VLLMProvider requires a non-empty model_path")
+        # Validated at construction: a bad option must never reach a live engine.
+        self.chat_template_kwargs = validate_chat_template_kwargs(chat_template_kwargs)
+        self.stop_token_ids = validate_stop_token_ids(stop_token_ids)
         self.model_path = str(model_path)
         self.max_new_tokens = int(max_new_tokens)
         self.temperature = float(temperature)
@@ -255,27 +323,47 @@ class VLLMProvider(Provider):
             raise ProviderError(
                 "vllm import failed (%s: %s)" % (type(exc).__name__, exc)
             ) from exc
-        return SamplingParams(
-            temperature=self.temperature,
-            top_p=self.top_p,
-            max_tokens=self.max_new_tokens,
-            seed=self.seed,
-        )
+        kwargs: Dict[str, Any] = {
+            "temperature": self.temperature,
+            "top_p": self.top_p,
+            "max_tokens": self.max_new_tokens,
+            "seed": self.seed,
+        }
+        # Only sent when declared, so an undeclared model keeps the exact call
+        # shape it had before this option existed.
+        if self.stop_token_ids:
+            kwargs["stop_token_ids"] = list(self.stop_token_ids)
+        return SamplingParams(**kwargs)
 
     def effective_params(self) -> Dict[str, object]:
-        """Exactly what goes into SamplingParams, for the manifest to copy."""
+        """Exactly what goes into SamplingParams/apply_chat_template.
+
+        Both option keys are always reported (empty dict / empty list when
+        undeclared), so every manifest from now on states what was applied
+        instead of leaving it to be inferred from the model list.
+        """
         return {
             "max_tokens": self.max_new_tokens,
             "temperature": self.temperature,
             "top_p": self.top_p,
+            "chat_template_kwargs": dict(self.chat_template_kwargs),
+            "stop_token_ids": list(self.stop_token_ids),
         }
 
     def build_prompt(self, messages: List[Dict[str, str]]) -> str:
-        """Apply the model's chat template, with a generation prompt appended."""
+        """Apply the model's chat template, with a generation prompt appended.
+
+        Declared chat_template_kwargs are forwarded verbatim (e.g. the hybrid
+        thinking switch some templates read); the template itself - and its
+        sha256 provenance - is unchanged.
+        """
         _, tokenizer = self._ensure_engine()
         try:
             return tokenizer.apply_chat_template(
-                messages, tokenize=False, add_generation_prompt=True
+                messages,
+                tokenize=False,
+                add_generation_prompt=True,
+                **self.chat_template_kwargs,
             )
         except Exception as exc:
             raise ProviderError(

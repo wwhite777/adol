@@ -35,7 +35,15 @@ MANIFEST_FIELDS = (
 # Provenance fields a provider may add when it knows them (e.g. the prompt
 # format a local open-weight model actually used). Optional: absent for
 # providers that expose nothing, never required for a record to be valid.
-OPTIONAL_MANIFEST_FIELDS = ("chat_template_source", "chat_template_sha256")
+# Extended explicitly (never by widening the guard): chat_template_kwargs is the
+# dict passed to apply_chat_template and stop_token_ids the extra end-of-turn
+# ids handed to SamplingParams, both reported by VLLMProvider.effective_params().
+OPTIONAL_MANIFEST_FIELDS = (
+    "chat_template_source",
+    "chat_template_sha256",
+    "chat_template_kwargs",
+    "stop_token_ids",
+)
 
 RESPONSE_FIELDS = ("item_id", "condition", "turn_index", "user_text", "model_text")
 

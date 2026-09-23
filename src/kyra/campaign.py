@@ -92,7 +92,11 @@ from typing import Any, Dict, List, Optional, Sequence, Tuple
 from gates.verify_freeze import FreezeMismatch, verify
 from kyra import manifest as mf
 from kyra import runner as kyra_runner
-from kyra.providers import get_provider
+from kyra.providers import (
+    get_provider,
+    validate_chat_template_kwargs,
+    validate_stop_token_ids,
+)
 from kyra.schema import load_items
 
 EXIT_OK = 0
@@ -155,6 +159,25 @@ def slug(text: str) -> str:
     return re.sub(r"[^A-Za-z0-9._-]+", "-", str(text)).strip("-") or "model"
 
 
+def compact_json(value: Any) -> str:
+    """Single-line JSON, stable key order (for plan lines and EXPERIMENTS rows)."""
+    return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+
+
+def generation_options_suffix(model: Dict[str, Any]) -> str:
+    """'; chat_template_kwargs=...; stop_token_ids=...' for the declared ones only.
+
+    Empty string when a model declares neither, so every existing EXPERIMENTS
+    row keeps the exact config format it had before these options existed.
+    """
+    parts = []
+    if model.get("chat_template_kwargs") is not None:
+        parts.append("chat_template_kwargs=%s" % compact_json(model["chat_template_kwargs"]))
+    if model.get("stop_token_ids") is not None:
+        parts.append("stop_token_ids=%s" % compact_json(model["stop_token_ids"]))
+    return "".join("; " + p for p in parts)
+
+
 # --------------------------------------------------------------------------
 # models.json
 # --------------------------------------------------------------------------
@@ -208,6 +231,18 @@ def load_models(path, run_class: str) -> List[Dict[str, Any]]:
             raise CampaignError(
                 "%s gpu_memory_utilization must be a number" % where, EXIT_BAD_INPUT
             )
+        # Optional per-model generation options (hybrid-thinking switch, extra
+        # end-of-turn ids). Validated by the provider's own validators, so the
+        # model list cannot declare something the provider would refuse later.
+        raw_ctk = entry.get("chat_template_kwargs")
+        raw_stop = entry.get("stop_token_ids")
+        try:
+            validate_chat_template_kwargs(raw_ctk)
+            validate_stop_token_ids(raw_stop)
+        except ValueError as exc:
+            raise CampaignError(
+                "%s model_id %r: %s" % (where, model_id, exc), EXIT_BAD_INPUT
+            )
         if model_id in seen:
             raise CampaignError("%s duplicates model_id %r" % (where, model_id), EXIT_BAD_INPUT)
         seen.add(model_id)
@@ -218,6 +253,8 @@ def load_models(path, run_class: str) -> List[Dict[str, Any]]:
                 "family": family,
                 "provider": provider,
                 "gpu_memory_utilization": float(gpu_util) if gpu_util is not None else None,
+                "chat_template_kwargs": dict(raw_ctk) if raw_ctk is not None else None,
+                "stop_token_ids": list(raw_stop) if raw_stop is not None else None,
                 "notes": entry.get("notes", ""),
                 "slug": slug(model_id),
             }
@@ -661,6 +698,8 @@ def build_plan(
                 "family": m["family"],
                 "provider": m["provider"],
                 "gpu_memory_utilization": m["gpu_memory_utilization"],
+                "chat_template_kwargs": m.get("chat_template_kwargs"),
+                "stop_token_ids": m.get("stop_token_ids"),
                 "notes": m["notes"],
                 "runs": [dict(r) for r in runs_per_model],
             }
@@ -703,6 +742,10 @@ def print_plan(plan: Dict[str, Any], preflights: List[Dict[str, Any]], stream=No
             % (model["model_id"], model["family"], model["provider"], model["gpu_memory_utilization"])
         )
         w("  path: %s\n" % model["model_path"])
+        if model.get("chat_template_kwargs") is not None:
+            w("  chat_template_kwargs: %s\n" % compact_json(model["chat_template_kwargs"]))
+        if model.get("stop_token_ids") is not None:
+            w("  stop_token_ids: %s\n" % compact_json(model["stop_token_ids"]))
         for r in model["runs"]:
             w(
                 "  run %-9s temperature=%.1f seed=%d items=%d (%s)\n"
@@ -781,7 +824,16 @@ def make_provider(model: Dict[str, Any], temperature: float, seed: int, gpu_inde
         }
         if model["gpu_memory_utilization"] is not None:
             opts["gpu_memory_utilization"] = model["gpu_memory_utilization"]
+        if model.get("chat_template_kwargs") is not None:
+            opts["chat_template_kwargs"] = model["chat_template_kwargs"]
+        if model.get("stop_token_ids") is not None:
+            opts["stop_token_ids"] = model["stop_token_ids"]
         return get_provider("vllm", **opts)
+    if model.get("chat_template_kwargs") is not None or model.get("stop_token_ids") is not None:
+        sys.stderr.write(
+            "WARNING: %s declares chat_template_kwargs/stop_token_ids, which the "
+            "%r provider ignores\n" % (model["model_id"], model["provider"])
+        )
     return get_provider(model["provider"])
 
 
@@ -881,6 +933,7 @@ def execute_one_run(
             cohort,
             spec["item_scope"],
         )
+        + generation_options_suffix(model)
     )
     failure = record["failure"] or (
         "none (smoke: never evidence)" if run_class == "smoke" else "none"

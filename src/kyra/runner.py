@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import json
 import os
 import re
 import sys
@@ -48,7 +49,16 @@ CONDITIONS: Dict[str, Dict[str, object]] = {
 
 
 # Manifest fields a provider is allowed to overwrite with what it actually used.
-PROVIDER_PARAM_KEYS = ("max_tokens", "temperature", "top_p")
+# chat_template_kwargs / stop_token_ids are per-model generation options: a
+# provider that declares them reports them here, so the manifest says what was
+# applied.
+PROVIDER_PARAM_KEYS = (
+    "max_tokens",
+    "temperature",
+    "top_p",
+    "chat_template_kwargs",
+    "stop_token_ids",
+)
 # Optional provenance fields, copied only when the provider exposes them.
 PROVIDER_PROVENANCE_KEYS = ("chat_template_source", "chat_template_sha256")
 
@@ -258,6 +268,18 @@ def build_parser() -> argparse.ArgumentParser:
         default=None,
         help="generation cap passed to the provider (vllm default: 350)",
     )
+    p.add_argument(
+        "--chat-template-kwargs",
+        default=None,
+        help="JSON object of extra kwargs for the model's chat template "
+        '(e.g. \'{"skip_reasoning": true}\'); vllm provider only',
+    )
+    p.add_argument(
+        "--stop-token-ids",
+        default=None,
+        help="comma-separated token ids that end a turn, added to SamplingParams "
+        "(e.g. 100273,100275); vllm provider only",
+    )
     return p
 
 
@@ -275,7 +297,38 @@ def provider_opts_from_args(args) -> Dict[str, object]:
         opts["temperature"] = args.temperature
     if getattr(args, "seed", None) is not None:
         opts["seed"] = args.seed
+    if getattr(args, "chat_template_kwargs", None) is not None:
+        opts["chat_template_kwargs"] = parse_chat_template_kwargs_arg(
+            args.chat_template_kwargs
+        )
+    if getattr(args, "stop_token_ids", None) is not None:
+        opts["stop_token_ids"] = parse_stop_token_ids_arg(args.stop_token_ids)
     return opts
+
+
+def parse_chat_template_kwargs_arg(text: str) -> Dict[str, object]:
+    """--chat-template-kwargs '<JSON object>' -> dict. Raises ValueError."""
+    try:
+        value = json.loads(text)
+    except json.JSONDecodeError as exc:
+        raise ValueError("--chat-template-kwargs is not valid JSON: %s" % exc)
+    if not isinstance(value, dict):
+        raise ValueError(
+            "--chat-template-kwargs must be a JSON object, got %s" % type(value).__name__
+        )
+    return value
+
+
+def parse_stop_token_ids_arg(text: str) -> List[int]:
+    """--stop-token-ids '1,2,3' -> [1, 2, 3]. Raises ValueError."""
+    parts = [p.strip() for p in str(text).split(",") if p.strip()]
+    ids: List[int] = []
+    for part in parts:
+        try:
+            ids.append(int(part))
+        except ValueError:
+            raise ValueError("--stop-token-ids entry %r is not an int" % part)
+    return ids
 
 
 def resolve_conditions(args) -> List[str]:

@@ -413,6 +413,29 @@ class TestRunnerAndValidation(unittest.TestCase):
         with self.assertRaises(ValueError):
             mf.write_manifest_record(p, dict(rec, surprise=1))
 
+    def test_generation_option_fields_are_accepted_unknown_ones_still_rejected(self):
+        """chat_template_kwargs / stop_token_ids are on the explicit allow-list."""
+        p = self.tmp / "genopts.jsonl"
+        old_format = {k: None for k in mf.MANIFEST_FIELDS}
+        old_format["status"] = "ok"
+        mf.write_manifest_record(p, old_format)  # a manifest without the new keys
+        rec = dict(old_format)
+        rec["chat_template_kwargs"] = {"skip_reasoning": True}
+        rec["stop_token_ids"] = [100273, 100275]
+        mf.write_manifest_record(p, rec)
+        written = [
+            json.loads(line)
+            for line in p.read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        ]
+        self.assertNotIn("stop_token_ids", written[0])
+        self.assertEqual(written[1]["chat_template_kwargs"], {"skip_reasoning": True})
+        self.assertEqual(written[1]["stop_token_ids"], [100273, 100275])
+        with self.assertRaises(ValueError):
+            mf.write_manifest_record(p, dict(rec, sampling_extras={"a": 1}))
+        self.assertIn("chat_template_kwargs", mf.OPTIONAL_MANIFEST_FIELDS)
+        self.assertIn("stop_token_ids", mf.OPTIONAL_MANIFEST_FIELDS)
+
     def test_manifest_record_field_guard(self):
         p = self.tmp / "m.jsonl"
         with self.assertRaises(ValueError):

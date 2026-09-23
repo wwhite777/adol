@@ -39,12 +39,15 @@ class FakeTokenizer:
         self.chat_template = chat_template
         self.calls = []
 
-    def apply_chat_template(self, messages, tokenize=None, add_generation_prompt=None):
+    def apply_chat_template(
+        self, messages, tokenize=None, add_generation_prompt=None, **extra
+    ):
         self.calls.append(
             {
                 "messages": list(messages),
                 "tokenize": tokenize,
                 "add_generation_prompt": add_generation_prompt,
+                "extra": dict(extra),
             }
         )
         body = "|".join("%s:%s" % (m["role"], m["content"]) for m in messages)
@@ -404,14 +407,26 @@ class TestVLLMEffectiveParams(VLLMProviderBaseTest):
         p = VLLMProvider(model_path="x/y", max_new_tokens=350)
         self.assertEqual(
             p.effective_params(),
-            {"max_tokens": 350, "temperature": 0.0, "top_p": 1.0},
+            {
+                "max_tokens": 350,
+                "temperature": 0.0,
+                "top_p": 1.0,
+                "chat_template_kwargs": {},
+                "stop_token_ids": [],
+            },
         )
 
     def test_effective_params_follow_an_override(self):
         p = VLLMProvider(model_path="x/y", max_new_tokens=64, temperature=0.7)
         self.assertEqual(
             p.effective_params(),
-            {"max_tokens": 64, "temperature": 0.7, "top_p": 1.0},
+            {
+                "max_tokens": 64,
+                "temperature": 0.7,
+                "top_p": 1.0,
+                "chat_template_kwargs": {},
+                "stop_token_ids": [],
+            },
         )
 
     def test_effective_params_equal_the_sampling_params_actually_sent(self):
@@ -427,6 +442,111 @@ class TestVLLMEffectiveParams(VLLMProviderBaseTest):
     def test_base_provider_declares_nothing(self):
         self.assertEqual(Provider().effective_params(), {})
         self.assertEqual(FailingProvider().effective_params(), {})
+
+
+class TestVLLMGenerationOptions(VLLMProviderBaseTest):
+    """Per-model chat_template_kwargs / stop_token_ids (hybrid-thinking models)."""
+
+    def test_chat_template_kwargs_reach_apply_chat_template(self):
+        install_fake_vllm(self)
+        p = VLLMProvider(
+            model_path="x/y", chat_template_kwargs={"skip_reasoning": True}
+        )
+        p.generate([{"role": "user", "content": "안녕"}])
+        call = p._tokenizer.calls[0]
+        self.assertEqual(call["extra"], {"skip_reasoning": True})
+        self.assertFalse(call["tokenize"])
+        self.assertTrue(call["add_generation_prompt"])
+
+    def test_stop_token_ids_reach_the_sampling_params(self):
+        install_fake_vllm(self)
+        p = VLLMProvider(model_path="x/y", stop_token_ids=[100273, 100275, 100274])
+        p.generate([{"role": "user", "content": "안녕"}])
+        params = p._llm.generate_calls[0][1]
+        self.assertEqual(params.kwargs["stop_token_ids"], [100273, 100275, 100274])
+        # the deterministic settings are untouched
+        self.assertEqual(params.kwargs["temperature"], 0.0)
+        self.assertEqual(params.kwargs["max_tokens"], 350)
+        self.assertEqual(params.kwargs["seed"], 20260922)
+
+    def test_effective_params_carry_both_keys_when_set(self):
+        p = VLLMProvider(
+            model_path="x/y",
+            chat_template_kwargs={"skip_reasoning": True},
+            stop_token_ids=[100273],
+        )
+        eff = p.effective_params()
+        self.assertEqual(eff["chat_template_kwargs"], {"skip_reasoning": True})
+        self.assertEqual(eff["stop_token_ids"], [100273])
+
+    def test_effective_params_carry_both_keys_when_unset(self):
+        eff = VLLMProvider(model_path="x/y").effective_params()
+        self.assertIn("chat_template_kwargs", eff)
+        self.assertIn("stop_token_ids", eff)
+        self.assertEqual(eff["chat_template_kwargs"], {})
+        self.assertEqual(eff["stop_token_ids"], [])
+
+    def test_effective_params_are_copies_not_the_live_objects(self):
+        p = VLLMProvider(
+            model_path="x/y",
+            chat_template_kwargs={"skip_reasoning": True},
+            stop_token_ids=[1],
+        )
+        eff = p.effective_params()
+        eff["chat_template_kwargs"]["skip_reasoning"] = False
+        eff["stop_token_ids"].append(2)
+        self.assertEqual(p.chat_template_kwargs, {"skip_reasoning": True})
+        self.assertEqual(p.stop_token_ids, [1])
+
+    def test_invalid_chat_template_kwargs_raise_value_error(self):
+        for bad in ([("a", 1)], "skip_reasoning=True", 3):
+            with self.assertRaises(ValueError):
+                VLLMProvider(model_path="x/y", chat_template_kwargs=bad)
+        with self.assertRaises(ValueError) as ctx:
+            VLLMProvider(model_path="x/y", chat_template_kwargs={"opts": {"a": 1}})
+        self.assertIn("opts", str(ctx.exception))
+        with self.assertRaises(ValueError) as ctx:
+            VLLMProvider(model_path="x/y", chat_template_kwargs={7: True})
+        self.assertIn("7", str(ctx.exception))
+
+    def test_invalid_stop_token_ids_raise_value_error(self):
+        with self.assertRaises(ValueError) as ctx:
+            VLLMProvider(model_path="x/y", stop_token_ids="100273")
+        self.assertIn("stop_token_ids", str(ctx.exception))
+        with self.assertRaises(ValueError) as ctx:
+            VLLMProvider(model_path="x/y", stop_token_ids=[100273, "100275"])
+        self.assertIn("100275", str(ctx.exception))
+        with self.assertRaises(ValueError) as ctx:
+            VLLMProvider(model_path="x/y", stop_token_ids=[-1])
+        self.assertIn("non-negative", str(ctx.exception))
+        with self.assertRaises(ValueError) as ctx:
+            VLLMProvider(model_path="x/y", stop_token_ids=[7, 7])
+        self.assertIn("duplicated", str(ctx.exception))
+        with self.assertRaises(ValueError):
+            VLLMProvider(model_path="x/y", stop_token_ids=[True])
+
+    def test_without_the_options_the_call_shapes_are_unchanged(self):
+        install_fake_vllm(self)
+        p = VLLMProvider(model_path="x/y")
+        p.generate([{"role": "user", "content": "안녕"}])
+        call = p._tokenizer.calls[0]
+        self.assertEqual(call["extra"], {}, "no extra kwarg may reach the template")
+        params = p._llm.generate_calls[0][1]
+        self.assertEqual(
+            sorted(params.kwargs),
+            ["max_tokens", "seed", "temperature", "top_p"],
+            "SamplingParams must keep its previous keys exactly",
+        )
+
+    def test_get_provider_passes_the_options_through(self):
+        p = get_provider(
+            "vllm",
+            model_path="x/y",
+            chat_template_kwargs={"enable_thinking": False},
+            stop_token_ids=[100273],
+        )
+        self.assertEqual(p.chat_template_kwargs, {"enable_thinking": False})
+        self.assertEqual(p.stop_token_ids, [100273])
 
 
 class TestManifestProvenance(VLLMProviderBaseTest):
@@ -499,6 +619,24 @@ class TestManifestProvenance(VLLMProviderBaseTest):
         self.assertEqual(rec["provider"], "vllm")
         self.assertEqual(rec["api_version"], FAKE_VERSION)
 
+    def test_manifest_carries_the_generation_options(self):
+        install_fake_vllm(self)
+        rec = self._run(
+            VLLMProvider(
+                model_path="x/y",
+                chat_template_kwargs={"skip_reasoning": True},
+                stop_token_ids=[100273, 100275],
+            )
+        )
+        self.assertEqual(rec["chat_template_kwargs"], {"skip_reasoning": True})
+        self.assertEqual(rec["stop_token_ids"], [100273, 100275])
+
+    def test_manifest_carries_the_generation_options_when_unset(self):
+        install_fake_vllm(self)
+        rec = self._run(VLLMProvider(model_path="x/y"))
+        self.assertEqual(rec["chat_template_kwargs"], {})
+        self.assertEqual(rec["stop_token_ids"], [])
+
     def test_template_provenance_is_absent_for_a_provider_without_it(self):
         rec = self._run(MockProvider())
         self.assertNotIn("chat_template_sha256", rec)
@@ -533,6 +671,46 @@ class TestRunnerWiring(unittest.TestCase):
             provider_opts_from_args(args),
             {"model_path": "models/EXAONE", "max_new_tokens": 350},
         )
+
+    def test_generation_option_flags_parse_into_provider_options(self):
+        from kyra.runner import build_parser, provider_opts_from_args
+
+        args = build_parser().parse_args(
+            [
+                "--items", "i.jsonl",
+                "--provider", "vllm",
+                "--model-path", "models/HCX",
+                "--chat-template-kwargs", '{"skip_reasoning": true}',
+                "--stop-token-ids", "100273, 100275",
+            ]
+        )
+        self.assertEqual(
+            provider_opts_from_args(args),
+            {
+                "model_path": "models/HCX",
+                "chat_template_kwargs": {"skip_reasoning": True},
+                "stop_token_ids": [100273, 100275],
+            },
+        )
+
+    def test_bad_generation_option_flags_are_value_errors(self):
+        from kyra.runner import build_parser, provider_opts_from_args
+
+        bad_json = build_parser().parse_args(
+            ["--items", "i.jsonl", "--chat-template-kwargs", "{not json"]
+        )
+        with self.assertRaises(ValueError):
+            provider_opts_from_args(bad_json)
+        not_object = build_parser().parse_args(
+            ["--items", "i.jsonl", "--chat-template-kwargs", "[1, 2]"]
+        )
+        with self.assertRaises(ValueError):
+            provider_opts_from_args(not_object)
+        bad_ids = build_parser().parse_args(
+            ["--items", "i.jsonl", "--stop-token-ids", "100273,abc"]
+        )
+        with self.assertRaises(ValueError):
+            provider_opts_from_args(bad_ids)
 
     def test_no_new_flags_means_no_options_so_defaults_stand(self):
         from kyra.runner import build_parser, provider_opts_from_args, resolve_conditions
