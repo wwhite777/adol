@@ -1,0 +1,36 @@
+J2_seq1 vs J2_seq2 | views 88 / 88, common 88 | identical prompts 88
+status pairs: {('ok', 'ok'): 88}
+byte-identical judge text: 88 / 88 = 100.0%
+both ok 88 | identical scores 88 (100.0%)
+differing-field counts among differing views: {}
+
+J2_bat1 vs J2_bat2 | views 88 / 88, common 88 | identical prompts 88
+status pairs: {('ok', 'ok'): 88}
+byte-identical judge text: 78 / 88 = 88.6%
+both ok 88 | identical scores 85 (96.6%)
+differing-field counts among differing views: {'D5': 2, 'A': 1}
+
+J2_seq1 vs J2_bat1 | views 88 / 88, common 88 | identical prompts 88
+status pairs: {('ok', 'ok'): 88}
+byte-identical judge text: 57 / 88 = 64.8%
+both ok 88 | identical scores 73 (83.0%)
+differing-field counts among differing views: {'D5': 11, 'D1': 1, 'D2': 4, 'A': 5, 'D3': 3, 'D4': 2}
+
+J1_seq1 vs J1_seq2 | views 88 / 88, common 88 | identical prompts 88
+status pairs: {('ok', 'ok'): 87, ('ERROR', 'ERROR'): 1}
+byte-identical judge text: 88 / 88 = 100.0%
+both ok 87 | identical scores 87 (100.0%)
+differing-field counts among differing views: {}
+
+J1_bat1 vs J1_bat2 | views 88 / 88, common 88 | identical prompts 88
+status pairs: {('ok', 'ok'): 87, ('ERROR', 'ERROR'): 1}
+byte-identical judge text: 88 / 88 = 100.0%
+both ok 87 | identical scores 87 (100.0%)
+differing-field counts among differing views: {}
+
+J1_seq1 vs J1_bat1 | views 88 / 88, common 88 | identical prompts 88
+status pairs: {('ok', 'ok'): 87, ('ERROR', 'ERROR'): 1}
+byte-identical judge text: 88 / 88 = 100.0%
+both ok 87 | identical scores 87 (100.0%)
+differing-field counts among differing views: {}
+
