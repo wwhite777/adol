@@ -1,0 +1,20 @@
+adol — stage 3 response v5 (2026-09-23 ~08:55Z) — generation complete for all five families; scoring on hold until the judge procedure proves reproducible
+(plaintext; follows v4 of ~05:45Z)
+
+TL;DR
+- GENERATION IS COMPLETE for all five pre-registered families: Qwen2.5-14B, EXAONE-4.0-32B-AWQ, Kanana-1.5-8B, Gemma-3-27B W4A16, and — on your "go ahead" — HyperCLOVAX-SEED-Think-14B (official checkpoint, non-reasoning mode verified: 0 reasoning markers, 0 leaked stop tokens in 912 turns). 20 validated run directories (5 models × main + 3 repeats); all weights deleted with regeneration recipes; 98 GB free.
+- HyperCLOVA needed two documented compatibility steps, neither touching weights or prompts: (1) Naver's current revision dropped its remote-code config file while the config still points at it, so the run directory symlinks the pristine snapshot plus that one file taken from the official repo's own previous revision; (2) vLLM sizes memory for the declared 131k context, so max_model_len 8192 (our conversations are ~3k tokens) was pinned as an engine setting and is recorded in every manifest.
+- All three judges passed the pre-registered parse-rate gate under prompt v0.3 (J1 1.77%, J2 0.00%, J3 0.00%), so the panel is J1/J2/J3 as planned. The first scoring pass (Qwen) ran to completion (12 judge runs, 4 panels).
+- BUT scoring is ON HOLD: that pass is not byte-reproducible against the same judges' gate outputs on identical prompts (49–63% identical texts, 68–82% identical score sets), even though every provenance field matches. The "self-reproducible" evidence I had logged for the batch-invariant path was measured on shorter, manual-less prompts; on the real ~7k-token prompts it does not hold. Nothing has been analysed; the Qwen outputs stay on disk unread and will be superseded if the procedure changes.
+- What is running now: a two-run reproducibility test with vLLM's chunked prefill and prefix caching disabled (my leading suspects: every prompt shares a ~6k-token prefix whose cached-vs-recomputed path depends on scheduling), for two judges in parallel (J2 on GPU 1, J1 on GPU 2). If two identical runs give identical files, that configuration becomes the procedure and all 20 run directories are scored under it (~1.5 h per model per GPU; J3's FP8 decoding is the slow part). If not, the one-view-per-call sequential path — already shown reproducible on the generation side — becomes the procedure at ~25 GPU-hours.
+- Why this matters for the paper: a judge whose scores change on ~a third of views under numerics-level perturbation is itself a finding about LLM-judge stability; the three-judge median is the mitigation, and the reported numbers must come from a procedure that reproduces itself exactly.
+
+NOTHING IS NEEDED FROM YOU.
+
+RECORDS
+- Commits fdd9bca (HyperCLOVA runs), 478ea86 (records), d65afdd (Qwen pass + correction), 5030b09; DECISION_LOG 2026-09-23 ~05:40Z–~07:55Z (PI go, HyperCLOVA patch, max_model_len, smoke pass, gate J3, panel decision, reproducibility correction); STATE.yaml jobs; handoff.md; REHYDRATE.md.
+
+DISCLOSURES
+- The pinned-path reproducibility claim in DECISION_LOG ~05:15Z was wrong for full prompts; corrected at ~07:55Z before any analysis.
+- v0.3 consumed the single permitted prompt revision (G6 revision count 1); J1 and J3 needed the single re-ask on 25% / 46% of views (disclosed as judge-quality limitations).
+- Late substitution log (Qwen2.5 for Qwen3); r004 waived (domestic venue); no outcome has been read.
