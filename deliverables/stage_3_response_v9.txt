@@ -1,0 +1,12 @@
+adol — stage 3 response v9 (2026-09-23 ~18:50Z) — all five scoring passes running or queued; projected end of scoring 2026-09-24 ~06:00Z
+(plaintext; follows v8 of ~14:40Z)
+
+TL;DR
+- Scoring is fully in motion under the pinned, reproducible procedure: Qwen on GPU 1 (single engine, ends ≈ 20:40Z), Kanana on GPU 2 (resumed after a fixable memory problem; ends ≈ 23:00Z); EXAONE, Gemma and HyperCLOVA are queued to start automatically as those finish (EXAONE → HyperCLOVA on GPU 1; Gemma on GPU 2). Last panel ≈ 2026-09-24 06:00Z, then analysis → the pre-registration judge (G6) → claim ledger → figures → Korean manuscript (skeleton already written in the JKIICE structure: manuscript/kyra_phaseA_ko_skeleton_v0.md).
+- Two robustness additions since v8, both verified on the GPU before use: (1) two-engine sharding is proven identical to a single engine for the FP8 judge as well (88/88) once it gets 0.45 of the GPU per engine — at 0.42 its KV cache did not fit and the Kanana pass stopped after J1/J2 (their finished work was kept); (2) `campaign score --resume` reuses judge outputs only when every provenance field matches the pinned procedure (a tampered sidecar is refused by name), so interruptions no longer cost finished hours.
+- The first real panel (Qwen main run, 564 views) is structurally complete; no aggregate has been read (the interim-look rule holds until all 20 run directories are scored).
+- Still yours: the target journal (v8; JKIICE recommended). Nothing else is needed.
+
+IF THIS SESSION IS GONE WHEN YOU READ THIS: the three queued launches live in this session's background. handoff.md ("SCORING QUEUE") has the exact manual launch lines and the verification checklist; the markers result/raw/phaseA_T1_score_<label>.DONE say what finished.
+
+RECORDS: DECISION_LOG ~18:05Z–~18:20Z (Kanana incident, J3 memory fix, resume mechanism, J3 sharded equality); commits d6e7507 (resume), 41439c4, 3695517; STATE.yaml jobs; hub page; memory.md.
