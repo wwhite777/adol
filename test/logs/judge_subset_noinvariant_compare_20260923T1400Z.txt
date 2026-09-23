@@ -1,0 +1,18 @@
+J3_ni1 vs J3_ni2 | views 88 / 88, common 88 | identical prompts 88
+status pairs: {('ok', 'ok'): 88}
+byte-identical judge text: 88 / 88 = 100.0%
+both ok 88 | identical scores 88 (100.0%)
+differing-field counts among differing views: {}
+
+J1_ni1 vs J1_ni2 | views 88 / 88, common 88 | identical prompts 88
+status pairs: {('ERROR', 'ERROR'): 1, ('ok', 'ok'): 87}
+byte-identical judge text: 88 / 88 = 100.0%
+both ok 87 | identical scores 87 (100.0%)
+differing-field counts among differing views: {}
+
+J2_ni1 vs J2_ni2 | views 88 / 88, common 88 | identical prompts 88
+status pairs: {('ok', 'ok'): 88}
+byte-identical judge text: 88 / 88 = 100.0%
+both ok 88 | identical scores 88 (100.0%)
+differing-field counts among differing views: {}
+
