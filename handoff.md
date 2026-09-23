@@ -7,7 +7,9 @@ State in one paragraph: The PI signed off the 156-item bank (2026-09-22), so con
 Done this session (paths): DECISION_LOG.md (incident + correction + checkpoint decisions) · research/ISSUES.csv (OPS-1) · src/kyra/campaign.py hardening + test/test_campaign_hardening.py (7) + test/test_g6_campaign.py (record glob) · test/logs/fullsuite_20260922T1358Z.log (326 OK) · result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/{main,repeat_1..3} (MARKERs) · result/raw/phaseA_T1/campaign_phaseA_T1__exaone32b__FAILED_20260922T1239Z.json (preserved failed record) · research/models_run3.json (Kanana), models_run4.json (Gemma), judges_phaseA_v1.json (J1–J3 by local snapshot paths), models_phaseA_v1.json (statuses) · REHYDRATE.md (J2 re-download, J3, Kanana, Gemma lines) · memory.md (6 lessons) · research/STATE.yaml (jobs, next_action) · research/PAPER_PLAN.md (next action 2026-09-23) · hub: wiki/projects/adol.md, INDEX.md, methods/shared-server-ops.md; ~/.claude/skills/home-cleanup/SKILL.md (WHEN for compile caches); zz/handoff.md + zz/memory.md (incident + GPU coordination).
 
 RUNNING / PENDING (check these FIRST in a fresh session):
-- GPU 1: campaign run phaseA_T1 LGAI-EXAONE/EXAONE-4.0-32B-AWQ (research/models_run2.json), confirmatory, since 2026-09-23 00:53Z. Log test/logs/campaign_phaseA_T1_exaone32b_rerun_20260923T0053Z.log; marker result/raw/phaseA_T1_exaone32b_rerun.DONE (expect "exit=0"); then 4 run dirs under result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/{main,repeat_1..3}/ must each hold a MARKER (main/20260922T1239Z-b936cd is the FAILED attempt without MARKER — leave it). Verify: `cat result/raw/phaseA_T1_exaone32b_rerun.DONE; grep -c "MARKER sha256" <log>` (expect 4).
+- EXAONE-4.0-32B-AWQ re-run DONE 02:35Z and VERIFIED (marker exit=0; 4 MARKERs; main 156/156, repeats 31/31; all Korean, no reasoning text; EXPERIMENTS rows completed; record campaign_phaseA_T1__20260923T0053Z-232bc4.json; commit d560f5c). Determinism cross-check: greedy texts identical to the failed 2026-09-22 attempt on 563/563 common turns. Weights DELETED 02:38Z (REHYDRATE.md). main/20260922T1239Z-b936cd remains the FAILED attempt without MARKER — leave it, never score it.
+- GPU 1: campaign run phaseA_T1 RedHatAI/gemma-3-27b-it-quantized.w4a16 (research/models_run4.json), confirmatory, since 2026-09-23 02:37Z. Log test/logs/campaign_phaseA_T1_gemma27b_20260923T0237Z.log; marker result/raw/phaseA_T1_gemma27b.DONE (expect "exit=0"); 4 run dirs under result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/ must hold MARKERs (expected end ~05:00Z). After verification: delete its weights (REHYDRATE.md).
+- HyperCLOVA download (59 GB) is GATED ON THE PI's explicit go (hub note below, 01:36Z) — do not start it before that and before the Kanana/Gemma weights are deleted. The metadata-only cache directory I had created while inspecting its config/template was removed (no weights were ever downloaded).
 - Provider options DONE (commit 1917ed7): per-model `chat_template_kwargs` + `stop_token_ids` flow models.json → campaign → VLLMProvider → manifest (runner flags too); conductor-verified: full suite 346 OK (test/logs/fullsuite_20260923T0110Z.log), planted dry-run checks, and a real-engine smoke proof (result/raw/smoke_genopts: EXAONE-1.2B with enable_thinking=true → "</think>" in 14/14 responses vs 0/14 baseline; class smoke, never evidence).
 - GPU 2: campaign run phaseA_T1 kakaocorp/kanana-1.5-8b-instruct-2505 (research/models_run3.json), confirmatory, since 2026-09-23 01:17Z. Log test/logs/campaign_phaseA_T1_kanana8b_20260923T0117Z.log; marker result/raw/phaseA_T1_kanana8b.DONE (expect "exit=0"); 4 run dirs under result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/ must hold MARKERs (expected end ~03:15Z).
 
@@ -29,3 +31,13 @@ Disclosures:
 - Standing rule §7 (co-author → SCI Q1) overridden by the PI's instruction (logged).
 
 Instruction conflicts: none unresolved.
+
+## NOTE FROM THE HUB SESSION — 2026-09-23T01:36Z (PI instruction to the hub: "adol: do steps 1 to 3" of the disk plan; account at 246 GiB)
+- Done by the hub: models--LGAI-EXAONE--EXAONE-4.0-1.2B deleted (2.39 GiB; REHYDRATE.md line added). Nothing else touched.
+- The hub session is watching the two generation runs (EXAONE pid 2807987 on GPU 1, Kanana pid 2832159 on GPU 2). Steps 1–2 of the plan
+  (verify markers → delete EXAONE + Kanana weights → run Gemma (models_run4.json) → verify → delete Gemma weights) are YOURS to execute
+  when your background tasks return, exactly as your "Exact next steps" say. The hub will step in ONLY if, 5 minutes after both runs
+  have exited, no weights were deleted and no Gemma run exists. To make that visible: name the Gemma log
+  test/logs/campaign_phaseA_T1_gemma27b_<STAMP>.log and its DONE file result/raw/phaseA_T1_gemma27b.DONE.
+- HyperCLOVA (59 GB fp32): the PI has NOT yet approved that download; the server has ~60 GB free — do not start it before the
+  EXAONE/Kanana/Gemma weights are gone and the PI says so.

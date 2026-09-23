@@ -18,7 +18,7 @@
       "gpu_memory_utilization": 0.85,
       "path": "models/hf/hub/models--LGAI-EXAONE--EXAONE-4.0-32B-AWQ (snapshot 1ce84bc0)",
       "disk_gb": 17,
-      "status": "downloaded",
+      "status": "RUNS COMPLETE 2026-09-23 02:35Z (4 MARKERs; re-run after the 2026-09-22 cache-deletion failure; greedy outputs identical to the failed attempt on 563/563 turns); weights deleted 02:38Z (REHYDRATE.md)",
       "notes": "official AWQ; base license 'EXAONE AI Model License Agreement 1.2 - NC'; vLLM >= 0.10 supports EXAONE 4.0; ungated"
     },
     {
