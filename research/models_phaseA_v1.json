@@ -48,7 +48,7 @@
       "gpu_memory_utilization": 0.85,
       "path": "models/hf (to download LAST, after Kanana/Gemma/EXAONE weights are deleted)",
       "disk_gb": 59,
-      "status": "planned — ungated as of 2026-09-23 (HF API gated=False; no click-through needed); waits for the provider options chat_template_kwargs={\"skip_reasoning\": true} + stop_token_ids=[100273, 100275, 100274] (coder card 2026-09-23) and a class=smoke probe on the real checkpoint",
+      "status": "downloading 2026-09-23 05:40Z on the PI's 'go ahead' (marker models/DOWNLOAD_hyperclova_think14b.DONE); provider options in place (commit 1917ed7; research/models_run5.json); next: class=smoke probe (no reasoning text, clean turn ends, Korean) → confirmatory campaign → scoring with the pinned judge procedure → delete weights",
       "notes": "official checkpoint, fp32 on disk (12 shards, 59 GB), fp16 in vLLM (architecture HyperCLOVAXForCausalLM supported by vLLM 0.19.0); license 'HyperCLOVA X SEED 14B Think Model License Agreement' (attribution notice required); non-reasoning mode pinned in DECISION_LOG 2026-09-23; 32B Think (66.6 GB) too large"
     }
   ],
