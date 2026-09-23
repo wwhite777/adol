@@ -1,0 +1,8 @@
+command: PYTHONPATH=src /home/wjeong/envs/jeongwoncheol_adol/bin/python -m kyra.panel --judges result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/repeat_3/20260922T1428Z-709a14/judge_J1.jsonl result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/repeat_3/20260922T1428Z-709a14/judge_J2.jsonl result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/repeat_3/20260922T1428Z-709a14/judge_J3.jsonl --family-map result/raw/phaseA_T1/family_map_phaseA_T1.json --evaluated-family alibaba --out result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/repeat_3/20260922T1428Z-709a14/panel.jsonl
+exit=0
+--- stdout ---
+views=116 conversations=31 ok=116 insufficient=0 evaluated_family=alibaba
+out=result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/repeat_3/20260922T1428Z-709a14/panel.jsonl
+
+--- stderr ---
+
