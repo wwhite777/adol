@@ -1,0 +1,31 @@
+adol — stage 3 response v2 (2026-09-23 ~01:15Z) — phase-A generation in flight
+(plaintext; supersedes nothing — v1 was the tooling report; this is the generation status after your "sorry. resume")
+
+TL;DR
+- Qwen2.5-14B-Instruct confirmatory campaign is COMPLETE and verified: 4 run directories with MARKERs (main 156/156 items at T=0; three stratified repeats 31/31 at T=0.7), every response Korean, 0 errors; DONE marker exit=0; EXPERIMENTS rows "completed".
+- The first EXAONE-4.0-32B-AWQ campaign FAILED (exit 8, no MARKER): a home-cleanup pass in another session deleted /tmp/torchinductor_wjeong at 12:40:47Z while the vLLM engine was compiling (birth time of the recreated directory = the error second). 155/156 items were generated afterwards, but the run is unvalidated and will never be scored. Root cause fixed: the campaign now pins private compile caches under adol/.cache, stamps its record file per invocation (two concurrent campaigns had shared one file), and logs any disk-floor override; 326 tests pass; the identical EXAONE campaign is RE-RUNNING on GPU 1 since 00:53Z (expected end ~03:30Z, 27 items done, 0 errors). The home-cleanup skill now says: never delete compile caches while a GPU job of ours runs.
+- Disk recovered on its own (another project freed space: 12 → 122 GB free; now 60 GB). Downloaded and verified: judges J2 (Intel Mistral-Small-3.2-24B int4, re-download) and J3 (cortecs/phi-4-FP8-Dynamic); evaluated models Kanana-1.5-8B-instruct (Apache-2.0) and Gemma-3-27B-it W4A16 (Red Hat AI build). Judges file: research/judges_phaseA_v1.json.
+- HyperCLOVA: the official naver-hyperclovax/HyperCLOVAX-SEED-Think-14B checkpoint is now UNGATED (HF API, 2026-09-23) — your license click / token is NOT needed. It is 59 GB (fp32 on disk; fp16 in vLLM 0.19, architecture supported natively) and a "Think" model: I pinned non-reasoning mode (template switch skip_reasoning=True) and its end-of-turn stop ids before any run, and a coder (Opus 5) is adding per-model chat-template/stop options to the provider so every manifest records them. It is downloaded last (disk sequence in DECISION_LOG).
+- One procedural gap disclosed: the frozen plan listed "Qwen3"; I ran Qwen2.5-14B (the cached, read-only checkpoint) for disk reasons and did not log that substitution BEFORE the launch. It is logged now (late, result-blind — nothing has been scored). A Qwen3 checkpoint can be added as a sixth model later if GPU time allows, decided before scoring.
+- One factual correction of my own record: my first incident line said the failed EXAONE run had "0 usable items" — it had 155 ok / 1 error; corrected by an appended DECISION_LOG entry.
+
+WHAT RUNS NEXT (no PI action needed)
+1. Coder receipt → my verification → commit → Kanana campaign on GPU 2 (~2 h).
+2. EXAONE re-run verify (4 MARKERs) → delete its weights → Gemma campaign on GPU 1 (~2.5–3.5 h).
+3. Scoring per finished model with J1–J3 on a free GPU (the scorer refuses a GPU already in use, so scoring waits for a free GPU).
+4. HyperCLOVA: download (after Kanana/Gemma/EXAONE weights are deleted), smoke probe, confirmatory run.
+5. Analysis → G6 → CLAIM_LEDGER → figures → Korean manuscript. Total remaining GPU work ≈ 7 h wall on two GPUs; all commands are in handoff.md and research/STATE.yaml next_action, so a fresh session can continue at any point.
+
+GPU/DISK NOTE FOR YOUR OTHER SESSIONS
+- adol holds GPU 1 (EXAONE until ~03:30Z) and GPU 2 (Kanana, then Gemma/HyperCLOVA/scoring) for most of 2026-09-23; zz/handoff.md carries the note. GPU 0 = jkpark; GPU 3 = other user (never used).
+- models/hf holds 85 GB of weights (deleted after each run per REHYDRATE.md); the shared volume is at 60 GB free.
+
+RECORDS
+- Commits: 3ae323c (incident records), f8aa3be (campaign hardening + Qwen evidence), 4a94fe0 (checkpoint decisions, judges file, REHYDRATE), 9f973fa (memory/PAPER_PLAN/STATE); hub 2168110, 92f9215.
+- DECISION_LOG 2026-09-22 ~13:55Z (incident), 2026-09-23 (correction; checkpoint decisions); ISSUES.csv OPS-1; memory.md (6 lessons); handoff.md (session 6); STATE.yaml jobs list; hub page + INDEX; home-cleanup SKILL.md WHEN; zz/handoff.md + zz/memory.md.
+
+DISCLOSURES
+- r004 waived (domestic venue); S1 v4 corrections auditor-unverified.
+- Failed EXAONE attempt excluded from all analyses; re-run identical in protocol.
+- Late substitution log (Qwen2.5 for Qwen3) — will appear in the paper's deviations list.
+- Judge quality unknown until the N3 reliability check; Phi-4's Korean competence untested.
