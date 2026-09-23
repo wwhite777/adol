@@ -31,6 +31,22 @@ class Provider:
     def generate(self, messages: List[Dict[str, str]]) -> str:
         raise NotImplementedError("Provider.generate must be implemented")
 
+    def generate_many(self, conversations: List[List[Dict[str, str]]]) -> List[str]:
+        """One completion per conversation, results in input order.
+
+        Each entry of `conversations` is exactly what generate() takes (one
+        `messages` list). The default maps the single-call path, so every
+        provider that implements only generate() - MockProvider, the failing and
+        fake test doubles - keeps identical semantics and identical call counts.
+        VLLMProvider overrides this with one batched engine call.
+        """
+        if not isinstance(conversations, (list, tuple)):
+            raise ProviderError(
+                "generate_many expects a list of message lists, got %s"
+                % type(conversations).__name__
+            )
+        return [self.generate(messages) for messages in conversations]
+
     def effective_params(self) -> Dict[str, object]:
         """The generation parameters this provider actually uses.
 
@@ -393,6 +409,65 @@ class VLLMProvider(Provider):
                 "vllm returned an empty completion for %r" % self.model_id
             )
         return text.strip()
+
+    def generate_many(self, conversations: List[List[Dict[str, str]]]) -> List[str]:
+        """Batched decode: ONE vllm generate() call for the whole list.
+
+        Same SamplingParams object and same chat-template kwargs as generate(),
+        so a batched call is the single call repeated - only the engine's
+        scheduling differs. Results are returned in input order (vllm returns one
+        RequestOutput per prompt, in the order the prompts were given); a length
+        mismatch is an error rather than a silently shortened list, and an empty
+        completion anywhere in the batch is an error for the whole call, exactly
+        as it is for a single call (an empty output is never a score).
+        """
+        if not isinstance(conversations, (list, tuple)):
+            raise ProviderError(
+                "VLLMProvider.generate_many expects a list of message lists, got %s"
+                % type(conversations).__name__
+            )
+        if not conversations:
+            raise ProviderError("VLLMProvider.generate_many called with no conversations")
+        for i, messages in enumerate(conversations):
+            if not messages:
+                raise ProviderError(
+                    "VLLMProvider.generate_many: conversation %d has no messages" % i
+                )
+        prompts = [self.build_prompt(list(messages)) for messages in conversations]
+        llm, _ = self._ensure_engine()
+        params = self._sampling_params()
+        try:
+            outputs = llm.generate(prompts, params)
+        except Exception as exc:
+            raise ProviderError(
+                "vllm generate failed (%s: %s)" % (type(exc).__name__, exc)
+            ) from exc
+        try:
+            n_out = len(outputs)
+        except Exception as exc:
+            raise ProviderError(
+                "unexpected vllm output shape (%s: %s)" % (type(exc).__name__, exc)
+            ) from exc
+        if n_out != len(prompts):
+            raise ProviderError(
+                "vllm returned %d output(s) for %d prompt(s)" % (n_out, len(prompts))
+            )
+        texts: List[str] = []
+        for i, out in enumerate(outputs):
+            try:
+                text = out.outputs[0].text
+            except Exception as exc:
+                raise ProviderError(
+                    "unexpected vllm output shape at batch index %d (%s: %s)"
+                    % (i, type(exc).__name__, exc)
+                ) from exc
+            if not isinstance(text, str) or not text.strip():
+                raise ProviderError(
+                    "vllm returned an empty completion for %r (batch index %d)"
+                    % (self.model_id, i)
+                )
+            texts.append(text.strip())
+        return texts
 
 
 PROVIDERS = {"mock": MockProvider, "vllm": VLLMProvider}

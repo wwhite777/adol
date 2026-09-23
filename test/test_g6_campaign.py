@@ -1392,6 +1392,70 @@ class TestCampaignScoring(unittest.TestCase):
         self.assertTrue(record["plan"]["allow_panel_overwrite"])
         self.assertEqual(record["status"], "completed")
 
+    def test_7_declared_batch_size_reaches_the_judge_command_and_the_config(self):
+        """judges.json "batch_size": 16 -> kyra.judge --batch-size 16 and a
+        config string that says so; a judge that does not declare it keeps the
+        exact config string it had before the option existed."""
+        run_dir = Path(self.runs[4])
+        judges_path = self.judges_file(run_dir)
+        doc = json.loads(judges_path.read_text(encoding="utf-8"))
+        doc["judges"][0]["batch_size"] = 16          # JF1 declares, JF2 does not
+        judges_path.write_text(json.dumps(doc), encoding="utf-8")
+
+        with self.csv.open(encoding="utf-8", newline="") as fh:
+            before = len(list(csv.reader(fh)))
+        code, out = self.score(run_dir, judges_path, "scorebatch")
+        self.assertEqual(code, 0, out)
+
+        record = json.loads(
+            one_campaign_record(self.out_root / "scorebatch", "scorebatch", "_scoring")
+            .read_text(encoding="utf-8")
+        )
+        plan_judges = {j["judge_id"]: j for j in record["plan"]["judges"]}
+        self.assertEqual(plan_judges["JF1"]["batch_size"], 16)
+        self.assertNotIn("batch_size", plan_judges["JF2"])
+
+        with self.csv.open(encoding="utf-8", newline="") as fh:
+            rows = list(csv.reader(fh))
+        self.assertEqual(len(rows) - before, 3)  # two judges + one panel
+        fields = {}
+        for row in rows[-3:]:
+            f = dict(zip(campaign.EXPERIMENTS_HEADER, row))
+            fields[f["run"].split("__")[-1]] = f
+
+        def expected_config(judge_id, family, model, extra=""):
+            return (
+                "judge=%s; family=%s; provider=fake; model=%s; views=prefix; "
+                "items=%s; anchors=%s; anchors_sha256=%s; evaluated_family=%s; "
+                "gpu=%s; run_dir=%s%s"
+                % (judge_id, family, model, SMOKE_ITEMS, ANCHORS, sha256(ANCHORS),
+                   record["plan"]["runs"][0]["evaluated_family"],
+                   record["gpu"]["chosen"], run_dir, extra)
+            )
+
+        jf1 = fields["judge_JF1"]
+        self.assertIn("--batch-size 16", jf1["command"])
+        self.assertEqual(
+            jf1["config"],
+            expected_config("JF1", "judge_x", "fake/judge-1", "; batch_size=16"),
+        )
+        jf2 = fields["judge_JF2"]
+        self.assertNotIn("--batch-size", jf2["command"])
+        self.assertEqual(
+            jf2["config"], expected_config("JF2", "judge_y", "fake/judge-2")
+        )
+        self.assertNotIn("batch_size", jf2["config"])
+        # the judge file itself is unaffected by the flag
+        rows_jf1 = self.read_jsonl(run_dir / "judge_JF1.jsonl")
+        rows_jf2 = self.read_jsonl(run_dir / "judge_JF2.jsonl")
+        self.assertEqual(len(rows_jf1), len(rows_jf2))
+        self.assertTrue(all(r["status"] == "ok" for r in rows_jf1))
+        meta = json.loads((run_dir / "judge_JF1.meta.json").read_text(encoding="utf-8"))
+        self.assertEqual(meta["batch_size"], 16)
+        self.assertEqual(meta["n_views"], len(rows_jf1))
+        self.assertEqual(meta["items_sha256"], sha256(SMOKE_ITEMS))
+        self.assertEqual(meta["anchors_sha256"], sha256(ANCHORS))
+
     def test_6_unknown_run_glob_is_refused(self):
         code, out = self.score(
             self.tmp / "nothing_here_*", self.judges_file(self.main_run), "scoreglob"

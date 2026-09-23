@@ -1,0 +1,31 @@
+{
+  "anchors_path": "research/judge_anchors_v1.json",
+  "anchors_sha256": "7f54fdbded6071d7f5e202d1b7820fe4a64b454dc695b6eb39def227c3373679",
+  "batch_size": 64,
+  "decode_mode": "batched",
+  "family": "meta",
+  "finished_utc": "2026-09-23T04:45:28Z",
+  "items_path": "research/items/items_phaseA_v1.jsonl",
+  "items_sha256": "8ab7cda19406e00d9c5fe59f0b2ac68fdfb7d54ca2669ce7ffdd350657d88017",
+  "judge_id": "J1",
+  "max_retries": 1,
+  "model_id": "0e9e39f249a16976918f6564b8830bc894c89659",
+  "model_path": "/home/wjeong/.cache/huggingface/hub/models--meta-llama--Llama-3.1-8B-Instruct/snapshots/0e9e39f249a16976918f6564b8830bc894c89659",
+  "n_error_final": 151,
+  "n_ok": 413,
+  "n_parse_errors_first_pass": 163,
+  "n_retried": 163,
+  "n_views": 564,
+  "out_path": "/tmp/claude-1011/-home-wjeong/407cdd4b-f055-4859-8e47-fbc41fca59f3/scratchpad/batchcmp/judge_J1_batched.jsonl",
+  "provider": "vllm",
+  "provider_effective_params": {
+    "chat_template_kwargs": {},
+    "max_tokens": 700,
+    "stop_token_ids": [],
+    "temperature": 0.0,
+    "top_p": 1.0
+  },
+  "run_dir": "result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/main/20260922T1238Z-a7a9d1",
+  "started_utc": "2026-09-23T04:40:04Z",
+  "views": "prefix"
+}

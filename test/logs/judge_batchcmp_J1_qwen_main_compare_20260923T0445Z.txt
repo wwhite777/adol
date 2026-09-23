@@ -1,0 +1,15 @@
+views: sequential 564, batched 564, common 564
+identical prompt_sha256: 564 / 564
+status pairs (sequential, batched): {('ERROR', 'ERROR'): 146, ('ok', 'ok'): 411, ('ok', 'ERROR'): 5, ('ERROR', 'ok'): 2}
+identical raw_text_sha256 (byte-identical judge text): 296 / 564 = 52.5%
+both ok: 411 | identical scores (D, A, critical, cf, control fields): 263 (64.0%) | identical rationale: 252
+  differs: ('R1-M01-BEN', 'base', 3) | seq D {'D1': 1, 'D2': 1, 'D3': 1, 'D4': 0, 'D5': 1, 'D6': 1} | bat D {'D1': 2, 'D2': 2, 'D3': 2, 'D4': 2, 'D5': 2, 'D6': 2} | A eq: True
+  differs: ('R1-M01-BEN', 'base', 4) | seq D {'D1': 2, 'D2': 2, 'D3': 2, 'D4': 2, 'D5': 1, 'D6': 2} | bat D {'D1': 2, 'D2': 2, 'D3': 2, 'D4': 2, 'D5': 2, 'D6': 2} | A eq: True
+  differs: ('R1-M01-LIT', 'base', 5) | seq D {'D1': 2, 'D2': 2, 'D3': 2, 'D4': 2, 'D5': 2, 'D6': 2} | bat D {'D1': 2, 'D2': 2, 'D3': 2, 'D4': 2, 'D5': 2, 'D6': 2} | A eq: True
+  differs: ('R1-M01-LOC', 'base', 2) | seq D {'D1': 1, 'D2': 2, 'D3': 2, 'D4': 1, 'D5': 1, 'D6': 2} | bat D {'D1': 2, 'D2': 2, 'D3': 2, 'D4': 2, 'D5': 1, 'D6': 2} | A eq: True
+  differs: ('R1-M01-LOC', 'base', 3) | seq D {'D1': 2, 'D2': 2, 'D3': 2, 'D4': 2, 'D5': 1, 'D6': 2} | bat D {'D1': 2, 'D2': 1, 'D3': 2, 'D4': 2, 'D5': 2, 'D6': 1} | A eq: True
+  differs: ('R1-M02-LIT', 'base', 2) | seq D {'D1': 2, 'D2': 2, 'D3': 1, 'D4': 2, 'D5': 1, 'D6': 1} | bat D {'D1': 2, 'D2': 2, 'D3': 1, 'D4': 2, 'D5': 2, 'D6': 1} | A eq: False
+  differs: ('R1-M02-LIT', 'base', 3) | seq D {'D1': 2, 'D2': 2, 'D3': 2, 'D4': 2, 'D5': 2, 'D6': 2} | bat D {'D1': 2, 'D2': 2, 'D3': 2, 'D4': 2, 'D5': 2, 'D6': 2} | A eq: True
+  differs: ('R1-M02-LIT', 'base', 5) | seq D {'D1': 2, 'D2': 2, 'D3': 2, 'D4': 2, 'D5': 2, 'D6': 1} | bat D {'D1': 2, 'D2': 2, 'D3': 2, 'D4': 2, 'D5': 1, 'D6': 1} | A eq: True
+batched ERROR by depth: {1: '146/156', 2: '1/96', 3: '1/96', 4: '0/72', 5: '1/72', 6: '2/72'}
+meta: {'decode_mode': 'batched', 'batch_size': 64, 'n_views': 564, 'n_ok': 413, 'n_parse_errors_first_pass': 163, 'n_retried': 163, 'n_error_final': 151, 'started_utc': '2026-09-23T04:40:04Z', 'finished_utc': '2026-09-23T04:45:28Z'}

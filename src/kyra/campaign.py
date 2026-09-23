@@ -49,7 +49,10 @@ For every run directory that carries a MARKER: each judge in judges.json is run
 as a child process (kyra.judge --views prefix --items <items>, so control ids
 come from risk_group CTRL and are never omitted), one judge model loaded at a
 time, writing judge_<judge_id>.jsonl into the run dir; an existing judge file is
-refused, never overwritten. Then kyra.panel aggregates that run's judge files
+refused, never overwritten. A judge entry may carry "batch_size": <int >= 1>,
+which is passed through as kyra.judge --batch-size (view prompts per provider
+call); undeclared, no flag is passed and kyra.judge's own default applies.
+Then kyra.panel aggregates that run's judge files
 with the family map built from models.json + judges.json and --evaluated-family
 = the run's model family, writing panel.jsonl. One EXPERIMENTS row per judge run
 and per panel (class inherited from the run's EXPERIMENTS row, or --class); the
@@ -1133,6 +1136,16 @@ def load_judges(path) -> List[Dict[str, Any]]:
             raise CampaignError(
                 "%s gpu_memory_utilization must be a number" % where, EXIT_BAD_INPUT
             )
+        # Optional batched judge decoding. Undeclared -> the flag is not passed
+        # at all and kyra.judge's own default applies, so an existing judges.json
+        # keeps the exact command it had before this option existed.
+        batch_size = entry.get("batch_size")
+        if batch_size is not None and (
+            isinstance(batch_size, bool) or not isinstance(batch_size, int) or batch_size < 1
+        ):
+            raise CampaignError(
+                "%s batch_size must be an int >= 1" % where, EXIT_BAD_INPUT
+            )
         judges.append(
             {
                 "judge_id": judge_id,
@@ -1141,6 +1154,7 @@ def load_judges(path) -> List[Dict[str, Any]]:
                 "family": family,
                 "provider": provider,
                 "gpu_memory_utilization": float(gpu_util) if gpu_util is not None else None,
+                "batch_size": int(batch_size) if batch_size is not None else None,
                 "fake_outputs": entry.get("fake_outputs"),
                 "notes": entry.get("notes", ""),
             }
@@ -1293,6 +1307,8 @@ def judge_command(
         cmd += ["--model-path", str(judge["model_path"])]
         if judge["gpu_memory_utilization"] is not None:
             cmd += ["--gpu-memory-utilization", str(judge["gpu_memory_utilization"])]
+    if judge.get("batch_size") is not None:
+        cmd += ["--batch-size", str(judge["batch_size"])]
     if judge["provider"] == "fake" and judge.get("fake_outputs"):
         cmd += ["--fake-outputs", str(judge["fake_outputs"])]
     if anchors is not None:
@@ -1395,7 +1411,11 @@ def score_main(argv: List[str], gpu_probe=query_gpus) -> int:
         "anchors_path": str(anchors_path) if anchors_path else None,
         "anchors_sha256": anchors_sha,
         "judges": [
-            {k: j[k] for k in ("judge_id", "family", "provider", "model_id", "notes")}
+            dict(
+                {k: j[k] for k in ("judge_id", "family", "provider", "model_id", "notes")},
+                # only when declared: an undeclared judge entry keeps its old shape
+                **({"batch_size": j["batch_size"]} if j.get("batch_size") is not None else {})
+            )
             for j in judges
         ],
         "family_map": family_map,
@@ -1610,7 +1630,7 @@ def score_main(argv: List[str], gpu_probe=query_gpus) -> int:
                     "class": run["class"],
                     "config": "judge=%s; family=%s; provider=%s; model=%s; views=%s; "
                     "items=%s; anchors=%s; anchors_sha256=%s; evaluated_family=%s; "
-                    "gpu=%s; run_dir=%s"
+                    "gpu=%s; run_dir=%s%s"
                     % (
                         judge["judge_id"],
                         judge["family"],
@@ -1623,6 +1643,11 @@ def score_main(argv: List[str], gpu_probe=query_gpus) -> int:
                         run["evaluated_family"],
                         gpu["chosen"],
                         run_dir,
+                        # appended only when the judge declares it, so an
+                        # undeclared judge keeps the exact previous config string
+                        "; batch_size=%d" % judge["batch_size"]
+                        if judge.get("batch_size") is not None
+                        else "",
                     ),
                     "seed": "n/a (judge)",
                     "command": shell_repr(cmd),

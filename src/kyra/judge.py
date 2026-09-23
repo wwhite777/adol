@@ -21,7 +21,14 @@ them. Which items are control is supplied by the caller (--items or
 CLI:
   python -m kyra.judge --run-dir <run_dir> --provider vllm|mock|fake \
       --model-path <path> --judge-id J1 --family <family> [--anchors <json>] \
-      [--views prefix|final] [--items <items.jsonl> | --control-ids ID,ID]
+      [--views prefix|final] [--items <items.jsonl> | --control-ids ID,ID] \
+      [--batch-size N]
+
+--batch-size N (default 64) decodes N view prompts per provider call; N=1 is the
+sequential path (one call per view). The records and their order do not depend on
+N. Every run also writes judge_<id>.meta.json beside the JSONL with the decode
+mode, the batch size, the retry counts and the provider's effective parameters;
+no consumer reads that sidecar.
 
 Exit codes: 0 ok (judge file written, whatever the parse-error rate)
             2 zero conversations in the run | 4 bad arguments / unreadable input.
@@ -34,6 +41,7 @@ import hashlib
 import json
 import sys
 from dataclasses import asdict
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Sequence, Tuple
 
@@ -117,9 +125,29 @@ JUDGE_RECORD_FIELDS = (
 STATUS_OK = "ok"
 STATUS_ERROR = "ERROR"
 
+# Batched decoding (2026-09-23). The judge builds every view prompt first and
+# sends them to the provider in chunks of --batch-size, which lets vllm decode a
+# whole chunk in one engine call instead of one call per view. batch_size=1 is
+# the sequential path: one provider call per view, in view order, retries
+# immediately after the view that failed.
+DEFAULT_BATCH_SIZE = 64
+DECODE_BATCHED = "batched"
+DECODE_SEQUENTIAL = "sequential"
+META_SUFFIX = ".meta.json"
+
 
 def _sha256_text(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
+def _utc_stamp() -> str:
+    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+def meta_path_for(out_path) -> Path:
+    """judge_J1.jsonl -> judge_J1.meta.json (sidecar, never read by the panel)."""
+    out = Path(out_path)
+    return out.with_name(out.stem + META_SUFFIX)
 
 
 def sha256_file(path) -> str:
@@ -516,6 +544,83 @@ def write_judge_record(path, rec: Dict[str, Any]) -> None:
         fh.write(line + "\n")
 
 
+def _chunks(seq: Sequence[int], size: int) -> List[List[int]]:
+    """Split a list of view indices into consecutive chunks of at most `size`."""
+    return [list(seq[i:i + size]) for i in range(0, len(seq), size)]
+
+
+def _generate_chunk(provider, conversations: List[List[Dict[str, str]]]) -> List[Any]:
+    """One batched provider call; entry i is the text OR the Exception for view i.
+
+    A batched call fails as a whole (the engine hands back one list), while the
+    sequential path attributes a failure to the single view that caused it. So a
+    failed chunk of more than one conversation is re-issued one conversation at a
+    time: the records then say exactly what the sequential path would say, at the
+    cost of extra calls on the failure path only. A chunk of one never falls back
+    (there is nothing to split), so --batch-size 1 makes exactly one provider
+    call per attempt, like the pre-batch code.
+    """
+    try:
+        texts = provider.generate_many([list(messages) for messages in conversations])
+    except Exception as exc:  # noqa: BLE001 - provider failures are labelled, never scored
+        if len(conversations) == 1:
+            return [exc]
+        results: List[Any] = []
+        for messages in conversations:
+            try:
+                results.append(provider.generate(list(messages)))
+            except Exception as single_exc:  # noqa: BLE001
+                results.append(single_exc)
+        return results
+    if not isinstance(texts, (list, tuple)) or len(texts) != len(conversations):
+        got = len(texts) if isinstance(texts, (list, tuple)) else type(texts).__name__
+        exc = ProviderError(
+            "provider returned %s result(s) for %d conversation(s)"
+            % (got, len(conversations))
+        )
+        return [exc for _ in conversations]
+    return list(texts)
+
+
+OUTCOME_OK = "ok"
+OUTCOME_PARSE_ERROR = "parse_error"
+OUTCOME_PROVIDER_ERROR = "provider_error"
+
+
+def _apply_result(task: Dict[str, Any], result: Any) -> str:
+    """Score one provider result into one view task; returns the outcome.
+
+    Same rules as judge_conversation: a provider failure is labelled and never
+    retried (a retry would hide an infrastructure failure inside a score); a
+    parse error stores the error, builds the same re-ask prompt and asks for
+    another attempt; only a clean parse of the right A length is a record.
+    """
+    task["attempts"] += 1
+    if isinstance(result, BaseException):
+        task["record"] = None
+        task["error"] = "ProviderError: %s: %s" % (type(result).__name__, result)
+        return OUTCOME_PROVIDER_ERROR
+    task["raw"] = result
+    try:
+        record = parse_judge_output(result, is_control=task["is_control"])
+        if len(record.A) != task["n_turns"]:
+            raise JudgeParseError(
+                "'A' has %d turn object(s) but this view has %d turn(s)"
+                % (len(record.A), task["n_turns"])
+            )
+    except JudgeParseError as exc:
+        task["error"] = "JudgeParseError: %s" % exc
+        shown = result if isinstance(result, str) and result.strip() else "(빈 출력)"
+        task["current"] = list(task["messages"]) + [
+            {"role": "assistant", "content": shown},
+            {"role": "user", "content": RETRY_REMINDER},
+        ]
+        return OUTCOME_PARSE_ERROR
+    task["record"] = record
+    task["error"] = None
+    return OUTCOME_OK
+
+
 def judge_run(
     run_dir,
     provider,
@@ -529,6 +634,9 @@ def judge_run(
     views: str = VIEW_PREFIX,
     control_item_ids: Optional[Any] = None,
     control_unknown: bool = False,
+    batch_size: int = 1,
+    provenance: Optional[Dict[str, Any]] = None,
+    write_meta: bool = True,
 ) -> Dict[str, Any]:
     """Score every view of every conversation with one judge; write judge_<id>.jsonl.
 
@@ -536,10 +644,22 @@ def judge_run(
     depth 1..T; views='final' writes one record per conversation (depth=T).
     control_item_ids is the set of item_ids whose risk_group is CTRL.
 
+    Work is done in passes: every view prompt is built first, the outstanding
+    views are decoded in chunks of `batch_size`, each output is parsed with the
+    same strict parser, and the views whose parse failed go into the next pass
+    with the same re-ask prompt as before - at most `max_retries` extra passes,
+    exactly the per-view budget of the sequential path. Records are written in
+    the original view order, so the file is byte-identical to the sequential
+    file for the same per-view outputs. batch_size=1 keeps the pre-batch call
+    order as well (a view's re-ask is issued before the next view is asked); it
+    is the default here for direct library callers, while the CLI defaults to
+    DEFAULT_BATCH_SIZE.
+
     Returns counts: conversations, total (= records written = views judged), ok,
     error, parse_error, provider_error, parse_error_rate (= parse_error / total
     views, the denominator the protocol's <= 2% judge kill rule uses) and
-    error_rate (= error / total).
+    error_rate (= error / total), plus the batching provenance also written to
+    the <out>.meta.json sidecar.
     """
     if not judge_id or not str(judge_id).strip():
         raise ValueError("judge_run requires a non-empty judge_id")
@@ -547,6 +667,10 @@ def judge_run(
         raise ValueError("judge_run requires a non-empty family")
     if views not in VIEW_MODES:
         raise ValueError("unknown view mode %r (available: %s)" % (views, ", ".join(VIEW_MODES)))
+    if max_retries < 0:
+        raise ValueError("max_retries must be >= 0")
+    if isinstance(batch_size, bool) or not isinstance(batch_size, int) or batch_size < 1:
+        raise ValueError("batch_size must be an int >= 1, got %r" % (batch_size,))
     control = set(control_item_ids or ())
     conversations = read_conversations(run_dir)
     if not conversations:
@@ -559,6 +683,73 @@ def judge_run(
     if out.exists():
         raise ValueError("judge output already exists, refusing to append: %s" % out)
 
+    started = _utc_stamp()
+    model_id = str(getattr(provider, "model_id", "unknown"))
+
+    # -- pass (a): build every view prompt, in the order the records are written.
+    tasks: List[Dict[str, Any]] = []
+    for conv in conversations:
+        # control_unknown (bare probe, --no-items): judged as a risk item but
+        # recorded as is_control=null, never as a claimed non-control item.
+        is_control = conv["item_id"] in control
+        recorded_control = None if control_unknown else is_control
+        for depth, view_turns in make_views(conv["turns"], views):
+            messages = build_judge_prompt(
+                view_turns, manual_text, anchors or [], template=tpl, is_control=is_control
+            )
+            tasks.append(
+                {
+                    "item_id": conv["item_id"],
+                    "condition": conv["condition"],
+                    "depth": depth,
+                    "n_turns": len(view_turns),
+                    "is_control": is_control,
+                    "recorded_control": recorded_control,
+                    "messages": messages,
+                    "current": list(messages),
+                    "prompt_sha": _sha256_text(
+                        json.dumps(messages, ensure_ascii=False, sort_keys=True)
+                    ),
+                    "attempts": 0,
+                    "raw": None,
+                    "record": None,
+                    "error": None,
+                }
+            )
+
+    # -- passes (b)-(d): decode, parse, re-ask only the views that failed to parse.
+    n_parse_errors_first_pass = 0
+    if batch_size == 1:
+        # Sequential: every attempt of a view happens before the next view is
+        # asked - the exact call order of the pre-batch judge.
+        for task in tasks:
+            for attempt_index in range(max_retries + 1):
+                result = _generate_chunk(provider, [task["current"]])[0]
+                outcome = _apply_result(task, result)
+                if attempt_index == 0 and outcome == OUTCOME_PARSE_ERROR:
+                    n_parse_errors_first_pass += 1
+                if outcome != OUTCOME_PARSE_ERROR:
+                    break
+    else:
+        # Batched: one pass over all outstanding views in chunks of batch_size,
+        # then a pass over only the views whose parse failed.
+        pending = list(range(len(tasks)))
+        for attempt_index in range(max_retries + 1):
+            if not pending:
+                break
+            failed: List[int] = []
+            for chunk in _chunks(pending, batch_size):
+                results = _generate_chunk(provider, [tasks[i]["current"] for i in chunk])
+                for idx, result in zip(chunk, results):
+                    if _apply_result(tasks[idx], result) == OUTCOME_PARSE_ERROR:
+                        failed.append(idx)
+            if attempt_index == 0:
+                n_parse_errors_first_pass = len(failed)
+            pending = failed
+    # A view is re-asked exactly when its first parse failed and there is budget.
+    n_retried = n_parse_errors_first_pass if max_retries >= 1 else 0
+
+    # -- pass (e): write the records in the original view order.
     counts = {
         "conversations": len(conversations),
         "views": views,
@@ -569,57 +760,126 @@ def judge_run(
         "provider_error": 0,
         "control_views": 0,
     }
-    model_id = str(getattr(provider, "model_id", "unknown"))
-    for conv in conversations:
-        # control_unknown (bare probe, --no-items): judged as a risk item but
-        # recorded as is_control=null, never as a claimed non-control item.
-        is_control = conv["item_id"] in control
-        recorded_control = None if control_unknown else is_control
-        for depth, view_turns in make_views(conv["turns"], views):
-            messages = build_judge_prompt(
-                view_turns, manual_text, anchors or [], template=tpl, is_control=is_control
-            )
-            prompt_sha = _sha256_text(json.dumps(messages, ensure_ascii=False, sort_keys=True))
-            record, raw, error, attempts = judge_conversation(
-                provider,
-                messages,
-                max_retries=max_retries,
-                is_control=is_control,
-                expect_turns=len(view_turns),
-            )
-            rec = make_judge_record(
-                judge_id=judge_id,
-                family=family,
-                item_id=conv["item_id"],
-                condition=conv["condition"],
-                n_turns=len(view_turns),
-                prompt_sha256=prompt_sha,
-                raw_text=raw,
-                record=record,
-                error=error,
-                attempts=attempts,
-                model_id=model_id,
-                depth=depth,
-                view=views,
-                is_control=recorded_control,
-            )
-            write_judge_record(out, rec)
-            counts["total"] += 1
-            if is_control:
-                counts["control_views"] += 1
-            if rec["status"] == STATUS_OK:
-                counts["ok"] += 1
+    for task in tasks:
+        rec = make_judge_record(
+            judge_id=judge_id,
+            family=family,
+            item_id=task["item_id"],
+            condition=task["condition"],
+            n_turns=task["n_turns"],
+            prompt_sha256=task["prompt_sha"],
+            raw_text=task["raw"],
+            record=task["record"],
+            error=task["error"],
+            attempts=task["attempts"],
+            model_id=model_id,
+            depth=task["depth"],
+            view=views,
+            is_control=task["recorded_control"],
+        )
+        write_judge_record(out, rec)
+        counts["total"] += 1
+        if task["is_control"]:
+            counts["control_views"] += 1
+        if rec["status"] == STATUS_OK:
+            counts["ok"] += 1
+        else:
+            counts["error"] += 1
+            if str(rec["error"]).startswith("JudgeParseError"):
+                counts["parse_error"] += 1
             else:
-                counts["error"] += 1
-                if str(rec["error"]).startswith("JudgeParseError"):
-                    counts["parse_error"] += 1
-                else:
-                    counts["provider_error"] += 1
+                counts["provider_error"] += 1
     total = counts["total"]
     counts["parse_error_rate"] = counts["parse_error"] / total if total else 0.0
     counts["error_rate"] = counts["error"] / total if total else 0.0
     counts["out_path"] = str(out)
+    counts["batch_size"] = batch_size
+    counts["decode_mode"] = DECODE_SEQUENTIAL if batch_size == 1 else DECODE_BATCHED
+    counts["n_parse_errors_first_pass"] = n_parse_errors_first_pass
+    counts["n_retried"] = n_retried
+    counts["n_error_final"] = counts["error"]
+
+    if write_meta:
+        meta = build_judge_meta(
+            counts=counts,
+            judge_id=judge_id,
+            family=family,
+            provider=provider,
+            out_path=out,
+            run_dir=run_dir,
+            views=views,
+            max_retries=max_retries,
+            started_utc=started,
+            finished_utc=_utc_stamp(),
+            provenance=provenance,
+        )
+        counts["meta_path"] = str(write_judge_meta(out, meta))
     return counts
+
+
+# -- provenance sidecar -------------------------------------------------------
+
+
+def build_judge_meta(
+    counts: Dict[str, Any],
+    judge_id: str,
+    family: str,
+    provider,
+    out_path,
+    run_dir,
+    views: str,
+    max_retries: int,
+    started_utc: str,
+    finished_utc: str,
+    provenance: Optional[Dict[str, Any]] = None,
+) -> Dict[str, Any]:
+    """The <out>.meta.json payload: how this judge file was decoded.
+
+    Pure provenance - neither kyra.panel nor kyra.campaign reads it (both address
+    judge_<id>.jsonl by name), so a missing sidecar can never change a score.
+    Unknown provenance is written as null rather than omitted.
+    """
+    extra = dict(provenance or {})
+    try:
+        effective = provider.effective_params()
+    except Exception as exc:  # noqa: BLE001 - provenance is best-effort, never fatal
+        effective = {"error": "%s: %s" % (type(exc).__name__, exc)}
+    return {
+        "judge_id": judge_id,
+        "family": family,
+        "provider": str(getattr(provider, "provider_name", "unknown")),
+        "model_id": str(getattr(provider, "model_id", "unknown")),
+        "model_path": extra.get("model_path", getattr(provider, "model_path", None)),
+        "provider_effective_params": effective,
+        "decode_mode": counts["decode_mode"],
+        "batch_size": counts["batch_size"],
+        "max_retries": int(max_retries),
+        "views": views,
+        "run_dir": str(run_dir),
+        "out_path": str(out_path),
+        "n_views": counts["total"],
+        "n_ok": counts["ok"],
+        "n_parse_errors_first_pass": counts["n_parse_errors_first_pass"],
+        "n_retried": counts["n_retried"],
+        "n_error_final": counts["n_error_final"],
+        "items_path": extra.get("items_path"),
+        "items_sha256": extra.get("items_sha256"),
+        "anchors_path": extra.get("anchors_path"),
+        "anchors_sha256": extra.get("anchors_sha256"),
+        "started_utc": started_utc,
+        "finished_utc": finished_utc,
+    }
+
+
+def write_judge_meta(out_path, meta: Dict[str, Any]) -> Path:
+    """Write the sidecar next to the judge JSONL; returns its path."""
+    p = meta_path_for(out_path)
+    p.parent.mkdir(parents=True, exist_ok=True)
+    p.write_text(
+        json.dumps(meta, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    return p
 
 
 # -- CLI ---------------------------------------------------------------------
@@ -663,6 +923,13 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--manual", default=str(DEFAULT_MANUAL_PATH), help="annotation manual path")
     p.add_argument("--out", default=None, help="output path (default: <run-dir>/judge_<id>.jsonl)")
     p.add_argument("--max-retries", type=int, default=1, help="re-asks after a parse error")
+    p.add_argument(
+        "--batch-size",
+        type=int,
+        default=DEFAULT_BATCH_SIZE,
+        help="view prompts per provider call (default %d; 1 = one call per view, "
+        "the sequential path)" % DEFAULT_BATCH_SIZE,
+    )
     p.add_argument("--max-new-tokens", type=int, default=700, help="judge generation cap (vllm)")
     p.add_argument(
         "--gpu-memory-utilization",
@@ -751,6 +1018,8 @@ def main(argv=None) -> int:
         sys.stderr.write("ERROR: %s\n" % exc)
         return EXIT_BAD_INPUT
     try:
+        if args.batch_size < 1:
+            raise ValueError("--batch-size must be >= 1, got %d" % args.batch_size)
         anchors = load_anchors(args.anchors) if args.anchors else []
         manual_text = load_manual_text(args.manual)
         out_path = Path(args.out) if args.out else Path(args.run_dir) / ("judge_%s.jsonl" % args.judge_id)
@@ -781,6 +1050,25 @@ def main(argv=None) -> int:
         "out=%s manual=%s anchors=%d control_items=%d\n"
         % (out_path, args.manual, len(anchors), len(control))
     )
+    sys.stdout.write(
+        "decode_mode=%s batch_size=%d max_retries=%d\n"
+        % (
+            DECODE_SEQUENTIAL if args.batch_size == 1 else DECODE_BATCHED,
+            args.batch_size,
+            args.max_retries,
+        )
+    )
+    provenance = {
+        "model_path": args.model_path,
+        "items_path": str(args.items) if args.items else None,
+        "items_sha256": (
+            sha256_file(args.items) if args.items and Path(args.items).is_file() else None
+        ),
+        "anchors_path": str(args.anchors) if args.anchors else None,
+        "anchors_sha256": (
+            sha256_file(args.anchors) if args.anchors and Path(args.anchors).is_file() else None
+        ),
+    }
     try:
         counts = judge_run(
             args.run_dir,
@@ -794,6 +1082,8 @@ def main(argv=None) -> int:
             views=args.views,
             control_item_ids=control,
             control_unknown=bool(args.no_items and not (args.items or args.control_ids)),
+            batch_size=args.batch_size,
+            provenance=provenance,
         )
     except ValueError as exc:
         sys.stderr.write("ERROR: %s\n" % exc)
@@ -806,6 +1096,14 @@ def main(argv=None) -> int:
            counts["parse_error_rate"], counts["error_rate"])
     )
     sys.stdout.write("judge_file_sha256=%s\n" % sha256_file(out_path))
+    sys.stdout.write(
+        "meta=%s retried=%d parse_errors_first_pass=%d\n"
+        % (
+            counts.get("meta_path", "not written"),
+            counts["n_retried"],
+            counts["n_parse_errors_first_pass"],
+        )
+    )
     return EXIT_OK
 
 
