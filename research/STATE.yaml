@@ -8,7 +8,7 @@ venue:
   phase_a: domestic — 한국정보통신학회 JKIICE or 한국융합학회 (PI 2026-09-22); no cross-family audit (PI rule 2026-09-11)
   phase_b: optional Q1 attempt (JMIR Formative / Sci Rep / JMIR MH) after co-author double rating; T1 conference only if H5 strong
 stage: S3
-status: 'in_progress   # generation DONE 4/5 (HyperCLOVA awaits the PI''s go); scoring blocked on: decode-path decision (batched reproducibility test running) + judge prompt v0.3 (coder); no outcome read'
+status: 'in_progress   # generation DONE 4/5 (HyperCLOVA awaits the PI''s go); scoring blocked on the decode-path decision (plain batched rejected; batch-invariant test pending a provider passthrough) and judge prompt v0.3 (coder); GPUs idle; no outcome read'
 stage_history:
 - stage: S0
   status: completed
@@ -99,9 +99,11 @@ jobs:
 - '2026-09-23 02:39Z RUNNING: campaign score phaseA_T1 — Qwen2.5-14B runs (4) x judges J1 Llama-3.1-8B / J2 Mistral-Small int4 / J3 Phi-4 FP8, prefix views, anchors; --gpu 2; log test/logs/score_phaseA_T1_qwen14b_20260923T0239Z.log; marker result/raw/phaseA_T1_score_qwen14b.DONE; outputs judge_J*.jsonl + panel.jsonl per run dir'
 - '2026-09-23 02:37Z-04:18Z DONE: campaign run phaseA_T1 RedHatAI/gemma-3-27b-it-quantized.w4a16, GPU 1 — 4 MARKERs (main 156/156; repeat_1..3 31/31); marker result/raw/phaseA_T1_gemma27b.DONE exit=0; record campaign_phaseA_T1__20260923T0237Z-77effc.json; weights deleted 04:20Z'
 - '2026-09-23 04:20Z-04:45Z DONE: batched judge (kyra.judge --batch-size; commit c42cf33; 374 tests OK); comparison batched-64 vs sequential J1 on Qwen main: 5.4 vs 65 min, text byte-identical 52.5%, scores identical 64% of both-ok views (DECISION_LOG ~04:50Z)'
-- '2026-09-23 04:46Z RUNNING: batched-vs-batched repeat of J1 on Qwen main (GPU 1; log test/logs/judge_batchcmp_J1_qwen_main_rep2_*.log) — decides the pinned decode path'
 - '2026-09-23 04:47Z RUNNING: coder card judge prompt v0.3 (new file src/kyra/judge_prompt_v0_3.md; dynamic example; unconditional control rule; parser guard; raw text on ERROR)'
-- '2026-09-23 PENDING: pin decode path → score all 16 run dirs (4 models × 4) with J1–J3 under v0.3 → parse-error rates per judge (> 2% → replace the judge) → panels → analysis → G6 (--n3-revisions 1); HyperCLOVA after the PI''s go'
+- '2026-09-23 04:46Z-04:52Z DONE: batched-vs-batched repeat (J1, Qwen main): text identical 75.7%, scores identical 82.7% of both-ok, 6 critical flips → plain batched decoding REJECTED (not self-reproducible; DECISION_LOG ~04:55Z)'
+- '2026-09-23 04:53Z-04:57Z FAILED ×2: vLLM batch-invariant mode needs the attention backend set in the engine config (env VLLM_ATTENTION_BACKEND is ignored by the check); each attempt looped over engine re-builds until killed by PID (OPS-2)'
+- '2026-09-23 04:58Z RUNNING: coder card — env-driven engine kwargs passthrough in providers.py (KYRA_VLLM_ENGINE_KWARGS → LLM(...); recorded in effective params) so batch-invariant + FLASH_ATTN can be tested'
+- '2026-09-23 PENDING: batch-invariant test ×2 on GPU 2 (self-reproducibility + sequential comparison) → pin the decode path (DECISION_LOG) → verify v0.3 → score 16 run dirs × 3 judges → parse-error rates (> 2% → replace judge) → panels → analysis → G6 (--n3-revisions 1); HyperCLOVA after the PI''s go'
 s3_progress:
   provider: DONE — src/kyra VLLMProvider + provenance fix (manifest records effective params + chat-template hash); smoke run result/raw/smoke_vllm/20260922T0817Z-3c5915 (sha manifest e201f60f…, responses 62bb9d8a…)
   disk: 26 GB free on the shared volume after the install; one ≤20 GB checkpoint at a time; cached Qwen2.5-14B-Instruct + Llama-3.1-8B-Instruct (fusion1's, read-only) count as two of the needed models/judges
