@@ -1,0 +1,5 @@
+nc1_single vs sharded_merged_v2 | views 88 / 88, common 88 | identical prompts 88
+status pairs: {('ok', 'ok'): 88}
+byte-identical judge text: 88 / 88 = 100.0%
+both ok 88 | identical scores 88 (100.0%)
+differing-field counts among differing views: {}
