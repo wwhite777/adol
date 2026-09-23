@@ -1,0 +1,21 @@
+adol — stage 3 response v3 (2026-09-23 ~04:35Z) — generation complete for 4 of 5 models; judge prompt revision in progress
+(plaintext; follows v2 of 01:15Z)
+
+TL;DR
+- GENERATION DONE AND VERIFIED for four models: Qwen2.5-14B-Instruct, EXAONE-4.0-32B-AWQ (re-run), Kanana-1.5-8B-instruct, Gemma-3-27B-it W4A16 — each with 4 validated run directories (main 156/156 items at T=0; three stratified repeats 31/31 at T=0.7), all Korean, 0 errors; weights deleted after verification (recipes in REHYDRATE.md). Bonus check: EXAONE's greedy outputs are identical to the failed 2026-09-22 attempt on 563/563 common turns.
+- ONE DECISION IS YOURS: the fifth model, HyperCLOVAX-SEED-Think-14B (official, ungated), is a 59 GB download. Your hub session relayed that you have not approved it. If you say "go", it downloads (~30 min), gets a smoke probe in non-reasoning mode, runs (~2 h), and is scored like the others. If you say "skip", phase A reports four models and discloses the fifth as not run (the frozen plan says five; a deviation line would go in the paper). Disk is fine either way (99 GB free now).
+- JUDGE PROMPT: the first real scoring pass exposed format failures far above the frozen 2% parse-error bar — Llama-3.1-8B (J1) 26% (it copies the example's two-turn array on single-turn views), Mistral-Small-24B (J2) 30% (it omits the two control-item fields because the rendered rule was conditional on a cross-reference). Raw-output probes confirmed both mechanisms. The frozen protocol allows exactly one prompt revision, so v0.3 is being implemented now (dynamic example sized to the view, unconditional control instruction, a parser guard against copying the example, raw text kept on errors) — format only, no rubric or threshold changes; every v0.2 judge output is discarded (never used) and G6 will be told the revision count (1). If a judge is still above 2% after v0.3, it is replaced by a different open-weight judge, as the protocol says.
+- SPEED: the sequential judge took ~1 hour per judge per run (20+ GPU-hours for the study); batched vLLM judging is being added and will be verified against the sequential outputs before use.
+- No outcome (dimension score, panel, claim) has been read; only parse statuses and raw text formats were inspected.
+
+STATE OF THE SERVER
+- GPU 1 and GPU 2 are free right now (waiting on the code); GPU 0 = jkpark, GPU 3 = other user.
+- Shared volume 99 GB free; adol/models/hf holds only the two judges (Mistral int4 15 GB, Phi-4 FP8 16 GB).
+
+RECORDS
+- Commits d560f5c (EXAONE), 641c5f3 (Kanana), 8c373a9 (Gemma), 352acb7 (scoring stop + probes + decision), e2ca7c5; DECISION_LOG 2026-09-23 entries (checkpoint decisions; prompt revision; probes); handoff.md; STATE.yaml jobs; PAPER_PLAN next action.
+- Failed/superseded material kept, never analysed: result/raw/phaseA_T1/LGAI-EXAONE-.../main/20260922T1239Z-b936cd (no MARKER); result/raw/phaseA_T1/superseded_judge_prompt_v0.2/.
+
+DISCLOSURES
+- Late log of the Qwen2.5-for-Qwen3 substitution (result-blind); r004 waived (domestic venue).
+- v0.3 consumes the protocol's single prompt revision; N3.1's falsifier therefore reads FAIL (not MISS) if any dimension's AC2 CI upper bound is below 0.70.
