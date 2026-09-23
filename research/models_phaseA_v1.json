@@ -38,7 +38,7 @@
       "gpu_memory_utilization": 0.85,
       "path": "models/hf (to download)",
       "disk_gb": 20,
-      "status": "downloaded 2026-09-23 (snapshot 2b537554; 19.7 GB, 4 shards, Gemma3ForConditionalGeneration, eos [1, 106]); research/models_run4.json",
+      "status": "RUNS COMPLETE 2026-09-23 04:18Z (4 MARKERs; main 156/156, repeats 31/31); weights deleted 04:20Z (REHYDRATE.md); research/models_run4.json",
       "notes": "compressed-tensors W4A16 of google/gemma-3-27b-it by Red Hat AI (vLLM maintainers); ungated; 19.7 GB; Gemma Terms of Use apply; alternatives ISTA-DASLab/gemma-3-27b-it-GPTQ-4b-128g (16.9 GB) and gaunernst/gemma-3-27b-it-int4-awq (personal) — DECISION_LOG 2026-09-23"
     },
     {
