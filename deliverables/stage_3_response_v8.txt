@@ -1,0 +1,22 @@
+adol — stage 3 response v8 (2026-09-23 ~14:40Z) — venue facts verified at source; one decision for you (target journal)
+(plaintext; follows v7 of ~14:05Z)
+
+WHILE THE GPUs SCORE, I VERIFIED THE TWO DOMESTIC VENUES YOUR SUPERVISOR NAMED — THIS IS YOURS TO DECIDE
+
+1. JKIICE — 한국정보통신학회논문지 (한국정보통신학회)
+   - KCI 등재 (full listing; selected 2018-01, maintained 2021-01; KCI record SER000003195). 12 issues a year.
+   - Format: 한글(HWP) or PDF, Korean body; A4, 9.2 pt, two-column from the introduction (official 2023 template kit downloaded: research/venue/); Korean 요약 + English abstract of 130–160 words; 4–5 keywords in each language; figures/tables in English; references in English with DOIs (a reference-format accuracy below 30% is grounds for desk rejection).
+   - Review: three peer reviewers for full papers (short papers: two reviewers, 15-day decision). Fees: 심사료 40,000 KRW (80,000 expedited); page charges were not stated on the pages I could read — to confirm at submission. Copyright-transfer and conflict-of-interest forms are in the kit; CC BY-NC.
+   - AI-use policy: none on its Instructions for Authors, publication-ethics or 연구윤리규정 pages as of today → our usual four-sentence disclosure applies.
+   - Caution: the journal's own domain (jkiice.org) serves a root page with hidden spam links; the official template and submission live on kiice.org and DBpiaONE (membership required; corresponding author with paid dues).
+
+2. 한국융합학회 (KCONS)
+   - The journal you knew as 한국융합학회논문지 had its KCI listing CANCELLED in June 2022 (KCI SER000004000). The society's current journal is 미래기술융합논문지, which is KCI 등재후보 (candidate) since 2024-01 (SER000006231), bimonthly.
+   - Format: HWP only, ≥ 6 pages; three double-blind reviewers; 심사료 60,000 KRW, 게재료 150,000 KRW for six pages + 30,000 per extra page; all authors must be members.
+   - Its generative-AI regulation (effective 2026-06-01) restricts AI to grammar/formatting/simple search and defines AI-assisted work submitted as original research as research misconduct; essential AI use must be cited with model/version/conversation link/date. This paper is built with Claude Code end to end, so KCONS is compatible only if you decide that use is "auxiliary" under their text — a call I cannot make for you. (The same regulation touches the lab's spatialmotion v3 and ICASSP v2 papers now with KCONS, if they are resubmitted after 2026-06-01; noted in the hub's hazards page.)
+
+MY RECOMMENDATION: JKIICE, full paper. It is the fully listed journal, its rules fit the frozen design (Korean body, English abstract and references, no page cap found), and it has no AI-use restriction. Nothing changes in the plan except the template: the manuscript will be drafted in the JKIICE structure (Ⅰ 서론 … Ⅴ 결론, English REFERENCES with DOIs).
+
+SCORING STATUS (unchanged from v7): Qwen on GPU 1, Kanana on GPU 2; EXAONE, Gemma, HyperCLOVA follow; last panel ≈ 2026-09-24 05:00Z; no outcome read.
+
+RECORDS: ~/repos/wiki/venues.md (policies verified at source), hazards.md §4 (KCONS AI regulation; jkiice.org spam links), research/PAPER_PLAN.md (venue facts + recommendation), research/venue/ (template kit + extracted text), commits in adol and the hub.
