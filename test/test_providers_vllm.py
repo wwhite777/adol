@@ -19,7 +19,9 @@ if SRC not in sys.path:
     sys.path.insert(0, SRC)
 
 from kyra.providers import (  # noqa: E402
+    ENGINE_KWARGS_ENV,
     PROVIDERS,
+    RESERVED_ENGINE_KWARGS,
     FailingProvider,
     MockProvider,
     Provider,
@@ -27,6 +29,9 @@ from kyra.providers import (  # noqa: E402
     VLLMProvider,
     get_provider,
 )
+
+# Every variable this module reads or writes; saved and restored per test.
+GUARDED_ENV = (ENGINE_KWARGS_ENV, "VLLM_BATCH_INVARIANT", "VLLM_ATTENTION_BACKEND")
 
 FAKE_TEMPLATE = "{% for m in messages %}<|{{m['role']}}|>{{m['content']}}{% endfor %}"
 FAKE_VERSION = "0.0.0-fake"
@@ -111,8 +116,30 @@ def install_fake_vllm(test, llm_cls=FakeLLM, version=FAKE_VERSION):
     return mod
 
 
-class VLLMProviderBaseTest(unittest.TestCase):
+class EnvGuard(unittest.TestCase):
+    """Base class: os.environ is saved and restored around every test.
+
+    The guarded variables are also cleared at setUp, so a stray export in the
+    shell that runs the suite cannot steer a test either way.
+    """
+
     def setUp(self):
+        self.saved_env = {name: os.environ.get(name) for name in GUARDED_ENV}
+        self.addCleanup(self.restore_env)
+        for name in GUARDED_ENV:
+            os.environ.pop(name, None)
+
+    def restore_env(self):
+        for name, value in self.saved_env.items():
+            if value is None:
+                os.environ.pop(name, None)
+            else:
+                os.environ[name] = value
+
+
+class VLLMProviderBaseTest(EnvGuard):
+    def setUp(self):
+        super().setUp()
         FakeLLM.constructions = []
         FakeLLM.raise_on_construct = None
         FakeLLM.reply_text = "괜찮아, 지금 많이 힘들었겠다."
@@ -370,7 +397,7 @@ class TestVLLMProviderErrors(VLLMProviderBaseTest):
         self.assertIn("unexpected vllm output shape", str(ctx.exception))
 
 
-class TestGetProviderWiring(unittest.TestCase):
+class TestGetProviderWiring(EnvGuard):
     def test_vllm_is_registered(self):
         self.assertIs(PROVIDERS["vllm"], VLLMProvider)
 
@@ -413,6 +440,8 @@ class TestVLLMEffectiveParams(VLLMProviderBaseTest):
                 "top_p": 1.0,
                 "chat_template_kwargs": {},
                 "stop_token_ids": [],
+                "engine_kwargs": {},
+                "vllm_env": {},
             },
         )
 
@@ -426,6 +455,8 @@ class TestVLLMEffectiveParams(VLLMProviderBaseTest):
                 "top_p": 1.0,
                 "chat_template_kwargs": {},
                 "stop_token_ids": [],
+                "engine_kwargs": {},
+                "vllm_env": {},
             },
         )
 
@@ -547,6 +578,168 @@ class TestVLLMGenerationOptions(VLLMProviderBaseTest):
         )
         self.assertEqual(p.chat_template_kwargs, {"enable_thinking": False})
         self.assertEqual(p.stop_token_ids, [100273])
+
+
+class TestVLLMEngineKwargsEnv(VLLMProviderBaseTest):
+    """KYRA_VLLM_ENGINE_KWARGS: extra engine constructor kwargs, no CLI change.
+
+    vllm 0.19 batch-invariant decoding refuses to start unless the attention
+    backend is set in the engine configuration, so the conductor exports
+    KYRA_VLLM_ENGINE_KWARGS='{"attention_backend": "FLASH_ATTN"}'. Every test
+    here restores os.environ (EnvGuard).
+    """
+
+    DECLARED = ["gpu_memory_utilization", "model", "seed", "trust_remote_code"]
+
+    def test_unset_env_leaves_the_engine_call_exactly_as_before(self):
+        install_fake_vllm(self)
+        p = VLLMProvider(model_path="x/y")
+        p.generate([{"role": "user", "content": "안녕"}])
+        self.assertEqual(sorted(FakeLLM.constructions[0]), self.DECLARED)
+        eff = p.effective_params()
+        self.assertEqual(eff["engine_kwargs"], {})
+        self.assertEqual(eff["vllm_env"], {})
+
+    def test_blank_env_is_treated_as_unset(self):
+        for raw in ("", "   "):
+            os.environ[ENGINE_KWARGS_ENV] = raw
+            self.assertEqual(
+                VLLMProvider(model_path="x/y").effective_params()["engine_kwargs"], {}
+            )
+
+    def test_attention_backend_reaches_the_engine_constructor(self):
+        os.environ[ENGINE_KWARGS_ENV] = '{"attention_backend": "FLASH_ATTN"}'
+        install_fake_vllm(self)
+        p = VLLMProvider(model_path="x/y")
+        p.generate([{"role": "user", "content": "안녕"}])
+        kw = FakeLLM.constructions[0]
+        self.assertEqual(kw["attention_backend"], "FLASH_ATTN")
+        # the declared arguments are untouched
+        self.assertEqual(kw["model"], "x/y")
+        self.assertEqual(kw["seed"], 20260922)
+        self.assertEqual(kw["gpu_memory_utilization"], 0.85)
+        self.assertTrue(kw["trust_remote_code"])
+        self.assertEqual(
+            sorted(kw), sorted(self.DECLARED + ["attention_backend"])
+        )
+        self.assertEqual(
+            p.effective_params()["engine_kwargs"], {"attention_backend": "FLASH_ATTN"}
+        )
+
+    def test_scalar_values_of_every_allowed_type_pass_through(self):
+        os.environ[ENGINE_KWARGS_ENV] = (
+            '{"attention_backend": "FLASH_ATTN", "max_model_len": 4096, '
+            '"enforce_eager": true, "swap_space": 1.5}'
+        )
+        install_fake_vllm(self)
+        p = VLLMProvider(model_path="x/y")
+        p.generate([{"role": "user", "content": "안녕"}])
+        kw = FakeLLM.constructions[0]
+        self.assertEqual(kw["max_model_len"], 4096)
+        self.assertIs(kw["enforce_eager"], True)
+        self.assertEqual(kw["swap_space"], 1.5)
+        self.assertEqual(p.effective_params()["engine_kwargs"]["max_model_len"], 4096)
+
+    def test_env_is_read_at_construction_not_at_generate(self):
+        os.environ[ENGINE_KWARGS_ENV] = '{"attention_backend": "FLASH_ATTN"}'
+        install_fake_vllm(self)
+        p = VLLMProvider(model_path="x/y")
+        os.environ.pop(ENGINE_KWARGS_ENV)  # engine built later, config already fixed
+        p.generate([{"role": "user", "content": "안녕"}])
+        self.assertEqual(FakeLLM.constructions[0]["attention_backend"], "FLASH_ATTN")
+
+    def test_invalid_json_is_a_value_error(self):
+        os.environ[ENGINE_KWARGS_ENV] = '{"attention_backend": FLASH_ATTN}'
+        with self.assertRaises(ValueError) as ctx:
+            VLLMProvider(model_path="x/y")
+        self.assertIn(ENGINE_KWARGS_ENV, str(ctx.exception))
+        self.assertIn("valid JSON", str(ctx.exception))
+
+    def test_a_non_object_payload_is_a_value_error(self):
+        for raw in ('["attention_backend"]', '"FLASH_ATTN"', "3"):
+            os.environ[ENGINE_KWARGS_ENV] = raw
+            with self.assertRaises(ValueError) as ctx:
+                VLLMProvider(model_path="x/y")
+            self.assertIn("JSON object", str(ctx.exception))
+
+    def test_a_nested_value_is_a_value_error_naming_the_key(self):
+        os.environ[ENGINE_KWARGS_ENV] = '{"attention_config": {"backend": "FLASH_ATTN"}}'
+        with self.assertRaises(ValueError) as ctx:
+            VLLMProvider(model_path="x/y")
+        self.assertIn("attention_config", str(ctx.exception))
+        self.assertIn("dict", str(ctx.exception))
+        os.environ[ENGINE_KWARGS_ENV] = '{"backends": ["FLASH_ATTN"]}'
+        with self.assertRaises(ValueError) as ctx:
+            VLLMProvider(model_path="x/y")
+        self.assertIn("backends", str(ctx.exception))
+        os.environ[ENGINE_KWARGS_ENV] = '{"attention_backend": null}'
+        with self.assertRaises(ValueError) as ctx:
+            VLLMProvider(model_path="x/y")
+        self.assertIn("attention_backend", str(ctx.exception))
+
+    def test_a_key_the_provider_sets_itself_is_a_value_error(self):
+        values = {
+            "model": '"other/model"',
+            "seed": "1",
+            "gpu_memory_utilization": "0.1",
+            "trust_remote_code": "false",
+        }
+        self.assertEqual(sorted(values), sorted(RESERVED_ENGINE_KWARGS))
+        for key, val in values.items():
+            os.environ[ENGINE_KWARGS_ENV] = '{"%s": %s}' % (key, val)
+            with self.assertRaises(ValueError) as ctx:
+                VLLMProvider(model_path="x/y")
+            self.assertIn(key, str(ctx.exception))
+            self.assertIn("collides", str(ctx.exception))
+
+    def test_an_empty_key_is_a_value_error(self):
+        os.environ[ENGINE_KWARGS_ENV] = '{"": "FLASH_ATTN"}'
+        with self.assertRaises(ValueError):
+            VLLMProvider(model_path="x/y")
+
+    def test_a_bad_payload_fails_before_any_engine_is_built(self):
+        install_fake_vllm(self)
+        os.environ[ENGINE_KWARGS_ENV] = "{not json"
+        with self.assertRaises(ValueError):
+            VLLMProvider(model_path="x/y")
+        self.assertEqual(FakeLLM.constructions, [])
+
+    def test_batch_invariant_env_is_recorded_as_provenance(self):
+        os.environ["VLLM_BATCH_INVARIANT"] = "1"
+        eff = VLLMProvider(model_path="x/y").effective_params()
+        self.assertEqual(eff["vllm_env"], {"VLLM_BATCH_INVARIANT": "1"})
+
+    def test_both_vllm_env_vars_are_recorded_when_set(self):
+        os.environ["VLLM_BATCH_INVARIANT"] = "1"
+        os.environ["VLLM_ATTENTION_BACKEND"] = "FLASH_ATTN"
+        eff = VLLMProvider(model_path="x/y").effective_params()
+        self.assertEqual(
+            eff["vllm_env"],
+            {"VLLM_BATCH_INVARIANT": "1", "VLLM_ATTENTION_BACKEND": "FLASH_ATTN"},
+        )
+
+    def test_vllm_env_changes_no_behaviour(self):
+        os.environ["VLLM_BATCH_INVARIANT"] = "1"
+        os.environ["VLLM_ATTENTION_BACKEND"] = "FLASH_ATTN"
+        install_fake_vllm(self)
+        p = VLLMProvider(model_path="x/y")
+        p.generate([{"role": "user", "content": "안녕"}])
+        self.assertEqual(sorted(FakeLLM.constructions[0]), self.DECLARED)
+
+    def test_effective_params_are_copies_not_the_live_dicts(self):
+        os.environ[ENGINE_KWARGS_ENV] = '{"attention_backend": "FLASH_ATTN"}'
+        os.environ["VLLM_BATCH_INVARIANT"] = "1"
+        p = VLLMProvider(model_path="x/y")
+        eff = p.effective_params()
+        eff["engine_kwargs"]["attention_backend"] = "TRITON_ATTN"
+        eff["vllm_env"]["VLLM_BATCH_INVARIANT"] = "0"
+        self.assertEqual(p.engine_kwargs, {"attention_backend": "FLASH_ATTN"})
+        self.assertEqual(p.vllm_env, {"VLLM_BATCH_INVARIANT": "1"})
+
+    def test_get_provider_surfaces_the_value_error(self):
+        os.environ[ENGINE_KWARGS_ENV] = "{not json"
+        with self.assertRaises(ValueError):
+            get_provider("vllm", model_path="x/y")
 
 
 class TestManifestProvenance(VLLMProviderBaseTest):

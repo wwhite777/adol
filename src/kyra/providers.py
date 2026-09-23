@@ -9,6 +9,7 @@ imports vllm and never loads a model - the engine is built on first generate().
 from __future__ import annotations
 
 import hashlib
+import json
 import os
 from typing import Any, Dict, List, Optional
 
@@ -201,6 +202,73 @@ def validate_stop_token_ids(value: Any) -> List[int]:
     return out
 
 
+# One environment variable carries extra vllm engine constructor kwargs, so the
+# engine configuration can change without a CLI change. Example (vllm 0.19
+# batch-invariant decoding, which refuses to start unless the attention backend
+# is set in the engine configuration - the VLLM_ATTENTION_BACKEND env var does
+# not satisfy that check):
+#   export KYRA_VLLM_ENGINE_KWARGS='{"attention_backend": "FLASH_ATTN"}'
+ENGINE_KWARGS_ENV = "KYRA_VLLM_ENGINE_KWARGS"
+# Engine kwargs VLLMProvider sets itself: the environment may add, never
+# override, so a run cannot silently lose its seed or memory budget.
+RESERVED_ENGINE_KWARGS = ("model", "seed", "gpu_memory_utilization", "trust_remote_code")
+# vllm environment variables recorded for provenance only (this module reads
+# them for the manifest and never acts on them).
+VLLM_ENV_KEYS = ("VLLM_BATCH_INVARIANT", "VLLM_ATTENTION_BACKEND")
+
+
+def parse_engine_kwargs(raw: Any) -> Dict[str, Any]:
+    """Parse the KYRA_VLLM_ENGINE_KWARGS payload; ValueError names the problem.
+
+    Accepts None / "" (-> {}) or a JSON object whose values are scalars
+    (bool/int/float/str). Nested objects and arrays are refused rather than
+    forwarded into the engine constructor, and a key the provider sets itself is
+    refused rather than silently overriding it.
+    """
+    if raw is None:
+        return {}
+    if not isinstance(raw, str):
+        raise ValueError(
+            "%s must be a JSON string, got %s" % (ENGINE_KWARGS_ENV, type(raw).__name__)
+        )
+    if not raw.strip():
+        return {}
+    try:
+        parsed = json.loads(raw)
+    except Exception as exc:
+        raise ValueError("%s is not valid JSON: %s" % (ENGINE_KWARGS_ENV, exc)) from exc
+    if not isinstance(parsed, dict):
+        raise ValueError(
+            "%s must be a JSON object, got %s"
+            % (ENGINE_KWARGS_ENV, type(parsed).__name__)
+        )
+    out: Dict[str, Any] = {}
+    for key, val in parsed.items():
+        if not isinstance(key, str) or not key.strip():
+            raise ValueError(
+                "%s key %r must be a non-empty string" % (ENGINE_KWARGS_ENV, key)
+            )
+        if not isinstance(val, (bool, int, float, str)):
+            raise ValueError(
+                "%s[%r] must be a bool, int, float or str, got %s"
+                % (ENGINE_KWARGS_ENV, key, type(val).__name__)
+            )
+        if key in RESERVED_ENGINE_KWARGS:
+            raise ValueError(
+                "%s[%r] collides with an engine argument VLLMProvider sets itself "
+                "(%s); refusing to override it"
+                % (ENGINE_KWARGS_ENV, key, ", ".join(RESERVED_ENGINE_KWARGS))
+            )
+        out[key] = val
+    return out
+
+
+def read_vllm_env(environ: Optional[Dict[str, str]] = None) -> Dict[str, str]:
+    """vllm env vars worth recording, {name: value} for those actually set."""
+    env = os.environ if environ is None else environ
+    return {name: env[name] for name in VLLM_ENV_KEYS if env.get(name) is not None}
+
+
 def _derive_model_id(model_path: str) -> str:
     """HF repo id verbatim, or the basename of a local directory."""
     p = str(model_path).rstrip(os.sep)
@@ -254,6 +322,11 @@ class VLLMProvider(Provider):
         self.temperature = float(temperature)
         self.seed = int(seed)
         self.gpu_memory_utilization = float(gpu_memory_utilization)
+        # Extra engine constructor kwargs from the environment, validated here so
+        # a bad value fails before a GPU is ever touched. Recorded verbatim by
+        # effective_params(), together with the vllm env vars in force.
+        self.engine_kwargs = parse_engine_kwargs(os.environ.get(ENGINE_KWARGS_ENV))
+        self.vllm_env = read_vllm_env()
         self.model_id = _derive_model_id(self.model_path)
         # Provenance of the prompt format, filled when the tokenizer is loaded.
         self.chat_template_source = None
@@ -278,13 +351,18 @@ class VLLMProvider(Provider):
             raise ProviderError(
                 "vllm import failed (%s: %s)" % (type(exc).__name__, exc)
             ) from exc
+        # Declared kwargs first, then the environment's additions: the two sets
+        # are disjoint by construction (parse_engine_kwargs refuses a collision),
+        # so with the variable unset the call is byte-identical to before.
+        kwargs: Dict[str, Any] = {
+            "model": self.model_path,
+            "seed": self.seed,
+            "gpu_memory_utilization": self.gpu_memory_utilization,
+            "trust_remote_code": True,
+        }
+        kwargs.update(self.engine_kwargs)
         try:
-            return LLM(
-                model=self.model_path,
-                seed=self.seed,
-                gpu_memory_utilization=self.gpu_memory_utilization,
-                trust_remote_code=True,
-            )
+            return LLM(**kwargs)
         except Exception as exc:
             raise ProviderError(
                 "vllm engine construction failed for %r (%s: %s)"
@@ -356,7 +434,10 @@ class VLLMProvider(Provider):
 
         Both option keys are always reported (empty dict / empty list when
         undeclared), so every manifest from now on states what was applied
-        instead of leaving it to be inferred from the model list.
+        instead of leaving it to be inferred from the model list. engine_kwargs
+        (what the engine was built with, beyond the declared arguments) and
+        vllm_env (the vllm environment variables in force at construction) are
+        provenance: always present, empty when nothing was set.
         """
         return {
             "max_tokens": self.max_new_tokens,
@@ -364,6 +445,8 @@ class VLLMProvider(Provider):
             "top_p": self.top_p,
             "chat_template_kwargs": dict(self.chat_template_kwargs),
             "stop_token_ids": list(self.stop_token_ids),
+            "engine_kwargs": dict(self.engine_kwargs),
+            "vllm_env": dict(self.vllm_env),
         }
 
     def build_prompt(self, messages: List[Dict[str, str]]) -> str:
