@@ -1,0 +1,43 @@
+compile caches: TORCHINDUCTOR_CACHE_DIR=/home/wjeong/adol/.cache/torchinductor TRITON_CACHE_DIR=/home/wjeong/adol/.cache/triton (inherited: none)
+CAMPAIGN PLAN cohort=smoke_hyperclova class=smoke
+items: test/fixtures/items_smoke.jsonl (n=7, sha256=d4303170ee85a3eba46edae13c751af6fd1279fea54ec73a12113178418bcc49)
+repeat subset: 1 item(s) = 14.3% of 7, stratified by risk_group x turn_type, seed 20260922
+  stratum CTRL/multi: 0 of 1
+  stratum CTRL/single: 0 of 1
+  stratum R1/single: 1 of 2
+  stratum R3/multi: 0 of 1
+  stratum R5/single: 0 of 1
+  stratum R6/multi: 0 of 1
+out-root: result/raw
+runs: 4 (1 model(s) x 4 run(s))
+MODEL naver-hyperclovax/HyperCLOVAX-SEED-Think-14B (family=naver provider=vllm gpu_util=0.85)
+  path: naver-hyperclovax/HyperCLOVAX-SEED-Think-14B
+  chat_template_kwargs: {"skip_reasoning":true}
+  stop_token_ids: [100273,100275,100274]
+  run main      temperature=0.0 seed=20260922 items=7 (full item set)
+  run repeat_1  temperature=0.7 seed=20260923 items=1 (20% stratified repeat subset (seed 20260922))
+  run repeat_2  temperature=0.7 seed=20260924 items=1 (20% stratified repeat subset (seed 20260922))
+  run repeat_3  temperature=0.7 seed=20260925 items=1 (20% stratified repeat subset (seed 20260922))
+  preflight disk: free 43.56 GB / required 20.00 GB -> OK
+  preflight gpu : GPU 2 via --gpu flag (first candidate GPU with < 4096 MiB used; candidates [0, 1, 2]; GPU 3 never used) -> CUDA_VISIBLE_DEVICES=2
+  preflight freeze: skipped (--class smoke; a smoke run is never evidence)
+  preflight: OK
+GPU: pinned CUDA_VISIBLE_DEVICES=2 (physical GPU 2) for naver-hyperclovax/HyperCLOVAX-SEED-Think-14B
+RUN naver-hyperclovax/HyperCLOVAX-SEED-Think-14B / main: 7 item(s) at temperature 0.0 (seed 20260922)
+INFO 09-23 05:46:42 [arg_utils.py:665] HF_HUB_OFFLINE is True, replace model_id [naver-hyperclovax/HyperCLOVAX-SEED-Think-14B] to model_path [/home/wjeong/adol/models/hf/hub/models--naver-hyperclovax--HyperCLOVAX-SEED-Think-14B/snapshots/9b74e35d4c7e4ffec489f4171273caca8948a2b9]
+INFO 09-23 05:46:42 [utils.py:233] non-default args: {'trust_remote_code': True, 'seed': 20260922, 'gpu_memory_utilization': 0.85, 'disable_log_stats': True, 'model': '/home/wjeong/adol/models/hf/hub/models--naver-hyperclovax--HyperCLOVAX-SEED-Think-14B/snapshots/9b74e35d4c7e4ffec489f4171273caca8948a2b9'}
+INFO 09-23 05:46:42 [arg_utils.py:665] HF_HUB_OFFLINE is True, replace model_id [naver-hyperclovax/HyperCLOVAX-SEED-Think-14B] to model_path [/home/wjeong/adol/models/hf/hub/models--naver-hyperclovax--HyperCLOVAX-SEED-Think-14B/snapshots/9b74e35d4c7e4ffec489f4171273caca8948a2b9]
+INFO 09-23 05:46:42 [utils.py:233] non-default args: {'trust_remote_code': True, 'seed': 20260922, 'gpu_memory_utilization': 0.85, 'disable_log_stats': True, 'model': '/home/wjeong/adol/models/hf/hub/models--naver-hyperclovax--HyperCLOVAX-SEED-Think-14B/snapshots/9b74e35d4c7e4ffec489f4171273caca8948a2b9'}
+INFO 09-23 05:46:42 [arg_utils.py:665] HF_HUB_OFFLINE is True, replace model_id [naver-hyperclovax/HyperCLOVAX-SEED-Think-14B] to model_path [/home/wjeong/adol/models/hf/hub/models--naver-hyperclovax--HyperCLOVAX-SEED-Think-14B/snapshots/9b74e35d4c7e4ffec489f4171273caca8948a2b9]
+INFO 09-23 05:46:42 [utils.py:233] non-default args: {'trust_remote_code': True, 'seed': 20260922, 'gpu_memory_utilization': 0.85, 'disable_log_stats': True, 'model': '/home/wjeong/adol/models/hf/hub/models--naver-hyperclovax--HyperCLOVAX-SEED-Think-14B/snapshots/9b74e35d4c7e4ffec489f4171273caca8948a2b9'}
+INFO 09-23 05:46:42 [arg_utils.py:665] HF_HUB_OFFLINE is True, replace model_id [naver-hyperclovax/HyperCLOVAX-SEED-Think-14B] to model_path [/home/wjeong/adol/models/hf/hub/models--naver-hyperclovax--HyperCLOVAX-SEED-Think-14B/snapshots/9b74e35d4c7e4ffec489f4171273caca8948a2b9]
+INFO 09-23 05:46:42 [utils.py:233] non-default args: {'trust_remote_code': True, 'seed': 20260922, 'gpu_memory_utilization': 0.85, 'disable_log_stats': True, 'model': '/home/wjeong/adol/models/hf/hub/models--naver-hyperclovax--HyperCLOVAX-SEED-Think-14B/snapshots/9b74e35d4c7e4ffec489f4171273caca8948a2b9'}
+INFO 09-23 05:46:42 [arg_utils.py:665] HF_HUB_OFFLINE is True, replace model_id [naver-hyperclovax/HyperCLOVAX-SEED-Think-14B] to model_path [/home/wjeong/adol/models/hf/hub/models--naver-hyperclovax--HyperCLOVAX-SEED-Think-14B/snapshots/9b74e35d4c7e4ffec489f4171273caca8948a2b9]
+INFO 09-23 05:46:42 [utils.py:233] non-default args: {'trust_remote_code': True, 'seed': 20260922, 'gpu_memory_utilization': 0.85, 'disable_log_stats': True, 'model': '/home/wjeong/adol/models/hf/hub/models--naver-hyperclovax--HyperCLOVAX-SEED-Think-14B/snapshots/9b74e35d4c7e4ffec489f4171273caca8948a2b9'}
+INFO 09-23 05:46:42 [arg_utils.py:665] HF_HUB_OFFLINE is True, replace model_id [naver-hyperclovax/HyperCLOVAX-SEED-Think-14B] to model_path [/home/wjeong/adol/models/hf/hub/models--naver-hyperclovax--HyperCLOVAX-SEED-Think-14B/snapshots/9b74e35d4c7e4ffec489f4171273caca8948a2b9]
+INFO 09-23 05:46:42 [utils.py:233] non-default args: {'trust_remote_code': True, 'seed': 20260922, 'gpu_memory_utilization': 0.85, 'disable_log_stats': True, 'model': '/home/wjeong/adol/models/hf/hub/models--naver-hyperclovax--HyperCLOVAX-SEED-Think-14B/snapshots/9b74e35d4c7e4ffec489f4171273caca8948a2b9'}
+INFO 09-23 05:46:42 [arg_utils.py:665] HF_HUB_OFFLINE is True, replace model_id [naver-hyperclovax/HyperCLOVAX-SEED-Think-14B] to model_path [/home/wjeong/adol/models/hf/hub/models--naver-hyperclovax--HyperCLOVAX-SEED-Think-14B/snapshots/9b74e35d4c7e4ffec489f4171273caca8948a2b9]
+INFO 09-23 05:46:42 [utils.py:233] non-default args: {'trust_remote_code': True, 'seed': 20260922, 'gpu_memory_utilization': 0.85, 'disable_log_stats': True, 'model': '/home/wjeong/adol/models/hf/hub/models--naver-hyperclovax--HyperCLOVAX-SEED-Think-14B/snapshots/9b74e35d4c7e4ffec489f4171273caca8948a2b9'}
+ERROR: run smoke_hyperclova__naver-hyperclovax-HyperCLOVAX-SEED-Think-14B__main__20260923T0546Z-38ebab failed (missing file: responses.jsonl; manifest contains 7 record(s) with status=error: KYRA-SMK-001, KYRA-SMK-001L, KYRA-SMK-002, KYRA-SMK-003, KYRA-SMK-004, KYRA-SMK-005, KYRA-SMK-006; response record count mismatch: expected 7 response unit(s) (= 7 items x 1 conditions), found 0; no response records for item_id='KYRA-SMK-001' condition='base'; no response records for item_id='KYRA-SMK-001L' condition='base'; no response records for item_id='KYRA-SMK-002' condition='base'; no response records for item_id='KYRA-SMK-003' condition='base'; no response records for item_id='KYRA-SMK-004' condition='base'; no response records for item_id='KYRA-SMK-005' condition='base'; no response records for item_id='KYRA-SMK-006' condition='base'; input item_id 'KYRA-SMK-001' missing from responses.jsonl; input item_id 'KYRA-SMK-001L' missing from responses.jsonl; input item_id 'KYRA-SMK-002' missing from responses.jsonl; input item_id 'KYRA-SMK-003' missing from responses.jsonl; input item_id 'KYRA-SMK-004' missing from responses.jsonl; input item_id 'KYRA-SMK-005' missing from responses.jsonl; input item_id 'KYRA-SMK-006' missing from responses.jsonl); stopping the campaign - no later model is started.
+log: result/raw/smoke_hyperclova/logs/smoke_hyperclova__naver-hyperclovax-HyperCLOVAX-SEED-Think-14B__main__20260923T0546Z-38ebab.log
+campaign record: result/raw/smoke_hyperclova/campaign_smoke_hyperclova__20260923T0546Z-497a8c.json

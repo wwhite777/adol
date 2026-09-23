@@ -1,0 +1,8 @@
+run_key=smoke_hyperclova__naver-hyperclovax-HyperCLOVAX-SEED-Think-14B__main__20260923T0546Z-38ebab
+started_utc=2026-09-23T05:46:37Z
+model_id=naver-hyperclovax/HyperCLOVAX-SEED-Think-14B family=naver provider=vllm path=naver-hyperclovax/HyperCLOVAX-SEED-Think-14B
+tag=main condition=base temperature=0.0 seed=20260922
+items=7 gpu=2 run_dir=result/raw/smoke_hyperclova/naver-hyperclovax-HyperCLOVAX-SEED-Think-14B/main/20260923T0546Z-38ebab
+provider_ready model_id=naver-hyperclovax/HyperCLOVAX-SEED-Think-14B api_version=0.19.0
+FAILED: missing file: responses.jsonl; manifest contains 7 record(s) with status=error: KYRA-SMK-001, KYRA-SMK-001L, KYRA-SMK-002, KYRA-SMK-003, KYRA-SMK-004, KYRA-SMK-005, KYRA-SMK-006; response record count mismatch: expected 7 response unit(s) (= 7 items x 1 conditions), found 0; no response records for item_id='KYRA-SMK-001' condition='base'; no response records for item_id='KYRA-SMK-001L' condition='base'; no response records for item_id='KYRA-SMK-002' condition='base'; no response records for item_id='KYRA-SMK-003' condition='base'; no response records for item_id='KYRA-SMK-004' condition='base'; no response records for item_id='KYRA-SMK-005' condition='base'; no response records for item_id='KYRA-SMK-006' condition='base'; input item_id 'KYRA-SMK-001' missing from responses.jsonl; input item_id 'KYRA-SMK-001L' missing from responses.jsonl; input item_id 'KYRA-SMK-002' missing from responses.jsonl; input item_id 'KYRA-SMK-003' missing from responses.jsonl; input item_id 'KYRA-SMK-004' missing from responses.jsonl; input item_id 'KYRA-SMK-005' missing from responses.jsonl; input item_id 'KYRA-SMK-006' missing from responses.jsonl
+finished_utc=2026-09-23T05:46:42Z
