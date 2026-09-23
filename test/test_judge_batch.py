@@ -52,6 +52,9 @@ META_FIELDS = {
     "decode_mode",
     "batch_size",
     "max_retries",
+    # how the engine came up (2026-09-23): built once, before any view
+    "engine_ready_attempts",
+    "engine_ready_seconds",
     "views",
     # judge prompt v0.3 (2026-09-23): which prompt template produced this file
     "prompt_template_path",

@@ -1,0 +1,37 @@
+.....................................ERROR: pre-flight refused for fake/tiny-vllm-a
+  disk: {'path': '/tmp/campaign_harden_dydpexrs/raw', 'free_gb': 5.0, 'required_gb': 20.0, 'min_free_gb_overridden': False, 'default_required_gb': 20.0, 'ok': False, 'enforced': True}
+campaign record: /tmp/campaign_harden_dydpexrs/raw/hardenfloor/campaign_hardenfloor__20260923T1057Z-05cbfe.json
+...ERROR: pre-flight refused for fake/tiny-vllm-a
+  disk: {'path': '/tmp/campaign_harden_xmiybr90/raw', 'free_gb': 5.0, 'required_gb': 20.0, 'min_free_gb_overridden': False, 'default_required_gb': 20.0, 'ok': False, 'enforced': True}
+campaign record: /tmp/campaign_harden_xmiybr90/raw/hardensame/campaign_hardensame__20260923T1057Z-5b6c06.json
+.....ERROR: pre-flight refused for fake/tiny-vllm-a
+  freeze: FREEZE_MISMATCH: /tmp/campaign_dry_ka_ah1lv/PREREGISTERED_kyra_v2.yaml sha256=6396ec8483d664da97f2bf9a06c840d40d97aa6416a7c0fda1fa3a49c076d488 does not match frozen receipt sha256=87abaae4c16fb0efe3dad27ff464fcd86b6b48ff67a33f1414336ccc7ddd34a4
+campaign record: /tmp/campaign_dry_ka_ah1lv/raw/dryrun/campaign_dryrun__20260923T1057Z-78e86a.json
+.ERROR: models_fake.json[0] uses the mock provider; a mock run is never evidence and is refused for --class confirmatory
+....ERROR: pre-flight refused for fake/tiny-vllm-a
+  gpu: no free GPU among [0, 1, 2] (< 4096 MiB used)
+campaign record: /tmp/campaign_dry_babh2e5c/raw/dryrun/campaign_dryrun__20260923T1057Z-ee5ce1.json
+...........ERROR: pre-flight refused for fake/tiny-vllm-a
+  gpu: --gpu 3 refused: allowed GPUs are [0, 1, 2] and GPU 3 is another user's job
+campaign record: /tmp/campaign_gpu_zi3zvnso/raw2/gpubad/campaign_gpubad__20260923T1057Z-acc20e.json
+.....ERROR: judge output already exists, refusing to overwrite: /tmp/campaign_score_2967bfm4/raw/scoreme/fake-tiny-a/main/20260923T1057Z-e302be/judge_JF1.jsonl, /tmp/campaign_score_2967bfm4/raw/scoreme/fake-tiny-a/main/20260923T1057Z-e302be/judge_JF2.jsonl
+campaign record: /tmp/campaign_score_2967bfm4/raw/scoreagain/campaign_scoreagain__20260923T1057Z-aa25cd_scoring.json
+..ERROR: refusing to score /tmp/campaign_score_2967bfm4/no_marker_run: no MARKER (an unvalidated run is not data)
+.ERROR: no run directory matches '/tmp/campaign_score_2967bfm4/nothing_here_*' (a missing run is never scored silently)
+.ERROR: refusing to score /tmp/campaign_score_2967bfm4/raw/scoreme/fake-tiny-a/repeat_2/20260923T1057Z-c71bcf: 1 item_id(s) in responses.jsonl are absent from /home/wjeong/adol/research/items/items_phaseA_v1.jsonl, so their risk_group (and therefore which views are CTRL controls) is unknown: KYRA-SMK-001L
+.ERROR: panel output already exists, refusing to overwrite: /tmp/campaign_score_2967bfm4/raw/scoreme/fake-tiny-a/repeat_3/20260923T1057Z-1bfa3f/panel.jsonl (pass --allow-panel-overwrite to replace it)
+campaign record: /tmp/campaign_score_2967bfm4/raw/scorepanel2/campaign_scorepanel2__20260923T1057Z-5e0b44_scoring.json
+..ERROR: run stoptest__fake-tiny-a__repeat_1__20260923T1057Z-29c978 failed (missing file: responses.jsonl; manifest contains 1 record(s) with status=error: KYRA-SMK-001L; response record count mismatch: expected 1 response unit(s) (= 1 items x 1 conditions), found 0; no response records for item_id='KYRA-SMK-001L' condition='repeat_1'; input item_id 'KYRA-SMK-001L' missing from responses.jsonl); stopping the campaign - no later model is started.
+log: /tmp/campaign_run_uqsj99lh/raw/stoptest/logs/stoptest__fake-tiny-a__repeat_1__20260923T1057Z-29c978.log
+campaign record: /tmp/campaign_run_uqsj99lh/raw/stoptest/campaign_stoptest__20260923T1057Z-aca4ff.json
+..............................................................ERROR: --condition and --conditions are mutually exclusive
+.ERROR: bad condition tag 'repeat 1!' (allowed: letters, digits, . _ -)
+..ERROR: bad options for provider 'mock': MockProvider() takes no arguments
+............................s........................................................................................................................................................................................................................................................................................................vllm engine construction attempt 1/1 failed for 'x/y': model 'x/y' exposes no chat template; refusing to invent a prompt format
+..................vllm engine construction attempt 1/1 failed for 'x/y': vllm engine construction failed for 'x/y' (RuntimeError: CUDA out of memory on device 0)
+..vllm engine construction attempt 1/1 failed for 'x/y': vllm import failed (ModuleNotFoundError: import of vllm halted; None in sys.modules)
+..............
+----------------------------------------------------------------------
+Ran 497 tests in 396.200s
+
+OK (skipped=1)

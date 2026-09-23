@@ -36,6 +36,7 @@ from kyra import campaign  # noqa: E402
 from kyra.judge import (  # noqa: E402
     DEFAULT_SHARD,
     build_merge_parser,
+    build_parser as judge_build_parser,
     judge_run,
     main as judge_main,
     merge_shards,
@@ -490,6 +491,14 @@ class TestCampaignShards(unittest.TestCase):
     def tearDownClass(cls):
         shutil.rmtree(cls.tmp, True)
 
+    def setUp(self):
+        # The production stagger is 45 s per shard (TestShardStagger asserts it on
+        # the argv). These end-to-end tests really start the children, so they run
+        # with no stagger at all: what they test is the split and the merge.
+        real = campaign.SHARD_START_STAGGER_S
+        campaign.SHARD_START_STAGGER_S = 0
+        self.addCleanup(setattr, campaign, "SHARD_START_STAGGER_S", real)
+
     def judges_file(self, run_dir, shards=None, keep=None):
         doc = json.loads(json.dumps(self.judges_doc))
         judges = doc["judges"] if keep is None else [
@@ -617,6 +626,10 @@ class TestCampaignShards(unittest.TestCase):
             self.assertTrue(Path(judge_run_record["log"]).is_file())
         plan_judges = {j["judge_id"]: j for j in record["plan"]["judges"]}
         self.assertEqual(plan_judges["JF1"]["shards"], 2)
+        # the stagger this batch used is part of the scoring record (0 here: see setUp)
+        self.assertEqual(
+            record["plan"]["shard_start_stagger_s"], campaign.SHARD_START_STAGGER_S
+        )
 
         # one EXPERIMENTS row per judge, carrying both shard commands + the merge
         with self.csv.open(encoding="utf-8", newline="") as fh:
@@ -629,6 +642,9 @@ class TestCampaignShards(unittest.TestCase):
         self.assertEqual(len(command_lines), 3)
         self.assertIn("--shard 1/2", command_lines[0])
         self.assertIn("--shard 2/2", command_lines[1])
+        # each shard command carries its own start delay (0 s each under setUp)
+        self.assertIn("--start-delay-s 0", command_lines[0])
+        self.assertIn("--start-delay-s 0", command_lines[1])
         self.assertIn("kyra.judge merge", command_lines[2])
         self.assertIn("--shards", command_lines[2])
         self.assertEqual(fields["status"], "completed")
@@ -680,7 +696,9 @@ class TestCampaignShards(unittest.TestCase):
                record["plan"]["runs"][0]["evaluated_family"], record["gpu"]["chosen"], run_dir)
         )
         self.assertEqual(fields["config"], expected_config)
+        self.assertNotIn("shard_start_stagger_s", record["plan"])
         self.assertNotIn("--shard", fields["command"])
+        self.assertNotIn("--start-delay-s", fields["command"])
         self.assertEqual(len(fields["command"].splitlines()), 1)
         self.assertEqual(
             [p.name for p in run_dir.glob("judge_*.shard*")], []
@@ -793,6 +811,93 @@ class TestCampaignShards(unittest.TestCase):
             encoding="utf-8",
         )
         self.assertEqual(campaign.load_judges(path)[0]["shards"], 1)
+
+
+# -- staggered shard starts ---------------------------------------------------
+
+
+class TestShardStagger(unittest.TestCase):
+    """Shard k builds its engine (k-1)*45 s after shard 1 (2026-09-23).
+
+    Two engines that probe free GPU memory in the same second collide, and that
+    collision used to be written into the first views of both shards. This class
+    uses the REAL constant (TestCampaignShards sets it to 0 for its end-to-end
+    runs), so a change of the 45 s stagger has to be made here too.
+    """
+
+    JUDGE = {
+        "judge_id": "J2", "family": "qwen", "provider": "vllm",
+        "model_path": "/models/j2", "gpu_memory_utilization": 0.42,
+        "batch_size": None, "shards": 2, "fake_outputs": None,
+    }
+
+    def cmd(self, shard):
+        run_dir = Path("/runs/r1")
+        out = (
+            campaign.shard_out_path(run_dir, "J2", shard[0], shard[1])
+            if shard else run_dir / "judge_J2.jsonl"
+        )
+        return campaign.judge_command(
+            self.JUDGE, run_dir, Path("items.jsonl"), out, None, shard=shard
+        )
+
+    def test_the_stagger_constant_is_45_seconds(self):
+        self.assertEqual(campaign.SHARD_START_STAGGER_S, 45)
+
+    def test_the_first_shard_starts_now_and_the_second_45_seconds_later(self):
+        first, second = self.cmd((1, 2)), self.cmd((2, 2))
+        self.assertEqual(first[first.index("--start-delay-s") + 1], "0")
+        self.assertEqual(second[second.index("--start-delay-s") + 1], "45")
+        self.assertEqual(first[first.index("--shard") + 1], "1/2")
+        self.assertEqual(second[second.index("--shard") + 1], "2/2")
+
+    def test_three_shards_are_spread_45_seconds_apart(self):
+        delays = []
+        for k in (1, 2, 3):
+            cmd = self.cmd((k, 3))
+            delays.append(cmd[cmd.index("--start-delay-s") + 1])
+        self.assertEqual(delays, ["0", "45", "90"])
+
+    def test_an_unsharded_judge_gets_no_delay_flag_at_all(self):
+        for shard in (None, (1, 1)):
+            cmd = self.cmd(shard)
+            self.assertNotIn("--start-delay-s", cmd)
+            self.assertNotIn("--shard", cmd)
+
+    def test_the_delay_reaches_the_child_from_judges_json(self):
+        """judges.json "shards": 2 -> the second child's argv carries 45 s."""
+        tmp = Path(tempfile.mkdtemp(prefix="stagger_"))
+        self.addCleanup(shutil.rmtree, tmp, True)
+        path = tmp / "judges.json"
+        path.write_text(
+            json.dumps({"judges": [{"judge_id": "J2", "family": "qwen",
+                                    "provider": "vllm", "model_path": "/models/j2",
+                                    "shards": 2}]}),
+            encoding="utf-8",
+        )
+        judge = campaign.load_judges(path)[0]
+        self.assertEqual(judge["shards"], 2)
+        cmds = [
+            campaign.judge_command(
+                judge, Path("/runs/r1"), Path("items.jsonl"),
+                campaign.shard_out_path(Path("/runs/r1"), "J2", k, 2), None, shard=(k, 2),
+            )
+            for k in (1, 2)
+        ]
+        self.assertIn("--start-delay-s 0", " ".join(cmds[0]))
+        self.assertIn("--start-delay-s 45", " ".join(cmds[1]))
+        # and the flag the child parses really is the judge CLI's own flag
+        args = judge_build_parser().parse_args(
+            ["--run-dir", "/runs/r1", "--judge-id", "J2", "--family", "qwen",
+             "--start-delay-s", "45"]
+        )
+        self.assertEqual(args.start_delay_s, 45.0)
+        self.assertEqual(
+            judge_build_parser().parse_args(
+                ["--run-dir", "/runs/r1", "--judge-id", "J2", "--family", "qwen"]
+            ).start_delay_s,
+            0.0,
+        )
 
 
 # -- the N3 consumer ----------------------------------------------------------

@@ -55,7 +55,9 @@ call); undeclared, no flag is passed and kyra.judge's own default applies.
 A judge entry may also carry "shards": <int >= 1> (default 1). With N > 1 that
 judge's pass over a run directory is split across N kyra.judge child processes
 started at the same time on the same pinned GPU (--shard k/N, one engine each,
-writing judge_<id>.shard<k>of<N>.jsonl); when all N have finished,
+writing judge_<id>.shard<k>of<N>.jsonl), with their ENGINE starts staggered by
+--start-delay-s (k-1)*SHARD_START_STAGGER_S so two engines do not probe free GPU
+memory in the same second; when all N have finished,
 `kyra.judge merge` interleaves them into the single judge_<id>.jsonl, which is
 byte-identical to what one engine would have written, and the shard files (with
 their sidecars) are moved into <run_dir>/shards/ so that only the merged judge
@@ -1298,6 +1300,12 @@ def run_item_ids(run_dir: Path) -> List[str]:
 
 
 SHARDS_DIR_NAME = "shards"
+# Seconds between the starts of two shards of one judge (2026-09-23). Shard k
+# gets --start-delay-s (k-1)*STAGGER, so the engines do not probe free GPU memory
+# in the same second - the collision that recorded the first views of two shards
+# as ProviderError. The children still run concurrently; only their starts are
+# spread.
+SHARD_START_STAGGER_S = 45
 
 
 def shard_out_path(run_dir: Path, judge_id: str, k: int, n: int) -> Path:
@@ -1354,9 +1362,11 @@ def judge_command(
 ) -> List[str]:
     """The kyra.judge argv for one judge on one run (views=prefix, items given).
 
-    shard=(k, n) with n > 1 appends --shard k/n: this child judges only that
-    slice of the run's views. shard=None (or n == 1) is the unsharded argv, which
-    is exactly the argv this function produced before sharding existed.
+    shard=(k, n) with n > 1 appends --shard k/n and --start-delay-s
+    (k-1)*SHARD_START_STAGGER_S: this child judges only that slice of the run's
+    views, and waits its turn before building its engine. shard=None (or n == 1)
+    is the unsharded argv, which is exactly the argv this function produced before
+    sharding existed - no delay flag at all.
     """
     cmd = [
         sys.executable,
@@ -1385,6 +1395,7 @@ def judge_command(
         cmd += ["--batch-size", str(judge["batch_size"])]
     if shard is not None and int(shard[1]) > 1:
         cmd += ["--shard", "%d/%d" % (int(shard[0]), int(shard[1]))]
+        cmd += ["--start-delay-s", str((int(shard[0]) - 1) * SHARD_START_STAGGER_S)]
     if judge["provider"] == "fake" and judge.get("fake_outputs"):
         cmd += ["--fake-outputs", str(judge["fake_outputs"])]
     if anchors is not None:
@@ -1630,6 +1641,10 @@ def score_main(argv: List[str], gpu_probe=query_gpus) -> int:
         "out_root": str(out_root),
         "runs": [],
     }
+    # Only when some judge is actually sharded, so an unsharded scoring record
+    # keeps the exact shape it had before the stagger existed.
+    if any(j["shards"] > 1 for j in judges):
+        plan["shard_start_stagger_s"] = SHARD_START_STAGGER_S
 
     # Per-run bookkeeping: MARKER, class, evaluated family, judge output paths.
     try:

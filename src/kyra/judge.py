@@ -55,9 +55,18 @@ rubric excerpt is a different protocol (2026-09-23). The re-ask after a parse
 error is rendered per view type as well, so a control view is never reminded of a
 five-key schema.
 
+The judge engine is built ONCE, eagerly, before any view is judged
+(provider.ensure_ready(), 2026-09-23): an engine-construction failure must never
+become a view's final judge record. A transient failure is retried inside
+ensure_ready; a permanent one stops the run with exit 5 and NO judge file, rather
+than being re-attempted per view. --start-delay-s FLOAT sleeps that long before
+the engine is built, which is how concurrent shards are staggered.
+
 Exit codes: 0 ok (judge file written, whatever the parse-error rate)
             2 zero conversations in the run | 4 bad arguments / unreadable input
-            (including a missing or empty annotation manual).
+            (including a missing or empty annotation manual)
+            5 the judge engine could not be constructed (ProviderError from
+            provider.ensure_ready(); no judge file is written).
 """
 
 from __future__ import annotations
@@ -66,6 +75,7 @@ import argparse
 import hashlib
 import json
 import sys
+import time
 from dataclasses import asdict
 from datetime import datetime, timezone
 from pathlib import Path
@@ -78,6 +88,10 @@ from kyra.schema import JudgeRecord
 EXIT_OK = 0
 EXIT_ZERO_CONVERSATIONS = 2
 EXIT_BAD_INPUT = 4
+# The engine could not be built (provider.ensure_ready raised ProviderError after
+# its retries). Distinct from 4 so a campaign can tell "this judge has no engine"
+# from "these arguments are wrong"; no judge file exists when it is returned.
+EXIT_ENGINE_NOT_READY = 5
 
 _HERE = Path(__file__).resolve().parent
 REPO_ROOT = _HERE.parents[1]
@@ -858,6 +872,38 @@ def _apply_result(task: Dict[str, Any], result: Any) -> str:
     return OUTCOME_OK
 
 
+# Staggering concurrent shards (2026-09-23): the process waits this long before
+# it builds its engine, so two engines on one card do not probe free GPU memory
+# in the same second. 0 = build immediately, the single-engine behaviour.
+DEFAULT_START_DELAY_S = 0.0
+
+
+def ensure_provider_ready(
+    provider, start_delay_s: float = DEFAULT_START_DELAY_S, sleep=time.sleep
+) -> Tuple[int, float]:
+    """Wait out the start delay, then build the engine ONCE; (attempts, seconds).
+
+    Called before any view is prompted, so an engine-construction failure can
+    never end up inside a judge record: ensure_ready() retries a transient
+    failure itself and raises ProviderError on a permanent one, which the CLI
+    turns into EXIT_ENGINE_NOT_READY with no judge file written.
+
+    attempts is what the provider reports (0 for a provider with no engine, e.g.
+    the mock and the test doubles). seconds is wall time from the start of the
+    delay until the engine is ready, so it includes start_delay_s and any retry
+    waits.
+    """
+    delay = float(start_delay_s or 0.0)
+    if delay < 0:
+        raise ValueError("start_delay_s must be >= 0, got %r" % (start_delay_s,))
+    t0 = time.monotonic()
+    if delay:
+        sleep(delay)
+    ready = getattr(provider, "ensure_ready", None)
+    attempts = int(ready()) if callable(ready) else 0
+    return attempts, round(time.monotonic() - t0, 3)
+
+
 def judge_run(
     run_dir,
     provider,
@@ -876,6 +922,7 @@ def judge_run(
     write_meta: bool = True,
     shard: int = 1,
     n_shards: int = 1,
+    start_delay_s: float = DEFAULT_START_DELAY_S,
 ) -> Dict[str, Any]:
     """Score every view of every conversation with one judge; write judge_<id>.jsonl.
 
@@ -900,6 +947,11 @@ def judge_run(
     exactly the records the unsharded run would have written for those views, so
     `kyra.judge merge` can interleave the N files back into the single-engine
     file. N=1 is the unsharded path, unchanged down to the sidecar's key set.
+
+    The provider's engine is built before the first prompt is even rendered
+    (ensure_provider_ready), after an optional start_delay_s wait used to stagger
+    concurrent shards. A ProviderError from there propagates out of this function
+    with nothing written.
 
     Returns counts: conversations, total (= records written = views judged), ok,
     error, parse_error, provider_error, parse_error_rate (= parse_error / total
@@ -945,6 +997,13 @@ def judge_run(
 
     started = _utc_stamp()
     model_id = str(getattr(provider, "model_id", "unknown"))
+
+    # -- pass (0): the engine, once, before any view exists. A ProviderError here
+    # propagates: no task is built, no record is written, and the caller (the CLI)
+    # reports EXIT_ENGINE_NOT_READY instead of scoring views against a dead engine.
+    engine_ready_attempts, engine_ready_seconds = ensure_provider_ready(
+        provider, start_delay_s=start_delay_s
+    )
 
     # -- pass (a): build every view prompt, in the order the records are written.
     tasks: List[Dict[str, Any]] = []
@@ -1073,6 +1132,8 @@ def judge_run(
     counts["n_error_final"] = counts["error"]
     counts["shard"] = shard_str(shard, n_shards)
     counts["n_views_total"] = n_views_total
+    counts["engine_ready_attempts"] = engine_ready_attempts
+    counts["engine_ready_seconds"] = engine_ready_seconds
 
     if write_meta:
         meta = build_judge_meta(
@@ -1147,6 +1208,10 @@ def build_judge_meta(
         "decode_mode": counts["decode_mode"],
         "batch_size": counts["batch_size"],
         "max_retries": int(max_retries),
+        # How the engine came up: attempts ensure_ready() needed (0 = a provider
+        # with no engine) and the wall seconds it took, including --start-delay-s.
+        "engine_ready_attempts": counts.get("engine_ready_attempts"),
+        "engine_ready_seconds": counts.get("engine_ready_seconds"),
         "views": views,
         "prompt_template_path": template_path,
         "prompt_template_sha256": template_sha256,
@@ -1491,6 +1556,14 @@ def build_parser() -> argparse.ArgumentParser:
         "in their original order (default %s = every view; merge the N files with "
         "`python -m kyra.judge merge`)" % DEFAULT_SHARD,
     )
+    p.add_argument(
+        "--start-delay-s",
+        type=float,
+        default=DEFAULT_START_DELAY_S,
+        help="sleep this many seconds before the judge engine is built (default "
+        "%.1f); used to stagger concurrent shards so two engines do not probe "
+        "free GPU memory in the same second" % DEFAULT_START_DELAY_S,
+    )
     p.add_argument("--max-new-tokens", type=int, default=700, help="judge generation cap (vllm)")
     p.add_argument(
         "--gpu-memory-utilization",
@@ -1647,6 +1720,8 @@ def main(argv=None) -> int:
     try:
         if args.batch_size < 1:
             raise ValueError("--batch-size must be >= 1, got %d" % args.batch_size)
+        if args.start_delay_s < 0:
+            raise ValueError("--start-delay-s must be >= 0, got %r" % (args.start_delay_s,))
         anchors = load_anchors(args.anchors) if args.anchors else []
         out_path = Path(args.out) if args.out else Path(args.run_dir) / ("judge_%s.jsonl" % args.judge_id)
         conversations = read_conversations(args.run_dir)
@@ -1681,13 +1756,15 @@ def main(argv=None) -> int:
         % (PROMPT_PATH, sha256_file(PROMPT_PATH) if PROMPT_PATH.is_file() else "missing")
     )
     sys.stdout.write(
-        "decode_mode=%s batch_size=%d max_retries=%d shard=%s shard_views=%d\n"
+        "decode_mode=%s batch_size=%d max_retries=%d shard=%s shard_views=%d "
+        "start_delay_s=%s\n"
         % (
             DECODE_SEQUENTIAL if args.batch_size == 1 else DECODE_BATCHED,
             args.batch_size,
             args.max_retries,
             shard_str(shard, n_shards),
             len(range(shard - 1, n_views, n_shards)),
+            args.start_delay_s,
         )
     )
     provenance = {
@@ -1718,7 +1795,13 @@ def main(argv=None) -> int:
             provenance=provenance,
             shard=shard,
             n_shards=n_shards,
+            start_delay_s=args.start_delay_s,
         )
+    except ProviderError as exc:
+        # The engine never came up. Nothing has been written, so the run aborts
+        # here instead of turning one infrastructure failure into N judge records.
+        sys.stderr.write("ERROR: judge engine not ready: %s\n" % exc)
+        return EXIT_ENGINE_NOT_READY
     except ValueError as exc:
         sys.stderr.write("ERROR: %s\n" % exc)
         return EXIT_BAD_INPUT
@@ -1730,6 +1813,10 @@ def main(argv=None) -> int:
            counts["parse_error_rate"], counts["error_rate"])
     )
     sys.stdout.write("judge_file_sha256=%s\n" % sha256_file(out_path))
+    sys.stdout.write(
+        "engine_ready_attempts=%s engine_ready_seconds=%s\n"
+        % (counts["engine_ready_attempts"], counts["engine_ready_seconds"])
+    )
     sys.stdout.write(
         "meta=%s retried=%d parse_errors_first_pass=%d\n"
         % (

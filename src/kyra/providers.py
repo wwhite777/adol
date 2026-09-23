@@ -3,7 +3,15 @@
 MockProvider is a deterministic offline double. VLLMProvider runs local
 open-weight models through the vllm offline engine (no server, no network at
 generate time: the weights must already be on disk). Importing this module never
-imports vllm and never loads a model - the engine is built on first generate().
+imports vllm and never loads a model.
+
+Engine construction (2026-09-23): a caller builds the engine ONCE, eagerly, with
+ensure_ready() - which retries a failed construction with a wait in between and,
+after the last attempt, raises ProviderError. generate() still builds the engine
+if nobody did, through the same ensure_ready(), so a transient construction
+failure is retried in place instead of being recorded per view, and a permanent
+one aborts the caller with one clear error instead of being re-attempted for
+every view (ISSUES OPS-2).
 """
 
 from __future__ import annotations
@@ -11,11 +19,21 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import sys
+import time
 from typing import Any, Dict, List, Optional
 
 
 class ProviderError(RuntimeError):
     """Raised by a provider when a call fails (never swallowed into a score)."""
+
+
+# ensure_ready defaults. Ten attempts 30 s apart covers the failure actually
+# measured (two engines probing free GPU memory at the same moment, 2026-09-23:
+# both came up, but the first views of each shard had been recorded as
+# ProviderError) without hiding a permanent failure for long.
+ENGINE_READY_ATTEMPTS = 10
+ENGINE_READY_WAIT_S = 30.0
 
 
 class Provider:
@@ -28,6 +46,20 @@ class Provider:
     provider_name = "base"
     model_id = "unset"
     api_version = "unset"
+
+    def ensure_ready(
+        self,
+        max_attempts: int = ENGINE_READY_ATTEMPTS,
+        wait_s: float = ENGINE_READY_WAIT_S,
+        sleep=time.sleep,
+    ) -> int:
+        """Build whatever this provider needs before the first call; attempts used.
+
+        A provider with no engine (the mock and the test doubles) has nothing to
+        build: this is a no-op returning 0, which a caller records as "no engine
+        construction happened". VLLMProvider overrides it.
+        """
+        return 0
 
     def generate(self, messages: List[Dict[str, str]]) -> str:
         raise NotImplementedError("Provider.generate must be implemented")
@@ -291,9 +323,10 @@ class VLLMProvider(Provider):
     end-of-turn ids for models whose turn enders are not the tokenizer's eos).
     Both are validated at construction and always reported by effective_params().
 
-    The engine is constructed lazily on the first generate() call. Any failure to
-    construct it (or to generate) is raised as ProviderError carrying the
-    original error text - there is no fallback to a mock.
+    The engine is constructed by ensure_ready() - once, eagerly, with a bounded
+    retry - which generate()/generate_many() call themselves if no caller did.
+    Any failure to construct it (or to generate) is raised as ProviderError
+    carrying the original error text - there is no fallback to a mock.
     """
 
     provider_name = "vllm"
@@ -408,6 +441,51 @@ class VLLMProvider(Provider):
             self._tokenizer = tokenizer
         return self._llm, self._tokenizer
 
+    def ensure_ready(
+        self,
+        max_attempts: int = ENGINE_READY_ATTEMPTS,
+        wait_s: float = ENGINE_READY_WAIT_S,
+        sleep=time.sleep,
+    ) -> int:
+        """Build the engine NOW (no generation), retrying construction; attempts used.
+
+        Two engines starting on one card can collide while they probe free GPU
+        memory, and that transient failure used to be recorded as a per-view
+        ProviderError (the first 5 / 2 views of two shards, 2026-09-23). So the
+        caller builds the engine once, before any unit of work: each failed
+        attempt is logged to stderr with the exception's first line, the next one
+        follows after wait_s, and after the last failure this raises
+        ProviderError("engine construction failed after N attempts: ..."). The
+        run then aborts with one error instead of carrying a failure into a
+        record (ISSUES OPS-2).
+
+        Returns the number of attempts the successful construction took (0 when
+        the engine was already built).
+        """
+        if isinstance(max_attempts, bool) or not isinstance(max_attempts, int) or max_attempts < 1:
+            raise ValueError("max_attempts must be an int >= 1, got %r" % (max_attempts,))
+        if self._llm is not None:
+            return 0
+        last: Optional[Exception] = None
+        for attempt in range(1, max_attempts + 1):
+            try:
+                self._ensure_engine()
+            except Exception as exc:  # noqa: BLE001 - retried, then re-raised below
+                last = exc
+                first_line = str(exc).strip().splitlines()[0] if str(exc).strip() else repr(exc)
+                sys.stderr.write(
+                    "vllm engine construction attempt %d/%d failed for %r: %s\n"
+                    % (attempt, max_attempts, self.model_path, first_line)
+                )
+                sys.stderr.flush()
+                if attempt < max_attempts:
+                    sleep(wait_s)
+                continue
+            return attempt
+        raise ProviderError(
+            "engine construction failed after %d attempts: %s" % (max_attempts, last)
+        ) from last
+
     # -- generation -----------------------------------------------------------
 
     def _sampling_params(self):
@@ -472,6 +550,11 @@ class VLLMProvider(Provider):
     def generate(self, messages: List[Dict[str, str]]) -> str:
         if not messages:
             raise ProviderError("VLLMProvider.generate called with no messages")
+        # A caller that did not call ensure_ready() gets the same eager, retried
+        # construction here, so a transient failure is retried in place and never
+        # becomes this call's error.
+        if self._llm is None:
+            self.ensure_ready()
         prompt = self.build_prompt(messages)
         llm, _ = self._ensure_engine()
         params = self._sampling_params()
@@ -516,6 +599,8 @@ class VLLMProvider(Provider):
                 raise ProviderError(
                     "VLLMProvider.generate_many: conversation %d has no messages" % i
                 )
+        if self._llm is None:
+            self.ensure_ready()
         prompts = [self.build_prompt(list(messages)) for messages in conversations]
         llm, _ = self._ensure_engine()
         params = self._sampling_params()

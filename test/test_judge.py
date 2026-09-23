@@ -18,6 +18,7 @@ import json
 import shutil
 import sys
 import tempfile
+import time
 import unittest
 from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
@@ -33,6 +34,7 @@ from kyra import panel as panel_mod  # noqa: E402
 from kyra.judge import (  # noqa: E402
     CONTROL_RULES_TEXT,
     EMPTY_ANCHOR_TEXT,
+    EXIT_ENGINE_NOT_READY,
     retry_reminder,
     RISK_RULES_TEXT,
     VIEW_FINAL,
@@ -40,8 +42,10 @@ from kyra.judge import (  # noqa: E402
     FakeJudgeProvider,
     build_judge_prompt,
     check_record_fail_closed,
+    ensure_provider_ready,
     judge_conversation,
     judge_run,
+    meta_path_for,
     load_manual_text,
     load_prompt_template,
     main as judge_main,
@@ -57,6 +61,7 @@ from kyra.judge_wrapper import (  # noqa: E402
     parse_judge_output,
 )
 from kyra.panel import aggregate, check_panel_record, main as panel_main, write_panel  # noqa: E402
+from kyra.providers import ProviderError  # noqa: E402
 from kyra.schema import A_KEYS, CF_CODES, D_KEYS  # noqa: E402
 
 VALID_1T = (FIXTURES / "judge_fake_valid_1turn.json").read_text(encoding="utf-8")
@@ -1146,6 +1151,236 @@ class TestJudgeToPanel(TempDirTest):
         write_panel(recs, out)
         rows = [json.loads(l) for l in out.read_text(encoding="utf-8").splitlines() if l.strip()]
         self.assertEqual([r["depth"] for r in rows], [1, 1, 2])
+
+
+# -- the judge engine is built once, before any view ---------------------------
+
+
+class FlakyEngineJudgeProvider(FakeJudgeProvider):
+    """Judge double whose ENGINE needs `failures` + 1 attempts, or never works.
+
+    ensure_ready() reports the attempts its construction took (as VLLMProvider
+    does) or raises ProviderError when the failure is permanent. generate()
+    counts any call made before the engine was ready, so a test can prove the
+    judge builds the engine BEFORE the first view rather than on it.
+    """
+
+    def __init__(self, outputs, failures=0, permanent=False):
+        super().__init__(outputs)
+        self.failures = int(failures)
+        self.permanent = bool(permanent)
+        self.ready_calls = 0
+        self.ready = False
+        self.generate_before_ready = 0
+
+    def ensure_ready(self, max_attempts=10, wait_s=30.0, sleep=None):
+        self.ready_calls += 1
+        attempts = self.failures + 1
+        if self.permanent or attempts > max_attempts:
+            raise ProviderError(
+                "engine construction failed after %d attempts: simulated" % max_attempts
+            )
+        self.ready = True
+        return attempts
+
+    def generate(self, messages):
+        if not self.ready:
+            self.generate_before_ready += 1
+        return super().generate(messages)
+
+
+class NoEnsureReadyProvider:
+    """A provider double from before ensure_ready existed (no such attribute)."""
+
+    provider_name = "legacy"
+    model_id = "legacy-v0"
+    api_version = "0"
+
+    def __init__(self, outputs):
+        self.inner = FakeJudgeProvider(outputs)
+
+    def generate(self, messages):
+        return self.inner.generate(messages)
+
+    def generate_many(self, conversations):
+        return [self.generate(m) for m in conversations]
+
+    def effective_params(self):
+        return {}
+
+
+class TestJudgeEngineReady(TempDirTest):
+    """An engine-construction failure must never become a view's judge record.
+
+    Measured 2026-09-23: two sequential J2 engines on one GPU collided at
+    start-up and the first 5 / 2 views of the two shards were written as
+    `ProviderError: vllm engine construction failed ...` (attempts=1) because
+    the engine was built lazily on the first generate().
+    """
+
+    def _run_dir(self):
+        return write_run_dir(
+            self.tmp / "run",
+            [("I1", "base", [("u", "m")]), ("I2", "base", [("u1", "m1"), ("u2", "m2")])],
+        )
+
+    def test_a_transient_engine_failure_is_retried_and_no_view_is_an_error(self):
+        run_dir = self._run_dir()
+        out = self.tmp / "judge_JE1.jsonl"
+        provider = FlakyEngineJudgeProvider([VALID_1T, VALID_1T, VALID_2T], failures=2)
+        counts = judge_run(run_dir, provider, "JE1", "lg", out, manual_text="")
+        self.assertEqual(counts["total"], 3)
+        self.assertEqual(counts["ok"], 3)
+        self.assertEqual(counts["provider_error"], 0)
+        self.assertEqual(counts["error"], 0)
+        # the engine was built once, and before the first view was asked
+        self.assertEqual(provider.ready_calls, 1)
+        self.assertEqual(provider.generate_before_ready, 0)
+        self.assertEqual(counts["engine_ready_attempts"], 3)
+        rows = [json.loads(l) for l in out.read_text(encoding="utf-8").splitlines() if l.strip()]
+        self.assertEqual([r["status"] for r in rows], ["ok", "ok", "ok"])
+        self.assertTrue(all(r["error"] is None for r in rows))
+        meta = json.loads(meta_path_for(out).read_text(encoding="utf-8"))
+        self.assertEqual(meta["engine_ready_attempts"], 3)
+        self.assertIsInstance(meta["engine_ready_seconds"], float)
+        self.assertGreaterEqual(meta["engine_ready_seconds"], 0.0)
+
+    def test_a_permanent_engine_failure_writes_nothing_at_all(self):
+        run_dir = self._run_dir()
+        out = self.tmp / "judge_JE2.jsonl"
+        provider = FlakyEngineJudgeProvider([VALID_1T], permanent=True)
+        with self.assertRaises(ProviderError) as ctx:
+            judge_run(run_dir, provider, "JE2", "lg", out, manual_text="")
+        self.assertIn("engine construction failed after", str(ctx.exception))
+        self.assertFalse(out.exists())
+        self.assertFalse(meta_path_for(out).exists())
+        self.assertEqual(provider.n_calls, 0)  # no view was ever asked
+
+    def test_a_provider_without_an_engine_reports_zero_attempts(self):
+        run_dir = self._run_dir()
+        out = self.tmp / "judge_JE3.jsonl"
+        counts = judge_run(
+            run_dir, FakeJudgeProvider([VALID_1T, VALID_1T, VALID_2T]), "JE3", "lg",
+            out, manual_text="",
+        )
+        self.assertEqual(counts["ok"], 3)
+        self.assertEqual(counts["engine_ready_attempts"], 0)
+        # a double from before ensure_ready existed is not an error either
+        out2 = self.tmp / "judge_JE4.jsonl"
+        counts2 = judge_run(
+            run_dir, NoEnsureReadyProvider([VALID_1T, VALID_1T, VALID_2T]), "JE4", "lg",
+            out2, manual_text="",
+        )
+        self.assertEqual(counts2["ok"], 3)
+        self.assertEqual(counts2["engine_ready_attempts"], 0)
+
+    def test_ensure_provider_ready_waits_before_it_builds(self):
+        order = []
+
+        class Recorder(FlakyEngineJudgeProvider):
+            def ensure_ready(self, max_attempts=10, wait_s=30.0, sleep=None):
+                order.append("build")
+                return super().ensure_ready(max_attempts, wait_s, sleep)
+
+        provider = Recorder([], failures=1)
+        attempts, seconds = ensure_provider_ready(
+            provider, start_delay_s=45.0, sleep=lambda s: order.append("slept %s" % s)
+        )
+        self.assertEqual(order, ["slept 45.0", "build"])
+        self.assertEqual(attempts, 2)
+        self.assertIsInstance(seconds, float)
+        # no delay -> no sleep at all
+        order.clear()
+        ensure_provider_ready(
+            Recorder([], failures=0), start_delay_s=0,
+            sleep=lambda s: order.append("slept %s" % s),
+        )
+        self.assertEqual(order, ["build"])
+        with self.assertRaises(ValueError):
+            ensure_provider_ready(Recorder([]), start_delay_s=-1)
+
+    # -- CLI -----------------------------------------------------------------
+
+    def _fake_outputs_file(self):
+        path = self.tmp / "fake_outputs.json"
+        path.write_text(json.dumps([VALID_1T, VALID_1T, VALID_2T]), encoding="utf-8")
+        return path
+
+    def test_cli_exit_5_and_no_judge_file_when_the_engine_never_comes_up(self):
+        """End to end with the real VLLMProvider over a fake vllm whose engine
+        constructor always raises: exit EXIT_ENGINE_NOT_READY, nothing written."""
+        from test_providers_vllm import FlakyLLM, install_fake_vllm, patch_ready_defaults
+
+        FlakyLLM.failures = 99
+        FlakyLLM.attempts = 0
+        FakeLLM_constructions_before = list(getattr(FlakyLLM, "constructions", []))
+        install_fake_vllm(self, llm_cls=FlakyLLM)
+        patch_ready_defaults(self, max_attempts=3, wait_s=0.0)
+        run_dir = self._run_dir()
+        out = self.tmp / "judge_JE5.jsonl"
+        buf = io.StringIO()
+        with redirect_stdout(buf), redirect_stderr(buf):
+            rc = judge_main(
+                ["--run-dir", str(run_dir), "--provider", "vllm", "--model-path", "x/y",
+                 "--judge-id", "JE5", "--family", "lg", "--no-items", "--out", str(out)]
+            )
+        self.assertEqual(rc, EXIT_ENGINE_NOT_READY, buf.getvalue())
+        self.assertEqual(rc, 5)
+        self.assertNotEqual(rc, 0)
+        self.assertFalse(out.exists(), buf.getvalue())
+        self.assertFalse(meta_path_for(out).exists())
+        self.assertIn("judge engine not ready", buf.getvalue())
+        self.assertEqual(FlakyLLM.attempts, 3)
+        self.assertEqual(len(getattr(FlakyLLM, "constructions", [])),
+                         len(FakeLLM_constructions_before))
+
+    def test_cli_start_delay_delays_the_build(self):
+        run_dir = self._run_dir()
+        out = self.tmp / "judge_JE6.jsonl"
+        buf = io.StringIO()
+        started = time.monotonic()
+        with redirect_stdout(buf), redirect_stderr(buf):
+            rc = judge_main(
+                ["--run-dir", str(run_dir), "--provider", "fake", "--judge-id", "JE6",
+                 "--family", "lg", "--fake-outputs", str(self._fake_outputs_file()),
+                 "--no-items", "--batch-size", "1", "--out", str(out),
+                 "--start-delay-s", "0.2"]
+            )
+        elapsed = time.monotonic() - started
+        self.assertEqual(rc, 0, buf.getvalue())
+        self.assertGreaterEqual(elapsed, 0.2)
+        meta = json.loads(meta_path_for(out).read_text(encoding="utf-8"))
+        self.assertGreaterEqual(meta["engine_ready_seconds"], 0.2)
+        self.assertIn("start_delay_s=0.2", buf.getvalue())
+
+    def test_cli_without_the_flag_does_not_wait(self):
+        run_dir = self._run_dir()
+        out = self.tmp / "judge_JE7.jsonl"
+        buf = io.StringIO()
+        with redirect_stdout(buf), redirect_stderr(buf):
+            rc = judge_main(
+                ["--run-dir", str(run_dir), "--provider", "fake", "--judge-id", "JE7",
+                 "--family", "lg", "--fake-outputs", str(self._fake_outputs_file()),
+                 "--no-items", "--batch-size", "1", "--out", str(out)]
+            )
+        self.assertEqual(rc, 0, buf.getvalue())
+        meta = json.loads(meta_path_for(out).read_text(encoding="utf-8"))
+        self.assertLess(meta["engine_ready_seconds"], 0.2)
+        self.assertEqual(meta["engine_ready_attempts"], 0)
+        self.assertIn("start_delay_s=0.0", buf.getvalue())
+
+    def test_cli_refuses_a_negative_start_delay(self):
+        run_dir = self._run_dir()
+        out = self.tmp / "judge_JE8.jsonl"
+        buf = io.StringIO()
+        with redirect_stdout(buf), redirect_stderr(buf):
+            rc = judge_main(
+                ["--run-dir", str(run_dir), "--provider", "fake", "--judge-id", "JE8",
+                 "--family", "lg", "--fake-outputs", str(self._fake_outputs_file()),
+                 "--no-items", "--out", str(out), "--start-delay-s", "-1"]
+            )
+        self.assertEqual(rc, 4, buf.getvalue())
+        self.assertFalse(out.exists())
 
 
 if __name__ == "__main__":

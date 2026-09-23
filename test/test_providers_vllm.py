@@ -9,10 +9,13 @@ fields, and get_provider wiring. Nothing loads a model.
 from __future__ import annotations
 
 import hashlib
+import io
 import os
 import sys
+import time
 import types
 import unittest
+from contextlib import redirect_stderr
 
 SRC = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "src")
 if SRC not in sys.path:
@@ -20,6 +23,8 @@ if SRC not in sys.path:
 
 from kyra.providers import (  # noqa: E402
     ENGINE_KWARGS_ENV,
+    ENGINE_READY_ATTEMPTS,
+    ENGINE_READY_WAIT_S,
     PROVIDERS,
     RESERVED_ENGINE_KWARGS,
     FailingProvider,
@@ -97,6 +102,45 @@ class FakeLLM:
         return [FakeRequestOutput(FakeLLM.reply_text) for _ in prompts]
 
 
+class FlakyLLM(FakeLLM):
+    """Constructor raises for its first `failures` calls, then builds normally.
+
+    The measured failure: two engines starting on one card collide while they
+    probe free GPU memory, and the next attempt a little later succeeds.
+    """
+
+    failures = 0
+    attempts = 0
+
+    def __init__(self, **kwargs):
+        FlakyLLM.attempts += 1
+        if FlakyLLM.attempts <= FlakyLLM.failures:
+            raise RuntimeError(
+                "engine start-up probe collided (attempt %d)\nsecond line of the traceback"
+                % FlakyLLM.attempts
+            )
+        super().__init__(**kwargs)
+
+
+def patch_ready_defaults(test, max_attempts=1, wait_s=0.0):
+    """Make ensure_ready()'s DEFAULT arguments instant for the duration of a test.
+
+    generate() calls self.ensure_ready() with no arguments, so any test that
+    reaches a failing engine through generate() would otherwise inherit the
+    production defaults (10 attempts, 30 s apart) and really sleep. The
+    defaults are restored afterwards, the originals are kept on the test as
+    real_ready_defaults, and the returned list collects every wait the fake
+    sleep was asked for.
+    """
+    sleeps = []
+    func = VLLMProvider.ensure_ready
+    original = func.__defaults__
+    test.real_ready_defaults = original
+    func.__defaults__ = (max_attempts, wait_s, sleeps.append)
+    test.addCleanup(setattr, func, "__defaults__", original)
+    return sleeps
+
+
 def install_fake_vllm(test, llm_cls=FakeLLM, version=FAKE_VERSION):
     """Put a fake vllm module in sys.modules for the duration of one test."""
     mod = types.ModuleType("vllm")
@@ -143,6 +187,13 @@ class VLLMProviderBaseTest(EnvGuard):
         FakeLLM.constructions = []
         FakeLLM.raise_on_construct = None
         FakeLLM.reply_text = "괜찮아, 지금 많이 힘들었겠다."
+        FlakyLLM.failures = 0
+        FlakyLLM.attempts = 0
+        # One attempt, no wait: every test that reaches the engine through
+        # generate() keeps exactly the behaviour it had before ensure_ready
+        # existed, and no test ever sleeps. Tests of the retry itself pass their
+        # own max_attempts / wait_s / sleep.
+        self.default_sleeps = patch_ready_defaults(self, max_attempts=1, wait_s=0.0)
 
 
 class TestVLLMProviderFields(VLLMProviderBaseTest):
@@ -395,6 +446,137 @@ class TestVLLMProviderErrors(VLLMProviderBaseTest):
         with self.assertRaises(ProviderError) as ctx:
             p.generate([{"role": "user", "content": "안녕"}])
         self.assertIn("unexpected vllm output shape", str(ctx.exception))
+
+
+class TestVLLMProviderEnsureReady(VLLMProviderBaseTest):
+    """The engine is built ONCE, eagerly, with a bounded retry (2026-09-23).
+
+    Two J2 engines started concurrently on one GPU collided while probing free
+    memory, and because the engine was built lazily on the first generate() the
+    first 5 views of one shard and the first 2 of the other were RECORDED as
+    `ProviderError: vllm engine construction failed ...` (attempts=1), with the
+    construction re-attempted on every later view. ensure_ready() moves that
+    construction before the work and retries it in place.
+    """
+
+    def test_production_defaults_are_ten_attempts_thirty_seconds_apart(self):
+        # setUp patched the defaults so nothing sleeps; these are the real ones.
+        self.assertEqual(self.real_ready_defaults[0], 10)
+        self.assertEqual(self.real_ready_defaults[1], 30.0)
+        self.assertIs(self.real_ready_defaults[2], time.sleep)
+        self.assertEqual((ENGINE_READY_ATTEMPTS, ENGINE_READY_WAIT_S), (10, 30.0))
+
+    def test_ensure_ready_builds_the_engine_and_generates_nothing(self):
+        install_fake_vllm(self)
+        p = VLLMProvider(model_path="x/y")
+        attempts = p.ensure_ready(max_attempts=3, wait_s=0.0, sleep=lambda s: None)
+        self.assertEqual(attempts, 1)
+        self.assertEqual(len(FakeLLM.constructions), 1)
+        self.assertIsNotNone(p._llm)
+        self.assertEqual(p._llm.generate_calls, [])
+
+    def test_succeeds_after_two_failures_in_three_attempts_waiting_thirty_seconds(self):
+        FlakyLLM.failures = 2
+        install_fake_vllm(self, llm_cls=FlakyLLM)
+        sleeps = []
+        p = VLLMProvider(model_path="x/y")
+        buf = io.StringIO()
+        with redirect_stderr(buf):
+            attempts = p.ensure_ready(max_attempts=10, wait_s=30.0, sleep=sleeps.append)
+        self.assertEqual(attempts, 3)
+        self.assertEqual(sleeps, [30.0, 30.0])  # one wait between attempts, never after
+        self.assertEqual(FlakyLLM.attempts, 3)
+        self.assertEqual(len(FakeLLM.constructions), 1)  # only the successful one
+        # Each failed attempt is logged with the exception's FIRST line only.
+        lines = [l for l in buf.getvalue().splitlines() if l.strip()]
+        self.assertEqual(len(lines), 2)
+        self.assertIn("attempt 1/10", lines[0])
+        self.assertIn("engine start-up probe collided (attempt 1)", lines[0])
+        self.assertNotIn("second line of the traceback", buf.getvalue())
+
+    def test_three_failures_take_four_attempts_and_three_waits(self):
+        FlakyLLM.failures = 3
+        install_fake_vllm(self, llm_cls=FlakyLLM)
+        sleeps = []
+        p = VLLMProvider(model_path="x/y")
+        with redirect_stderr(io.StringIO()):
+            attempts = p.ensure_ready(max_attempts=10, wait_s=30.0, sleep=sleeps.append)
+        self.assertEqual(attempts, 4)
+        self.assertEqual(sleeps, [30.0, 30.0, 30.0])
+
+    def test_a_permanent_failure_names_the_attempt_count_and_never_generates(self):
+        FlakyLLM.failures = 99
+        install_fake_vllm(self, llm_cls=FlakyLLM)
+        sleeps = []
+        p = VLLMProvider(model_path="x/y")
+        with redirect_stderr(io.StringIO()):
+            with self.assertRaises(ProviderError) as ctx:
+                p.ensure_ready(max_attempts=4, wait_s=30.0, sleep=sleeps.append)
+        msg = str(ctx.exception)
+        self.assertIn("engine construction failed after 4 attempts", msg)
+        self.assertIn("engine start-up probe collided", msg)  # the last error
+        self.assertEqual(FlakyLLM.attempts, 4)
+        self.assertEqual(sleeps, [30.0, 30.0, 30.0])  # no wait after the last attempt
+        self.assertIsNone(p._llm)
+        self.assertEqual(FakeLLM.constructions, [])  # nothing was ever generated with
+
+    def test_generate_on_an_unbuilt_engine_goes_through_ensure_ready(self):
+        """A transient construction failure inside generate() is retried in place:
+        the view is answered, not recorded as a ProviderError."""
+        FlakyLLM.failures = 2
+        install_fake_vllm(self, llm_cls=FlakyLLM)
+        sleeps = patch_ready_defaults(self, max_attempts=10, wait_s=30.0)
+        p = VLLMProvider(model_path="x/y")
+        with redirect_stderr(io.StringIO()):
+            text = p.generate([{"role": "user", "content": "안녕"}])
+        self.assertEqual(text, FakeLLM.reply_text)
+        self.assertEqual(FlakyLLM.attempts, 3)
+        self.assertEqual(sleeps, [30.0, 30.0])
+
+    def test_generate_many_on_an_unbuilt_engine_goes_through_ensure_ready(self):
+        FlakyLLM.failures = 1
+        install_fake_vllm(self, llm_cls=FlakyLLM)
+        sleeps = patch_ready_defaults(self, max_attempts=10, wait_s=30.0)
+        p = VLLMProvider(model_path="x/y")
+        with redirect_stderr(io.StringIO()):
+            texts = p.generate_many([[{"role": "user", "content": "안녕"}]])
+        self.assertEqual(texts, [FakeLLM.reply_text])
+        self.assertEqual(sleeps, [30.0])
+
+    def test_a_built_engine_is_never_rebuilt(self):
+        install_fake_vllm(self)
+        p = VLLMProvider(model_path="x/y")
+        self.assertEqual(p.ensure_ready(max_attempts=2, wait_s=0.0, sleep=lambda s: None), 1)
+        self.assertEqual(p.ensure_ready(max_attempts=2, wait_s=0.0, sleep=lambda s: None), 0)
+        p.generate([{"role": "user", "content": "안녕"}])
+        self.assertEqual(len(FakeLLM.constructions), 1)
+
+    def test_bad_max_attempts_is_a_value_error(self):
+        install_fake_vllm(self)
+        p = VLLMProvider(model_path="x/y")
+        for bad in (0, -1, True, 1.5, "2"):
+            with self.assertRaises(ValueError):
+                p.ensure_ready(max_attempts=bad, wait_s=0.0, sleep=lambda s: None)
+        self.assertEqual(FakeLLM.constructions, [])
+
+    def test_ensure_ready_is_a_no_op_for_providers_without_an_engine(self):
+        self.assertEqual(MockProvider().ensure_ready(), 0)
+        self.assertEqual(FailingProvider().ensure_ready(), 0)
+        self.assertEqual(Provider().ensure_ready(), 0)
+        # and it does not consume the mock's canned replies
+        self.assertIn("mock-v0", MockProvider().generate([{"role": "user", "content": "x"}]))
+
+    def test_effective_params_are_unchanged_by_ensure_ready(self):
+        install_fake_vllm(self)
+        p = VLLMProvider(model_path="x/y")
+        before = p.effective_params()
+        p.ensure_ready(max_attempts=2, wait_s=0.0, sleep=lambda s: None)
+        self.assertEqual(p.effective_params(), before)
+        self.assertEqual(
+            sorted(before),
+            ["chat_template_kwargs", "engine_kwargs", "max_tokens", "stop_token_ids",
+             "temperature", "top_p", "vllm_env"],
+        )
 
 
 class TestGetProviderWiring(EnvGuard):
