@@ -1,0 +1,44 @@
+ERROR: judge J3 failed on result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/main/20260923T0117Z-919654 (exit 5); see result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0117Z-919654__judge_J3.shard1of2.log
+campaign record: result/raw/phaseA_T1/campaign_phaseA_T1__20260923T1400Z-544306_scoring.json
+compile caches: TORCHINDUCTOR_CACHE_DIR=/tmp/claude-1011/-home-wjeong/407cdd4b-f055-4859-8e47-fbc41fca59f3/scratchpad/snap_scoring3/.cache/torchinductor TRITON_CACHE_DIR=/tmp/claude-1011/-home-wjeong/407cdd4b-f055-4859-8e47-fbc41fca59f3/scratchpad/snap_scoring3/.cache/triton (inherited: none)
+SCORING PLAN cohort=phaseA_T1
+items: research/items/items_phaseA_v1.jsonl (sha256=8ab7cda19406e00d9c5fe59f0b2ac68fdfb7d54ca2669ce7ffdd350657d88017)
+views: prefix (control ids = risk_group CTRL from the items file)
+anchors: research/judge_anchors_v1.json (sha256=7f54fdbded6071d7f5e202d1b7820fe4a64b454dc695b6eb39def227c3373679)
+judges: J1/meta (vllm, 2 shards), J2/mistral (vllm, 2 shards), J3/microsoft (vllm, 2 shards)
+RUN result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/main/20260923T0117Z-919654 class=confirmatory (EXPERIMENTS row phaseA_T1__kakaocorp-kanana-1.5-8b-instruct-2505__main__20260923T0117Z-919654) model=kakaocorp/kanana-1.5-8b-instruct-2505 evaluated_family=kakao
+  MARKER sha256=b4074ce4bddb5ac5f893c8ceb0f1840a98746f5187df366c842a3f8b9f2113ac
+  judge -> result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/main/20260923T0117Z-919654/judge_J1.jsonl
+  judge -> result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/main/20260923T0117Z-919654/judge_J2.jsonl
+  judge -> result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/main/20260923T0117Z-919654/judge_J3.jsonl
+  items: 156 (48 control) - every id present in the items file
+  panel -> result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/main/20260923T0117Z-919654/panel.jsonl
+RUN result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/repeat_1/20260923T0206Z-8bca3d class=confirmatory (EXPERIMENTS row phaseA_T1__kakaocorp-kanana-1.5-8b-instruct-2505__repeat_1__20260923T0206Z-8bca3d) model=kakaocorp/kanana-1.5-8b-instruct-2505 evaluated_family=kakao
+  MARKER sha256=65f788a822e2ba41a8678efc13ac695eb4ce67f0eb460366db01c7876408c14d
+  judge -> result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/repeat_1/20260923T0206Z-8bca3d/judge_J1.jsonl
+  judge -> result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/repeat_1/20260923T0206Z-8bca3d/judge_J2.jsonl
+  judge -> result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/repeat_1/20260923T0206Z-8bca3d/judge_J3.jsonl
+  items: 31 (10 control) - every id present in the items file
+  panel -> result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/repeat_1/20260923T0206Z-8bca3d/panel.jsonl
+RUN result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/repeat_2/20260923T0217Z-cd918e class=confirmatory (EXPERIMENTS row phaseA_T1__kakaocorp-kanana-1.5-8b-instruct-2505__repeat_2__20260923T0217Z-cd918e) model=kakaocorp/kanana-1.5-8b-instruct-2505 evaluated_family=kakao
+  MARKER sha256=65f788a822e2ba41a8678efc13ac695eb4ce67f0eb460366db01c7876408c14d
+  judge -> result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/repeat_2/20260923T0217Z-cd918e/judge_J1.jsonl
+  judge -> result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/repeat_2/20260923T0217Z-cd918e/judge_J2.jsonl
+  judge -> result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/repeat_2/20260923T0217Z-cd918e/judge_J3.jsonl
+  items: 31 (10 control) - every id present in the items file
+  panel -> result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/repeat_2/20260923T0217Z-cd918e/panel.jsonl
+RUN result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/repeat_3/20260923T0227Z-c9705b class=confirmatory (EXPERIMENTS row phaseA_T1__kakaocorp-kanana-1.5-8b-instruct-2505__repeat_3__20260923T0227Z-c9705b) model=kakaocorp/kanana-1.5-8b-instruct-2505 evaluated_family=kakao
+  MARKER sha256=65f788a822e2ba41a8678efc13ac695eb4ce67f0eb460366db01c7876408c14d
+  judge -> result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/repeat_3/20260923T0227Z-c9705b/judge_J1.jsonl
+  judge -> result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/repeat_3/20260923T0227Z-c9705b/judge_J2.jsonl
+  judge -> result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/repeat_3/20260923T0227Z-c9705b/judge_J3.jsonl
+  items: 31 (10 control) - every id present in the items file
+  panel -> result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/repeat_3/20260923T0227Z-c9705b/panel.jsonl
+freeze: OK sha256=87abaae4c16fb0efe3dad27ff464fcd86b6b48ff67a33f1414336ccc7ddd34a4
+gpu: GPU 2 via --gpu flag (candidates [0, 1, 2]; GPU 3 never used) -> CUDA_VISIBLE_DEVICES=2
+GPU: pinned CUDA_VISIBLE_DEVICES=2 (physical GPU 2)
+JUDGE J1 on result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/main/20260923T0117Z-919654 (2 concurrent shards)
+  OK result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/main/20260923T0117Z-919654/judge_J1.jsonl
+JUDGE J2 on result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/main/20260923T0117Z-919654 (2 concurrent shards)
+  OK result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/main/20260923T0117Z-919654/judge_J2.jsonl
+JUDGE J3 on result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/main/20260923T0117Z-919654 (2 concurrent shards)

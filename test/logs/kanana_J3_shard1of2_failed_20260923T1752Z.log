@@ -1,0 +1,1003 @@
+command: PYTHONPATH=src /home/wjeong/envs/jeongwoncheol_adol/bin/python -m kyra.judge --run-dir result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/main/20260923T0117Z-919654 --provider vllm --judge-id J3 --family microsoft --views prefix --items research/items/items_phaseA_v1.jsonl --out result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/main/20260923T0117Z-919654/judge_J3.shard1of2.jsonl --model-path /home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1 --gpu-memory-utilization 0.42 --batch-size 1 --shard 1/2 --start-delay-s 0 --anchors research/judge_anchors_v1.json
+exit=5
+--- stdout ---
+judge_id=J3 family=microsoft provider=vllm model_id=7014f998fac5d1daf230aa4a9766067b2ebe0bc1 conversations=156 views=prefix n_views=564
+out=result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/main/20260923T0117Z-919654/judge_J3.shard1of2.jsonl manual=/tmp/claude-1011/-home-wjeong/407cdd4b-f055-4859-8e47-fbc41fca59f3/scratchpad/snap_scoring3/manual/RB6D_v2_annotation_manual_draft_v1.md anchors=2 control_items=48
+prompt_template=/tmp/claude-1011/-home-wjeong/407cdd4b-f055-4859-8e47-fbc41fca59f3/scratchpad/snap_scoring3/src/kyra/judge_prompt_v0_3.md prompt_template_sha256=65460efc95d2415f85f5020a3c028165b0a6051c0e28eb6bf86213869bf94921
+decode_mode=sequential batch_size=1 max_retries=1 shard=1/2 shard_views=282 start_delay_s=0.0
+INFO 09-23 17:52:00 [utils.py:233] non-default args: {'trust_remote_code': True, 'seed': 20260922, 'max_model_len': 16384, 'enable_prefix_caching': False, 'gpu_memory_utilization': 0.42, 'disable_log_stats': True, 'attention_backend': 'FLASH_ATTN', 'model': '/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1'}
+INFO 09-23 17:52:00 [model.py:549] Resolved architecture: Phi3ForCausalLM
+INFO 09-23 17:52:00 [model.py:1678] Using max model len 16384
+INFO 09-23 17:52:01 [scheduler.py:238] Chunked prefill is enabled with max_num_batched_tokens=8192.
+INFO 09-23 17:52:01 [vllm.py:790] Asynchronous scheduling is enabled.
+(EngineCore pid=3837431) INFO 09-23 17:52:01 [core.py:105] Initializing a V1 LLM engine (v0.19.0) with config: model='/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1', speculative_config=None, tokenizer='/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=True, dtype=torch.bfloat16, max_seq_len=16384, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, decode_context_parallel_size=1, dcp_comm_backend=ag_rs, disable_custom_all_reduce=True, quantization=compressed-tensors, enforce_eager=False, enable_return_routed_experts=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False), seed=20260922, served_model_name=/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1, enable_prefix_caching=False, enable_chunked_prefill=True, pooler_config=None, compilation_config={'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::olmo_hybrid_gdn_full_forward', 'vllm::kda_attention', 'vllm::sparse_attn_indexer', 'vllm::rocm_aiter_sparse_attn_indexer', 'vllm::unified_kv_cache_update', 'vllm::unified_mla_kv_cache_update'], 'compile_mm_encoder': False, 'cudagraph_mm_encoder': False, 'encoder_cudagraph_token_budgets': [], 'encoder_cudagraph_max_images_per_batch': 0, 'compile_sizes': [], 'compile_ranges_endpoints': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'size_asserts': False, 'alignment_asserts': False, 'scalar_asserts': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 512, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': True, 'static_all_moe_layers': []}
+(EngineCore pid=3837431) INFO 09-23 17:52:01 [parallel_state.py:1400] world_size=1 rank=0 local_rank=0 distributed_init_method=tcp://115.145.134.180:60133 backend=nccl
+(EngineCore pid=3837431) INFO 09-23 17:52:01 [parallel_state.py:1716] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank N/A, EPLB rank N/A
+(EngineCore pid=3837431) INFO 09-23 17:52:02 [gpu_model_runner.py:4735] Starting to load model /home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1...
+(EngineCore pid=3837431) INFO 09-23 17:52:02 [__init__.py:261] Selected CutlassFP8ScaledMMLinearKernel for CompressedTensorsW8A8Fp8
+(EngineCore pid=3837431) INFO 09-23 17:52:02 [cuda.py:274] Using AttentionBackendEnum.FLASH_ATTN backend.
+(EngineCore pid=3837431) INFO 09-23 17:52:02 [flash_attn.py:596] Using FlashAttention version 2
+(EngineCore pid=3837431) INFO 09-23 17:52:07 [default_loader.py:384] Loading weights took 3.25 seconds
+(EngineCore pid=3837431) INFO 09-23 17:52:08 [gpu_model_runner.py:4820] Model loading took 14.74 GiB memory and 5.022679 seconds
+(EngineCore pid=3837431) INFO 09-23 17:52:19 [backends.py:1051] Using cache directory: /home/wjeong/.cache/vllm/torch_compile_cache/79d9281c77/rank_0_0/backbone for vLLM's torch.compile
+(EngineCore pid=3837431) INFO 09-23 17:52:19 [backends.py:1111] Dynamo bytecode transform time: 10.50 s
+(EngineCore pid=3837431) INFO 09-23 17:52:21 [backends.py:285] Directly load the compiled graph(s) for compile range (1, 8192) from the cache, took 2.009 s
+(EngineCore pid=3837431) INFO 09-23 17:52:23 [monitor.py:48] torch.compile and initial profiling/warmup run together took 15.37 s in total
+(EngineCore pid=3837431) INFO 09-23 17:52:30 [kv_cache_utils.py:829] Overriding num_gpu_blocks=0 with num_gpu_blocks_override=512
+(EngineCore pid=3837431) INFO 09-23 17:52:30 [gpu_model_runner.py:5876] Profiling CUDA graph memory: PIECEWISE=51 (largest=512), FULL=35 (largest=256)
+(EngineCore pid=3837431) INFO 09-23 17:52:31 [gpu_model_runner.py:5955] Estimated CUDA graph memory: 0.66 GiB total
+(EngineCore pid=3837431) INFO 09-23 17:52:32 [gpu_worker.py:436] Available KV cache memory: 2.63 GiB
+(EngineCore pid=3837431) INFO 09-23 17:52:32 [gpu_worker.py:470] In v0.19, CUDA graph memory profiling will be enabled by default (VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=1), which more accurately accounts for CUDA graph memory during KV cache allocation. To try it now, set VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=1 and increase --gpu-memory-utilization from 0.4200 to 0.4349 to maintain the same effective KV cache size.
+(EngineCore pid=3837431) ERROR 09-23 17:52:32 [core.py:1108] EngineCore failed to start.
+(EngineCore pid=3837431) ERROR 09-23 17:52:32 [core.py:1108] Traceback (most recent call last):
+(EngineCore pid=3837431) ERROR 09-23 17:52:32 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 1082, in run_engine_core
+(EngineCore pid=3837431) ERROR 09-23 17:52:32 [core.py:1108]     engine_core = EngineCoreProc(*args, engine_index=dp_rank, **kwargs)
+(EngineCore pid=3837431) ERROR 09-23 17:52:32 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=3837431) ERROR 09-23 17:52:32 [core.py:1108]     return func(*args, **kwargs)
+(EngineCore pid=3837431) ERROR 09-23 17:52:32 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 848, in __init__
+(EngineCore pid=3837431) ERROR 09-23 17:52:32 [core.py:1108]     super().__init__(
+(EngineCore pid=3837431) ERROR 09-23 17:52:32 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 124, in __init__
+(EngineCore pid=3837431) ERROR 09-23 17:52:32 [core.py:1108]     kv_cache_config = self._initialize_kv_caches(vllm_config)
+(EngineCore pid=3837431) ERROR 09-23 17:52:32 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=3837431) ERROR 09-23 17:52:32 [core.py:1108]     return func(*args, **kwargs)
+(EngineCore pid=3837431) ERROR 09-23 17:52:32 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 258, in _initialize_kv_caches
+(EngineCore pid=3837431) ERROR 09-23 17:52:32 [core.py:1108]     kv_cache_configs = get_kv_cache_configs(
+(EngineCore pid=3837431) ERROR 09-23 17:52:32 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/core/kv_cache_utils.py", line 1579, in get_kv_cache_configs
+(EngineCore pid=3837431) ERROR 09-23 17:52:32 [core.py:1108]     _check_enough_kv_cache_memory(
+(EngineCore pid=3837431) ERROR 09-23 17:52:32 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/core/kv_cache_utils.py", line 644, in _check_enough_kv_cache_memory
+(EngineCore pid=3837431) ERROR 09-23 17:52:32 [core.py:1108]     raise ValueError(
+(EngineCore pid=3837431) ERROR 09-23 17:52:32 [core.py:1108] ValueError: To serve at least one request with the models's max seq len (16384), (3.12 GiB KV cache is needed, which is larger than the available KV cache memory (2.63 GiB). Based on the available memory, the estimated maximum model length is 13760. Try increasing `gpu_memory_utilization` or decreasing `max_model_len` when initializing the engine. See https://docs.vllm.ai/en/latest/configuration/conserving_memory/ for more details.
+INFO 09-23 17:53:02 [utils.py:233] non-default args: {'trust_remote_code': True, 'seed': 20260922, 'max_model_len': 16384, 'enable_prefix_caching': False, 'gpu_memory_utilization': 0.42, 'disable_log_stats': True, 'attention_backend': 'FLASH_ATTN', 'model': '/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1'}
+INFO 09-23 17:53:02 [model.py:549] Resolved architecture: Phi3ForCausalLM
+INFO 09-23 17:53:02 [model.py:1678] Using max model len 16384
+(EngineCore pid=3839110) INFO 09-23 17:53:02 [core.py:105] Initializing a V1 LLM engine (v0.19.0) with config: model='/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1', speculative_config=None, tokenizer='/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=True, dtype=torch.bfloat16, max_seq_len=16384, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, decode_context_parallel_size=1, dcp_comm_backend=ag_rs, disable_custom_all_reduce=True, quantization=compressed-tensors, enforce_eager=False, enable_return_routed_experts=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False), seed=20260922, served_model_name=/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1, enable_prefix_caching=False, enable_chunked_prefill=True, pooler_config=None, compilation_config={'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::olmo_hybrid_gdn_full_forward', 'vllm::kda_attention', 'vllm::sparse_attn_indexer', 'vllm::rocm_aiter_sparse_attn_indexer', 'vllm::unified_kv_cache_update', 'vllm::unified_mla_kv_cache_update'], 'compile_mm_encoder': False, 'cudagraph_mm_encoder': False, 'encoder_cudagraph_token_budgets': [], 'encoder_cudagraph_max_images_per_batch': 0, 'compile_sizes': [], 'compile_ranges_endpoints': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'size_asserts': False, 'alignment_asserts': False, 'scalar_asserts': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 512, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': True, 'static_all_moe_layers': []}
+(EngineCore pid=3839110) INFO 09-23 17:53:02 [parallel_state.py:1400] world_size=1 rank=0 local_rank=0 distributed_init_method=tcp://115.145.134.180:53679 backend=nccl
+(EngineCore pid=3839110) INFO 09-23 17:53:02 [parallel_state.py:1716] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank N/A, EPLB rank N/A
+(EngineCore pid=3839110) INFO 09-23 17:53:03 [gpu_model_runner.py:4735] Starting to load model /home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1...
+(EngineCore pid=3839110) INFO 09-23 17:53:04 [__init__.py:261] Selected CutlassFP8ScaledMMLinearKernel for CompressedTensorsW8A8Fp8
+(EngineCore pid=3839110) INFO 09-23 17:53:04 [cuda.py:274] Using AttentionBackendEnum.FLASH_ATTN backend.
+(EngineCore pid=3839110) INFO 09-23 17:53:04 [flash_attn.py:596] Using FlashAttention version 2
+(EngineCore pid=3839110) INFO 09-23 17:53:08 [default_loader.py:384] Loading weights took 3.46 seconds
+(EngineCore pid=3839110) INFO 09-23 17:53:09 [gpu_model_runner.py:4820] Model loading took 14.74 GiB memory and 4.888400 seconds
+(EngineCore pid=3839110) INFO 09-23 17:53:20 [backends.py:1051] Using cache directory: /home/wjeong/.cache/vllm/torch_compile_cache/79d9281c77/rank_0_0/backbone for vLLM's torch.compile
+(EngineCore pid=3839110) INFO 09-23 17:53:20 [backends.py:1111] Dynamo bytecode transform time: 10.99 s
+(EngineCore pid=3839110) INFO 09-23 17:53:23 [backends.py:285] Directly load the compiled graph(s) for compile range (1, 8192) from the cache, took 2.034 s
+(EngineCore pid=3839110) INFO 09-23 17:53:26 [monitor.py:48] torch.compile and initial profiling/warmup run together took 16.11 s in total
+(EngineCore pid=3839110) INFO 09-23 17:53:26 [kv_cache_utils.py:829] Overriding num_gpu_blocks=0 with num_gpu_blocks_override=512
+(EngineCore pid=3839110) INFO 09-23 17:53:26 [gpu_model_runner.py:5876] Profiling CUDA graph memory: PIECEWISE=51 (largest=512), FULL=35 (largest=256)
+(EngineCore pid=3839110) INFO 09-23 17:53:28 [gpu_model_runner.py:5955] Estimated CUDA graph memory: 0.66 GiB total
+(EngineCore pid=3839110) ERROR 09-23 17:53:29 [core.py:1108] EngineCore failed to start.
+(EngineCore pid=3839110) ERROR 09-23 17:53:29 [core.py:1108] Traceback (most recent call last):
+(EngineCore pid=3839110) ERROR 09-23 17:53:29 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 1082, in run_engine_core
+(EngineCore pid=3839110) ERROR 09-23 17:53:29 [core.py:1108]     engine_core = EngineCoreProc(*args, engine_index=dp_rank, **kwargs)
+(EngineCore pid=3839110) ERROR 09-23 17:53:29 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=3839110) ERROR 09-23 17:53:29 [core.py:1108]     return func(*args, **kwargs)
+(EngineCore pid=3839110) ERROR 09-23 17:53:29 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 848, in __init__
+(EngineCore pid=3839110) ERROR 09-23 17:53:29 [core.py:1108]     super().__init__(
+(EngineCore pid=3839110) ERROR 09-23 17:53:29 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 124, in __init__
+(EngineCore pid=3839110) ERROR 09-23 17:53:29 [core.py:1108]     kv_cache_config = self._initialize_kv_caches(vllm_config)
+(EngineCore pid=3839110) ERROR 09-23 17:53:29 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=3839110) ERROR 09-23 17:53:29 [core.py:1108]     return func(*args, **kwargs)
+(EngineCore pid=3839110) ERROR 09-23 17:53:29 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 247, in _initialize_kv_caches
+(EngineCore pid=3839110) ERROR 09-23 17:53:29 [core.py:1108]     available_gpu_memory = self.model_executor.determine_available_memory()
+(EngineCore pid=3839110) ERROR 09-23 17:53:29 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/executor/abstract.py", line 136, in determine_available_memory
+(EngineCore pid=3839110) ERROR 09-23 17:53:29 [core.py:1108]     return self.collective_rpc("determine_available_memory")
+(EngineCore pid=3839110) ERROR 09-23 17:53:29 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/executor/uniproc_executor.py", line 80, in collective_rpc
+(EngineCore pid=3839110) ERROR 09-23 17:53:29 [core.py:1108]     result = run_method(self.driver_worker, method, args, kwargs)
+(EngineCore pid=3839110) ERROR 09-23 17:53:29 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/serial_utils.py", line 510, in run_method
+(EngineCore pid=3839110) ERROR 09-23 17:53:29 [core.py:1108]     return func(*args, **kwargs)
+(EngineCore pid=3839110) ERROR 09-23 17:53:29 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(EngineCore pid=3839110) ERROR 09-23 17:53:29 [core.py:1108]     return func(*args, **kwargs)
+(EngineCore pid=3839110) ERROR 09-23 17:53:29 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/worker/gpu_worker.py", line 408, in determine_available_memory
+(EngineCore pid=3839110) ERROR 09-23 17:53:29 [core.py:1108]     assert self.init_snapshot.free_memory >= free_gpu_memory, (
+(EngineCore pid=3839110) ERROR 09-23 17:53:29 [core.py:1108] AssertionError: Error in memory profiling. Initial free memory 28.76 GiB, current free memory 28.87 GiB. This happens when other processes sharing the same container release GPU memory while vLLM is profiling during initialization. To fix this, ensure consistent GPU memory allocation or isolate vLLM in its own container.
+INFO 09-23 17:53:59 [utils.py:233] non-default args: {'trust_remote_code': True, 'seed': 20260922, 'max_model_len': 16384, 'enable_prefix_caching': False, 'gpu_memory_utilization': 0.42, 'disable_log_stats': True, 'attention_backend': 'FLASH_ATTN', 'model': '/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1'}
+INFO 09-23 17:53:59 [model.py:549] Resolved architecture: Phi3ForCausalLM
+INFO 09-23 17:53:59 [model.py:1678] Using max model len 16384
+(EngineCore pid=3840409) INFO 09-23 17:53:59 [core.py:105] Initializing a V1 LLM engine (v0.19.0) with config: model='/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1', speculative_config=None, tokenizer='/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=True, dtype=torch.bfloat16, max_seq_len=16384, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, decode_context_parallel_size=1, dcp_comm_backend=ag_rs, disable_custom_all_reduce=True, quantization=compressed-tensors, enforce_eager=False, enable_return_routed_experts=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False), seed=20260922, served_model_name=/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1, enable_prefix_caching=False, enable_chunked_prefill=True, pooler_config=None, compilation_config={'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::olmo_hybrid_gdn_full_forward', 'vllm::kda_attention', 'vllm::sparse_attn_indexer', 'vllm::rocm_aiter_sparse_attn_indexer', 'vllm::unified_kv_cache_update', 'vllm::unified_mla_kv_cache_update'], 'compile_mm_encoder': False, 'cudagraph_mm_encoder': False, 'encoder_cudagraph_token_budgets': [], 'encoder_cudagraph_max_images_per_batch': 0, 'compile_sizes': [], 'compile_ranges_endpoints': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'size_asserts': False, 'alignment_asserts': False, 'scalar_asserts': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 512, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': True, 'static_all_moe_layers': []}
+(EngineCore pid=3840409) INFO 09-23 17:53:59 [parallel_state.py:1400] world_size=1 rank=0 local_rank=0 distributed_init_method=tcp://115.145.134.180:54863 backend=nccl
+(EngineCore pid=3840409) INFO 09-23 17:53:59 [parallel_state.py:1716] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank N/A, EPLB rank N/A
+(EngineCore pid=3840409) INFO 09-23 17:54:00 [gpu_model_runner.py:4735] Starting to load model /home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1...
+(EngineCore pid=3840409) INFO 09-23 17:54:00 [__init__.py:261] Selected CutlassFP8ScaledMMLinearKernel for CompressedTensorsW8A8Fp8
+(EngineCore pid=3840409) INFO 09-23 17:54:00 [cuda.py:274] Using AttentionBackendEnum.FLASH_ATTN backend.
+(EngineCore pid=3840409) INFO 09-23 17:54:00 [flash_attn.py:596] Using FlashAttention version 2
+(EngineCore pid=3840409) INFO 09-23 17:54:05 [default_loader.py:384] Loading weights took 3.30 seconds
+(EngineCore pid=3840409) INFO 09-23 17:54:06 [gpu_model_runner.py:4820] Model loading took 14.74 GiB memory and 5.065860 seconds
+(EngineCore pid=3840409) INFO 09-23 17:54:17 [backends.py:1051] Using cache directory: /home/wjeong/.cache/vllm/torch_compile_cache/79d9281c77/rank_0_0/backbone for vLLM's torch.compile
+(EngineCore pid=3840409) INFO 09-23 17:54:17 [backends.py:1111] Dynamo bytecode transform time: 10.55 s
+(EngineCore pid=3840409) INFO 09-23 17:54:19 [backends.py:285] Directly load the compiled graph(s) for compile range (1, 8192) from the cache, took 2.028 s
+(EngineCore pid=3840409) INFO 09-23 17:54:22 [monitor.py:48] torch.compile and initial profiling/warmup run together took 15.71 s in total
+(EngineCore pid=3840409) INFO 09-23 17:54:22 [kv_cache_utils.py:829] Overriding num_gpu_blocks=0 with num_gpu_blocks_override=512
+(EngineCore pid=3840409) INFO 09-23 17:54:22 [gpu_model_runner.py:5876] Profiling CUDA graph memory: PIECEWISE=51 (largest=512), FULL=35 (largest=256)
+(EngineCore pid=3840409) INFO 09-23 17:54:24 [gpu_model_runner.py:5955] Estimated CUDA graph memory: 0.66 GiB total
+(EngineCore pid=3840409) ERROR 09-23 17:54:25 [core.py:1108] EngineCore failed to start.
+(EngineCore pid=3840409) ERROR 09-23 17:54:25 [core.py:1108] Traceback (most recent call last):
+(EngineCore pid=3840409) ERROR 09-23 17:54:25 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 1082, in run_engine_core
+(EngineCore pid=3840409) ERROR 09-23 17:54:25 [core.py:1108]     engine_core = EngineCoreProc(*args, engine_index=dp_rank, **kwargs)
+(EngineCore pid=3840409) ERROR 09-23 17:54:25 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=3840409) ERROR 09-23 17:54:25 [core.py:1108]     return func(*args, **kwargs)
+(EngineCore pid=3840409) ERROR 09-23 17:54:25 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 848, in __init__
+(EngineCore pid=3840409) ERROR 09-23 17:54:25 [core.py:1108]     super().__init__(
+(EngineCore pid=3840409) ERROR 09-23 17:54:25 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 124, in __init__
+(EngineCore pid=3840409) ERROR 09-23 17:54:25 [core.py:1108]     kv_cache_config = self._initialize_kv_caches(vllm_config)
+(EngineCore pid=3840409) ERROR 09-23 17:54:25 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=3840409) ERROR 09-23 17:54:25 [core.py:1108]     return func(*args, **kwargs)
+(EngineCore pid=3840409) ERROR 09-23 17:54:25 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 247, in _initialize_kv_caches
+(EngineCore pid=3840409) ERROR 09-23 17:54:25 [core.py:1108]     available_gpu_memory = self.model_executor.determine_available_memory()
+(EngineCore pid=3840409) ERROR 09-23 17:54:25 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/executor/abstract.py", line 136, in determine_available_memory
+(EngineCore pid=3840409) ERROR 09-23 17:54:25 [core.py:1108]     return self.collective_rpc("determine_available_memory")
+(EngineCore pid=3840409) ERROR 09-23 17:54:25 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/executor/uniproc_executor.py", line 80, in collective_rpc
+(EngineCore pid=3840409) ERROR 09-23 17:54:25 [core.py:1108]     result = run_method(self.driver_worker, method, args, kwargs)
+(EngineCore pid=3840409) ERROR 09-23 17:54:25 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/serial_utils.py", line 510, in run_method
+(EngineCore pid=3840409) ERROR 09-23 17:54:25 [core.py:1108]     return func(*args, **kwargs)
+(EngineCore pid=3840409) ERROR 09-23 17:54:25 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(EngineCore pid=3840409) ERROR 09-23 17:54:25 [core.py:1108]     return func(*args, **kwargs)
+(EngineCore pid=3840409) ERROR 09-23 17:54:25 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/worker/gpu_worker.py", line 408, in determine_available_memory
+(EngineCore pid=3840409) ERROR 09-23 17:54:25 [core.py:1108]     assert self.init_snapshot.free_memory >= free_gpu_memory, (
+(EngineCore pid=3840409) ERROR 09-23 17:54:25 [core.py:1108] AssertionError: Error in memory profiling. Initial free memory 28.76 GiB, current free memory 28.87 GiB. This happens when other processes sharing the same container release GPU memory while vLLM is profiling during initialization. To fix this, ensure consistent GPU memory allocation or isolate vLLM in its own container.
+INFO 09-23 17:54:55 [utils.py:233] non-default args: {'trust_remote_code': True, 'seed': 20260922, 'max_model_len': 16384, 'enable_prefix_caching': False, 'gpu_memory_utilization': 0.42, 'disable_log_stats': True, 'attention_backend': 'FLASH_ATTN', 'model': '/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1'}
+INFO 09-23 17:54:55 [model.py:549] Resolved architecture: Phi3ForCausalLM
+INFO 09-23 17:54:55 [model.py:1678] Using max model len 16384
+(EngineCore pid=3841639) INFO 09-23 17:54:55 [core.py:105] Initializing a V1 LLM engine (v0.19.0) with config: model='/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1', speculative_config=None, tokenizer='/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=True, dtype=torch.bfloat16, max_seq_len=16384, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, decode_context_parallel_size=1, dcp_comm_backend=ag_rs, disable_custom_all_reduce=True, quantization=compressed-tensors, enforce_eager=False, enable_return_routed_experts=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False), seed=20260922, served_model_name=/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1, enable_prefix_caching=False, enable_chunked_prefill=True, pooler_config=None, compilation_config={'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::olmo_hybrid_gdn_full_forward', 'vllm::kda_attention', 'vllm::sparse_attn_indexer', 'vllm::rocm_aiter_sparse_attn_indexer', 'vllm::unified_kv_cache_update', 'vllm::unified_mla_kv_cache_update'], 'compile_mm_encoder': False, 'cudagraph_mm_encoder': False, 'encoder_cudagraph_token_budgets': [], 'encoder_cudagraph_max_images_per_batch': 0, 'compile_sizes': [], 'compile_ranges_endpoints': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'size_asserts': False, 'alignment_asserts': False, 'scalar_asserts': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 512, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': True, 'static_all_moe_layers': []}
+(EngineCore pid=3841639) INFO 09-23 17:54:55 [parallel_state.py:1400] world_size=1 rank=0 local_rank=0 distributed_init_method=tcp://115.145.134.180:49011 backend=nccl
+(EngineCore pid=3841639) INFO 09-23 17:54:55 [parallel_state.py:1716] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank N/A, EPLB rank N/A
+(EngineCore pid=3841639) INFO 09-23 17:54:56 [gpu_model_runner.py:4735] Starting to load model /home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1...
+(EngineCore pid=3841639) INFO 09-23 17:54:56 [__init__.py:261] Selected CutlassFP8ScaledMMLinearKernel for CompressedTensorsW8A8Fp8
+(EngineCore pid=3841639) INFO 09-23 17:54:56 [cuda.py:274] Using AttentionBackendEnum.FLASH_ATTN backend.
+(EngineCore pid=3841639) INFO 09-23 17:54:56 [flash_attn.py:596] Using FlashAttention version 2
+(EngineCore pid=3841639) INFO 09-23 17:55:01 [default_loader.py:384] Loading weights took 3.25 seconds
+(EngineCore pid=3841639) INFO 09-23 17:55:02 [gpu_model_runner.py:4820] Model loading took 14.74 GiB memory and 5.030630 seconds
+(EngineCore pid=3841639) INFO 09-23 17:55:13 [backends.py:1051] Using cache directory: /home/wjeong/.cache/vllm/torch_compile_cache/79d9281c77/rank_0_0/backbone for vLLM's torch.compile
+(EngineCore pid=3841639) INFO 09-23 17:55:13 [backends.py:1111] Dynamo bytecode transform time: 10.46 s
+(EngineCore pid=3841639) INFO 09-23 17:55:15 [backends.py:285] Directly load the compiled graph(s) for compile range (1, 8192) from the cache, took 2.037 s
+(EngineCore pid=3841639) INFO 09-23 17:55:18 [monitor.py:48] torch.compile and initial profiling/warmup run together took 15.60 s in total
+(EngineCore pid=3841639) INFO 09-23 17:55:18 [kv_cache_utils.py:829] Overriding num_gpu_blocks=0 with num_gpu_blocks_override=512
+(EngineCore pid=3841639) INFO 09-23 17:55:18 [gpu_model_runner.py:5876] Profiling CUDA graph memory: PIECEWISE=51 (largest=512), FULL=35 (largest=256)
+(EngineCore pid=3841639) INFO 09-23 17:55:20 [gpu_model_runner.py:5955] Estimated CUDA graph memory: 0.66 GiB total
+(EngineCore pid=3841639) ERROR 09-23 17:55:21 [core.py:1108] EngineCore failed to start.
+(EngineCore pid=3841639) ERROR 09-23 17:55:21 [core.py:1108] Traceback (most recent call last):
+(EngineCore pid=3841639) ERROR 09-23 17:55:21 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 1082, in run_engine_core
+(EngineCore pid=3841639) ERROR 09-23 17:55:21 [core.py:1108]     engine_core = EngineCoreProc(*args, engine_index=dp_rank, **kwargs)
+(EngineCore pid=3841639) ERROR 09-23 17:55:21 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=3841639) ERROR 09-23 17:55:21 [core.py:1108]     return func(*args, **kwargs)
+(EngineCore pid=3841639) ERROR 09-23 17:55:21 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 848, in __init__
+(EngineCore pid=3841639) ERROR 09-23 17:55:21 [core.py:1108]     super().__init__(
+(EngineCore pid=3841639) ERROR 09-23 17:55:21 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 124, in __init__
+(EngineCore pid=3841639) ERROR 09-23 17:55:21 [core.py:1108]     kv_cache_config = self._initialize_kv_caches(vllm_config)
+(EngineCore pid=3841639) ERROR 09-23 17:55:21 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=3841639) ERROR 09-23 17:55:21 [core.py:1108]     return func(*args, **kwargs)
+(EngineCore pid=3841639) ERROR 09-23 17:55:21 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 247, in _initialize_kv_caches
+(EngineCore pid=3841639) ERROR 09-23 17:55:21 [core.py:1108]     available_gpu_memory = self.model_executor.determine_available_memory()
+(EngineCore pid=3841639) ERROR 09-23 17:55:21 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/executor/abstract.py", line 136, in determine_available_memory
+(EngineCore pid=3841639) ERROR 09-23 17:55:21 [core.py:1108]     return self.collective_rpc("determine_available_memory")
+(EngineCore pid=3841639) ERROR 09-23 17:55:21 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/executor/uniproc_executor.py", line 80, in collective_rpc
+(EngineCore pid=3841639) ERROR 09-23 17:55:21 [core.py:1108]     result = run_method(self.driver_worker, method, args, kwargs)
+(EngineCore pid=3841639) ERROR 09-23 17:55:21 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/serial_utils.py", line 510, in run_method
+(EngineCore pid=3841639) ERROR 09-23 17:55:21 [core.py:1108]     return func(*args, **kwargs)
+(EngineCore pid=3841639) ERROR 09-23 17:55:21 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(EngineCore pid=3841639) ERROR 09-23 17:55:21 [core.py:1108]     return func(*args, **kwargs)
+(EngineCore pid=3841639) ERROR 09-23 17:55:21 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/worker/gpu_worker.py", line 408, in determine_available_memory
+(EngineCore pid=3841639) ERROR 09-23 17:55:21 [core.py:1108]     assert self.init_snapshot.free_memory >= free_gpu_memory, (
+(EngineCore pid=3841639) ERROR 09-23 17:55:21 [core.py:1108] AssertionError: Error in memory profiling. Initial free memory 28.76 GiB, current free memory 28.87 GiB. This happens when other processes sharing the same container release GPU memory while vLLM is profiling during initialization. To fix this, ensure consistent GPU memory allocation or isolate vLLM in its own container.
+INFO 09-23 17:55:51 [utils.py:233] non-default args: {'trust_remote_code': True, 'seed': 20260922, 'max_model_len': 16384, 'enable_prefix_caching': False, 'gpu_memory_utilization': 0.42, 'disable_log_stats': True, 'attention_backend': 'FLASH_ATTN', 'model': '/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1'}
+INFO 09-23 17:55:51 [model.py:549] Resolved architecture: Phi3ForCausalLM
+INFO 09-23 17:55:51 [model.py:1678] Using max model len 16384
+(EngineCore pid=3842756) INFO 09-23 17:55:51 [core.py:105] Initializing a V1 LLM engine (v0.19.0) with config: model='/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1', speculative_config=None, tokenizer='/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=True, dtype=torch.bfloat16, max_seq_len=16384, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, decode_context_parallel_size=1, dcp_comm_backend=ag_rs, disable_custom_all_reduce=True, quantization=compressed-tensors, enforce_eager=False, enable_return_routed_experts=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False), seed=20260922, served_model_name=/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1, enable_prefix_caching=False, enable_chunked_prefill=True, pooler_config=None, compilation_config={'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::olmo_hybrid_gdn_full_forward', 'vllm::kda_attention', 'vllm::sparse_attn_indexer', 'vllm::rocm_aiter_sparse_attn_indexer', 'vllm::unified_kv_cache_update', 'vllm::unified_mla_kv_cache_update'], 'compile_mm_encoder': False, 'cudagraph_mm_encoder': False, 'encoder_cudagraph_token_budgets': [], 'encoder_cudagraph_max_images_per_batch': 0, 'compile_sizes': [], 'compile_ranges_endpoints': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'size_asserts': False, 'alignment_asserts': False, 'scalar_asserts': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 512, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': True, 'static_all_moe_layers': []}
+(EngineCore pid=3842756) INFO 09-23 17:55:51 [parallel_state.py:1400] world_size=1 rank=0 local_rank=0 distributed_init_method=tcp://115.145.134.180:37209 backend=nccl
+(EngineCore pid=3842756) INFO 09-23 17:55:51 [parallel_state.py:1716] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank N/A, EPLB rank N/A
+(EngineCore pid=3842756) INFO 09-23 17:55:52 [gpu_model_runner.py:4735] Starting to load model /home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1...
+(EngineCore pid=3842756) INFO 09-23 17:55:53 [__init__.py:261] Selected CutlassFP8ScaledMMLinearKernel for CompressedTensorsW8A8Fp8
+(EngineCore pid=3842756) INFO 09-23 17:55:53 [cuda.py:274] Using AttentionBackendEnum.FLASH_ATTN backend.
+(EngineCore pid=3842756) INFO 09-23 17:55:53 [flash_attn.py:596] Using FlashAttention version 2
+(EngineCore pid=3842756) INFO 09-23 17:55:58 [default_loader.py:384] Loading weights took 3.54 seconds
+(EngineCore pid=3842756) INFO 09-23 17:55:59 [gpu_model_runner.py:4820] Model loading took 14.74 GiB memory and 5.847167 seconds
+(EngineCore pid=3842756) INFO 09-23 17:56:10 [backends.py:1051] Using cache directory: /home/wjeong/.cache/vllm/torch_compile_cache/79d9281c77/rank_0_0/backbone for vLLM's torch.compile
+(EngineCore pid=3842756) INFO 09-23 17:56:10 [backends.py:1111] Dynamo bytecode transform time: 11.03 s
+(EngineCore pid=3842756) INFO 09-23 17:56:13 [backends.py:285] Directly load the compiled graph(s) for compile range (1, 8192) from the cache, took 2.027 s
+(EngineCore pid=3842756) INFO 09-23 17:56:16 [monitor.py:48] torch.compile and initial profiling/warmup run together took 16.21 s in total
+(EngineCore pid=3842756) INFO 09-23 17:56:16 [kv_cache_utils.py:829] Overriding num_gpu_blocks=0 with num_gpu_blocks_override=512
+(EngineCore pid=3842756) INFO 09-23 17:56:16 [gpu_model_runner.py:5876] Profiling CUDA graph memory: PIECEWISE=51 (largest=512), FULL=35 (largest=256)
+(EngineCore pid=3842756) INFO 09-23 17:56:17 [gpu_model_runner.py:5955] Estimated CUDA graph memory: 0.66 GiB total
+(EngineCore pid=3842756) ERROR 09-23 17:56:18 [core.py:1108] EngineCore failed to start.
+(EngineCore pid=3842756) ERROR 09-23 17:56:18 [core.py:1108] Traceback (most recent call last):
+(EngineCore pid=3842756) ERROR 09-23 17:56:18 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 1082, in run_engine_core
+(EngineCore pid=3842756) ERROR 09-23 17:56:18 [core.py:1108]     engine_core = EngineCoreProc(*args, engine_index=dp_rank, **kwargs)
+(EngineCore pid=3842756) ERROR 09-23 17:56:18 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=3842756) ERROR 09-23 17:56:18 [core.py:1108]     return func(*args, **kwargs)
+(EngineCore pid=3842756) ERROR 09-23 17:56:18 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 848, in __init__
+(EngineCore pid=3842756) ERROR 09-23 17:56:18 [core.py:1108]     super().__init__(
+(EngineCore pid=3842756) ERROR 09-23 17:56:18 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 124, in __init__
+(EngineCore pid=3842756) ERROR 09-23 17:56:18 [core.py:1108]     kv_cache_config = self._initialize_kv_caches(vllm_config)
+(EngineCore pid=3842756) ERROR 09-23 17:56:18 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=3842756) ERROR 09-23 17:56:18 [core.py:1108]     return func(*args, **kwargs)
+(EngineCore pid=3842756) ERROR 09-23 17:56:18 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 247, in _initialize_kv_caches
+(EngineCore pid=3842756) ERROR 09-23 17:56:18 [core.py:1108]     available_gpu_memory = self.model_executor.determine_available_memory()
+(EngineCore pid=3842756) ERROR 09-23 17:56:18 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/executor/abstract.py", line 136, in determine_available_memory
+(EngineCore pid=3842756) ERROR 09-23 17:56:18 [core.py:1108]     return self.collective_rpc("determine_available_memory")
+(EngineCore pid=3842756) ERROR 09-23 17:56:18 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/executor/uniproc_executor.py", line 80, in collective_rpc
+(EngineCore pid=3842756) ERROR 09-23 17:56:18 [core.py:1108]     result = run_method(self.driver_worker, method, args, kwargs)
+(EngineCore pid=3842756) ERROR 09-23 17:56:18 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/serial_utils.py", line 510, in run_method
+(EngineCore pid=3842756) ERROR 09-23 17:56:18 [core.py:1108]     return func(*args, **kwargs)
+(EngineCore pid=3842756) ERROR 09-23 17:56:18 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(EngineCore pid=3842756) ERROR 09-23 17:56:18 [core.py:1108]     return func(*args, **kwargs)
+(EngineCore pid=3842756) ERROR 09-23 17:56:18 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/worker/gpu_worker.py", line 408, in determine_available_memory
+(EngineCore pid=3842756) ERROR 09-23 17:56:18 [core.py:1108]     assert self.init_snapshot.free_memory >= free_gpu_memory, (
+(EngineCore pid=3842756) ERROR 09-23 17:56:18 [core.py:1108] AssertionError: Error in memory profiling. Initial free memory 28.76 GiB, current free memory 28.87 GiB. This happens when other processes sharing the same container release GPU memory while vLLM is profiling during initialization. To fix this, ensure consistent GPU memory allocation or isolate vLLM in its own container.
+INFO 09-23 17:56:48 [utils.py:233] non-default args: {'trust_remote_code': True, 'seed': 20260922, 'max_model_len': 16384, 'enable_prefix_caching': False, 'gpu_memory_utilization': 0.42, 'disable_log_stats': True, 'attention_backend': 'FLASH_ATTN', 'model': '/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1'}
+INFO 09-23 17:56:48 [model.py:549] Resolved architecture: Phi3ForCausalLM
+INFO 09-23 17:56:48 [model.py:1678] Using max model len 16384
+(EngineCore pid=3843865) INFO 09-23 17:56:48 [core.py:105] Initializing a V1 LLM engine (v0.19.0) with config: model='/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1', speculative_config=None, tokenizer='/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=True, dtype=torch.bfloat16, max_seq_len=16384, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, decode_context_parallel_size=1, dcp_comm_backend=ag_rs, disable_custom_all_reduce=True, quantization=compressed-tensors, enforce_eager=False, enable_return_routed_experts=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False), seed=20260922, served_model_name=/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1, enable_prefix_caching=False, enable_chunked_prefill=True, pooler_config=None, compilation_config={'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::olmo_hybrid_gdn_full_forward', 'vllm::kda_attention', 'vllm::sparse_attn_indexer', 'vllm::rocm_aiter_sparse_attn_indexer', 'vllm::unified_kv_cache_update', 'vllm::unified_mla_kv_cache_update'], 'compile_mm_encoder': False, 'cudagraph_mm_encoder': False, 'encoder_cudagraph_token_budgets': [], 'encoder_cudagraph_max_images_per_batch': 0, 'compile_sizes': [], 'compile_ranges_endpoints': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'size_asserts': False, 'alignment_asserts': False, 'scalar_asserts': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 512, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': True, 'static_all_moe_layers': []}
+(EngineCore pid=3843865) INFO 09-23 17:56:48 [parallel_state.py:1400] world_size=1 rank=0 local_rank=0 distributed_init_method=tcp://115.145.134.180:44071 backend=nccl
+(EngineCore pid=3843865) INFO 09-23 17:56:48 [parallel_state.py:1716] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank N/A, EPLB rank N/A
+(EngineCore pid=3843865) INFO 09-23 17:56:49 [gpu_model_runner.py:4735] Starting to load model /home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1...
+(EngineCore pid=3843865) INFO 09-23 17:56:49 [__init__.py:261] Selected CutlassFP8ScaledMMLinearKernel for CompressedTensorsW8A8Fp8
+(EngineCore pid=3843865) INFO 09-23 17:56:50 [cuda.py:274] Using AttentionBackendEnum.FLASH_ATTN backend.
+(EngineCore pid=3843865) INFO 09-23 17:56:50 [flash_attn.py:596] Using FlashAttention version 2
+(EngineCore pid=3843865) INFO 09-23 17:56:55 [default_loader.py:384] Loading weights took 3.45 seconds
+(EngineCore pid=3843865) INFO 09-23 17:56:55 [gpu_model_runner.py:4820] Model loading took 14.74 GiB memory and 5.413885 seconds
+(EngineCore pid=3843865) INFO 09-23 17:57:06 [backends.py:1051] Using cache directory: /home/wjeong/.cache/vllm/torch_compile_cache/79d9281c77/rank_0_0/backbone for vLLM's torch.compile
+(EngineCore pid=3843865) INFO 09-23 17:57:06 [backends.py:1111] Dynamo bytecode transform time: 10.39 s
+(EngineCore pid=3843865) INFO 09-23 17:57:09 [backends.py:285] Directly load the compiled graph(s) for compile range (1, 8192) from the cache, took 2.353 s
+(EngineCore pid=3843865) INFO 09-23 17:57:11 [monitor.py:48] torch.compile and initial profiling/warmup run together took 15.54 s in total
+(EngineCore pid=3843865) INFO 09-23 17:57:12 [kv_cache_utils.py:829] Overriding num_gpu_blocks=0 with num_gpu_blocks_override=512
+(EngineCore pid=3843865) INFO 09-23 17:57:12 [gpu_model_runner.py:5876] Profiling CUDA graph memory: PIECEWISE=51 (largest=512), FULL=35 (largest=256)
+(EngineCore pid=3843865) INFO 09-23 17:57:13 [gpu_model_runner.py:5955] Estimated CUDA graph memory: 0.66 GiB total
+(EngineCore pid=3843865) ERROR 09-23 17:57:13 [core.py:1108] EngineCore failed to start.
+(EngineCore pid=3843865) ERROR 09-23 17:57:13 [core.py:1108] Traceback (most recent call last):
+(EngineCore pid=3843865) ERROR 09-23 17:57:13 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 1082, in run_engine_core
+(EngineCore pid=3843865) ERROR 09-23 17:57:13 [core.py:1108]     engine_core = EngineCoreProc(*args, engine_index=dp_rank, **kwargs)
+(EngineCore pid=3843865) ERROR 09-23 17:57:13 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=3843865) ERROR 09-23 17:57:13 [core.py:1108]     return func(*args, **kwargs)
+(EngineCore pid=3843865) ERROR 09-23 17:57:13 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 848, in __init__
+(EngineCore pid=3843865) ERROR 09-23 17:57:13 [core.py:1108]     super().__init__(
+(EngineCore pid=3843865) ERROR 09-23 17:57:13 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 124, in __init__
+(EngineCore pid=3843865) ERROR 09-23 17:57:13 [core.py:1108]     kv_cache_config = self._initialize_kv_caches(vllm_config)
+(EngineCore pid=3843865) ERROR 09-23 17:57:13 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=3843865) ERROR 09-23 17:57:13 [core.py:1108]     return func(*args, **kwargs)
+(EngineCore pid=3843865) ERROR 09-23 17:57:13 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 247, in _initialize_kv_caches
+(EngineCore pid=3843865) ERROR 09-23 17:57:13 [core.py:1108]     available_gpu_memory = self.model_executor.determine_available_memory()
+(EngineCore pid=3843865) ERROR 09-23 17:57:13 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/executor/abstract.py", line 136, in determine_available_memory
+(EngineCore pid=3843865) ERROR 09-23 17:57:13 [core.py:1108]     return self.collective_rpc("determine_available_memory")
+(EngineCore pid=3843865) ERROR 09-23 17:57:13 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/executor/uniproc_executor.py", line 80, in collective_rpc
+(EngineCore pid=3843865) ERROR 09-23 17:57:13 [core.py:1108]     result = run_method(self.driver_worker, method, args, kwargs)
+(EngineCore pid=3843865) ERROR 09-23 17:57:13 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/serial_utils.py", line 510, in run_method
+(EngineCore pid=3843865) ERROR 09-23 17:57:13 [core.py:1108]     return func(*args, **kwargs)
+(EngineCore pid=3843865) ERROR 09-23 17:57:13 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(EngineCore pid=3843865) ERROR 09-23 17:57:13 [core.py:1108]     return func(*args, **kwargs)
+(EngineCore pid=3843865) ERROR 09-23 17:57:13 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/worker/gpu_worker.py", line 408, in determine_available_memory
+(EngineCore pid=3843865) ERROR 09-23 17:57:13 [core.py:1108]     assert self.init_snapshot.free_memory >= free_gpu_memory, (
+(EngineCore pid=3843865) ERROR 09-23 17:57:13 [core.py:1108] AssertionError: Error in memory profiling. Initial free memory 27.48 GiB, current free memory 28.87 GiB. This happens when other processes sharing the same container release GPU memory while vLLM is profiling during initialization. To fix this, ensure consistent GPU memory allocation or isolate vLLM in its own container.
+INFO 09-23 17:57:44 [utils.py:233] non-default args: {'trust_remote_code': True, 'seed': 20260922, 'max_model_len': 16384, 'enable_prefix_caching': False, 'gpu_memory_utilization': 0.42, 'disable_log_stats': True, 'attention_backend': 'FLASH_ATTN', 'model': '/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1'}
+INFO 09-23 17:57:44 [model.py:549] Resolved architecture: Phi3ForCausalLM
+INFO 09-23 17:57:44 [model.py:1678] Using max model len 16384
+(EngineCore pid=3844893) INFO 09-23 17:57:44 [core.py:105] Initializing a V1 LLM engine (v0.19.0) with config: model='/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1', speculative_config=None, tokenizer='/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=True, dtype=torch.bfloat16, max_seq_len=16384, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, decode_context_parallel_size=1, dcp_comm_backend=ag_rs, disable_custom_all_reduce=True, quantization=compressed-tensors, enforce_eager=False, enable_return_routed_experts=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False), seed=20260922, served_model_name=/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1, enable_prefix_caching=False, enable_chunked_prefill=True, pooler_config=None, compilation_config={'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::olmo_hybrid_gdn_full_forward', 'vllm::kda_attention', 'vllm::sparse_attn_indexer', 'vllm::rocm_aiter_sparse_attn_indexer', 'vllm::unified_kv_cache_update', 'vllm::unified_mla_kv_cache_update'], 'compile_mm_encoder': False, 'cudagraph_mm_encoder': False, 'encoder_cudagraph_token_budgets': [], 'encoder_cudagraph_max_images_per_batch': 0, 'compile_sizes': [], 'compile_ranges_endpoints': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'size_asserts': False, 'alignment_asserts': False, 'scalar_asserts': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 512, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': True, 'static_all_moe_layers': []}
+(EngineCore pid=3844893) INFO 09-23 17:57:44 [parallel_state.py:1400] world_size=1 rank=0 local_rank=0 distributed_init_method=tcp://115.145.134.180:56329 backend=nccl
+(EngineCore pid=3844893) INFO 09-23 17:57:44 [parallel_state.py:1716] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank N/A, EPLB rank N/A
+(EngineCore pid=3844893) INFO 09-23 17:57:45 [gpu_model_runner.py:4735] Starting to load model /home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1...
+(EngineCore pid=3844893) INFO 09-23 17:57:45 [__init__.py:261] Selected CutlassFP8ScaledMMLinearKernel for CompressedTensorsW8A8Fp8
+(EngineCore pid=3844893) INFO 09-23 17:57:45 [cuda.py:274] Using AttentionBackendEnum.FLASH_ATTN backend.
+(EngineCore pid=3844893) INFO 09-23 17:57:45 [flash_attn.py:596] Using FlashAttention version 2
+(EngineCore pid=3844893) INFO 09-23 17:57:50 [default_loader.py:384] Loading weights took 3.41 seconds
+(EngineCore pid=3844893) INFO 09-23 17:57:51 [gpu_model_runner.py:4820] Model loading took 14.74 GiB memory and 5.387187 seconds
+(EngineCore pid=3844893) INFO 09-23 17:58:02 [backends.py:1051] Using cache directory: /home/wjeong/.cache/vllm/torch_compile_cache/79d9281c77/rank_0_0/backbone for vLLM's torch.compile
+(EngineCore pid=3844893) INFO 09-23 17:58:02 [backends.py:1111] Dynamo bytecode transform time: 10.81 s
+(EngineCore pid=3844893) INFO 09-23 17:58:05 [backends.py:285] Directly load the compiled graph(s) for compile range (1, 8192) from the cache, took 2.024 s
+(EngineCore pid=3844893) INFO 09-23 17:58:07 [monitor.py:48] torch.compile and initial profiling/warmup run together took 15.68 s in total
+(EngineCore pid=3844893) INFO 09-23 17:58:08 [kv_cache_utils.py:829] Overriding num_gpu_blocks=0 with num_gpu_blocks_override=512
+(EngineCore pid=3844893) INFO 09-23 17:58:08 [gpu_model_runner.py:5876] Profiling CUDA graph memory: PIECEWISE=51 (largest=512), FULL=35 (largest=256)
+(EngineCore pid=3844893) INFO 09-23 17:58:09 [gpu_model_runner.py:5955] Estimated CUDA graph memory: 0.66 GiB total
+(EngineCore pid=3844893) ERROR 09-23 17:58:10 [core.py:1108] EngineCore failed to start.
+(EngineCore pid=3844893) ERROR 09-23 17:58:10 [core.py:1108] Traceback (most recent call last):
+(EngineCore pid=3844893) ERROR 09-23 17:58:10 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 1082, in run_engine_core
+(EngineCore pid=3844893) ERROR 09-23 17:58:10 [core.py:1108]     engine_core = EngineCoreProc(*args, engine_index=dp_rank, **kwargs)
+(EngineCore pid=3844893) ERROR 09-23 17:58:10 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=3844893) ERROR 09-23 17:58:10 [core.py:1108]     return func(*args, **kwargs)
+(EngineCore pid=3844893) ERROR 09-23 17:58:10 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 848, in __init__
+(EngineCore pid=3844893) ERROR 09-23 17:58:10 [core.py:1108]     super().__init__(
+(EngineCore pid=3844893) ERROR 09-23 17:58:10 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 124, in __init__
+(EngineCore pid=3844893) ERROR 09-23 17:58:10 [core.py:1108]     kv_cache_config = self._initialize_kv_caches(vllm_config)
+(EngineCore pid=3844893) ERROR 09-23 17:58:10 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=3844893) ERROR 09-23 17:58:10 [core.py:1108]     return func(*args, **kwargs)
+(EngineCore pid=3844893) ERROR 09-23 17:58:10 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 247, in _initialize_kv_caches
+(EngineCore pid=3844893) ERROR 09-23 17:58:10 [core.py:1108]     available_gpu_memory = self.model_executor.determine_available_memory()
+(EngineCore pid=3844893) ERROR 09-23 17:58:10 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/executor/abstract.py", line 136, in determine_available_memory
+(EngineCore pid=3844893) ERROR 09-23 17:58:10 [core.py:1108]     return self.collective_rpc("determine_available_memory")
+(EngineCore pid=3844893) ERROR 09-23 17:58:10 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/executor/uniproc_executor.py", line 80, in collective_rpc
+(EngineCore pid=3844893) ERROR 09-23 17:58:10 [core.py:1108]     result = run_method(self.driver_worker, method, args, kwargs)
+(EngineCore pid=3844893) ERROR 09-23 17:58:10 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/serial_utils.py", line 510, in run_method
+(EngineCore pid=3844893) ERROR 09-23 17:58:10 [core.py:1108]     return func(*args, **kwargs)
+(EngineCore pid=3844893) ERROR 09-23 17:58:10 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(EngineCore pid=3844893) ERROR 09-23 17:58:10 [core.py:1108]     return func(*args, **kwargs)
+(EngineCore pid=3844893) ERROR 09-23 17:58:10 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/worker/gpu_worker.py", line 408, in determine_available_memory
+(EngineCore pid=3844893) ERROR 09-23 17:58:10 [core.py:1108]     assert self.init_snapshot.free_memory >= free_gpu_memory, (
+(EngineCore pid=3844893) ERROR 09-23 17:58:10 [core.py:1108] AssertionError: Error in memory profiling. Initial free memory 27.48 GiB, current free memory 28.87 GiB. This happens when other processes sharing the same container release GPU memory while vLLM is profiling during initialization. To fix this, ensure consistent GPU memory allocation or isolate vLLM in its own container.
+INFO 09-23 17:58:40 [utils.py:233] non-default args: {'trust_remote_code': True, 'seed': 20260922, 'max_model_len': 16384, 'enable_prefix_caching': False, 'gpu_memory_utilization': 0.42, 'disable_log_stats': True, 'attention_backend': 'FLASH_ATTN', 'model': '/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1'}
+INFO 09-23 17:58:40 [model.py:549] Resolved architecture: Phi3ForCausalLM
+INFO 09-23 17:58:40 [model.py:1678] Using max model len 16384
+(EngineCore pid=3845892) INFO 09-23 17:58:40 [core.py:105] Initializing a V1 LLM engine (v0.19.0) with config: model='/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1', speculative_config=None, tokenizer='/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=True, dtype=torch.bfloat16, max_seq_len=16384, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, decode_context_parallel_size=1, dcp_comm_backend=ag_rs, disable_custom_all_reduce=True, quantization=compressed-tensors, enforce_eager=False, enable_return_routed_experts=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False), seed=20260922, served_model_name=/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1, enable_prefix_caching=False, enable_chunked_prefill=True, pooler_config=None, compilation_config={'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::olmo_hybrid_gdn_full_forward', 'vllm::kda_attention', 'vllm::sparse_attn_indexer', 'vllm::rocm_aiter_sparse_attn_indexer', 'vllm::unified_kv_cache_update', 'vllm::unified_mla_kv_cache_update'], 'compile_mm_encoder': False, 'cudagraph_mm_encoder': False, 'encoder_cudagraph_token_budgets': [], 'encoder_cudagraph_max_images_per_batch': 0, 'compile_sizes': [], 'compile_ranges_endpoints': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'size_asserts': False, 'alignment_asserts': False, 'scalar_asserts': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 512, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': True, 'static_all_moe_layers': []}
+(EngineCore pid=3845892) INFO 09-23 17:58:40 [parallel_state.py:1400] world_size=1 rank=0 local_rank=0 distributed_init_method=tcp://115.145.134.180:57519 backend=nccl
+(EngineCore pid=3845892) INFO 09-23 17:58:40 [parallel_state.py:1716] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank N/A, EPLB rank N/A
+(EngineCore pid=3845892) INFO 09-23 17:58:41 [gpu_model_runner.py:4735] Starting to load model /home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1...
+(EngineCore pid=3845892) INFO 09-23 17:58:41 [__init__.py:261] Selected CutlassFP8ScaledMMLinearKernel for CompressedTensorsW8A8Fp8
+(EngineCore pid=3845892) INFO 09-23 17:58:41 [cuda.py:274] Using AttentionBackendEnum.FLASH_ATTN backend.
+(EngineCore pid=3845892) INFO 09-23 17:58:41 [flash_attn.py:596] Using FlashAttention version 2
+(EngineCore pid=3845892) INFO 09-23 17:58:46 [default_loader.py:384] Loading weights took 3.29 seconds
+(EngineCore pid=3845892) INFO 09-23 17:58:46 [gpu_model_runner.py:4820] Model loading took 14.74 GiB memory and 4.661122 seconds
+(EngineCore pid=3845892) INFO 09-23 17:58:57 [backends.py:1051] Using cache directory: /home/wjeong/.cache/vllm/torch_compile_cache/79d9281c77/rank_0_0/backbone for vLLM's torch.compile
+(EngineCore pid=3845892) INFO 09-23 17:58:57 [backends.py:1111] Dynamo bytecode transform time: 10.38 s
+(EngineCore pid=3845892) INFO 09-23 17:58:59 [backends.py:285] Directly load the compiled graph(s) for compile range (1, 8192) from the cache, took 2.009 s
+(EngineCore pid=3845892) INFO 09-23 17:59:02 [monitor.py:48] torch.compile and initial profiling/warmup run together took 15.22 s in total
+(EngineCore pid=3845892) INFO 09-23 17:59:02 [kv_cache_utils.py:829] Overriding num_gpu_blocks=0 with num_gpu_blocks_override=512
+(EngineCore pid=3845892) INFO 09-23 17:59:02 [gpu_model_runner.py:5876] Profiling CUDA graph memory: PIECEWISE=51 (largest=512), FULL=35 (largest=256)
+(EngineCore pid=3845892) INFO 09-23 17:59:04 [gpu_model_runner.py:5955] Estimated CUDA graph memory: 0.66 GiB total
+(EngineCore pid=3845892) ERROR 09-23 17:59:04 [core.py:1108] EngineCore failed to start.
+(EngineCore pid=3845892) ERROR 09-23 17:59:04 [core.py:1108] Traceback (most recent call last):
+(EngineCore pid=3845892) ERROR 09-23 17:59:04 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 1082, in run_engine_core
+(EngineCore pid=3845892) ERROR 09-23 17:59:04 [core.py:1108]     engine_core = EngineCoreProc(*args, engine_index=dp_rank, **kwargs)
+(EngineCore pid=3845892) ERROR 09-23 17:59:04 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=3845892) ERROR 09-23 17:59:04 [core.py:1108]     return func(*args, **kwargs)
+(EngineCore pid=3845892) ERROR 09-23 17:59:04 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 848, in __init__
+(EngineCore pid=3845892) ERROR 09-23 17:59:04 [core.py:1108]     super().__init__(
+(EngineCore pid=3845892) ERROR 09-23 17:59:04 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 124, in __init__
+(EngineCore pid=3845892) ERROR 09-23 17:59:04 [core.py:1108]     kv_cache_config = self._initialize_kv_caches(vllm_config)
+(EngineCore pid=3845892) ERROR 09-23 17:59:04 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=3845892) ERROR 09-23 17:59:04 [core.py:1108]     return func(*args, **kwargs)
+(EngineCore pid=3845892) ERROR 09-23 17:59:04 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 247, in _initialize_kv_caches
+(EngineCore pid=3845892) ERROR 09-23 17:59:04 [core.py:1108]     available_gpu_memory = self.model_executor.determine_available_memory()
+(EngineCore pid=3845892) ERROR 09-23 17:59:04 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/executor/abstract.py", line 136, in determine_available_memory
+(EngineCore pid=3845892) ERROR 09-23 17:59:04 [core.py:1108]     return self.collective_rpc("determine_available_memory")
+(EngineCore pid=3845892) ERROR 09-23 17:59:04 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/executor/uniproc_executor.py", line 80, in collective_rpc
+(EngineCore pid=3845892) ERROR 09-23 17:59:04 [core.py:1108]     result = run_method(self.driver_worker, method, args, kwargs)
+(EngineCore pid=3845892) ERROR 09-23 17:59:04 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/serial_utils.py", line 510, in run_method
+(EngineCore pid=3845892) ERROR 09-23 17:59:04 [core.py:1108]     return func(*args, **kwargs)
+(EngineCore pid=3845892) ERROR 09-23 17:59:04 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(EngineCore pid=3845892) ERROR 09-23 17:59:04 [core.py:1108]     return func(*args, **kwargs)
+(EngineCore pid=3845892) ERROR 09-23 17:59:04 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/worker/gpu_worker.py", line 408, in determine_available_memory
+(EngineCore pid=3845892) ERROR 09-23 17:59:04 [core.py:1108]     assert self.init_snapshot.free_memory >= free_gpu_memory, (
+(EngineCore pid=3845892) ERROR 09-23 17:59:04 [core.py:1108] AssertionError: Error in memory profiling. Initial free memory 26.93 GiB, current free memory 28.87 GiB. This happens when other processes sharing the same container release GPU memory while vLLM is profiling during initialization. To fix this, ensure consistent GPU memory allocation or isolate vLLM in its own container.
+INFO 09-23 17:59:34 [utils.py:233] non-default args: {'trust_remote_code': True, 'seed': 20260922, 'max_model_len': 16384, 'enable_prefix_caching': False, 'gpu_memory_utilization': 0.42, 'disable_log_stats': True, 'attention_backend': 'FLASH_ATTN', 'model': '/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1'}
+INFO 09-23 17:59:34 [model.py:549] Resolved architecture: Phi3ForCausalLM
+INFO 09-23 17:59:34 [model.py:1678] Using max model len 16384
+(EngineCore pid=3846768) INFO 09-23 17:59:34 [core.py:105] Initializing a V1 LLM engine (v0.19.0) with config: model='/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1', speculative_config=None, tokenizer='/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=True, dtype=torch.bfloat16, max_seq_len=16384, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, decode_context_parallel_size=1, dcp_comm_backend=ag_rs, disable_custom_all_reduce=True, quantization=compressed-tensors, enforce_eager=False, enable_return_routed_experts=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False), seed=20260922, served_model_name=/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1, enable_prefix_caching=False, enable_chunked_prefill=True, pooler_config=None, compilation_config={'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::olmo_hybrid_gdn_full_forward', 'vllm::kda_attention', 'vllm::sparse_attn_indexer', 'vllm::rocm_aiter_sparse_attn_indexer', 'vllm::unified_kv_cache_update', 'vllm::unified_mla_kv_cache_update'], 'compile_mm_encoder': False, 'cudagraph_mm_encoder': False, 'encoder_cudagraph_token_budgets': [], 'encoder_cudagraph_max_images_per_batch': 0, 'compile_sizes': [], 'compile_ranges_endpoints': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'size_asserts': False, 'alignment_asserts': False, 'scalar_asserts': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 512, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': True, 'static_all_moe_layers': []}
+(EngineCore pid=3846768) INFO 09-23 17:59:34 [parallel_state.py:1400] world_size=1 rank=0 local_rank=0 distributed_init_method=tcp://115.145.134.180:35151 backend=nccl
+(EngineCore pid=3846768) INFO 09-23 17:59:34 [parallel_state.py:1716] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank N/A, EPLB rank N/A
+(EngineCore pid=3846768) INFO 09-23 17:59:35 [gpu_model_runner.py:4735] Starting to load model /home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1...
+(EngineCore pid=3846768) INFO 09-23 17:59:35 [__init__.py:261] Selected CutlassFP8ScaledMMLinearKernel for CompressedTensorsW8A8Fp8
+(EngineCore pid=3846768) INFO 09-23 17:59:35 [cuda.py:274] Using AttentionBackendEnum.FLASH_ATTN backend.
+(EngineCore pid=3846768) INFO 09-23 17:59:35 [flash_attn.py:596] Using FlashAttention version 2
+(EngineCore pid=3846768) INFO 09-23 17:59:40 [default_loader.py:384] Loading weights took 3.46 seconds
+(EngineCore pid=3846768) INFO 09-23 17:59:41 [gpu_model_runner.py:4820] Model loading took 14.74 GiB memory and 4.921847 seconds
+(EngineCore pid=3846768) INFO 09-23 17:59:52 [backends.py:1051] Using cache directory: /home/wjeong/.cache/vllm/torch_compile_cache/79d9281c77/rank_0_0/backbone for vLLM's torch.compile
+(EngineCore pid=3846768) INFO 09-23 17:59:52 [backends.py:1111] Dynamo bytecode transform time: 10.59 s
+(EngineCore pid=3846768) INFO 09-23 17:59:54 [backends.py:285] Directly load the compiled graph(s) for compile range (1, 8192) from the cache, took 2.079 s
+(EngineCore pid=3846768) INFO 09-23 17:59:57 [monitor.py:48] torch.compile and initial profiling/warmup run together took 15.51 s in total
+(EngineCore pid=3846768) INFO 09-23 17:59:57 [kv_cache_utils.py:829] Overriding num_gpu_blocks=0 with num_gpu_blocks_override=512
+(EngineCore pid=3846768) INFO 09-23 17:59:57 [gpu_model_runner.py:5876] Profiling CUDA graph memory: PIECEWISE=51 (largest=512), FULL=35 (largest=256)
+(EngineCore pid=3846768) INFO 09-23 17:59:59 [gpu_model_runner.py:5955] Estimated CUDA graph memory: 0.66 GiB total
+(EngineCore pid=3846768) ERROR 09-23 17:59:59 [core.py:1108] EngineCore failed to start.
+(EngineCore pid=3846768) ERROR 09-23 17:59:59 [core.py:1108] Traceback (most recent call last):
+(EngineCore pid=3846768) ERROR 09-23 17:59:59 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 1082, in run_engine_core
+(EngineCore pid=3846768) ERROR 09-23 17:59:59 [core.py:1108]     engine_core = EngineCoreProc(*args, engine_index=dp_rank, **kwargs)
+(EngineCore pid=3846768) ERROR 09-23 17:59:59 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=3846768) ERROR 09-23 17:59:59 [core.py:1108]     return func(*args, **kwargs)
+(EngineCore pid=3846768) ERROR 09-23 17:59:59 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 848, in __init__
+(EngineCore pid=3846768) ERROR 09-23 17:59:59 [core.py:1108]     super().__init__(
+(EngineCore pid=3846768) ERROR 09-23 17:59:59 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 124, in __init__
+(EngineCore pid=3846768) ERROR 09-23 17:59:59 [core.py:1108]     kv_cache_config = self._initialize_kv_caches(vllm_config)
+(EngineCore pid=3846768) ERROR 09-23 17:59:59 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=3846768) ERROR 09-23 17:59:59 [core.py:1108]     return func(*args, **kwargs)
+(EngineCore pid=3846768) ERROR 09-23 17:59:59 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 247, in _initialize_kv_caches
+(EngineCore pid=3846768) ERROR 09-23 17:59:59 [core.py:1108]     available_gpu_memory = self.model_executor.determine_available_memory()
+(EngineCore pid=3846768) ERROR 09-23 17:59:59 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/executor/abstract.py", line 136, in determine_available_memory
+(EngineCore pid=3846768) ERROR 09-23 17:59:59 [core.py:1108]     return self.collective_rpc("determine_available_memory")
+(EngineCore pid=3846768) ERROR 09-23 17:59:59 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/executor/uniproc_executor.py", line 80, in collective_rpc
+(EngineCore pid=3846768) ERROR 09-23 17:59:59 [core.py:1108]     result = run_method(self.driver_worker, method, args, kwargs)
+(EngineCore pid=3846768) ERROR 09-23 17:59:59 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/serial_utils.py", line 510, in run_method
+(EngineCore pid=3846768) ERROR 09-23 17:59:59 [core.py:1108]     return func(*args, **kwargs)
+(EngineCore pid=3846768) ERROR 09-23 17:59:59 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(EngineCore pid=3846768) ERROR 09-23 17:59:59 [core.py:1108]     return func(*args, **kwargs)
+(EngineCore pid=3846768) ERROR 09-23 17:59:59 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/worker/gpu_worker.py", line 408, in determine_available_memory
+(EngineCore pid=3846768) ERROR 09-23 17:59:59 [core.py:1108]     assert self.init_snapshot.free_memory >= free_gpu_memory, (
+(EngineCore pid=3846768) ERROR 09-23 17:59:59 [core.py:1108] AssertionError: Error in memory profiling. Initial free memory 26.93 GiB, current free memory 28.87 GiB. This happens when other processes sharing the same container release GPU memory while vLLM is profiling during initialization. To fix this, ensure consistent GPU memory allocation or isolate vLLM in its own container.
+INFO 09-23 18:00:29 [utils.py:233] non-default args: {'trust_remote_code': True, 'seed': 20260922, 'max_model_len': 16384, 'enable_prefix_caching': False, 'gpu_memory_utilization': 0.42, 'disable_log_stats': True, 'attention_backend': 'FLASH_ATTN', 'model': '/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1'}
+INFO 09-23 18:00:29 [model.py:549] Resolved architecture: Phi3ForCausalLM
+INFO 09-23 18:00:29 [model.py:1678] Using max model len 16384
+(EngineCore pid=3848452) INFO 09-23 18:00:29 [core.py:105] Initializing a V1 LLM engine (v0.19.0) with config: model='/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1', speculative_config=None, tokenizer='/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=True, dtype=torch.bfloat16, max_seq_len=16384, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, decode_context_parallel_size=1, dcp_comm_backend=ag_rs, disable_custom_all_reduce=True, quantization=compressed-tensors, enforce_eager=False, enable_return_routed_experts=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False), seed=20260922, served_model_name=/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1, enable_prefix_caching=False, enable_chunked_prefill=True, pooler_config=None, compilation_config={'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::olmo_hybrid_gdn_full_forward', 'vllm::kda_attention', 'vllm::sparse_attn_indexer', 'vllm::rocm_aiter_sparse_attn_indexer', 'vllm::unified_kv_cache_update', 'vllm::unified_mla_kv_cache_update'], 'compile_mm_encoder': False, 'cudagraph_mm_encoder': False, 'encoder_cudagraph_token_budgets': [], 'encoder_cudagraph_max_images_per_batch': 0, 'compile_sizes': [], 'compile_ranges_endpoints': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'size_asserts': False, 'alignment_asserts': False, 'scalar_asserts': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 512, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': True, 'static_all_moe_layers': []}
+(EngineCore pid=3848452) INFO 09-23 18:00:30 [parallel_state.py:1400] world_size=1 rank=0 local_rank=0 distributed_init_method=tcp://115.145.134.180:34051 backend=nccl
+(EngineCore pid=3848452) INFO 09-23 18:00:30 [parallel_state.py:1716] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank N/A, EPLB rank N/A
+(EngineCore pid=3848452) INFO 09-23 18:00:31 [gpu_model_runner.py:4735] Starting to load model /home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1...
+(EngineCore pid=3848452) INFO 09-23 18:00:31 [__init__.py:261] Selected CutlassFP8ScaledMMLinearKernel for CompressedTensorsW8A8Fp8
+(EngineCore pid=3848452) INFO 09-23 18:00:31 [cuda.py:274] Using AttentionBackendEnum.FLASH_ATTN backend.
+(EngineCore pid=3848452) INFO 09-23 18:00:31 [flash_attn.py:596] Using FlashAttention version 2
+(EngineCore pid=3848452) INFO 09-23 18:00:36 [default_loader.py:384] Loading weights took 3.46 seconds
+(EngineCore pid=3848452) INFO 09-23 18:00:37 [gpu_model_runner.py:4820] Model loading took 14.74 GiB memory and 5.186037 seconds
+(EngineCore pid=3848452) INFO 09-23 18:00:48 [backends.py:1051] Using cache directory: /home/wjeong/.cache/vllm/torch_compile_cache/79d9281c77/rank_0_0/backbone for vLLM's torch.compile
+(EngineCore pid=3848452) INFO 09-23 18:00:48 [backends.py:1111] Dynamo bytecode transform time: 11.22 s
+(EngineCore pid=3848452) INFO 09-23 18:00:51 [backends.py:285] Directly load the compiled graph(s) for compile range (1, 8192) from the cache, took 2.070 s
+(EngineCore pid=3848452) INFO 09-23 18:00:53 [monitor.py:48] torch.compile and initial profiling/warmup run together took 16.19 s in total
+(EngineCore pid=3848452) INFO 09-23 18:00:54 [kv_cache_utils.py:829] Overriding num_gpu_blocks=0 with num_gpu_blocks_override=512
+(EngineCore pid=3848452) INFO 09-23 18:00:54 [gpu_model_runner.py:5876] Profiling CUDA graph memory: PIECEWISE=51 (largest=512), FULL=35 (largest=256)
+(EngineCore pid=3848452) INFO 09-23 18:00:56 [gpu_model_runner.py:5955] Estimated CUDA graph memory: 0.66 GiB total
+(EngineCore pid=3848452) ERROR 09-23 18:00:56 [core.py:1108] EngineCore failed to start.
+(EngineCore pid=3848452) ERROR 09-23 18:00:56 [core.py:1108] Traceback (most recent call last):
+(EngineCore pid=3848452) ERROR 09-23 18:00:56 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 1082, in run_engine_core
+(EngineCore pid=3848452) ERROR 09-23 18:00:56 [core.py:1108]     engine_core = EngineCoreProc(*args, engine_index=dp_rank, **kwargs)
+(EngineCore pid=3848452) ERROR 09-23 18:00:56 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=3848452) ERROR 09-23 18:00:56 [core.py:1108]     return func(*args, **kwargs)
+(EngineCore pid=3848452) ERROR 09-23 18:00:56 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 848, in __init__
+(EngineCore pid=3848452) ERROR 09-23 18:00:56 [core.py:1108]     super().__init__(
+(EngineCore pid=3848452) ERROR 09-23 18:00:56 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 124, in __init__
+(EngineCore pid=3848452) ERROR 09-23 18:00:56 [core.py:1108]     kv_cache_config = self._initialize_kv_caches(vllm_config)
+(EngineCore pid=3848452) ERROR 09-23 18:00:56 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=3848452) ERROR 09-23 18:00:56 [core.py:1108]     return func(*args, **kwargs)
+(EngineCore pid=3848452) ERROR 09-23 18:00:56 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 247, in _initialize_kv_caches
+(EngineCore pid=3848452) ERROR 09-23 18:00:56 [core.py:1108]     available_gpu_memory = self.model_executor.determine_available_memory()
+(EngineCore pid=3848452) ERROR 09-23 18:00:56 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/executor/abstract.py", line 136, in determine_available_memory
+(EngineCore pid=3848452) ERROR 09-23 18:00:56 [core.py:1108]     return self.collective_rpc("determine_available_memory")
+(EngineCore pid=3848452) ERROR 09-23 18:00:56 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/executor/uniproc_executor.py", line 80, in collective_rpc
+(EngineCore pid=3848452) ERROR 09-23 18:00:56 [core.py:1108]     result = run_method(self.driver_worker, method, args, kwargs)
+(EngineCore pid=3848452) ERROR 09-23 18:00:56 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/serial_utils.py", line 510, in run_method
+(EngineCore pid=3848452) ERROR 09-23 18:00:56 [core.py:1108]     return func(*args, **kwargs)
+(EngineCore pid=3848452) ERROR 09-23 18:00:56 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(EngineCore pid=3848452) ERROR 09-23 18:00:56 [core.py:1108]     return func(*args, **kwargs)
+(EngineCore pid=3848452) ERROR 09-23 18:00:56 [core.py:1108]   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/worker/gpu_worker.py", line 408, in determine_available_memory
+(EngineCore pid=3848452) ERROR 09-23 18:00:56 [core.py:1108]     assert self.init_snapshot.free_memory >= free_gpu_memory, (
+(EngineCore pid=3848452) ERROR 09-23 18:00:56 [core.py:1108] AssertionError: Error in memory profiling. Initial free memory 26.93 GiB, current free memory 28.87 GiB. This happens when other processes sharing the same container release GPU memory while vLLM is profiling during initialization. To fix this, ensure consistent GPU memory allocation or isolate vLLM in its own container.
+
+--- stderr ---
+(EngineCore pid=3837431) /home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/torch/library.py:357: UserWarning: Warning only once for all operators,  other operators may also be overridden.
+(EngineCore pid=3837431)   Overriding a previously registered kernel for the same operator and the same dispatch key
+(EngineCore pid=3837431)   operator: aten::mm(Tensor self, Tensor mat2) -> Tensor
+(EngineCore pid=3837431)     registered at /pytorch/build/aten/src/ATen/RegisterSchema.cpp:6
+(EngineCore pid=3837431)   dispatch key: CUDA
+(EngineCore pid=3837431)   previous kernel: registered at /pytorch/aten/src/ATen/LegacyBatchingRegistrations.cpp:1076
+(EngineCore pid=3837431)        new kernel: registered at /home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/model_executor/layers/batch_invariant.py:936 (Triggered internally at /pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
+(EngineCore pid=3837431)   self.m.impl(
+[W923 17:52:01.162576701 Context.cpp:534] Warning: torch.backends.cuda.preferred_blas_library is an experimental feature. If you see any error or unexpected behavior when this flag is set please file an issue on GitHub. (function operator())
+(EngineCore pid=3837431) <frozen importlib._bootstrap_external>:1184: FutureWarning: The cuda.cudart module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.runtime module instead.
+(EngineCore pid=3837431) <frozen importlib._bootstrap_external>:1184: FutureWarning: The cuda.nvrtc module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.nvrtc module instead.
+(EngineCore pid=3837431) 
+Loading safetensors checkpoint shards:   0% Completed | 0/4 [00:00<?, ?it/s]
+(EngineCore pid=3837431) 
+Loading safetensors checkpoint shards:  25% Completed | 1/4 [00:00<00:02,  1.08it/s]
+(EngineCore pid=3837431) 
+Loading safetensors checkpoint shards:  50% Completed | 2/4 [00:01<00:01,  1.00it/s]
+(EngineCore pid=3837431) 
+Loading safetensors checkpoint shards:  75% Completed | 3/4 [00:02<00:00,  1.04it/s]
+(EngineCore pid=3837431) 
+Loading safetensors checkpoint shards: 100% Completed | 4/4 [00:03<00:00,  1.41it/s]
+(EngineCore pid=3837431) 
+Loading safetensors checkpoint shards: 100% Completed | 4/4 [00:03<00:00,  1.24it/s]
+(EngineCore pid=3837431) 
+(EngineCore pid=3837431) Process EngineCore:
+(EngineCore pid=3837431) Traceback (most recent call last):
+(EngineCore pid=3837431)   File "/usr/lib/python3.10/multiprocessing/process.py", line 314, in _bootstrap
+(EngineCore pid=3837431)     self.run()
+(EngineCore pid=3837431)   File "/usr/lib/python3.10/multiprocessing/process.py", line 108, in run
+(EngineCore pid=3837431)     self._target(*self._args, **self._kwargs)
+(EngineCore pid=3837431)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 1112, in run_engine_core
+(EngineCore pid=3837431)     raise e
+(EngineCore pid=3837431)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 1082, in run_engine_core
+(EngineCore pid=3837431)     engine_core = EngineCoreProc(*args, engine_index=dp_rank, **kwargs)
+(EngineCore pid=3837431)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=3837431)     return func(*args, **kwargs)
+(EngineCore pid=3837431)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 848, in __init__
+(EngineCore pid=3837431)     super().__init__(
+(EngineCore pid=3837431)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 124, in __init__
+(EngineCore pid=3837431)     kv_cache_config = self._initialize_kv_caches(vllm_config)
+(EngineCore pid=3837431)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=3837431)     return func(*args, **kwargs)
+(EngineCore pid=3837431)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 258, in _initialize_kv_caches
+(EngineCore pid=3837431)     kv_cache_configs = get_kv_cache_configs(
+(EngineCore pid=3837431)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/core/kv_cache_utils.py", line 1579, in get_kv_cache_configs
+(EngineCore pid=3837431)     _check_enough_kv_cache_memory(
+(EngineCore pid=3837431)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/core/kv_cache_utils.py", line 644, in _check_enough_kv_cache_memory
+(EngineCore pid=3837431)     raise ValueError(
+(EngineCore pid=3837431) ValueError: To serve at least one request with the models's max seq len (16384), (3.12 GiB KV cache is needed, which is larger than the available KV cache memory (2.63 GiB). Based on the available memory, the estimated maximum model length is 13760. Try increasing `gpu_memory_utilization` or decreasing `max_model_len` when initializing the engine. See https://docs.vllm.ai/en/latest/configuration/conserving_memory/ for more details.
+vllm engine construction attempt 1/10 failed for '/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1': vllm engine construction failed for '/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1' (RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {})
+(EngineCore pid=3839110) /home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/torch/library.py:357: UserWarning: Warning only once for all operators,  other operators may also be overridden.
+(EngineCore pid=3839110)   Overriding a previously registered kernel for the same operator and the same dispatch key
+(EngineCore pid=3839110)   operator: aten::mm(Tensor self, Tensor mat2) -> Tensor
+(EngineCore pid=3839110)     registered at /pytorch/build/aten/src/ATen/RegisterSchema.cpp:6
+(EngineCore pid=3839110)   dispatch key: CUDA
+(EngineCore pid=3839110)   previous kernel: registered at /pytorch/aten/src/ATen/LegacyBatchingRegistrations.cpp:1076
+(EngineCore pid=3839110)        new kernel: registered at /home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/model_executor/layers/batch_invariant.py:936 (Triggered internally at /pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
+(EngineCore pid=3839110)   self.m.impl(
+[W923 17:53:02.435559470 Context.cpp:534] Warning: torch.backends.cuda.preferred_blas_library is an experimental feature. If you see any error or unexpected behavior when this flag is set please file an issue on GitHub. (function operator())
+(EngineCore pid=3839110) <frozen importlib._bootstrap_external>:1184: FutureWarning: The cuda.cudart module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.runtime module instead.
+(EngineCore pid=3839110) <frozen importlib._bootstrap_external>:1184: FutureWarning: The cuda.nvrtc module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.nvrtc module instead.
+(EngineCore pid=3839110) 
+Loading safetensors checkpoint shards:   0% Completed | 0/4 [00:00<?, ?it/s]
+(EngineCore pid=3839110) 
+Loading safetensors checkpoint shards:  25% Completed | 1/4 [00:00<00:02,  1.21it/s]
+(EngineCore pid=3839110) 
+Loading safetensors checkpoint shards:  50% Completed | 2/4 [00:01<00:02,  1.01s/it]
+(EngineCore pid=3839110) 
+Loading safetensors checkpoint shards:  75% Completed | 3/4 [00:03<00:01,  1.06s/it]
+(EngineCore pid=3839110) 
+Loading safetensors checkpoint shards: 100% Completed | 4/4 [00:03<00:00,  1.29it/s]
+(EngineCore pid=3839110) 
+Loading safetensors checkpoint shards: 100% Completed | 4/4 [00:03<00:00,  1.17it/s]
+(EngineCore pid=3839110) 
+(EngineCore pid=3839110) Process EngineCore:
+(EngineCore pid=3839110) Traceback (most recent call last):
+(EngineCore pid=3839110)   File "/usr/lib/python3.10/multiprocessing/process.py", line 314, in _bootstrap
+(EngineCore pid=3839110)     self.run()
+(EngineCore pid=3839110)   File "/usr/lib/python3.10/multiprocessing/process.py", line 108, in run
+(EngineCore pid=3839110)     self._target(*self._args, **self._kwargs)
+(EngineCore pid=3839110)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 1112, in run_engine_core
+(EngineCore pid=3839110)     raise e
+(EngineCore pid=3839110)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 1082, in run_engine_core
+(EngineCore pid=3839110)     engine_core = EngineCoreProc(*args, engine_index=dp_rank, **kwargs)
+(EngineCore pid=3839110)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=3839110)     return func(*args, **kwargs)
+(EngineCore pid=3839110)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 848, in __init__
+(EngineCore pid=3839110)     super().__init__(
+(EngineCore pid=3839110)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 124, in __init__
+(EngineCore pid=3839110)     kv_cache_config = self._initialize_kv_caches(vllm_config)
+(EngineCore pid=3839110)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=3839110)     return func(*args, **kwargs)
+(EngineCore pid=3839110)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 247, in _initialize_kv_caches
+(EngineCore pid=3839110)     available_gpu_memory = self.model_executor.determine_available_memory()
+(EngineCore pid=3839110)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/executor/abstract.py", line 136, in determine_available_memory
+(EngineCore pid=3839110)     return self.collective_rpc("determine_available_memory")
+(EngineCore pid=3839110)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/executor/uniproc_executor.py", line 80, in collective_rpc
+(EngineCore pid=3839110)     result = run_method(self.driver_worker, method, args, kwargs)
+(EngineCore pid=3839110)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/serial_utils.py", line 510, in run_method
+(EngineCore pid=3839110)     return func(*args, **kwargs)
+(EngineCore pid=3839110)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(EngineCore pid=3839110)     return func(*args, **kwargs)
+(EngineCore pid=3839110)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/worker/gpu_worker.py", line 408, in determine_available_memory
+(EngineCore pid=3839110)     assert self.init_snapshot.free_memory >= free_gpu_memory, (
+(EngineCore pid=3839110) AssertionError: Error in memory profiling. Initial free memory 28.76 GiB, current free memory 28.87 GiB. This happens when other processes sharing the same container release GPU memory while vLLM is profiling during initialization. To fix this, ensure consistent GPU memory allocation or isolate vLLM in its own container.
+vllm engine construction attempt 2/10 failed for '/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1': vllm engine construction failed for '/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1' (RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {})
+(EngineCore pid=3840409) /home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/torch/library.py:357: UserWarning: Warning only once for all operators,  other operators may also be overridden.
+(EngineCore pid=3840409)   Overriding a previously registered kernel for the same operator and the same dispatch key
+(EngineCore pid=3840409)   operator: aten::mm(Tensor self, Tensor mat2) -> Tensor
+(EngineCore pid=3840409)     registered at /pytorch/build/aten/src/ATen/RegisterSchema.cpp:6
+(EngineCore pid=3840409)   dispatch key: CUDA
+(EngineCore pid=3840409)   previous kernel: registered at /pytorch/aten/src/ATen/LegacyBatchingRegistrations.cpp:1076
+(EngineCore pid=3840409)        new kernel: registered at /home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/model_executor/layers/batch_invariant.py:936 (Triggered internally at /pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
+(EngineCore pid=3840409)   self.m.impl(
+[W923 17:53:59.187036095 Context.cpp:534] Warning: torch.backends.cuda.preferred_blas_library is an experimental feature. If you see any error or unexpected behavior when this flag is set please file an issue on GitHub. (function operator())
+(EngineCore pid=3840409) <frozen importlib._bootstrap_external>:1184: FutureWarning: The cuda.cudart module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.runtime module instead.
+(EngineCore pid=3840409) <frozen importlib._bootstrap_external>:1184: FutureWarning: The cuda.nvrtc module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.nvrtc module instead.
+(EngineCore pid=3840409) 
+Loading safetensors checkpoint shards:   0% Completed | 0/4 [00:00<?, ?it/s]
+(EngineCore pid=3840409) 
+Loading safetensors checkpoint shards:  25% Completed | 1/4 [00:00<00:02,  1.02it/s]
+(EngineCore pid=3840409) 
+Loading safetensors checkpoint shards:  50% Completed | 2/4 [00:02<00:02,  1.01s/it]
+(EngineCore pid=3840409) 
+Loading safetensors checkpoint shards:  75% Completed | 3/4 [00:02<00:00,  1.04it/s]
+(EngineCore pid=3840409) 
+Loading safetensors checkpoint shards: 100% Completed | 4/4 [00:03<00:00,  1.40it/s]
+(EngineCore pid=3840409) 
+Loading safetensors checkpoint shards: 100% Completed | 4/4 [00:03<00:00,  1.23it/s]
+(EngineCore pid=3840409) 
+(EngineCore pid=3840409) Process EngineCore:
+(EngineCore pid=3840409) Traceback (most recent call last):
+(EngineCore pid=3840409)   File "/usr/lib/python3.10/multiprocessing/process.py", line 314, in _bootstrap
+(EngineCore pid=3840409)     self.run()
+(EngineCore pid=3840409)   File "/usr/lib/python3.10/multiprocessing/process.py", line 108, in run
+(EngineCore pid=3840409)     self._target(*self._args, **self._kwargs)
+(EngineCore pid=3840409)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 1112, in run_engine_core
+(EngineCore pid=3840409)     raise e
+(EngineCore pid=3840409)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 1082, in run_engine_core
+(EngineCore pid=3840409)     engine_core = EngineCoreProc(*args, engine_index=dp_rank, **kwargs)
+(EngineCore pid=3840409)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=3840409)     return func(*args, **kwargs)
+(EngineCore pid=3840409)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 848, in __init__
+(EngineCore pid=3840409)     super().__init__(
+(EngineCore pid=3840409)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 124, in __init__
+(EngineCore pid=3840409)     kv_cache_config = self._initialize_kv_caches(vllm_config)
+(EngineCore pid=3840409)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=3840409)     return func(*args, **kwargs)
+(EngineCore pid=3840409)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 247, in _initialize_kv_caches
+(EngineCore pid=3840409)     available_gpu_memory = self.model_executor.determine_available_memory()
+(EngineCore pid=3840409)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/executor/abstract.py", line 136, in determine_available_memory
+(EngineCore pid=3840409)     return self.collective_rpc("determine_available_memory")
+(EngineCore pid=3840409)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/executor/uniproc_executor.py", line 80, in collective_rpc
+(EngineCore pid=3840409)     result = run_method(self.driver_worker, method, args, kwargs)
+(EngineCore pid=3840409)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/serial_utils.py", line 510, in run_method
+(EngineCore pid=3840409)     return func(*args, **kwargs)
+(EngineCore pid=3840409)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(EngineCore pid=3840409)     return func(*args, **kwargs)
+(EngineCore pid=3840409)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/worker/gpu_worker.py", line 408, in determine_available_memory
+(EngineCore pid=3840409)     assert self.init_snapshot.free_memory >= free_gpu_memory, (
+(EngineCore pid=3840409) AssertionError: Error in memory profiling. Initial free memory 28.76 GiB, current free memory 28.87 GiB. This happens when other processes sharing the same container release GPU memory while vLLM is profiling during initialization. To fix this, ensure consistent GPU memory allocation or isolate vLLM in its own container.
+vllm engine construction attempt 3/10 failed for '/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1': vllm engine construction failed for '/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1' (RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {})
+(EngineCore pid=3841639) /home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/torch/library.py:357: UserWarning: Warning only once for all operators,  other operators may also be overridden.
+(EngineCore pid=3841639)   Overriding a previously registered kernel for the same operator and the same dispatch key
+(EngineCore pid=3841639)   operator: aten::mm(Tensor self, Tensor mat2) -> Tensor
+(EngineCore pid=3841639)     registered at /pytorch/build/aten/src/ATen/RegisterSchema.cpp:6
+(EngineCore pid=3841639)   dispatch key: CUDA
+(EngineCore pid=3841639)   previous kernel: registered at /pytorch/aten/src/ATen/LegacyBatchingRegistrations.cpp:1076
+(EngineCore pid=3841639)        new kernel: registered at /home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/model_executor/layers/batch_invariant.py:936 (Triggered internally at /pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
+(EngineCore pid=3841639)   self.m.impl(
+[W923 17:54:55.451060190 Context.cpp:534] Warning: torch.backends.cuda.preferred_blas_library is an experimental feature. If you see any error or unexpected behavior when this flag is set please file an issue on GitHub. (function operator())
+(EngineCore pid=3841639) <frozen importlib._bootstrap_external>:1184: FutureWarning: The cuda.cudart module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.runtime module instead.
+(EngineCore pid=3841639) <frozen importlib._bootstrap_external>:1184: FutureWarning: The cuda.nvrtc module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.nvrtc module instead.
+(EngineCore pid=3841639) 
+Loading safetensors checkpoint shards:   0% Completed | 0/4 [00:00<?, ?it/s]
+(EngineCore pid=3841639) 
+Loading safetensors checkpoint shards:  25% Completed | 1/4 [00:00<00:02,  1.09it/s]
+(EngineCore pid=3841639) 
+Loading safetensors checkpoint shards:  50% Completed | 2/4 [00:01<00:02,  1.00s/it]
+(EngineCore pid=3841639) 
+Loading safetensors checkpoint shards:  75% Completed | 3/4 [00:02<00:00,  1.05it/s]
+(EngineCore pid=3841639) 
+Loading safetensors checkpoint shards: 100% Completed | 4/4 [00:03<00:00,  1.41it/s]
+(EngineCore pid=3841639) 
+Loading safetensors checkpoint shards: 100% Completed | 4/4 [00:03<00:00,  1.24it/s]
+(EngineCore pid=3841639) 
+(EngineCore pid=3841639) Process EngineCore:
+(EngineCore pid=3841639) Traceback (most recent call last):
+(EngineCore pid=3841639)   File "/usr/lib/python3.10/multiprocessing/process.py", line 314, in _bootstrap
+(EngineCore pid=3841639)     self.run()
+(EngineCore pid=3841639)   File "/usr/lib/python3.10/multiprocessing/process.py", line 108, in run
+(EngineCore pid=3841639)     self._target(*self._args, **self._kwargs)
+(EngineCore pid=3841639)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 1112, in run_engine_core
+(EngineCore pid=3841639)     raise e
+(EngineCore pid=3841639)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 1082, in run_engine_core
+(EngineCore pid=3841639)     engine_core = EngineCoreProc(*args, engine_index=dp_rank, **kwargs)
+(EngineCore pid=3841639)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=3841639)     return func(*args, **kwargs)
+(EngineCore pid=3841639)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 848, in __init__
+(EngineCore pid=3841639)     super().__init__(
+(EngineCore pid=3841639)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 124, in __init__
+(EngineCore pid=3841639)     kv_cache_config = self._initialize_kv_caches(vllm_config)
+(EngineCore pid=3841639)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=3841639)     return func(*args, **kwargs)
+(EngineCore pid=3841639)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 247, in _initialize_kv_caches
+(EngineCore pid=3841639)     available_gpu_memory = self.model_executor.determine_available_memory()
+(EngineCore pid=3841639)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/executor/abstract.py", line 136, in determine_available_memory
+(EngineCore pid=3841639)     return self.collective_rpc("determine_available_memory")
+(EngineCore pid=3841639)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/executor/uniproc_executor.py", line 80, in collective_rpc
+(EngineCore pid=3841639)     result = run_method(self.driver_worker, method, args, kwargs)
+(EngineCore pid=3841639)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/serial_utils.py", line 510, in run_method
+(EngineCore pid=3841639)     return func(*args, **kwargs)
+(EngineCore pid=3841639)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(EngineCore pid=3841639)     return func(*args, **kwargs)
+(EngineCore pid=3841639)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/worker/gpu_worker.py", line 408, in determine_available_memory
+(EngineCore pid=3841639)     assert self.init_snapshot.free_memory >= free_gpu_memory, (
+(EngineCore pid=3841639) AssertionError: Error in memory profiling. Initial free memory 28.76 GiB, current free memory 28.87 GiB. This happens when other processes sharing the same container release GPU memory while vLLM is profiling during initialization. To fix this, ensure consistent GPU memory allocation or isolate vLLM in its own container.
+vllm engine construction attempt 4/10 failed for '/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1': vllm engine construction failed for '/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1' (RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {})
+(EngineCore pid=3842756) /home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/torch/library.py:357: UserWarning: Warning only once for all operators,  other operators may also be overridden.
+(EngineCore pid=3842756)   Overriding a previously registered kernel for the same operator and the same dispatch key
+(EngineCore pid=3842756)   operator: aten::mm(Tensor self, Tensor mat2) -> Tensor
+(EngineCore pid=3842756)     registered at /pytorch/build/aten/src/ATen/RegisterSchema.cpp:6
+(EngineCore pid=3842756)   dispatch key: CUDA
+(EngineCore pid=3842756)   previous kernel: registered at /pytorch/aten/src/ATen/LegacyBatchingRegistrations.cpp:1076
+(EngineCore pid=3842756)        new kernel: registered at /home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/model_executor/layers/batch_invariant.py:936 (Triggered internally at /pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
+(EngineCore pid=3842756)   self.m.impl(
+[W923 17:55:51.531183413 Context.cpp:534] Warning: torch.backends.cuda.preferred_blas_library is an experimental feature. If you see any error or unexpected behavior when this flag is set please file an issue on GitHub. (function operator())
+(EngineCore pid=3842756) <frozen importlib._bootstrap_external>:1184: FutureWarning: The cuda.cudart module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.runtime module instead.
+(EngineCore pid=3842756) <frozen importlib._bootstrap_external>:1184: FutureWarning: The cuda.nvrtc module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.nvrtc module instead.
+(EngineCore pid=3842756) 
+Loading safetensors checkpoint shards:   0% Completed | 0/4 [00:00<?, ?it/s]
+(EngineCore pid=3842756) 
+Loading safetensors checkpoint shards:  25% Completed | 1/4 [00:00<00:02,  1.06it/s]
+(EngineCore pid=3842756) 
+Loading safetensors checkpoint shards:  50% Completed | 2/4 [00:02<00:02,  1.03s/it]
+(EngineCore pid=3842756) 
+Loading safetensors checkpoint shards:  75% Completed | 3/4 [00:03<00:01,  1.08s/it]
+(EngineCore pid=3842756) 
+Loading safetensors checkpoint shards: 100% Completed | 4/4 [00:03<00:00,  1.28it/s]
+(EngineCore pid=3842756) 
+Loading safetensors checkpoint shards: 100% Completed | 4/4 [00:03<00:00,  1.14it/s]
+(EngineCore pid=3842756) 
+(EngineCore pid=3842756) Process EngineCore:
+(EngineCore pid=3842756) Traceback (most recent call last):
+(EngineCore pid=3842756)   File "/usr/lib/python3.10/multiprocessing/process.py", line 314, in _bootstrap
+(EngineCore pid=3842756)     self.run()
+(EngineCore pid=3842756)   File "/usr/lib/python3.10/multiprocessing/process.py", line 108, in run
+(EngineCore pid=3842756)     self._target(*self._args, **self._kwargs)
+(EngineCore pid=3842756)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 1112, in run_engine_core
+(EngineCore pid=3842756)     raise e
+(EngineCore pid=3842756)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 1082, in run_engine_core
+(EngineCore pid=3842756)     engine_core = EngineCoreProc(*args, engine_index=dp_rank, **kwargs)
+(EngineCore pid=3842756)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=3842756)     return func(*args, **kwargs)
+(EngineCore pid=3842756)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 848, in __init__
+(EngineCore pid=3842756)     super().__init__(
+(EngineCore pid=3842756)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 124, in __init__
+(EngineCore pid=3842756)     kv_cache_config = self._initialize_kv_caches(vllm_config)
+(EngineCore pid=3842756)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=3842756)     return func(*args, **kwargs)
+(EngineCore pid=3842756)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 247, in _initialize_kv_caches
+(EngineCore pid=3842756)     available_gpu_memory = self.model_executor.determine_available_memory()
+(EngineCore pid=3842756)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/executor/abstract.py", line 136, in determine_available_memory
+(EngineCore pid=3842756)     return self.collective_rpc("determine_available_memory")
+(EngineCore pid=3842756)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/executor/uniproc_executor.py", line 80, in collective_rpc
+(EngineCore pid=3842756)     result = run_method(self.driver_worker, method, args, kwargs)
+(EngineCore pid=3842756)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/serial_utils.py", line 510, in run_method
+(EngineCore pid=3842756)     return func(*args, **kwargs)
+(EngineCore pid=3842756)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(EngineCore pid=3842756)     return func(*args, **kwargs)
+(EngineCore pid=3842756)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/worker/gpu_worker.py", line 408, in determine_available_memory
+(EngineCore pid=3842756)     assert self.init_snapshot.free_memory >= free_gpu_memory, (
+(EngineCore pid=3842756) AssertionError: Error in memory profiling. Initial free memory 28.76 GiB, current free memory 28.87 GiB. This happens when other processes sharing the same container release GPU memory while vLLM is profiling during initialization. To fix this, ensure consistent GPU memory allocation or isolate vLLM in its own container.
+vllm engine construction attempt 5/10 failed for '/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1': vllm engine construction failed for '/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1' (RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {})
+(EngineCore pid=3843865) /home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/torch/library.py:357: UserWarning: Warning only once for all operators,  other operators may also be overridden.
+(EngineCore pid=3843865)   Overriding a previously registered kernel for the same operator and the same dispatch key
+(EngineCore pid=3843865)   operator: aten::mm(Tensor self, Tensor mat2) -> Tensor
+(EngineCore pid=3843865)     registered at /pytorch/build/aten/src/ATen/RegisterSchema.cpp:6
+(EngineCore pid=3843865)   dispatch key: CUDA
+(EngineCore pid=3843865)   previous kernel: registered at /pytorch/aten/src/ATen/LegacyBatchingRegistrations.cpp:1076
+(EngineCore pid=3843865)        new kernel: registered at /home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/model_executor/layers/batch_invariant.py:936 (Triggered internally at /pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
+(EngineCore pid=3843865)   self.m.impl(
+[W923 17:56:48.563008905 Context.cpp:534] Warning: torch.backends.cuda.preferred_blas_library is an experimental feature. If you see any error or unexpected behavior when this flag is set please file an issue on GitHub. (function operator())
+(EngineCore pid=3843865) <frozen importlib._bootstrap_external>:1184: FutureWarning: The cuda.cudart module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.runtime module instead.
+(EngineCore pid=3843865) <frozen importlib._bootstrap_external>:1184: FutureWarning: The cuda.nvrtc module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.nvrtc module instead.
+(EngineCore pid=3843865) 
+Loading safetensors checkpoint shards:   0% Completed | 0/4 [00:00<?, ?it/s]
+(EngineCore pid=3843865) 
+Loading safetensors checkpoint shards:  25% Completed | 1/4 [00:00<00:02,  1.10it/s]
+(EngineCore pid=3843865) 
+Loading safetensors checkpoint shards:  50% Completed | 2/4 [00:02<00:02,  1.15s/it]
+(EngineCore pid=3843865) 
+Loading safetensors checkpoint shards:  75% Completed | 3/4 [00:03<00:01,  1.03s/it]
+(EngineCore pid=3843865) 
+Loading safetensors checkpoint shards: 100% Completed | 4/4 [00:03<00:00,  1.35it/s]
+(EngineCore pid=3843865) 
+Loading safetensors checkpoint shards: 100% Completed | 4/4 [00:03<00:00,  1.17it/s]
+(EngineCore pid=3843865) 
+(EngineCore pid=3843865) Process EngineCore:
+(EngineCore pid=3843865) Traceback (most recent call last):
+(EngineCore pid=3843865)   File "/usr/lib/python3.10/multiprocessing/process.py", line 314, in _bootstrap
+(EngineCore pid=3843865)     self.run()
+(EngineCore pid=3843865)   File "/usr/lib/python3.10/multiprocessing/process.py", line 108, in run
+(EngineCore pid=3843865)     self._target(*self._args, **self._kwargs)
+(EngineCore pid=3843865)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 1112, in run_engine_core
+(EngineCore pid=3843865)     raise e
+(EngineCore pid=3843865)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 1082, in run_engine_core
+(EngineCore pid=3843865)     engine_core = EngineCoreProc(*args, engine_index=dp_rank, **kwargs)
+(EngineCore pid=3843865)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=3843865)     return func(*args, **kwargs)
+(EngineCore pid=3843865)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 848, in __init__
+(EngineCore pid=3843865)     super().__init__(
+(EngineCore pid=3843865)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 124, in __init__
+(EngineCore pid=3843865)     kv_cache_config = self._initialize_kv_caches(vllm_config)
+(EngineCore pid=3843865)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=3843865)     return func(*args, **kwargs)
+(EngineCore pid=3843865)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 247, in _initialize_kv_caches
+(EngineCore pid=3843865)     available_gpu_memory = self.model_executor.determine_available_memory()
+(EngineCore pid=3843865)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/executor/abstract.py", line 136, in determine_available_memory
+(EngineCore pid=3843865)     return self.collective_rpc("determine_available_memory")
+(EngineCore pid=3843865)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/executor/uniproc_executor.py", line 80, in collective_rpc
+(EngineCore pid=3843865)     result = run_method(self.driver_worker, method, args, kwargs)
+(EngineCore pid=3843865)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/serial_utils.py", line 510, in run_method
+(EngineCore pid=3843865)     return func(*args, **kwargs)
+(EngineCore pid=3843865)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(EngineCore pid=3843865)     return func(*args, **kwargs)
+(EngineCore pid=3843865)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/worker/gpu_worker.py", line 408, in determine_available_memory
+(EngineCore pid=3843865)     assert self.init_snapshot.free_memory >= free_gpu_memory, (
+(EngineCore pid=3843865) AssertionError: Error in memory profiling. Initial free memory 27.48 GiB, current free memory 28.87 GiB. This happens when other processes sharing the same container release GPU memory while vLLM is profiling during initialization. To fix this, ensure consistent GPU memory allocation or isolate vLLM in its own container.
+vllm engine construction attempt 6/10 failed for '/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1': vllm engine construction failed for '/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1' (RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {})
+(EngineCore pid=3844893) /home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/torch/library.py:357: UserWarning: Warning only once for all operators,  other operators may also be overridden.
+(EngineCore pid=3844893)   Overriding a previously registered kernel for the same operator and the same dispatch key
+(EngineCore pid=3844893)   operator: aten::mm(Tensor self, Tensor mat2) -> Tensor
+(EngineCore pid=3844893)     registered at /pytorch/build/aten/src/ATen/RegisterSchema.cpp:6
+(EngineCore pid=3844893)   dispatch key: CUDA
+(EngineCore pid=3844893)   previous kernel: registered at /pytorch/aten/src/ATen/LegacyBatchingRegistrations.cpp:1076
+(EngineCore pid=3844893)        new kernel: registered at /home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/model_executor/layers/batch_invariant.py:936 (Triggered internally at /pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
+(EngineCore pid=3844893)   self.m.impl(
+[W923 17:57:44.187516963 Context.cpp:534] Warning: torch.backends.cuda.preferred_blas_library is an experimental feature. If you see any error or unexpected behavior when this flag is set please file an issue on GitHub. (function operator())
+(EngineCore pid=3844893) <frozen importlib._bootstrap_external>:1184: FutureWarning: The cuda.cudart module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.runtime module instead.
+(EngineCore pid=3844893) <frozen importlib._bootstrap_external>:1184: FutureWarning: The cuda.nvrtc module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.nvrtc module instead.
+(EngineCore pid=3844893) 
+Loading safetensors checkpoint shards:   0% Completed | 0/4 [00:00<?, ?it/s]
+(EngineCore pid=3844893) 
+Loading safetensors checkpoint shards:  25% Completed | 1/4 [00:00<00:02,  1.13it/s]
+(EngineCore pid=3844893) 
+Loading safetensors checkpoint shards:  50% Completed | 2/4 [00:01<00:01,  1.01it/s]
+(EngineCore pid=3844893) 
+Loading safetensors checkpoint shards:  75% Completed | 3/4 [00:03<00:01,  1.04s/it]
+(EngineCore pid=3844893) 
+Loading safetensors checkpoint shards: 100% Completed | 4/4 [00:03<00:00,  1.32it/s]
+(EngineCore pid=3844893) 
+Loading safetensors checkpoint shards: 100% Completed | 4/4 [00:03<00:00,  1.19it/s]
+(EngineCore pid=3844893) 
+(EngineCore pid=3844893) Process EngineCore:
+(EngineCore pid=3844893) Traceback (most recent call last):
+(EngineCore pid=3844893)   File "/usr/lib/python3.10/multiprocessing/process.py", line 314, in _bootstrap
+(EngineCore pid=3844893)     self.run()
+(EngineCore pid=3844893)   File "/usr/lib/python3.10/multiprocessing/process.py", line 108, in run
+(EngineCore pid=3844893)     self._target(*self._args, **self._kwargs)
+(EngineCore pid=3844893)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 1112, in run_engine_core
+(EngineCore pid=3844893)     raise e
+(EngineCore pid=3844893)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 1082, in run_engine_core
+(EngineCore pid=3844893)     engine_core = EngineCoreProc(*args, engine_index=dp_rank, **kwargs)
+(EngineCore pid=3844893)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=3844893)     return func(*args, **kwargs)
+(EngineCore pid=3844893)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 848, in __init__
+(EngineCore pid=3844893)     super().__init__(
+(EngineCore pid=3844893)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 124, in __init__
+(EngineCore pid=3844893)     kv_cache_config = self._initialize_kv_caches(vllm_config)
+(EngineCore pid=3844893)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=3844893)     return func(*args, **kwargs)
+(EngineCore pid=3844893)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 247, in _initialize_kv_caches
+(EngineCore pid=3844893)     available_gpu_memory = self.model_executor.determine_available_memory()
+(EngineCore pid=3844893)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/executor/abstract.py", line 136, in determine_available_memory
+(EngineCore pid=3844893)     return self.collective_rpc("determine_available_memory")
+(EngineCore pid=3844893)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/executor/uniproc_executor.py", line 80, in collective_rpc
+(EngineCore pid=3844893)     result = run_method(self.driver_worker, method, args, kwargs)
+(EngineCore pid=3844893)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/serial_utils.py", line 510, in run_method
+(EngineCore pid=3844893)     return func(*args, **kwargs)
+(EngineCore pid=3844893)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(EngineCore pid=3844893)     return func(*args, **kwargs)
+(EngineCore pid=3844893)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/worker/gpu_worker.py", line 408, in determine_available_memory
+(EngineCore pid=3844893)     assert self.init_snapshot.free_memory >= free_gpu_memory, (
+(EngineCore pid=3844893) AssertionError: Error in memory profiling. Initial free memory 27.48 GiB, current free memory 28.87 GiB. This happens when other processes sharing the same container release GPU memory while vLLM is profiling during initialization. To fix this, ensure consistent GPU memory allocation or isolate vLLM in its own container.
+vllm engine construction attempt 7/10 failed for '/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1': vllm engine construction failed for '/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1' (RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {})
+(EngineCore pid=3845892) /home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/torch/library.py:357: UserWarning: Warning only once for all operators,  other operators may also be overridden.
+(EngineCore pid=3845892)   Overriding a previously registered kernel for the same operator and the same dispatch key
+(EngineCore pid=3845892)   operator: aten::mm(Tensor self, Tensor mat2) -> Tensor
+(EngineCore pid=3845892)     registered at /pytorch/build/aten/src/ATen/RegisterSchema.cpp:6
+(EngineCore pid=3845892)   dispatch key: CUDA
+(EngineCore pid=3845892)   previous kernel: registered at /pytorch/aten/src/ATen/LegacyBatchingRegistrations.cpp:1076
+(EngineCore pid=3845892)        new kernel: registered at /home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/model_executor/layers/batch_invariant.py:936 (Triggered internally at /pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
+(EngineCore pid=3845892)   self.m.impl(
+[W923 17:58:40.198694900 Context.cpp:534] Warning: torch.backends.cuda.preferred_blas_library is an experimental feature. If you see any error or unexpected behavior when this flag is set please file an issue on GitHub. (function operator())
+(EngineCore pid=3845892) <frozen importlib._bootstrap_external>:1184: FutureWarning: The cuda.cudart module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.runtime module instead.
+(EngineCore pid=3845892) <frozen importlib._bootstrap_external>:1184: FutureWarning: The cuda.nvrtc module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.nvrtc module instead.
+(EngineCore pid=3845892) 
+Loading safetensors checkpoint shards:   0% Completed | 0/4 [00:00<?, ?it/s]
+(EngineCore pid=3845892) 
+Loading safetensors checkpoint shards:  25% Completed | 1/4 [00:00<00:02,  1.15it/s]
+(EngineCore pid=3845892) 
+Loading safetensors checkpoint shards:  50% Completed | 2/4 [00:02<00:02,  1.06s/it]
+(EngineCore pid=3845892) 
+Loading safetensors checkpoint shards:  75% Completed | 3/4 [00:02<00:00,  1.02it/s]
+(EngineCore pid=3845892) 
+Loading safetensors checkpoint shards: 100% Completed | 4/4 [00:03<00:00,  1.40it/s]
+(EngineCore pid=3845892) 
+Loading safetensors checkpoint shards: 100% Completed | 4/4 [00:03<00:00,  1.23it/s]
+(EngineCore pid=3845892) 
+(EngineCore pid=3845892) Process EngineCore:
+(EngineCore pid=3845892) Traceback (most recent call last):
+(EngineCore pid=3845892)   File "/usr/lib/python3.10/multiprocessing/process.py", line 314, in _bootstrap
+(EngineCore pid=3845892)     self.run()
+(EngineCore pid=3845892)   File "/usr/lib/python3.10/multiprocessing/process.py", line 108, in run
+(EngineCore pid=3845892)     self._target(*self._args, **self._kwargs)
+(EngineCore pid=3845892)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 1112, in run_engine_core
+(EngineCore pid=3845892)     raise e
+(EngineCore pid=3845892)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 1082, in run_engine_core
+(EngineCore pid=3845892)     engine_core = EngineCoreProc(*args, engine_index=dp_rank, **kwargs)
+(EngineCore pid=3845892)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=3845892)     return func(*args, **kwargs)
+(EngineCore pid=3845892)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 848, in __init__
+(EngineCore pid=3845892)     super().__init__(
+(EngineCore pid=3845892)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 124, in __init__
+(EngineCore pid=3845892)     kv_cache_config = self._initialize_kv_caches(vllm_config)
+(EngineCore pid=3845892)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=3845892)     return func(*args, **kwargs)
+(EngineCore pid=3845892)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 247, in _initialize_kv_caches
+(EngineCore pid=3845892)     available_gpu_memory = self.model_executor.determine_available_memory()
+(EngineCore pid=3845892)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/executor/abstract.py", line 136, in determine_available_memory
+(EngineCore pid=3845892)     return self.collective_rpc("determine_available_memory")
+(EngineCore pid=3845892)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/executor/uniproc_executor.py", line 80, in collective_rpc
+(EngineCore pid=3845892)     result = run_method(self.driver_worker, method, args, kwargs)
+(EngineCore pid=3845892)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/serial_utils.py", line 510, in run_method
+(EngineCore pid=3845892)     return func(*args, **kwargs)
+(EngineCore pid=3845892)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(EngineCore pid=3845892)     return func(*args, **kwargs)
+(EngineCore pid=3845892)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/worker/gpu_worker.py", line 408, in determine_available_memory
+(EngineCore pid=3845892)     assert self.init_snapshot.free_memory >= free_gpu_memory, (
+(EngineCore pid=3845892) AssertionError: Error in memory profiling. Initial free memory 26.93 GiB, current free memory 28.87 GiB. This happens when other processes sharing the same container release GPU memory while vLLM is profiling during initialization. To fix this, ensure consistent GPU memory allocation or isolate vLLM in its own container.
+vllm engine construction attempt 8/10 failed for '/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1': vllm engine construction failed for '/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1' (RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {})
+(EngineCore pid=3846768) /home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/torch/library.py:357: UserWarning: Warning only once for all operators,  other operators may also be overridden.
+(EngineCore pid=3846768)   Overriding a previously registered kernel for the same operator and the same dispatch key
+(EngineCore pid=3846768)   operator: aten::mm(Tensor self, Tensor mat2) -> Tensor
+(EngineCore pid=3846768)     registered at /pytorch/build/aten/src/ATen/RegisterSchema.cpp:6
+(EngineCore pid=3846768)   dispatch key: CUDA
+(EngineCore pid=3846768)   previous kernel: registered at /pytorch/aten/src/ATen/LegacyBatchingRegistrations.cpp:1076
+(EngineCore pid=3846768)        new kernel: registered at /home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/model_executor/layers/batch_invariant.py:936 (Triggered internally at /pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
+(EngineCore pid=3846768)   self.m.impl(
+[W923 17:59:34.508520822 Context.cpp:534] Warning: torch.backends.cuda.preferred_blas_library is an experimental feature. If you see any error or unexpected behavior when this flag is set please file an issue on GitHub. (function operator())
+(EngineCore pid=3846768) <frozen importlib._bootstrap_external>:1184: FutureWarning: The cuda.cudart module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.runtime module instead.
+(EngineCore pid=3846768) <frozen importlib._bootstrap_external>:1184: FutureWarning: The cuda.nvrtc module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.nvrtc module instead.
+(EngineCore pid=3846768) 
+Loading safetensors checkpoint shards:   0% Completed | 0/4 [00:00<?, ?it/s]
+(EngineCore pid=3846768) 
+Loading safetensors checkpoint shards:  25% Completed | 1/4 [00:00<00:02,  1.17it/s]
+(EngineCore pid=3846768) 
+Loading safetensors checkpoint shards:  50% Completed | 2/4 [00:02<00:02,  1.07s/it]
+(EngineCore pid=3846768) 
+Loading safetensors checkpoint shards:  75% Completed | 3/4 [00:03<00:01,  1.05s/it]
+(EngineCore pid=3846768) 
+Loading safetensors checkpoint shards: 100% Completed | 4/4 [00:03<00:00,  1.31it/s]
+(EngineCore pid=3846768) 
+Loading safetensors checkpoint shards: 100% Completed | 4/4 [00:03<00:00,  1.17it/s]
+(EngineCore pid=3846768) 
+(EngineCore pid=3846768) Process EngineCore:
+(EngineCore pid=3846768) Traceback (most recent call last):
+(EngineCore pid=3846768)   File "/usr/lib/python3.10/multiprocessing/process.py", line 314, in _bootstrap
+(EngineCore pid=3846768)     self.run()
+(EngineCore pid=3846768)   File "/usr/lib/python3.10/multiprocessing/process.py", line 108, in run
+(EngineCore pid=3846768)     self._target(*self._args, **self._kwargs)
+(EngineCore pid=3846768)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 1112, in run_engine_core
+(EngineCore pid=3846768)     raise e
+(EngineCore pid=3846768)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 1082, in run_engine_core
+(EngineCore pid=3846768)     engine_core = EngineCoreProc(*args, engine_index=dp_rank, **kwargs)
+(EngineCore pid=3846768)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=3846768)     return func(*args, **kwargs)
+(EngineCore pid=3846768)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 848, in __init__
+(EngineCore pid=3846768)     super().__init__(
+(EngineCore pid=3846768)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 124, in __init__
+(EngineCore pid=3846768)     kv_cache_config = self._initialize_kv_caches(vllm_config)
+(EngineCore pid=3846768)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=3846768)     return func(*args, **kwargs)
+(EngineCore pid=3846768)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 247, in _initialize_kv_caches
+(EngineCore pid=3846768)     available_gpu_memory = self.model_executor.determine_available_memory()
+(EngineCore pid=3846768)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/executor/abstract.py", line 136, in determine_available_memory
+(EngineCore pid=3846768)     return self.collective_rpc("determine_available_memory")
+(EngineCore pid=3846768)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/executor/uniproc_executor.py", line 80, in collective_rpc
+(EngineCore pid=3846768)     result = run_method(self.driver_worker, method, args, kwargs)
+(EngineCore pid=3846768)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/serial_utils.py", line 510, in run_method
+(EngineCore pid=3846768)     return func(*args, **kwargs)
+(EngineCore pid=3846768)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(EngineCore pid=3846768)     return func(*args, **kwargs)
+(EngineCore pid=3846768)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/worker/gpu_worker.py", line 408, in determine_available_memory
+(EngineCore pid=3846768)     assert self.init_snapshot.free_memory >= free_gpu_memory, (
+(EngineCore pid=3846768) AssertionError: Error in memory profiling. Initial free memory 26.93 GiB, current free memory 28.87 GiB. This happens when other processes sharing the same container release GPU memory while vLLM is profiling during initialization. To fix this, ensure consistent GPU memory allocation or isolate vLLM in its own container.
+vllm engine construction attempt 9/10 failed for '/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1': vllm engine construction failed for '/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1' (RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {})
+(EngineCore pid=3848452) /home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/torch/library.py:357: UserWarning: Warning only once for all operators,  other operators may also be overridden.
+(EngineCore pid=3848452)   Overriding a previously registered kernel for the same operator and the same dispatch key
+(EngineCore pid=3848452)   operator: aten::mm(Tensor self, Tensor mat2) -> Tensor
+(EngineCore pid=3848452)     registered at /pytorch/build/aten/src/ATen/RegisterSchema.cpp:6
+(EngineCore pid=3848452)   dispatch key: CUDA
+(EngineCore pid=3848452)   previous kernel: registered at /pytorch/aten/src/ATen/LegacyBatchingRegistrations.cpp:1076
+(EngineCore pid=3848452)        new kernel: registered at /home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/model_executor/layers/batch_invariant.py:936 (Triggered internally at /pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
+(EngineCore pid=3848452)   self.m.impl(
+[W923 18:00:30.851878917 Context.cpp:534] Warning: torch.backends.cuda.preferred_blas_library is an experimental feature. If you see any error or unexpected behavior when this flag is set please file an issue on GitHub. (function operator())
+(EngineCore pid=3848452) <frozen importlib._bootstrap_external>:1184: FutureWarning: The cuda.cudart module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.runtime module instead.
+(EngineCore pid=3848452) <frozen importlib._bootstrap_external>:1184: FutureWarning: The cuda.nvrtc module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.nvrtc module instead.
+(EngineCore pid=3848452) 
+Loading safetensors checkpoint shards:   0% Completed | 0/4 [00:00<?, ?it/s]
+(EngineCore pid=3848452) 
+Loading safetensors checkpoint shards:  25% Completed | 1/4 [00:01<00:03,  1.05s/it]
+(EngineCore pid=3848452) 
+Loading safetensors checkpoint shards:  50% Completed | 2/4 [00:02<00:02,  1.00s/it]
+(EngineCore pid=3848452) 
+Loading safetensors checkpoint shards:  75% Completed | 3/4 [00:03<00:01,  1.02s/it]
+(EngineCore pid=3848452) 
+Loading safetensors checkpoint shards: 100% Completed | 4/4 [00:03<00:00,  1.32it/s]
+(EngineCore pid=3848452) 
+Loading safetensors checkpoint shards: 100% Completed | 4/4 [00:03<00:00,  1.17it/s]
+(EngineCore pid=3848452) 
+(EngineCore pid=3848452) Process EngineCore:
+(EngineCore pid=3848452) Traceback (most recent call last):
+(EngineCore pid=3848452)   File "/usr/lib/python3.10/multiprocessing/process.py", line 314, in _bootstrap
+(EngineCore pid=3848452)     self.run()
+(EngineCore pid=3848452)   File "/usr/lib/python3.10/multiprocessing/process.py", line 108, in run
+(EngineCore pid=3848452)     self._target(*self._args, **self._kwargs)
+(EngineCore pid=3848452)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 1112, in run_engine_core
+(EngineCore pid=3848452)     raise e
+(EngineCore pid=3848452)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 1082, in run_engine_core
+(EngineCore pid=3848452)     engine_core = EngineCoreProc(*args, engine_index=dp_rank, **kwargs)
+(EngineCore pid=3848452)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=3848452)     return func(*args, **kwargs)
+(EngineCore pid=3848452)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 848, in __init__
+(EngineCore pid=3848452)     super().__init__(
+(EngineCore pid=3848452)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 124, in __init__
+(EngineCore pid=3848452)     kv_cache_config = self._initialize_kv_caches(vllm_config)
+(EngineCore pid=3848452)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=3848452)     return func(*args, **kwargs)
+(EngineCore pid=3848452)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/engine/core.py", line 247, in _initialize_kv_caches
+(EngineCore pid=3848452)     available_gpu_memory = self.model_executor.determine_available_memory()
+(EngineCore pid=3848452)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/executor/abstract.py", line 136, in determine_available_memory
+(EngineCore pid=3848452)     return self.collective_rpc("determine_available_memory")
+(EngineCore pid=3848452)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/executor/uniproc_executor.py", line 80, in collective_rpc
+(EngineCore pid=3848452)     result = run_method(self.driver_worker, method, args, kwargs)
+(EngineCore pid=3848452)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/serial_utils.py", line 510, in run_method
+(EngineCore pid=3848452)     return func(*args, **kwargs)
+(EngineCore pid=3848452)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(EngineCore pid=3848452)     return func(*args, **kwargs)
+(EngineCore pid=3848452)   File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/v1/worker/gpu_worker.py", line 408, in determine_available_memory
+(EngineCore pid=3848452)     assert self.init_snapshot.free_memory >= free_gpu_memory, (
+(EngineCore pid=3848452) AssertionError: Error in memory profiling. Initial free memory 26.93 GiB, current free memory 28.87 GiB. This happens when other processes sharing the same container release GPU memory while vLLM is profiling during initialization. To fix this, ensure consistent GPU memory allocation or isolate vLLM in its own container.
+vllm engine construction attempt 10/10 failed for '/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1': vllm engine construction failed for '/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1' (RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {})
+ERROR: judge engine not ready: engine construction failed after 10 attempts: vllm engine construction failed for '/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1' (RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {})
+
