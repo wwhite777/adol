@@ -1,0 +1,5 @@
+nochunk1 vs nochunk2 | views 564 / 564, common 564 | identical prompts 564
+status pairs: {('ok', 'ok'): 564}
+byte-identical judge text: 340 / 564 = 60.3%
+both ok 564 | identical scores 465 (82.4%)
+differing-field counts among differing views: {'D5': 64, 'D1': 9, 'D2': 18, 'D4': 30, 'A': 36, 'D3': 13, 'D6': 13, 'critical': 3}
