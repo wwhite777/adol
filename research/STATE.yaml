@@ -8,7 +8,7 @@ venue:
   phase_a: domestic — 한국정보통신학회 JKIICE or 한국융합학회 (PI 2026-09-22); no cross-family audit (PI rule 2026-09-11)
   phase_b: optional Q1 attempt (JMIR Formative / Sci Rep / JMIR MH) after co-author double rating; T1 conference only if H5 strong
 stage: S3
-status: 'in_progress   # generation DONE 4/5 (HyperCLOVA awaits the PI''s go); scoring blocked on the decode-path decision (plain batched rejected; batch-invariant test pending a provider passthrough) and judge prompt v0.3 (coder); GPUs idle; no outcome read'
+status: 'in_progress   # generation DONE 4/5 (HyperCLOVA awaits the PI''s go); decode path pinned (batch-invariant); judge prompt v0.3 built; parse-rate gate running for J1–J3; no outcome read'
 stage_history:
 - stage: S0
   status: completed
@@ -102,8 +102,10 @@ jobs:
 - '2026-09-23 04:47Z RUNNING: coder card judge prompt v0.3 (new file src/kyra/judge_prompt_v0_3.md; dynamic example; unconditional control rule; parser guard; raw text on ERROR)'
 - '2026-09-23 04:46Z-04:52Z DONE: batched-vs-batched repeat (J1, Qwen main): text identical 75.7%, scores identical 82.7% of both-ok, 6 critical flips → plain batched decoding REJECTED (not self-reproducible; DECISION_LOG ~04:55Z)'
 - '2026-09-23 04:53Z-04:57Z FAILED ×2: vLLM batch-invariant mode needs the attention backend set in the engine config (env VLLM_ATTENTION_BACKEND is ignored by the check); each attempt looped over engine re-builds until killed by PID (OPS-2)'
-- '2026-09-23 04:58Z RUNNING: coder card — env-driven engine kwargs passthrough in providers.py (KYRA_VLLM_ENGINE_KWARGS → LLM(...); recorded in effective params) so batch-invariant + FLASH_ATTN can be tested'
-- '2026-09-23 PENDING: batch-invariant test ×2 on GPU 2 (self-reproducibility + sequential comparison) → pin the decode path (DECISION_LOG) → verify v0.3 → score 16 run dirs × 3 judges → parse-error rates (> 2% → replace judge) → panels → analysis → G6 (--n3-revisions 1); HyperCLOVA after the PI''s go'
+- '2026-09-23 04:58Z-05:05Z DONE: engine-kwargs passthrough (providers.py, commit 61f344f); batch-invariant runs A/B identical 564/564 (different GPUs), run C vs sequential 49.1% text / 62.9% scores with identical prompts → DECODE PATH PINNED (DECISION_LOG ~05:15Z/~05:20Z; launcher bin/score_phaseA.sh; judges.json batch_size 64)'
+- '2026-09-23 04:47Z-05:30Z DONE (uncommitted until the conductor''s suite passes): judge prompt v0.3 + retry reminder per view type + fail-closed manual loader (coder; 429-test discover OK on the coder side)'
+- '2026-09-23 05:35Z RUNNING: parse-rate GATE under v0.3 + pinned path on Qwen main (564 views): J1 on GPU 2, J2 on GPU 1 (scratch outputs; logs test/logs/judge_gate_v0_3_J{1,2}_qwen_main_*.log); J3 next on the first free GPU. Rule: > 2% JudgeParseError → that judge is REPLACED (prereg), not revised'
+- '2026-09-23 PENDING: commit v0.3 → bin/score_phaseA.sh per model (Qwen, Kanana, EXAONE [4 dated dirs, never main/20260922T1239Z-b936cd], Gemma) → panels → analysis → G6 (--n3-revisions 1); HyperCLOVA after the PI''s go'
 s3_progress:
   provider: DONE — src/kyra VLLMProvider + provenance fix (manifest records effective params + chat-template hash); smoke run result/raw/smoke_vllm/20260922T0817Z-3c5915 (sha manifest e201f60f…, responses 62bb9d8a…)
   disk: 26 GB free on the shared volume after the install; one ≤20 GB checkpoint at a time; cached Qwen2.5-14B-Instruct + Llama-3.1-8B-Instruct (fusion1's, read-only) count as two of the needed models/judges
