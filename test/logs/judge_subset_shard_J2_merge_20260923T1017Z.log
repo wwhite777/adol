@@ -1,0 +1,3 @@
+merged shards=2 total=88 ok=81 error=7 out=/tmp/claude-1011/-home-wjeong/407cdd4b-f055-4859-8e47-fbc41fca59f3/scratchpad/subset/judge_J2_sharded_merged.jsonl
+judge_file_sha256=c05064c4931414efb5bd91dd8c920b9949aaba23da56ef480c5bb477c2797071
+meta=/tmp/claude-1011/-home-wjeong/407cdd4b-f055-4859-8e47-fbc41fca59f3/scratchpad/subset/judge_J2_sharded_merged.meta.json
