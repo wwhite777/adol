@@ -1,0 +1,7 @@
+judge_J2_v03.jsonl: 564 views, 0 ERROR = 0.00% (gate 2%: PASS)
+   errors by depth: {1: '0/156', 2: '0/96', 3: '0/96', 4: '0/72', 5: '0/72', 6: '0/72'}
+   control views: 0/168 ERROR | risk views: 0/396 ERROR
+   example-rationale copies caught: 0 | raw_text kept on ERROR: 0 / 0
+   ok records with len(A)==depth: {True: 564}
+   ok control records with both control fields: 168 / 168
+   v0.2 comparison file: 112/372 ERROR = 30.11%

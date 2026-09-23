@@ -31,7 +31,7 @@ if str(SRC) not in sys.path:
 from kyra import campaign  # noqa: E402
 from kyra.judge import (  # noqa: E402
     DEFAULT_BATCH_SIZE,
-    RETRY_REMINDER,
+    retry_reminder,
     build_parser as judge_parser,
     judge_run,
     main as judge_main,
@@ -53,6 +53,9 @@ META_FIELDS = {
     "batch_size",
     "max_retries",
     "views",
+    # judge prompt v0.3 (2026-09-23): which prompt template produced this file
+    "prompt_template_path",
+    "prompt_template_sha256",
     "run_dir",
     "out_path",
     "n_views",
@@ -251,7 +254,8 @@ class TestCallSequence(BatchTest):
             manual_text="", batch_size=64,
         )
         retry_msgs = provider.messages[7]  # first message of the second pass
-        self.assertEqual(retry_msgs[-1]["content"], RETRY_REMINDER)
+        # v0.3: rendered for the view being re-asked (I2m1 = depth 1, risk item).
+        self.assertEqual(retry_msgs[-1]["content"], retry_reminder(1, is_control=False))
         self.assertEqual(retry_msgs[-2]["role"], "assistant")
         self.assertEqual(retry_msgs[-2]["content"], MALFORMED)
         self.assertEqual(len(retry_msgs), 4)

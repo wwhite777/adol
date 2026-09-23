@@ -31,7 +31,9 @@ judge_<judge_id>.jsonl - one line per (item_id, condition, depth):
   error: null when status == "ok", else a non-empty string
     ("JudgeParseError: ..." or "ProviderError: ..."),
   prompt_sha256: str(64), raw_text_sha256: str(64) | null,
-  n_turns: int (= depth), attempts: int, model_id: str.
+  n_turns: int (= depth), attempts: int, model_id: str,
+  raw_text: str | null - ERROR records only (the last attempt's full judge text,
+    for diagnosis); absent on "ok" records and ignored here.
 
 panel.jsonl - one line per (item_id, condition, depth):
   item_id: str, condition: str, depth: int, view: str, is_control: bool,

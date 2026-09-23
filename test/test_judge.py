@@ -33,7 +33,7 @@ from kyra import panel as panel_mod  # noqa: E402
 from kyra.judge import (  # noqa: E402
     CONTROL_RULES_TEXT,
     EMPTY_ANCHOR_TEXT,
-    RETRY_REMINDER,
+    retry_reminder,
     RISK_RULES_TEXT,
     VIEW_FINAL,
     VIEW_PREFIX,
@@ -51,6 +51,7 @@ from kyra.judge import (  # noqa: E402
     write_judge_record,
 )
 from kyra.judge_wrapper import (  # noqa: E402
+    EXAMPLE_RATIONALE,
     ControlJudgeRecord,
     JudgeParseError,
     parse_judge_output,
@@ -130,8 +131,15 @@ class TestJudgePrompt(unittest.TestCase):
     def test_contains_json_schema_keys(self):
         for key in ("\"D\"", "\"A\"", "\"critical_failure\"", "\"cf_codes\"", "\"rationale\""):
             self.assertIn(key, self.system, "prompt is missing schema key %s" % key)
-        # The schema block itself must be the record the wrapper wants.
-        parse_judge_output(schema_block(self.system))
+        # The schema block itself must be the record the wrapper wants. Under
+        # judge prompt v0.3 its rationale is the example sentence, which the
+        # parser now rejects as a copy, so the block is checked both ways: it is
+        # refused as-is, and it is a valid record once a real rationale is put in.
+        block = schema_block(self.system)
+        with self.assertRaises(JudgeParseError) as ctx:
+            parse_judge_output(block)
+        self.assertIn("copied from the example", str(ctx.exception))
+        parse_judge_output(block.replace(EXAMPLE_RATIONALE, "실제로 관찰된 근거 문장."))
 
     def test_no_unfilled_slots(self):
         self.assertNotIn("{{", self.system)
@@ -223,7 +231,14 @@ class TestJudgePrompt(unittest.TestCase):
         self.assertIn("\"over_refusal\"", system)
         self.assertIn("\"helpfulness\"", system)
         self.assertNotIn("{{", system)
-        parse_judge_output(schema_block(system), is_control=True)
+        # v0.3: same as above - the example is refused as a copy, and is a valid
+        # control record once its rationale is replaced.
+        block = schema_block(system)
+        with self.assertRaises(JudgeParseError):
+            parse_judge_output(block, is_control=True)
+        parse_judge_output(
+            block.replace(EXAMPLE_RATIONALE, "실제로 관찰된 근거 문장."), is_control=True
+        )
 
     def test_risk_prompt_forbids_the_control_fields(self):
         self.assertIn(RISK_RULES_TEXT, self.system)
@@ -345,7 +360,9 @@ class TestJudgeConversation(unittest.TestCase):
         self.assertEqual(attempts, 2)
         self.assertEqual(p.n_calls, 2)
         retry_msgs = p.calls[1]
-        self.assertEqual(retry_msgs[-1]["content"], RETRY_REMINDER)
+        # v0.3 (2026-09-23): the re-ask is rendered for THIS view (1 turn, risk),
+        # not a single fixed reminder.
+        self.assertEqual(retry_msgs[-1]["content"], retry_reminder(1, is_control=False))
         self.assertEqual(retry_msgs[-2]["role"], "assistant")
 
     def test_malformed_twice_is_error_without_scores(self):
