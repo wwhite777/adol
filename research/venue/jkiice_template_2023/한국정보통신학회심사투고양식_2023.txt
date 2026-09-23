@@ -1,0 +1,131 @@
+
+<표>
+
+
+<표>
+
+<표>
+
+한국정보통신학회 논문지 제목 (산돌고딕B, 17p, 장평100, 자간-5, 줄간격130%, 왼쪽정렬)
+
+ 
+
+Efficient Multicasting Environment (영문Arial, 12.5p, 장평100, 자간0, 줄간격 120%,왼쪽정렬)
+
+
+
+
+
+요  약 (산돌고딕B, 10p, 장평 100, 자간 -2, 줄간격 160%, 왼쪽정렬)
+다음은 요약문 입니다. (-윤명조120 9.2p, 글자자간 -5, 장평 100%, 들여쓰기 10pt , 줄간격 130%)
+
+ABSTRACT (산돌고딕B, 10p, 장평 100, 자간 -2, 줄간격 160%, 왼쪽정렬)
+Abstract should be placed here. These instructions give you guidelines for preparing papers for JICCE. (Times New Roman 8.5p, 글자자간 -3, 장평 100%, 들여쓰기 10pt, 줄간격 130%.)
+
+키워드 : (산돌고딕, 10p, 장평100, 자간-2, 줄간격 156%, 왼쪽정렬) 중요 색인어 4-5개를 넣어주세요 (-윤명조120 8.5포인트)
+Keywords : (영문 Arial, 10p, 장평100, 자간-2, 줄간격 156%, 왼쪽정렬)  About four key words or phrases in alphabetical order, separated by commas such as Maritime, Information, Communication, Science, etc (Times New Roman 8.5포인트)
+
+
+
+
+
+
+
+
+
+서론부터는 페이지를 바꾸어서 작성하시기
+바랍니다
+Ⅰ. 서  론(-윤고딕140, 11p, 왼쪽정렬)
+한국정보통신학회논문지(J. Korea. Inst. Inf. Commun. Eng.) Vol. 23, No. 1: 399~406, Mar. 2019
+한국정보통신학회 논문 제목
+
+서론부터는 2단으로 편집하세요. 
+(들여쓰기 2. -윤명조120 9.2포인트. 줄간격150%)
+이 문서는 아래한글 2010에 대한 템플릿입니다. 이 템플릿 양식은 학회 홈페이지(http://www.kiice.org)에서 다운로드하여 사용할 수 있습니다.
+인쇄용지 A4사이즈, 워드프로세서는 글 3.0이상을 사용합니다. 논문 편집 여백은 위쪽, 아래쪽 38.5mm, 좌, 우 여백 각각 30mm, 머리말 10mm, 꼬리말 10mm로 설정합니다.
+각 장과 장 사이에는 2줄을 띄워 분리하여 주십시오. 
+
+
+Ⅱ. 본  론(-윤고딕140, 11p, 왼쪽정렬)
+
+본론은 필요에 따라 3-4 개의 장으로 편집할 수 있습니다. 본문의 제목은 장, 절, 부절에 따라 번호를 구분합니다.
+
+2.1 그림 편집
+본문에 삽입될 그림은 반드시 jpeg 나 jpg로 변환하여 원고 파일에 삽입하여 주시고, 파일로 작성할 수 없는 그림이나 사진이 포함되는 경우에는 저자가 “Camera-ready form”을 만들어 논문 전체를 Hard copy로 제출할 수 있습니다. 이 때에도 논문의 편집양식은 그대로 지켜야 합니다.
+
+
+<그림>
+
+Fig. 1 영문제목
+그림 안의 모든 내용은 영문으로 작성되어야 함
+(-Arial, 8p, 장평100, 자간 -8, 줄간격 130%, 왼쪽정렬)
+
+
+2.2.1 표 편집
+본문에 삽입될 표는 파일에 삽입하고 표를 삽입한 후에 위치에서 일반글자처럼 선택하고 여백캡션에서 모든 여백을 0으로 정한다. 표안의 내용은 영문으로 작성 후 신명조, 8포인트, 장평100, 자간-3 정렬은 양쪽정렬로, 줄간격은 120%로 한다.
+
+Table. 1 영문제목
+(-Arial, 8p, 장평100, 자간 -8, 줄간격 130%, 왼쪽정렬)
+
+<표>
+
+표를 만든 후 고치기에서 위치에서 일반글자처럼 선택하고 여백캡션에서 모든 여백을 0으로 정한다. 
+표안의 내용은 신명조, 8포인트, 장평100, 자간-3 정렬은 양쪽정렬로, 줄간격은 120%로    
+
+
+
+Ⅲ. (제 3 장의 제목)
+
+3.1 수식
+수식은 한글에서 수식편집기를 사용하여 삽입하고 오른쪽 여백에 괄호 안에 수식 번호를 입력한다.
+
+(1)
+
+
+Ⅳ. (제 4 장의 제목)
+
+4.1 참고문헌
+참고문헌은 먼저 본문에 언급한 순서대로 번호를 매겨야 한다. 각각의 참고문헌은 다음과 같이 인용한다[1, 4, 7], 또는 [6-9] 참고[3]과 논문[5]등으로 사용한다.
+
+
+
+Ⅴ. 결  론(-윤고딕140, 11p, 왼쪽정렬)
+
+결론을 작성하신 후, 부록이 있는 경우에는 각 부록을 장으로 설정하여, 결론과 참고문헌 사이에 삽입하여 주십시오. 단, 부록과 참고문헌에는 장번호(Ⅰ, Ⅱ, … 등)를 붙이지 않습니다.
+
+
+
+References(-윤고딕140, 11p, 왼쪽정렬)
+
+(내용 : Times New Roman, 8포인트. 줄간격150%)
+1) Journal Articles:  
+[1] E. H. Choi, H. S. Hwang, and C. S. Kim, “Electron spectroscopy studies on magneto-optical media and plastic substrate interfaces,” International Journal of Information and Communication Engineering, vol. 9, no. 4, pp. 358-362, Aug. 2011. DOI: 10.1016/j.jconrel.2013.07.008.
+
+2) Books & Book Chapters: 
+[2] J. G. Proakis, Digital Communications, 4th ed. New York, NY: McGraw-Hill, 1993.
+[3] J. L. Hennessy and D. A. Patterson, “Instruction-level parallelism and its exploitation,” in Computer Architecture: A Quantitative Approach, 4th ed. San Francisco, CA: Morgan Kaufmann Pub., ch. 2, pp. 66-153, 2007.
+
+3) Conference Proceedings: 
+[4] A. Hashmi, H. Berry, O. Temam, and M. Lipasti, “Automatic abstraction and fault tolerance in cortical microachitectures,” in Proceeding of the 38th Annual International Symposium on Computer Architecture, New York: NY, pp. 1-10, 2011.
+
+4) Dissertations (Ph.D.) and Theses (M.S.): 
+[5] B. Alavi, “Distance measurement error modeling for time-of-arrival based indoor geolocation,” Ph. D. dissertation, Worcester Polytechnic Institute, Worcester, MA, 2006.
+
+5) Technical Report:
+[6] Y. Z. Ben, D. K. John, and Anthony, “Tapestry: An infrastructure for fault-tolerant wide-area location and routing,” University of California, Berkeley: CA, Technical Report CSD-01-1141, 2001.
+
+6) Online Source:
+[7] Malardalen Real-Time Research Center. The worst-case execution time (WCET) analysis project [Internet]. Available: http://www.mrtc.mdh.se/projects/wcet/.
+[8] H. Nowakowska, M. Jasinski, P. S. Debicki and J. Mizeraczyk. (2011, October). Numerical analysis and optimization of power coupling efficiency in waveguide-based microwave plasma source. IEEE Transactions on Plasma Science [Online]. 39(10), pp. 1935-1942. Available: http://ieeexplore.ieee.org/xpl/freeabs_all.jsp?arnumber=6012536.
+
+7) Patents
+[9] J. L. Lee, GaAs Power Semiconductor Device Operating at a Low Voltage and Method for Fabricating the Same, US Patent 5,760,418, to ETRI, Patent and Trademark Office, Washington D.C., 1998.
+
+8) Standards
+[10] IEEE Std. 1394, IEEE Standard for a High Performance Serial Bus, IEEE, Piscataway, N.J., 1995.
+
+※ 참고문헌은 영어로 작성하고 본문에서 인용된 것만을 인용 순서에 따라 작성합니다.
+※ 참고문헌은 출처를 확인 할 수 있도록 DOI를 기입해주시기 바랍니다. 
+※ 참고문헌 작성 양식의 정확도가 30% 이하일 경우 접수거부 처리될 수 있습니다.
+
+
