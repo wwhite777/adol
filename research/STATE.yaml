@@ -8,7 +8,7 @@ venue:
   phase_a: domestic — 한국정보통신학회 JKIICE or 한국융합학회 (PI 2026-09-22); no cross-family audit (PI rule 2026-09-11)
   phase_b: optional Q1 attempt (JMIR Formative / Sci Rep / JMIR MH) after co-author double rating; T1 conference only if H5 strong
 stage: S3
-status: 'in_progress   # generation: 4/5 DONE + HyperCLOVA RUNNING (GPU 2); panel J1/J2/J3 confirmed under prompt v0.3 (all ≤ 2% parse errors); SCORING RUNNING (Qwen, GPU 1); no outcome read'
+status: 'in_progress   # generation: 4/5 DONE + HyperCLOVA RUNNING (GPU 2); panel J1/J2/J3 confirmed under v0.3; SCORING HELD — the pinned batch-invariant path proved non-reproducible on full-length prompts (Qwen pass vs gate: 49–63% identical texts); chunked-prefill hypothesis under test; no outcome read'
 stage_history:
 - stage: S0
   status: completed
@@ -105,13 +105,13 @@ jobs:
 - '2026-09-23 04:53Z-04:57Z FAILED ×2: vLLM batch-invariant mode needs the attention backend set in the engine config (env VLLM_ATTENTION_BACKEND is ignored by the check); each attempt looped over engine re-builds until killed by PID (OPS-2)'
 - '2026-09-23 04:58Z-05:05Z DONE: engine-kwargs passthrough (providers.py, commit 61f344f); batch-invariant runs A/B identical 564/564 (different GPUs), run C vs sequential 49.1% text / 62.9% scores with identical prompts → DECODE PATH PINNED (DECISION_LOG ~05:15Z/~05:20Z; launcher bin/score_phaseA.sh; judges.json batch_size 64)'
 - '2026-09-23 04:47Z-05:34Z DONE: judge prompt v0.3 committed (32762d0; 429 tests); gate under the pinned path on Qwen main: J2 0.00% PASS, J1 1.77% PASS (25% re-asks disclosed); artifacts result/raw/phaseA_T1/gate_v0_3_qwen_main/'
-- '2026-09-23 PENDING: J3 gate verdict → bin/score_phaseA.sh for Qwen + Kanana (one per GPU), then EXAONE (4 dated dirs) + Gemma; HyperCLOVA smoke probe (models_run5.json, class smoke) → confirmatory run → scoring → delete weights; then panels → analysis → G6 (--n3-revisions 1)'
 - '2026-09-23 05:40Z-05:45Z DONE: HyperCLOVAX-SEED-Think-14B downloaded (snapshot 9b74e35d, 59.0 GB, 12/12 shards); first smoke probe FAILED at engine construction (config auto_map → missing remote-code file; exit 8); patched run dir models/hf/patched/HyperCLOVAX-SEED-Think-14B (symlinks + official configuration_hyperclovax.py from revision a03175b5, sha ad2318a9…; DECISION_LOG ~05:52Z)'
 - '2026-09-23 05:51Z-06:03Z DONE: HyperCLOVA smoke probes — attempt 2 failed on KV-cache sizing (131k context) → max_model_len 8192 pinned; attempt 3 PASSED (4 MARKERs; 0 reasoning markers, 0 leaked tokens, Korean; DECISION_LOG ~06:02Z)'
 - '2026-09-23 05:59Z RUNNING: campaign run phaseA_T1 naver-hyperclovax/HyperCLOVAX-SEED-Think-14B (models_run5.json; patched dir; KYRA_VLLM_ENGINE_KWARGS max_model_len 8192), confirmatory, --gpu 2; log test/logs/campaign_phaseA_T1_hyperclova14b_*.log; marker result/raw/phaseA_T1_hyperclova14b.DONE; expected end ~08:15Z'
 - '2026-09-23 05:33Z-06:17Z DONE: gate J3 Phi-4 FP8 0/564 ERROR (PASS; 262 re-asks; 43.8 min) → PANEL CONFIRMED J1/J2/J3 (DECISION_LOG ~06:20Z); gate artifacts result/raw/phaseA_T1/gate_v0_3_qwen_main/'
-- '2026-09-23 06:18Z RUNNING: SCORING Qwen2.5-14B (4 run dirs × J1/J2/J3, pinned path) on GPU 1 via bin/score_phaseA.sh — launched with a trailing & (untracked by the harness; a log watcher wakes the conductor); log test/logs/score_phaseA_T1_qwen14b_*.log; marker result/raw/phaseA_T1_score_qwen14b.DONE (overwrites the v0.2 exit=143 marker on exit); expected ~1.5 h (J3 dominates)'
-- '2026-09-23 PENDING: after Qwen → Kanana, EXAONE (4 dated dirs) on GPU 1; after HyperCLOVA''s run (~08:00Z) → verify, delete its 59 GB + patched dir, score Gemma + HyperCLOVA on GPU 2; compare the campaign''s Qwen-main judge files with the gate outputs (byte-identical expected); panels → analysis CLIs → G6 (--n3-revisions 1) → CLAIM_LEDGER → figures → manuscript'
+- '2026-09-23 06:18Z-07:52Z DONE but NOT REPRODUCIBLE: Qwen scoring (12 judge runs, 4 panels, exit 0) — judge texts agree with the gate outputs on only 49–63% of identical prompts (DECISION_LOG ~07:55Z correction); files kept in place, superseded if the procedure changes; NOT analysed'
+- '2026-09-23 07:57Z RUNNING: reproducibility test — two J2 runs on Qwen main with enable_chunked_prefill=False, enable_prefix_caching=False, max_model_len 16384, max_num_batched_tokens 16384 (+ batch-invariant, FLASH_ATTN, batch 64) on GPU 1; logs test/logs/judge_repro_nochunk_J2_run{1,2}_*.log; marker scratchpad DONE_nochunk'
+- '2026-09-23 PENDING (HELD): scoring of Kanana/EXAONE/Gemma/HyperCLOVA until a self-reproducible judge procedure is demonstrated on full prompts (identical runs → identical files); else sequential judging (one view per call)'
 s3_progress:
   provider: DONE — src/kyra VLLMProvider + provenance fix (manifest records effective params + chat-template hash); smoke run result/raw/smoke_vllm/20260922T0817Z-3c5915 (sha manifest e201f60f…, responses 62bb9d8a…)
   disk: 26 GB free on the shared volume after the install; one ≤20 GB checkpoint at a time; cached Qwen2.5-14B-Instruct + Llama-3.1-8B-Instruct (fusion1's, read-only) count as two of the needed models/judges
