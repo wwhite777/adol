@@ -1,0 +1,23 @@
+invA vs invB | views 564 / 564, common 564 | identical prompts 564
+status pairs: {('ERROR', 'ERROR'): 159, ('ok', 'ok'): 405}
+byte-identical judge text: 564 / 564 = 100.0%
+both ok 405 | identical scores 405 (100.0%)
+differing-field counts among differing views: {}
+
+sequential vs invC | views 564 / 564, common 564 | identical prompts 564
+status pairs: {('ERROR', 'ERROR'): 145, ('ok', 'ok'): 412, ('ERROR', 'ok'): 3, ('ok', 'ERROR'): 4}
+byte-identical judge text: 277 / 564 = 49.1%
+both ok 412 | identical scores 259 (62.9%)
+differing-field counts among differing views: {'D1': 41, 'D2': 41, 'D3': 36, 'D4': 43, 'D5': 66, 'D6': 49, 'critical': 33, 'A': 59}
+
+batched1 vs invC | views 564 / 564, common 564 | identical prompts 564
+status pairs: {('ERROR', 'ERROR'): 144, ('ok', 'ok'): 408, ('ERROR', 'ok'): 7, ('ok', 'ERROR'): 5}
+byte-identical judge text: 285 / 564 = 50.5%
+both ok 408 | identical scores 250 (61.3%)
+differing-field counts among differing views: {'D5': 79, 'D1': 33, 'D2': 47, 'D6': 53, 'D3': 46, 'D4': 54, 'critical': 24, 'A': 60}
+
+invA_nomanual vs invC_manual | views 564 / 564, common 564 | identical prompts 0
+status pairs: {('ERROR', 'ERROR'): 142, ('ok', 'ok'): 398, ('ok', 'ERROR'): 7, ('ERROR', 'ok'): 17}
+byte-identical judge text: 1 / 564 = 0.2%
+both ok 398 | identical scores 34 (8.5%)
+differing-field counts among differing views: {'D2': 158, 'D4': 142, 'D5': 213, 'A': 177, 'D3': 119, 'D1': 98, 'D6': 160, 'critical': 83}
