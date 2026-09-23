@@ -1,84 +1,114 @@
 # research/STATE.yaml — adol (KYRA-Bench). Edit by parsing real YAML, field-scoped; unknown stays null.
 workflow:
-  protocol: "global CLAUDE.md v3.2 L2 (sections 8-10) + L5 orchestration (14-15); no project AGENTS.md"
-  adopted: "2026-09-16 (v3.1); migrated to v3.2 on 2026-09-21"
-  conductor: "Fable 5.1 (claude-fable-5-1), effort max for contracts/freeze; recommend high for S3 building; coder = Opus 5 high; scout = Sonnet 5 medium; auditor = Codex (not used in phase A by PI waiver)"
-topic: "KYRA-Bench phase A (option C): Korean adolescent multi-turn relational AI-safety benchmark, 5 open-weight models; domestic-first paper with Q1-grade methods; CRRI validity deferred to phase B"
+  protocol: global CLAUDE.md v3.2 L2 (sections 8-10) + L5 orchestration (14-15); no project AGENTS.md
+  adopted: 2026-09-16 (v3.1); migrated to v3.2 on 2026-09-21
+  conductor: Fable 5.1 (claude-fable-5-1), effort max for contracts/freeze; recommend high for S3 building; coder = Opus 5 high; scout = Sonnet 5 medium; auditor = Codex (not used in phase A by PI waiver)
+topic: 'KYRA-Bench phase A (option C): Korean adolescent multi-turn relational AI-safety benchmark, 5 open-weight models; domestic-first paper with Q1-grade methods; CRRI validity deferred to phase B'
 venue:
-  phase_a: "domestic — 한국정보통신학회 JKIICE or 한국융합학회 (PI 2026-09-22); no cross-family audit (PI rule 2026-09-11)"
-  phase_b: "optional Q1 attempt (JMIR Formative / Sci Rep / JMIR MH) after co-author double rating; T1 conference only if H5 strong"
+  phase_a: domestic — 한국정보통신학회 JKIICE or 한국융합학회 (PI 2026-09-22); no cross-family audit (PI rule 2026-09-11)
+  phase_b: optional Q1 attempt (JMIR Formative / Sci Rep / JMIR MH) after co-author double rating; T1 conference only if H5 strong
 stage: S3
-status: in_progress   # tooling complete; FIRST CONFIRMATORY GENERATION RUN LAUNCHED 2026-09-22 (Qwen2.5-14B); EXAONE-4.0-32B-AWQ downloaded; scoring waits on judges (Llama-3.1-8B cached + two 4-bit judges to download)
+status: 'in_progress   # generation: Qwen2.5-14B DONE (4 MARKERs, 2026-09-22); EXAONE-32B-AWQ re-run RUNNING (GPU 1, first attempt killed by an external cache deletion); Kanana + Gemma downloaded; HyperCLOVA official checkpoint ungated (download last); judges J1-J3 on disk; scoring not started'
 stage_history:
-  - {stage: S0, status: completed, date: "2026-09-16", gate: "PI approved D1-D4"}
-  - {stage: S1, status: completed_with_waiver, date: "2026-09-22", gate: "PI decisions 1-6 approved (2026-09-22); r001/r002 AWAITING_PI, r003 FAIL on prose corrected in v4 (unverified by auditor); r004 WAIVED by venue change to domestic (PI rule 2026-09-11) — DECISION_LOG 2026-09-22"}
-  - {stage: S2, status: completed, date: "2026-09-22", gate: "CONTRIBUTION_CONTRACT v2 + PREREGISTERED_kyra_v2.yaml frozen by src/gates/freeze.py; sha256 87abaae4c16fb0efe3dad27ff464fcd86b6b48ff67a33f1414336ccc7ddd34a4; verify_freeze exit 0; logged in DECISION_LOG"}
-  - {stage: S3, status: in_progress, date: "2026-09-22", gate: "provider adapter proven on a small model; judge wrapper self-tests; comparators/analysis scripts with fixtures"}
+- stage: S0
+  status: completed
+  date: '2026-09-16'
+  gate: PI approved D1-D4
+- stage: S1
+  status: completed_with_waiver
+  date: '2026-09-22'
+  gate: PI decisions 1-6 approved (2026-09-22); r001/r002 AWAITING_PI, r003 FAIL on prose corrected in v4 (unverified by auditor); r004 WAIVED by venue change to domestic (PI rule 2026-09-11) — DECISION_LOG 2026-09-22
+- stage: S2
+  status: completed
+  date: '2026-09-22'
+  gate: CONTRIBUTION_CONTRACT v2 + PREREGISTERED_kyra_v2.yaml frozen by src/gates/freeze.py; sha256 87abaae4c16fb0efe3dad27ff464fcd86b6b48ff67a33f1414336ccc7ddd34a4; verify_freeze exit 0; logged in DECISION_LOG
+- stage: S3
+  status: in_progress
+  date: '2026-09-22'
+  gate: provider adapter proven on a small model; judge wrapper self-tests; comparators/analysis scripts with fixtures
 roles:
   builder:
-    tool: "Claude Code"
-    model: "claude-fable-5-1 (since 2026-09-21; claude-fable-5 on 2026-09-16)"
-    proposed: "2026-09-16"
-    confirmed_by_pi: "2026-09-16"
+    tool: Claude Code
+    model: claude-fable-5-1 (since 2026-09-21; claude-fable-5 on 2026-09-16)
+    proposed: '2026-09-16'
+    confirmed_by_pi: '2026-09-16'
   auditor:
-    tool: "Codex"
-    evidence: "codex-cli 0.154.0; r001-r003 reports name model GPT-6"
-    confirmed_by_pi: "2026-09-16"
-    phase_a_status: "not required (domestic venue; PI waiver 2026-09-22); would return for phase B"
+    tool: Codex
+    evidence: codex-cli 0.154.0; r001-r003 reports name model GPT-6
+    confirmed_by_pi: '2026-09-16'
+    phase_a_status: not required (domestic venue; PI waiver 2026-09-22); would return for phase B
 lineage:
-  - "2026-09-16 09:30 PI dropped upload/1.docx.gpg (plan v2) and upload/2.docx.gpg (plan v1); sha256 in REHYDRATE.md"
-  - "2026-09-16 session 1: initialized project, RESOURCE_CONTRACT (S0)"
-  - "2026-09-16 session 2: D1-D4 approved; S1 executed; Codex r001 (AWAITING_PI); PI stop+record"
-  - "2026-09-21 session 3 (rules v3.2): 21 full texts, 4 scouts, NOVELTY_MATRIX v2, coder pipeline v0, Codex r002 (AWAITING_PI), corrections v3"
-  - "2026-09-22 session 4: PI approved decisions 1-6; Codex r003 (FAIL on prose) -> v4 corrections; S2 drafts v1 (full design); freeze gate built (coder) and verified"
-  - "2026-09-22 session 5: PI option C (domestic-first, no OSF/ETRI/IRB/keys, no human raters in phase A); r004 waived; contract v2 + prereg v2 FROZEN (87abaae4...); S3 opened: coder building vLLM provider + smoke test"
+- 2026-09-16 09:30 PI dropped upload/1.docx.gpg (plan v2) and upload/2.docx.gpg (plan v1); sha256 in REHYDRATE.md
+- '2026-09-16 session 1: initialized project, RESOURCE_CONTRACT (S0)'
+- '2026-09-16 session 2: D1-D4 approved; S1 executed; Codex r001 (AWAITING_PI); PI stop+record'
+- '2026-09-21 session 3 (rules v3.2): 21 full texts, 4 scouts, NOVELTY_MATRIX v2, coder pipeline v0, Codex r002 (AWAITING_PI), corrections v3'
+- '2026-09-22 session 4: PI approved decisions 1-6; Codex r003 (FAIL on prose) -> v4 corrections; S2 drafts v1 (full design); freeze gate built (coder) and verified'
+- '2026-09-22 session 5: PI option C (domestic-first, no OSF/ETRI/IRB/keys, no human raters in phase A); r004 waived; contract v2 + prereg v2 FROZEN (87abaae4...); S3 opened: coder building vLLM provider + smoke test'
 protocol_freeze:
-  file: "PREREGISTERED_kyra_v2.yaml"
-  sha256: "87abaae4c16fb0efe3dad27ff464fcd86b6b48ff67a33f1414336ccc7ddd34a4"
-  receipt: "PREREGISTERED_kyra_v2.yaml.sha256 (written by src/gates/freeze.py, 2026-09-22T08:05:21Z)"
-  contract: "CONTRIBUTION_CONTRACT.md Version: v2"
-  superseded_drafts: "PREREGISTERED_kyra_v1.yaml + CONTRIBUTION_CONTRACT_v1_fulldesign_2026-09-22.md (full design, never frozen; phase B basis)"
+  file: PREREGISTERED_kyra_v2.yaml
+  sha256: 87abaae4c16fb0efe3dad27ff464fcd86b6b48ff67a33f1414336ccc7ddd34a4
+  receipt: PREREGISTERED_kyra_v2.yaml.sha256 (written by src/gates/freeze.py, 2026-09-22T08:05:21Z)
+  contract: 'CONTRIBUTION_CONTRACT.md Version: v2'
+  superseded_drafts: PREREGISTERED_kyra_v1.yaml + CONTRIBUTION_CONTRACT_v1_fulldesign_2026-09-22.md (full design, never frozen; phase B basis)
 caps:
-  gpu: "L40S GPUs 0-2 only (GPU 3 = another user); open-weight inference only"
-  disk: "150 GB quota: weights downloaded sequentially and deleted after runs (REHYDRATE.md) or 4-bit; models/ git-ignored. 2026-09-22 10:15Z: shared volume 17 GB free (crossfam session grew the shared HF cache to 51 GB and holds GPU 1) — below the 20 GB campaign floor; adol downloads/confirmatory runs blocked until ≥ 40 GB free"
-  money: "$0 in phase A (no API keys); phase B optional $30-300 personal credit"
-  human_time: "PI ~5-8 h in phase A (review + submission); phase B ~30-45 h co-author rating"
+  gpu: L40S GPUs 0-2 only (GPU 3 = another user); open-weight inference only
+  disk: '150 GB quota: weights downloaded and deleted after runs (REHYDRATE.md). 2026-09-23 01:05Z: shared volume 60 GB free (recovered from 12 GB on 2026-09-22 after another project''s download); models/hf holds 85 GB (EXAONE 17, Mistral 15, Phi-4 16, Kanana 16, Gemma 20, smoke 2.4); campaign floor 20 GB (--min-free-gb override is logged if ever used)'
+  money: $0 in phase A (no API keys); phase B optional $30-300 personal credit
+  human_time: PI ~5-8 h in phase A (review + submission); phase B ~30-45 h co-author rating
 audit:
   open_round: null
   rounds:
-    - {id: r001, purpose: "S1 novelty lock + assessment (v1)", status: "verdict_awaiting_pi -> superseded", opened: "2026-09-16"}
-    - {id: r002, purpose: "S1 recheck (v2, full texts)", status: "verdict_awaiting_pi -> PI decisions 1-6 approved 2026-09-22", opened: "2026-09-21", snapshot: "tag audit/kyra-r002"}
-    - {id: r003, purpose: "verify v3 corrections", status: "verdict_fail -> corrected in v4 (auditor-unverified)", opened: "2026-09-22", snapshot: "tag audit/kyra-r003"}
-    - {id: r004, purpose: "verify v4 corrections", status: "WAIVED 2026-09-22 (domestic venue; package kept at audit/r004/, tag audit/kyra-r004)"}
+  - id: r001
+    purpose: S1 novelty lock + assessment (v1)
+    status: verdict_awaiting_pi -> superseded
+    opened: '2026-09-16'
+  - id: r002
+    purpose: S1 recheck (v2, full texts)
+    status: verdict_awaiting_pi -> PI decisions 1-6 approved 2026-09-22
+    opened: '2026-09-21'
+    snapshot: tag audit/kyra-r002
+  - id: r003
+    purpose: verify v3 corrections
+    status: verdict_fail -> corrected in v4 (auditor-unverified)
+    opened: '2026-09-22'
+    snapshot: tag audit/kyra-r003
+  - id: r004
+    purpose: verify v4 corrections
+    status: WAIVED 2026-09-22 (domestic venue; package kept at audit/r004/, tag audit/kyra-r004)
 gates:
-  freeze: "PASS 2026-09-22 (src/gates/freeze.py exit 0; verify_freeze exit 0)"
+  freeze: PASS 2026-09-22 (src/gates/freeze.py exit 0; verify_freeze exit 0)
 pi_decisions:
-  - "2026-09-16: 'initiate'"
-  - "2026-09-16: 'D1-D4 all approved. proceed'"
-  - "2026-09-16: 'stop work and record today's work'"
-  - "2026-09-21: 'apply the orchestration of agents ... resume work'"
-  - "2026-09-22: 'decisions 1-6 all approved. open r003 and proceed'"
-  - "2026-09-22: 'I agree with your recommendation, C' — domestic-first, reduced design, no OSF/ETRI/IRB/keys/human raters in phase A; r004 waived (DECISION_LOG)"
+- '2026-09-16: ''initiate'''
+- '2026-09-16: ''D1-D4 all approved. proceed'''
+- '2026-09-16: ''stop work and record today''s work'''
+- '2026-09-21: ''apply the orchestration of agents ... resume work'''
+- '2026-09-22: ''decisions 1-6 all approved. open r003 and proceed'''
+- '2026-09-22: ''I agree with your recommendation, C'' — domestic-first, reduced design, no OSF/ETRI/IRB/keys/human raters in phase A; r004 waived (DECISION_LOG)'
 five_statuses:
   artifact_integrity: null
   numerical_reproduction: null
   statistical_validity: null
-  claim_scope: "frozen v2 (N1 escalation + length control; N2 localization replication; N3 judge reliability; CRRI descriptive)"
+  claim_scope: frozen v2 (N1 escalation + length control; N2 localization replication; N3 judge reliability; CRRI descriptive)
   scientific_promise: null
 jobs:
-  - "2026-09-22 ~12:45Z: campaign run phaseA_T1, model Qwen/Qwen2.5-14B-Instruct (cached, offline), class confirmatory (freeze verified), GPU 1 pinned; 4 runs (main T=0 + 3 repeats T=0.7); log test/logs/campaign_phaseA_T1_qwen14b_*.log; marker result/raw/phaseA_T1_qwen14b.DONE on exit"
-  - "2026-09-22 ~12:50Z: campaign run phaseA_T1, model LGAI-EXAONE/EXAONE-4.0-32B-AWQ (models/hf, offline), class confirmatory, --gpu 2; log test/logs/campaign_phaseA_T1_exaone32b_*.log; marker result/raw/phaseA_T1_exaone32b.DONE"
-  - "2026-09-22 ~12:52Z: download judge J2 Intel/Mistral-Small-3.2-24B-Instruct-2506-int4-AutoRound into models/hf; marker models/DOWNLOAD_mistral_small_int4.DONE"
+- '2026-09-22 12:38Z-15:00Z DONE: campaign run phaseA_T1 Qwen/Qwen2.5-14B-Instruct, confirmatory, GPU 1 — 4 runs with MARKERs (main 156/156; repeat_1..3 31/31 at T=0.7); marker result/raw/phaseA_T1_qwen14b.DONE exit=0'
+- '2026-09-22 12:39Z FAILED: campaign run phaseA_T1 LGAI-EXAONE/EXAONE-4.0-32B-AWQ, GPU 2 — exit 8, no MARKER (an external cleanup deleted /tmp/torchinductor_wjeong mid-compile; 155/156 items generated but unvalidated; kept unscored; DECISION_LOG 2026-09-22/23)'
+- '2026-09-23 00:53Z RUNNING: campaign run phaseA_T1 LGAI-EXAONE/EXAONE-4.0-32B-AWQ (identical re-run under commit f8aa3be: private compile caches), confirmatory, --gpu 1; log test/logs/campaign_phaseA_T1_exaone32b_rerun_20260923T0053Z.log; marker result/raw/phaseA_T1_exaone32b_rerun.DONE on exit; expected end ~03:30Z'
+- '2026-09-23 ~01:00Z DONE: downloads into models/hf — J2 Mistral-Small int4 (re-download, snapshot 21907bf9), J3 cortecs/phi-4-FP8-Dynamic (7014f998), kakaocorp/kanana-1.5-8b-instruct-2505 (c963a5f4), RedHatAI/gemma-3-27b-it-quantized.w4a16 (2b537554); markers models/DOWNLOAD_*.DONE'
+- '2026-09-23 PENDING: campaign run Kanana (research/models_run3.json) on GPU 2 after the provider-options coder card is verified; then Gemma (models_run4.json) on the next free GPU; HyperCLOVA last (59 GB download after EXAONE/Kanana/Gemma weights are deleted; smoke probe first); then campaign score per model with research/judges_phaseA_v1.json'
 s3_progress:
-  provider: "DONE — src/kyra VLLMProvider + provenance fix (manifest records effective params + chat-template hash); smoke run result/raw/smoke_vllm/20260922T0817Z-3c5915 (sha manifest e201f60f…, responses 62bb9d8a…)"
-  disk: "26 GB free on the shared volume after the install; one ≤20 GB checkpoint at a time; cached Qwen2.5-14B-Instruct + Llama-3.1-8B-Instruct (fusion1's, read-only) count as two of the needed models/judges"
-  items: "DONE — 6 groups authored (conductor), benign twins gate-matched (coder; 39 lines), research/items/items_phaseA_v1.jsonl = 156 items (sha 8ab7cda1…), stratification_v1.csv; PI review sheet deliverables/item_review_sheet_v1.md (72 items) awaiting the PI"
-  judge: "DONE — src/kyra/judge.py + panel.py (LOFO, median, conservative tie) + judge_prompt_v0.md v0.1; 50 tests; smoke probe J0b: 7/7 parsed (v0: 3/7), no example copies — loop evidence only"
-  tests: "315 tests pass (full discover 2026-09-22 late; conductor-run)"
-  analysis: "DONE — src/kyra/analysis (loader for prefix-view panel records; n1_escalation with scenario-cluster-bootstrap interaction p; n2_localization paired LPM + TOST; n3_reliability Gwet AC2 + LOFO; transitions; pareto on the panel's over_refusal flag) with known-answer fixtures (OR 2.05 on true 2.07; null 1.04; paired +0.072 on true +0.06; AC2 exact on a hand case)"
-  g6_campaign: "DONE — src/kyra/g6.py (frozen-hash check, coded rule table asserted against the YAML, producer field names, --n3-revisions) + src/kyra/campaign.py run/score steps (disk/GPU guards, freeze check before confirmatory, repeats T=0.7 seeds 20260922+k, MARKER, EXPERIMENTS rows, item-coverage + panel-overwrite guards, anchors sha in provenance)"
-  chain: "VERIFIED on the smoke run (class smoke): runner -> 2 judge instances (prefix views, anchors, control ids) -> panel per depth (14 records, 4 control views with over_refusal) -> transitions/pareto/n3 on real records; G6 verdicts on fixtures (GO/KILL/KWS/INCONCLUSIVE); tamper -> exit 6"
-  judge_anchors: "research/judge_anchors_v1.json (safe + fail, conductor-authored, validated through renderer + strict parser)"
-next_action: "(1) [PI] review deliverables/item_review_sheet_v1.md (72 items, ~40 min) and reply with ✔/✘/comments; accept the HyperCLOVA X SEED HF license or choose Kanana instead. (2) Model selection within 25 GB free (research/models_phaseA_v1.json; verify the Kanana 8B repo id; find vLLM-loadable 4-bit variants for Gemma/Mistral/Phi): evaluated = Qwen2.5-14B-Instruct (cached) + EXAONE-4.0-32B 4-bit (find a vLLM-compatible AWQ/GPTQ) or EXAONE-4.0-7.8B + Kanana-1.5-8B or 15.7B-A3B 4-bit + Gemma-3-12B-it (24 GB, tight) or 27B 4-bit + HyperCLOVAX-SEED-Think-14B 4-bit (gated); judges = Llama-3.1-8B-Instruct (cached) + Mistral-Small-24B 4-bit + Phi-4 — one checkpoint at a time, delete after runs. (3) Coder cards: analysis scripts (logistic GLMM + cluster bootstrap, paired GLMM + TOST, Gwet's AC2) with synthetic fixtures; G6 judge script that verifies the freeze hash; run orchestration (conditions, repeats) + EXPERIMENTS.csv rows. (4) Runs (class confirmatory only after the PI's item sign-off)."
+  provider: DONE — src/kyra VLLMProvider + provenance fix (manifest records effective params + chat-template hash); smoke run result/raw/smoke_vllm/20260922T0817Z-3c5915 (sha manifest e201f60f…, responses 62bb9d8a…)
+  disk: 26 GB free on the shared volume after the install; one ≤20 GB checkpoint at a time; cached Qwen2.5-14B-Instruct + Llama-3.1-8B-Instruct (fusion1's, read-only) count as two of the needed models/judges
+  items: DONE — 6 groups authored (conductor), benign twins gate-matched (coder; 39 lines), research/items/items_phaseA_v1.jsonl = 156 items (sha 8ab7cda1…), stratification_v1.csv; PI review sheet deliverables/item_review_sheet_v1.md (72 items) awaiting the PI
+  judge: 'DONE — src/kyra/judge.py + panel.py (LOFO, median, conservative tie) + judge_prompt_v0.md v0.1; 50 tests; smoke probe J0b: 7/7 parsed (v0: 3/7), no example copies — loop evidence only'
+  tests: 315 tests pass (full discover 2026-09-22 late; conductor-run)
+  analysis: DONE — src/kyra/analysis (loader for prefix-view panel records; n1_escalation with scenario-cluster-bootstrap interaction p; n2_localization paired LPM + TOST; n3_reliability Gwet AC2 + LOFO; transitions; pareto on the panel's over_refusal flag) with known-answer fixtures (OR 2.05 on true 2.07; null 1.04; paired +0.072 on true +0.06; AC2 exact on a hand case)
+  g6_campaign: DONE — src/kyra/g6.py (frozen-hash check, coded rule table asserted against the YAML, producer field names, --n3-revisions) + src/kyra/campaign.py run/score steps (disk/GPU guards, freeze check before confirmatory, repeats T=0.7 seeds 20260922+k, MARKER, EXPERIMENTS rows, item-coverage + panel-overwrite guards, anchors sha in provenance)
+  chain: 'VERIFIED on the smoke run (class smoke): runner -> 2 judge instances (prefix views, anchors, control ids) -> panel per depth (14 records, 4 control views with over_refusal) -> transitions/pareto/n3 on real records; G6 verdicts on fixtures (GO/KILL/KWS/INCONCLUSIVE); tamper -> exit 6'
+  judge_anchors: research/judge_anchors_v1.json (safe + fail, conductor-authored, validated through renderer + strict parser)
+  runs: Qwen2.5-14B confirmatory DONE (4 MARKERs); EXAONE re-run in progress; Kanana/Gemma downloaded; HyperCLOVA pending provider options + download; scoring pending (judges J1 Llama-3.1-8B [fusion1 cache], J2 Mistral int4, J3 Phi-4 FP8 on disk; research/judges_phaseA_v1.json)
+  campaign_hardening: '2026-09-23 (commit f8aa3be): private compile caches (.cache/torchinductor, .cache/triton), per-invocation record file campaign_<cohort>__<stamp>.json, logged --min-free-gb; 326 tests; incident OPS-1 in ISSUES.csv'
+next_action: '(1) Verify the coder''s provider-options receipt (chat_template_kwargs + stop_token_ids through models.json → manifest), full suite, commit. (2) Launch Kanana on GPU 2 (`HF_HOME=/home/wjeong/adol/models/hf HF_HUB_OFFLINE=1 PYTHONPATH=src python -m kyra.campaign --items research/items/items_phaseA_v1.jsonl --models research/models_run3.json --cohort phaseA_T1 --class confirmatory --gpu 2`, own log + marker). (3) When the EXAONE re-run marker shows exit=0 and 4 MARKERs: delete EXAONE weights (REHYDRATE), launch Gemma (models_run4.json) on GPU 1. (4) Score finished models on a free GPU: `campaign score --items research/items/items_phaseA_v1.jsonl --models <models_runN.json> --judges research/judges_phaseA_v1.json --cohort phaseA_T1 --runs ''result/raw/phaseA_T1/<model>/*/*'' --anchors research/judge_anchors_v1.json --gpu <free>`. (5) HyperCLOVA: after Kanana + Gemma weights are deleted, download (59 GB), class=smoke probe with skip_reasoning + stop ids, then the confirmatory run.
+  (6) Analysis CLIs → G6 → CLAIM_LEDGER → figures → Korean manuscript.'
 blockers:
-  - "none PI-side in phase A (PI review checkpoints only)"
+- none PI-side in phase A (PI review checkpoints only)
