@@ -1,0 +1,11 @@
+adol — stage 3 response v7 (2026-09-23 ~14:05Z) — cost question settled; two scoring passes running; projected end of scoring 2026-09-24 ~05:00Z
+(plaintext; follows v6 of ~11:55Z)
+
+TL;DR
+- The cost measurement is in: without vLLM's batch-invariant kernels all three judges are still exactly reproducible (88/88 twice each), but only 13–17% faster — the FP8 judge's ~24 s per view is intrinsic (it needs the single permitted re-ask on 47% of views). By the rule logged beforehand, the procedure stays as pinned (sequential, prefix caching off, batch-invariant env, everything recorded in each judge's sidecar). No re-pin, no repeated tests, nothing superseded.
+- Two-engine sharding is verified on the GPU (merged file byte-identical to a single engine on 88/88 views after the start-up race was fixed) and is in use.
+- Scoring in progress: Qwen on GPU 1 (single engine; J1 on the main run 1.95% parse errors, J2 0.00% — both within the frozen 2% bar; J3 running), Kanana on GPU 2 (two engines per judge, since 14:01Z). Then EXAONE, Gemma, HyperCLOVA. At ~5 GPU-hours per model the last panel lands around 2026-09-24 05:00Z; analysis, the G6 pre-registration judge and the claim ledger follow, then figures and the Korean manuscript.
+- Nothing has been read as an outcome. Nothing is needed from you; the venue template (JKIICE / 한국융합학회) is the next thing I will look up while the GPUs work.
+
+RECORDS
+- DECISION_LOG ~11:55Z entry (measurement 5 result appended), ~10:10Z entry (shard re-test 88/88); commits b280636, 25e6c73, 530d3d5; hub page refreshed; STATE.yaml jobs + next_action carry the launch recipe and schedule.
