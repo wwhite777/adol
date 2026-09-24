@@ -1,0 +1,19 @@
+adol — JKIICE manuscript v1 (2026-09-24 ~03:00Z, conductor Opus 5.5)
+
+Q: Can you generate the JKIICE contents from the results so far?
+A: Only partly. The frozen protocol forbids reading any score until all 20 run dirs are scored (now 6/20; the last pass is due about 09-25 00:30Z). Writing results now would break the pre-registration. So I wrote everything that does not depend on the outcome, and marked every result slot with a yellow placeholder.
+
+File: deliverables/kyra_phaseA_jkiice_ko_v1.docx (source: manuscript/jkiice_v1/)
+- Layout copied from your published JKIICE paper: A4, 38.5/30 mm margins, one-column front matter (Korean/English title, authors, 요약, ABSTRACT, 키워드/Keywords), and a two-column body starting on a new page.
+- Written in full: I 서론; II 관련 연구 (every statement taken from the verified full-text rows of NOVELTY_MATRIX v4); III 방법 (item bank Table 1, models and judges Table 2, judging procedure, 3.4 decode reproducibility Table 3 with the measured numbers, 3.5 frozen statistics and CRRI Eq. (1)); limitations; AI-use disclosure (4 sentences); references; author bios.
+- Fig. 1: study-design schematic. Its counts are read from the item file; it shows no outcome.
+- References: 34 entries in JKIICE style with DOIs, all from live DataCite/Crossref metadata fetched today.
+- Placeholders (44, highlighted yellow): result sentences in the abstracts, IV 결과 (N1/N2/N3/descriptives/G6, Tables 4–5, Figs. 2–3), the conclusion summary, the funding acknowledgment, and publisher fields.
+- Checks: forbidden-wording list 0 hits (English list plus Korean equivalents); citations numbered in order of first appearance. The English abstract is 123 words before its result sentence, so that sentence must be 7–37 words to stay within 130–160.
+
+Please confirm:
+1. Authorship: 정원철 + 오하영 (corresponding), as in the example paper.
+2. Funding acknowledgment: the two grants from the earlier paper (ANCHOR, KOCCA), the ETRI project, or something else.
+3. Open the file in Word or 한글 once. The host has no LibreOffice, so I could not render the pages to check the layout visually.
+
+Next: verify Kanana at about 05:00Z and HyperCLOVA at about 12:30Z. After all 20 run dirs verify: analysis, then G6, the ledger, Figs. 2–3, then fill the placeholders into v2.

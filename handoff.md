@@ -41,3 +41,8 @@ Disclosures:
 - Standing: r004 waived (venue); S1 v4 corrections auditor-unverified; Qwen2.5-14B replaced the prereg's "Qwen3" (logged late, result-blind); the failed 2026-09-22 EXAONE attempt is excluded; judge prompt v0.3 = the one permitted revision (G6 --n3-revisions 1); judge quality unknown until N3; sensitive item groups at pattern level; §7 (co-author → SCI Q1) overridden by the PI's option C and the JKIICE decision.
 
 Instruction conflicts: none unresolved (the model switch is PI-directed and logged).
+
+## 2026-09-24 ~03:00Z — session 7 (Opus 5.5) addendum
+- Handoff verified at 01:55Z: schedulers and launchers alive, 6/20 run dirs complete (DECISION_LOG ~01:55Z).
+- JKIICE manuscript v1 BUILT at the PI's request, result-independent text only: manuscript/jkiice_v1/kyra_phaseA_jkiice_ko_v1.docx (builder build_docx.py, Fig. 1 fig1_design.py, refs refs_datacite_20260924.json; copy in deliverables/). There are 44 yellow ⟪…⟫ placeholders where outcomes go; they are filled only from result/analysis/phaseA_T1/<stamp>/ after all 20 run dirs verify. Build: `~/envs/jeongwoncheol_adol/bin/python manuscript/jkiice_v1/build_docx.py [outname.docx]` (new versions _v2…, never overwrite). The EN abstract is 123 words before its result sentence, so that sentence must be 7–37 words.
+- PI to confirm: authorship (정원철 + 오하영*, as in the example paper), funding acknowledgment, and a visual check in Word (no renderer on the host).
