@@ -1,0 +1,19 @@
+run dirs with MARKER: 4 (expect 4)
+marker: exit=0 stamp=20260923T2159Z log=test/logs/score_phaseA_T1_hyperclova14b_20260923T2159Z.log
+  main      J1: 11/564 ERROR = 1.95% | first-pass re-asks 132 | shards 2
+  main      J2: 0/564 ERROR = 0.00% | first-pass re-asks 0 | shards 2
+  main      J3: 19/564 ERROR = 3.37% | first-pass re-asks 343 | shards 2
+  repeat_1  J1: 0/116 ERROR = 0.00% | first-pass re-asks 28 | shards 2
+  repeat_1  J2: 0/116 ERROR = 0.00% | first-pass re-asks 0 | shards 2
+  repeat_1  J3: 3/116 ERROR = 2.59% | first-pass re-asks 76 | shards 2
+  repeat_2  J1: 1/116 ERROR = 0.86% | first-pass re-asks 27 | shards 2
+  repeat_2  J2: 0/116 ERROR = 0.00% | first-pass re-asks 0 | shards 2
+  repeat_2  J3: 3/116 ERROR = 2.59% | first-pass re-asks 70 | shards 2
+  repeat_3  J1: 1/116 ERROR = 0.86% | first-pass re-asks 27 | shards 2
+  repeat_3  J2: 0/116 ERROR = 0.00% | first-pass re-asks 0 | shards 2
+  repeat_3  J3: 3/116 ERROR = 2.59% | first-pass re-asks 76 | shards 2
+RESULT: FAIL
+  - main J3: ERROR rate 3.37% > 2% (prereg bar; report + decide)
+  - repeat_1 J3: ERROR rate 2.59% > 2% (prereg bar; report + decide)
+  - repeat_2 J3: ERROR rate 2.59% > 2% (prereg bar; report + decide)
+  - repeat_3 J3: ERROR rate 2.59% > 2% (prereg bar; report + decide)

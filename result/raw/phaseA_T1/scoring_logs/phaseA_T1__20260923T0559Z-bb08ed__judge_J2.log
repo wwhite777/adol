@@ -1,0 +1,9 @@
+command: PYTHONPATH=src /home/wjeong/envs/jeongwoncheol_adol/bin/python -m kyra.judge merge --run-dir result/raw/phaseA_T1/naver-hyperclovax-HyperCLOVAX-SEED-Think-14B/main/20260923T0559Z-bb08ed --views prefix --shards result/raw/phaseA_T1/naver-hyperclovax-HyperCLOVAX-SEED-Think-14B/main/20260923T0559Z-bb08ed/judge_J2.shard1of2.jsonl result/raw/phaseA_T1/naver-hyperclovax-HyperCLOVAX-SEED-Think-14B/main/20260923T0559Z-bb08ed/judge_J2.shard2of2.jsonl --out result/raw/phaseA_T1/naver-hyperclovax-HyperCLOVAX-SEED-Think-14B/main/20260923T0559Z-bb08ed/judge_J2.jsonl
+exit=0
+--- stdout ---
+merged shards=2 total=564 ok=564 error=0 out=result/raw/phaseA_T1/naver-hyperclovax-HyperCLOVAX-SEED-Think-14B/main/20260923T0559Z-bb08ed/judge_J2.jsonl
+judge_file_sha256=0007c8556ffde4ec66dd217add1454fcfd732a8e08bb56fc9982f8ded443d269
+meta=result/raw/phaseA_T1/naver-hyperclovax-HyperCLOVAX-SEED-Think-14B/main/20260923T0559Z-bb08ed/judge_J2.meta.json
+
+--- stderr ---
+

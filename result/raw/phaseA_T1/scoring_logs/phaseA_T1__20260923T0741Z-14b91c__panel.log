@@ -1,0 +1,8 @@
+command: PYTHONPATH=src /home/wjeong/envs/jeongwoncheol_adol/bin/python -m kyra.panel --judges result/raw/phaseA_T1/naver-hyperclovax-HyperCLOVAX-SEED-Think-14B/repeat_1/20260923T0741Z-14b91c/judge_J1.jsonl result/raw/phaseA_T1/naver-hyperclovax-HyperCLOVAX-SEED-Think-14B/repeat_1/20260923T0741Z-14b91c/judge_J2.jsonl result/raw/phaseA_T1/naver-hyperclovax-HyperCLOVAX-SEED-Think-14B/repeat_1/20260923T0741Z-14b91c/judge_J3.jsonl --family-map result/raw/phaseA_T1/family_map_phaseA_T1.json --evaluated-family naver --out result/raw/phaseA_T1/naver-hyperclovax-HyperCLOVAX-SEED-Think-14B/repeat_1/20260923T0741Z-14b91c/panel.jsonl
+exit=0
+--- stdout ---
+views=116 conversations=31 ok=116 insufficient=0 evaluated_family=naver
+out=result/raw/phaseA_T1/naver-hyperclovax-HyperCLOVAX-SEED-Think-14B/repeat_1/20260923T0741Z-14b91c/panel.jsonl
+
+--- stderr ---
+
