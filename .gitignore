@@ -3,3 +3,4 @@ research/sweeps/fulltext/
 __pycache__/
 models/
 .cache/
+snapshots/
