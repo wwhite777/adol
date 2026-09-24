@@ -1,0 +1,15 @@
+adol — session 7 start check (2026-09-24 01:55Z, conductor Opus 5.5)
+
+The handoff is accurate. Everything it claims checks out:
+- Schedulers: both alive and detached (PPID 1). PID 73192 = GPU 2 (Kanana -> Gemma), PID 73193 = GPU 1 (HyperCLOVA -> EXAONE).
+- Launchers: Kanana 3906485 and HyperCLOVA 4081869 both survived the restart. The old scratchpad snapshot they run from is still present.
+- GPUs: 1 and 2 at 100% (adol). GPU 0 (jkpark) and GPU 3 untouched.
+- Commits: adol 0c05b8b and b966ae4 and hub 8a43eba all exist. The Kanana/HyperCLOVA judge files are uncommitted, as planned.
+- Scoring: 6/20 run dirs complete (Qwen 4, Kanana main + repeat_1). Kanana repeat_2 J1 is done and J2 is running. HyperCLOVA main J1 and J2 are done. No outcome has been read.
+- Parse-ERROR rates are all under the 2% bar. The J1 main runs sit close to it: Qwen 11/564, Kanana 10/564, HyperCLOVA 11/564 (1.95%).
+- Markers: stale qwen14b exit=8 and exaone32b exit=2, both by design.
+- 1.docx = plan v2 (2026-09-16, SCI Q1 design). It was re-read and the decrypted copy deleted. Option C and the JKIICE decision supersede it for phase A.
+
+Security: two passphrases were pasted into chat (the rules vault and upload/). Both already exist in mode-600 files (~/.paper_vault_pass, adol/.upload_pass), so pasting is not needed. Please rotate them once.
+
+Next: verify Kanana at about 05:00Z and HyperCLOVA at about 12:30Z. Meanwhile, set up the JKIICE toolchain (Korean font in ~/.fonts, python-docx in the adol venv, kotex check).
