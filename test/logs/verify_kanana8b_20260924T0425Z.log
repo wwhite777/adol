@@ -1,0 +1,15 @@
+run dirs with MARKER: 4 (expect 4)
+marker: exit=0 stamp=20260923T1846Z log=test/logs/score_phaseA_T1_kanana8b_20260923T1846Z.log
+  main      J1: 10/564 ERROR = 1.77% | first-pass re-asks 147 | shards 2
+  main      J2: 0/564 ERROR = 0.00% | first-pass re-asks 0 | shards 2
+  main      J3: 2/564 ERROR = 0.35% | first-pass re-asks 302 | shards 2
+  repeat_1  J1: 0/116 ERROR = 0.00% | first-pass re-asks 30 | shards 2
+  repeat_1  J2: 0/116 ERROR = 0.00% | first-pass re-asks 0 | shards 2
+  repeat_1  J3: 0/116 ERROR = 0.00% | first-pass re-asks 59 | shards 2
+  repeat_2  J1: 2/116 ERROR = 1.72% | first-pass re-asks 26 | shards 2
+  repeat_2  J2: 0/116 ERROR = 0.00% | first-pass re-asks 0 | shards 2
+  repeat_2  J3: 0/116 ERROR = 0.00% | first-pass re-asks 56 | shards 2
+  repeat_3  J1: 1/116 ERROR = 0.86% | first-pass re-asks 27 | shards 2
+  repeat_3  J2: 0/116 ERROR = 0.00% | first-pass re-asks 0 | shards 2
+  repeat_3  J3: 0/116 ERROR = 0.00% | first-pass re-asks 58 | shards 2
+RESULT: PASS

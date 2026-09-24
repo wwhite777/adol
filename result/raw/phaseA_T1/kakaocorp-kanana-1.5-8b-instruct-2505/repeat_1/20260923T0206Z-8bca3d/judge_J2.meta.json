@@ -1,0 +1,69 @@
+{
+  "anchors_path": "research/judge_anchors_v1.json",
+  "anchors_sha256": "7f54fdbded6071d7f5e202d1b7820fe4a64b454dc695b6eb39def227c3373679",
+  "batch_size": 1,
+  "decode_mode": "sequential",
+  "family": "mistral",
+  "finished_utc": "2026-09-24T00:06:10Z",
+  "items_path": "research/items/items_phaseA_v1.jsonl",
+  "items_sha256": "8ab7cda19406e00d9c5fe59f0b2ac68fdfb7d54ca2669ce7ffdd350657d88017",
+  "judge_id": "J2",
+  "max_retries": 1,
+  "merged_utc": "2026-09-24T00:06:12Z",
+  "model_id": "21907bf9a442ec05c91e059ef17b08a8b44983f5",
+  "model_path": "/home/wjeong/adol/models/hf/hub/models--Intel--Mistral-Small-3.2-24B-Instruct-2506-int4-AutoRound/snapshots/21907bf9a442ec05c91e059ef17b08a8b44983f5",
+  "n_error_final": 0,
+  "n_ok": 116,
+  "n_parse_errors_first_pass": 0,
+  "n_retried": 0,
+  "n_views": 116,
+  "out_path": "result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/repeat_1/20260923T0206Z-8bca3d/judge_J2.jsonl",
+  "prompt_template_path": "/tmp/claude-1011/-home-wjeong/407cdd4b-f055-4859-8e47-fbc41fca59f3/scratchpad/snap_scoring4/src/kyra/judge_prompt_v0_3.md",
+  "prompt_template_sha256": "65460efc95d2415f85f5020a3c028165b0a6051c0e28eb6bf86213869bf94921",
+  "provider": "vllm",
+  "provider_effective_params": {
+    "chat_template_kwargs": {},
+    "engine_kwargs": {
+      "attention_backend": "FLASH_ATTN",
+      "enable_prefix_caching": false,
+      "max_model_len": 16384
+    },
+    "max_tokens": 700,
+    "stop_token_ids": [],
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "vllm_env": {
+      "VLLM_BATCH_INVARIANT": "1"
+    }
+  },
+  "run_dir": "result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/repeat_1/20260923T0206Z-8bca3d",
+  "shard_runs": [
+    {
+      "finished_utc": "2026-09-24T00:05:39Z",
+      "n_error_final": 0,
+      "n_ok": 58,
+      "n_parse_errors_first_pass": 0,
+      "n_retried": 0,
+      "n_views": 58,
+      "path": "result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/repeat_1/20260923T0206Z-8bca3d/judge_J2.shard1of2.jsonl",
+      "sha256": "b7fa4658ed50e1b5573cfe4e1bd53e3644d3edb01c2f41180fe012c5fb55b28f",
+      "shard": "1/2",
+      "started_utc": "2026-09-23T23:47:02Z"
+    },
+    {
+      "finished_utc": "2026-09-24T00:06:10Z",
+      "n_error_final": 0,
+      "n_ok": 58,
+      "n_parse_errors_first_pass": 0,
+      "n_retried": 0,
+      "n_views": 58,
+      "path": "result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/repeat_1/20260923T0206Z-8bca3d/judge_J2.shard2of2.jsonl",
+      "sha256": "69d187d0f86fe2b819e9c9e2209ab593e14a5ddb1cac7cf184939013225afab6",
+      "shard": "2/2",
+      "started_utc": "2026-09-23T23:47:02Z"
+    }
+  ],
+  "shards": 2,
+  "started_utc": "2026-09-23T23:47:02Z",
+  "views": "prefix"
+}

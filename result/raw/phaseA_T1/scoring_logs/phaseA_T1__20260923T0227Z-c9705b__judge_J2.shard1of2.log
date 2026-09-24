@@ -1,0 +1,585 @@
+command: PYTHONPATH=src /home/wjeong/envs/jeongwoncheol_adol/bin/python -m kyra.judge --run-dir result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/repeat_3/20260923T0227Z-c9705b --provider vllm --judge-id J2 --family mistral --views prefix --items research/items/items_phaseA_v1.jsonl --out result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/repeat_3/20260923T0227Z-c9705b/judge_J2.shard1of2.jsonl --model-path /home/wjeong/adol/models/hf/hub/models--Intel--Mistral-Small-3.2-24B-Instruct-2506-int4-AutoRound/snapshots/21907bf9a442ec05c91e059ef17b08a8b44983f5 --gpu-memory-utilization 0.42 --batch-size 1 --shard 1/2 --start-delay-s 0 --anchors research/judge_anchors_v1.json
+exit=0
+--- stdout ---
+judge_id=J2 family=mistral provider=vllm model_id=21907bf9a442ec05c91e059ef17b08a8b44983f5 conversations=31 views=prefix n_views=116
+out=result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/repeat_3/20260923T0227Z-c9705b/judge_J2.shard1of2.jsonl manual=/tmp/claude-1011/-home-wjeong/407cdd4b-f055-4859-8e47-fbc41fca59f3/scratchpad/snap_scoring4/manual/RB6D_v2_annotation_manual_draft_v1.md anchors=2 control_items=48
+prompt_template=/tmp/claude-1011/-home-wjeong/407cdd4b-f055-4859-8e47-fbc41fca59f3/scratchpad/snap_scoring4/src/kyra/judge_prompt_v0_3.md prompt_template_sha256=65460efc95d2415f85f5020a3c028165b0a6051c0e28eb6bf86213869bf94921
+decode_mode=sequential batch_size=1 max_retries=1 shard=1/2 shard_views=58 start_delay_s=0.0
+INFO 09-24 03:11:17 [utils.py:233] non-default args: {'trust_remote_code': True, 'seed': 20260922, 'max_model_len': 16384, 'enable_prefix_caching': False, 'gpu_memory_utilization': 0.42, 'disable_log_stats': True, 'attention_backend': 'FLASH_ATTN', 'model': '/home/wjeong/adol/models/hf/hub/models--Intel--Mistral-Small-3.2-24B-Instruct-2506-int4-AutoRound/snapshots/21907bf9a442ec05c91e059ef17b08a8b44983f5'}
+INFO 09-24 03:11:17 [model.py:549] Resolved architecture: Mistral3ForConditionalGeneration
+INFO 09-24 03:11:17 [model.py:1678] Using max model len 16384
+INFO 09-24 03:11:18 [scheduler.py:238] Chunked prefill is enabled with max_num_batched_tokens=8192.
+INFO 09-24 03:11:18 [vllm.py:790] Asynchronous scheduling is enabled.
+(EngineCore pid=178859) INFO 09-24 03:11:22 [core.py:105] Initializing a V1 LLM engine (v0.19.0) with config: model='/home/wjeong/adol/models/hf/hub/models--Intel--Mistral-Small-3.2-24B-Instruct-2506-int4-AutoRound/snapshots/21907bf9a442ec05c91e059ef17b08a8b44983f5', speculative_config=None, tokenizer='/home/wjeong/adol/models/hf/hub/models--Intel--Mistral-Small-3.2-24B-Instruct-2506-int4-AutoRound/snapshots/21907bf9a442ec05c91e059ef17b08a8b44983f5', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=True, dtype=torch.bfloat16, max_seq_len=16384, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, decode_context_parallel_size=1, dcp_comm_backend=ag_rs, disable_custom_all_reduce=True, quantization=inc, enforce_eager=False, enable_return_routed_experts=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False), seed=20260922, served_model_name=/home/wjeong/adol/models/hf/hub/models--Intel--Mistral-Small-3.2-24B-Instruct-2506-int4-AutoRound/snapshots/21907bf9a442ec05c91e059ef17b08a8b44983f5, enable_prefix_caching=False, enable_chunked_prefill=True, pooler_config=None, compilation_config={'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::olmo_hybrid_gdn_full_forward', 'vllm::kda_attention', 'vllm::sparse_attn_indexer', 'vllm::rocm_aiter_sparse_attn_indexer', 'vllm::unified_kv_cache_update', 'vllm::unified_mla_kv_cache_update'], 'compile_mm_encoder': False, 'cudagraph_mm_encoder': False, 'encoder_cudagraph_token_budgets': [], 'encoder_cudagraph_max_images_per_batch': 0, 'compile_sizes': [], 'compile_ranges_endpoints': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'size_asserts': False, 'alignment_asserts': False, 'scalar_asserts': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 512, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': True, 'static_all_moe_layers': []}
+(EngineCore pid=178859) INFO 09-24 03:11:23 [parallel_state.py:1400] world_size=1 rank=0 local_rank=0 distributed_init_method=tcp://115.145.134.180:46555 backend=nccl
+(EngineCore pid=178859) INFO 09-24 03:11:23 [parallel_state.py:1716] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank N/A, EPLB rank N/A
+(EngineCore pid=178859) INFO 09-24 03:11:23 [gpu_model_runner.py:4735] Starting to load model /home/wjeong/adol/models/hf/hub/models--Intel--Mistral-Small-3.2-24B-Instruct-2506-int4-AutoRound/snapshots/21907bf9a442ec05c91e059ef17b08a8b44983f5...
+(EngineCore pid=178859) INFO 09-24 03:11:24 [gptq_marlin.py:376] Using MarlinLinearKernel for GPTQMarlinLinearMethod
+(EngineCore pid=178859) INFO 09-24 03:11:24 [cuda.py:274] Using AttentionBackendEnum.FLASH_ATTN backend.
+(EngineCore pid=178859) INFO 09-24 03:11:24 [flash_attn.py:596] Using FlashAttention version 2
+(EngineCore pid=178859) INFO 09-24 03:11:28 [default_loader.py:384] Loading weights took 3.43 seconds
+(EngineCore pid=178859) INFO 09-24 03:11:29 [gpu_model_runner.py:4820] Model loading took 14.05 GiB memory and 4.345896 seconds
+(EngineCore pid=178859) INFO 09-24 03:11:29 [gpu_model_runner.py:5753] Encoder cache will be initialized with a budget of 8192 tokens, and profiled with 2 image items of the maximum feature size.
+(EngineCore pid=178859) INFO 09-24 03:11:39 [backends.py:1051] Using cache directory: /home/wjeong/.cache/vllm/torch_compile_cache/2663825499/rank_0_0/backbone for vLLM's torch.compile
+(EngineCore pid=178859) INFO 09-24 03:11:39 [backends.py:1111] Dynamo bytecode transform time: 7.78 s
+(EngineCore pid=178859) INFO 09-24 03:11:40 [backends.py:285] Directly load the compiled graph(s) for compile range (1, 8192) from the cache, took 1.408 s
+(EngineCore pid=178859) INFO 09-24 03:11:42 [monitor.py:48] torch.compile and initial profiling/warmup run together took 11.42 s in total
+(EngineCore pid=178859) INFO 09-24 03:11:44 [kv_cache_utils.py:829] Overriding num_gpu_blocks=0 with num_gpu_blocks_override=512
+(EngineCore pid=178859) INFO 09-24 03:11:44 [gpu_model_runner.py:5876] Profiling CUDA graph memory: PIECEWISE=51 (largest=512), FULL=35 (largest=256)
+(EngineCore pid=178859) INFO 09-24 03:11:46 [gpu_model_runner.py:5955] Estimated CUDA graph memory: 0.72 GiB total
+(EngineCore pid=178859) INFO 09-24 03:11:46 [gpu_worker.py:436] Available KV cache memory: 2.53 GiB
+(EngineCore pid=178859) INFO 09-24 03:11:46 [gpu_worker.py:470] In v0.19, CUDA graph memory profiling will be enabled by default (VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=1), which more accurately accounts for CUDA graph memory during KV cache allocation. To try it now, set VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=1 and increase --gpu-memory-utilization from 0.4200 to 0.4362 to maintain the same effective KV cache size.
+(EngineCore pid=178859) INFO 09-24 03:11:46 [kv_cache_utils.py:1319] GPU KV cache size: 16,560 tokens
+(EngineCore pid=178859) INFO 09-24 03:11:46 [kv_cache_utils.py:1324] Maximum concurrency for 16,384 tokens per request: 1.01x
+(EngineCore pid=178859) INFO 09-24 03:11:53 [gpu_model_runner.py:6046] Graph capturing finished in 7 secs, took 0.72 GiB
+(EngineCore pid=178859) INFO 09-24 03:11:53 [gpu_worker.py:597] CUDA graph pool memory: 0.72 GiB (actual), 0.72 GiB (estimated), difference: 0.0 GiB (0.0%).
+(EngineCore pid=178859) INFO 09-24 03:11:53 [core.py:283] init engine (profile, create kv cache, warmup model) took 24.07 seconds
+(EngineCore pid=178859) INFO 09-24 03:29:32 [core.py:1210] Shutdown initiated (timeout=0)
+(EngineCore pid=178859) INFO 09-24 03:29:32 [core.py:1233] Shutdown complete
+total=58 ok=58 error=0 parse_error=0 provider_error=0 control_views=19 parse_error_rate=0.0000 error_rate=0.0000
+judge_file_sha256=da3ae00a93f6bc1988b462653f23454443bd1a8654230466c9674faecfae48d5
+engine_ready_attempts=1 engine_ready_seconds=41.996
+meta=result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/repeat_3/20260923T0227Z-c9705b/judge_J2.shard1of2.meta.json retried=0 parse_errors_first_pass=0
+
+--- stderr ---
+The tokenizer you are loading from '/home/wjeong/adol/models/hf/hub/models--Intel--Mistral-Small-3.2-24B-Instruct-2506-int4-AutoRound/snapshots/21907bf9a442ec05c91e059ef17b08a8b44983f5' with an incorrect regex pattern: https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503/discussions/84#69121093e8b480e709447d5e. This will lead to incorrect tokenization. You should set the `fix_mistral_regex=True` flag when loading this tokenizer to fix this issue.
+The tokenizer you are loading from '/home/wjeong/adol/models/hf/hub/models--Intel--Mistral-Small-3.2-24B-Instruct-2506-int4-AutoRound/snapshots/21907bf9a442ec05c91e059ef17b08a8b44983f5' with an incorrect regex pattern: https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503/discussions/84#69121093e8b480e709447d5e. This will lead to incorrect tokenization. You should set the `fix_mistral_regex=True` flag when loading this tokenizer to fix this issue.
+The tokenizer you are loading from '/home/wjeong/adol/models/hf/hub/models--Intel--Mistral-Small-3.2-24B-Instruct-2506-int4-AutoRound/snapshots/21907bf9a442ec05c91e059ef17b08a8b44983f5' with an incorrect regex pattern: https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503/discussions/84#69121093e8b480e709447d5e. This will lead to incorrect tokenization. You should set the `fix_mistral_regex=True` flag when loading this tokenizer to fix this issue.
+(EngineCore pid=178859) /home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/torch/library.py:357: UserWarning: Warning only once for all operators,  other operators may also be overridden.
+(EngineCore pid=178859)   Overriding a previously registered kernel for the same operator and the same dispatch key
+(EngineCore pid=178859)   operator: aten::mm(Tensor self, Tensor mat2) -> Tensor
+(EngineCore pid=178859)     registered at /pytorch/build/aten/src/ATen/RegisterSchema.cpp:6
+(EngineCore pid=178859)   dispatch key: CUDA
+(EngineCore pid=178859)   previous kernel: registered at /pytorch/aten/src/ATen/LegacyBatchingRegistrations.cpp:1076
+(EngineCore pid=178859)        new kernel: registered at /home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/vllm/model_executor/layers/batch_invariant.py:936 (Triggered internally at /pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
+(EngineCore pid=178859)   self.m.impl(
+[W924 03:11:23.770810879 Context.cpp:534] Warning: torch.backends.cuda.preferred_blas_library is an experimental feature. If you see any error or unexpected behavior when this flag is set please file an issue on GitHub. (function operator())
+(EngineCore pid=178859) <frozen importlib._bootstrap_external>:1184: FutureWarning: The cuda.cudart module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.runtime module instead.
+(EngineCore pid=178859) <frozen importlib._bootstrap_external>:1184: FutureWarning: The cuda.nvrtc module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.nvrtc module instead.
+(EngineCore pid=178859) 
+Loading safetensors checkpoint shards:   0% Completed | 0/4 [00:00<?, ?it/s]
+(EngineCore pid=178859) 
+Loading safetensors checkpoint shards:  25% Completed | 1/4 [00:00<00:02,  1.06it/s]
+(EngineCore pid=178859) 
+Loading safetensors checkpoint shards:  50% Completed | 2/4 [00:02<00:02,  1.09s/it]
+(EngineCore pid=178859) 
+Loading safetensors checkpoint shards:  75% Completed | 3/4 [00:03<00:01,  1.00s/it]
+(EngineCore pid=178859) 
+Loading safetensors checkpoint shards: 100% Completed | 4/4 [00:03<00:00,  1.34it/s]
+(EngineCore pid=178859) 
+Loading safetensors checkpoint shards: 100% Completed | 4/4 [00:03<00:00,  1.18it/s]
+(EngineCore pid=178859) 
+(EngineCore pid=178859) 
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):   0%|          | 0/51 [00:00<?, ?it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):   2%|▏         | 1/51 [00:00<00:07,  6.43it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):   4%|▍         | 2/51 [00:00<00:07,  6.81it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):   6%|▌         | 3/51 [00:00<00:06,  6.96it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):   8%|▊         | 4/51 [00:00<00:06,  7.02it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  10%|▉         | 5/51 [00:00<00:06,  7.34it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  12%|█▏        | 6/51 [00:00<00:06,  7.33it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  14%|█▎        | 7/51 [00:00<00:05,  7.36it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  16%|█▌        | 8/51 [00:01<00:05,  7.44it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  18%|█▊        | 9/51 [00:01<00:05,  7.80it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  20%|█▉        | 10/51 [00:01<00:05,  8.05it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  22%|██▏       | 11/51 [00:01<00:04,  8.26it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  24%|██▎       | 12/51 [00:01<00:04,  8.43it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  27%|██▋       | 14/51 [00:01<00:04,  9.14it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  31%|███▏      | 16/51 [00:01<00:03,  9.53it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  35%|███▌      | 18/51 [00:02<00:03, 10.28it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  39%|███▉      | 20/51 [00:02<00:02, 10.79it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  43%|████▎     | 22/51 [00:02<00:02, 11.16it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  47%|████▋     | 24/51 [00:02<00:02, 11.46it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  51%|█████     | 26/51 [00:02<00:02, 12.27it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  55%|█████▍    | 28/51 [00:02<00:01, 12.91it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  59%|█████▉    | 30/51 [00:03<00:01, 13.49it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  63%|██████▎   | 32/51 [00:03<00:01, 13.95it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  67%|██████▋   | 34/51 [00:03<00:01, 14.94it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  71%|███████   | 36/51 [00:03<00:00, 15.68it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  75%|███████▍  | 38/51 [00:03<00:00, 16.38it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  78%|███████▊  | 40/51 [00:03<00:00, 17.04it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  84%|████████▍ | 43/51 [00:03<00:00, 19.68it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  90%|█████████ | 46/51 [00:03<00:00, 21.77it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  96%|█████████▌| 49/51 [00:03<00:00, 23.50it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE): 100%|██████████| 51/51 [00:04<00:00, 12.71it/s]
+(EngineCore pid=178859) 
+Capturing CUDA graphs (decode, FULL):   0%|          | 0/35 [00:00<?, ?it/s]
+Capturing CUDA graphs (decode, FULL):   6%|▌         | 2/35 [00:00<00:02, 12.35it/s]
+Capturing CUDA graphs (decode, FULL):  11%|█▏        | 4/35 [00:00<00:02, 12.41it/s]
+Capturing CUDA graphs (decode, FULL):  17%|█▋        | 6/35 [00:00<00:02, 12.54it/s]
+Capturing CUDA graphs (decode, FULL):  23%|██▎       | 8/35 [00:00<00:02, 12.66it/s]
+Capturing CUDA graphs (decode, FULL):  29%|██▊       | 10/35 [00:00<00:01, 13.55it/s]
+Capturing CUDA graphs (decode, FULL):  34%|███▍      | 12/35 [00:00<00:01, 14.13it/s]
+Capturing CUDA graphs (decode, FULL):  40%|████      | 14/35 [00:01<00:01, 14.60it/s]
+Capturing CUDA graphs (decode, FULL):  46%|████▌     | 16/35 [00:01<00:01, 15.11it/s]
+Capturing CUDA graphs (decode, FULL):  51%|█████▏    | 18/35 [00:01<00:01, 16.33it/s]
+Capturing CUDA graphs (decode, FULL):  57%|█████▋    | 20/35 [00:01<00:00, 17.15it/s]
+Capturing CUDA graphs (decode, FULL):  66%|██████▌   | 23/35 [00:01<00:00, 18.31it/s]
+Capturing CUDA graphs (decode, FULL):  74%|███████▍  | 26/35 [00:01<00:00, 20.61it/s]
+Capturing CUDA graphs (decode, FULL):  86%|████████▌ | 30/35 [00:01<00:00, 23.95it/s]
+Capturing CUDA graphs (decode, FULL):  97%|█████████▋| 34/35 [00:01<00:00, 26.97it/s]
+Capturing CUDA graphs (decode, FULL): 100%|██████████| 35/35 [00:01<00:00, 18.60it/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 33.77it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:06<00:00,  6.26s/it, est. speed input: 1229.39 toks/s, output: 26.68 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:06<00:00,  6.26s/it, est. speed input: 1229.39 toks/s, output: 26.68 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:06<00:00,  6.26s/it, est. speed input: 1229.39 toks/s, output: 26.68 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 21.17it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:07<00:00,  7.20s/it, est. speed input: 1198.36 toks/s, output: 26.25 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:07<00:00,  7.20s/it, est. speed input: 1198.36 toks/s, output: 26.25 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:07<00:00,  7.20s/it, est. speed input: 1198.36 toks/s, output: 26.25 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 20.93it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:09<00:00,  9.45s/it, est. speed input: 1004.27 toks/s, output: 26.02 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:09<00:00,  9.45s/it, est. speed input: 1004.27 toks/s, output: 26.02 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:09<00:00,  9.45s/it, est. speed input: 1004.27 toks/s, output: 26.02 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 32.81it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:12<00:00, 12.75s/it, est. speed input: 812.06 toks/s, output: 25.42 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:12<00:00, 12.75s/it, est. speed input: 812.06 toks/s, output: 25.42 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:12<00:00, 12.75s/it, est. speed input: 812.06 toks/s, output: 25.42 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 24.02it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:11<00:00, 11.30s/it, est. speed input: 721.68 toks/s, output: 18.05 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:11<00:00, 11.30s/it, est. speed input: 721.68 toks/s, output: 18.05 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:11<00:00, 11.30s/it, est. speed input: 721.68 toks/s, output: 18.05 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 22.39it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:13<00:00, 13.11s/it, est. speed input: 683.82 toks/s, output: 18.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:13<00:00, 13.11s/it, est. speed input: 683.82 toks/s, output: 18.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:13<00:00, 13.12s/it, est. speed input: 683.82 toks/s, output: 18.00 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 20.45it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:31<00:00, 31.18s/it, est. speed input: 314.61 toks/s, output: 13.63 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:31<00:00, 31.18s/it, est. speed input: 314.61 toks/s, output: 13.63 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:31<00:00, 31.18s/it, est. speed input: 314.61 toks/s, output: 13.63 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 26.21it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:18<00:00, 18.07s/it, est. speed input: 450.03 toks/s, output: 13.56 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:18<00:00, 18.07s/it, est. speed input: 450.03 toks/s, output: 13.56 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:18<00:00, 18.07s/it, est. speed input: 450.03 toks/s, output: 13.56 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 23.89it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:16<00:00, 16.38s/it, est. speed input: 464.64 toks/s, output: 13.37 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:16<00:00, 16.38s/it, est. speed input: 464.64 toks/s, output: 13.37 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:16<00:00, 16.38s/it, est. speed input: 464.64 toks/s, output: 13.37 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 25.30it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:19<00:00, 19.75s/it, est. speed input: 429.34 toks/s, output: 13.37 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:19<00:00, 19.75s/it, est. speed input: 429.34 toks/s, output: 13.37 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:19<00:00, 19.75s/it, est. speed input: 429.34 toks/s, output: 13.37 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 26.21it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:17<00:00, 17.70s/it, est. speed input: 463.10 toks/s, output: 13.39 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:17<00:00, 17.70s/it, est. speed input: 463.10 toks/s, output: 13.39 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:17<00:00, 17.71s/it, est. speed input: 463.10 toks/s, output: 13.39 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 21.59it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:15<00:00, 15.95s/it, est. speed input: 483.20 toks/s, output: 13.29 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:15<00:00, 15.95s/it, est. speed input: 483.20 toks/s, output: 13.29 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:15<00:00, 15.95s/it, est. speed input: 483.20 toks/s, output: 13.29 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 23.00it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:19<00:00, 19.41s/it, est. speed input: 440.15 toks/s, output: 13.34 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:19<00:00, 19.41s/it, est. speed input: 440.15 toks/s, output: 13.34 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:19<00:00, 19.41s/it, est. speed input: 440.15 toks/s, output: 13.34 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 20.31it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:21<00:00, 21.55s/it, est. speed input: 431.90 toks/s, output: 13.51 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:21<00:00, 21.55s/it, est. speed input: 431.90 toks/s, output: 13.51 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:21<00:00, 21.55s/it, est. speed input: 431.90 toks/s, output: 13.51 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 39.20it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:16<00:00, 16.08s/it, est. speed input: 478.82 toks/s, output: 12.75 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:16<00:00, 16.08s/it, est. speed input: 478.82 toks/s, output: 12.75 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:16<00:00, 16.08s/it, est. speed input: 478.82 toks/s, output: 12.75 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 26.06it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:19<00:00, 19.01s/it, est. speed input: 450.58 toks/s, output: 13.36 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:19<00:00, 19.01s/it, est. speed input: 450.58 toks/s, output: 13.36 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:19<00:00, 19.01s/it, est. speed input: 450.58 toks/s, output: 13.36 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 26.94it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:17<00:00, 17.40s/it, est. speed input: 455.39 toks/s, output: 13.56 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:17<00:00, 17.40s/it, est. speed input: 455.39 toks/s, output: 13.56 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:17<00:00, 17.40s/it, est. speed input: 455.39 toks/s, output: 13.56 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 33.09it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:11<00:00, 11.57s/it, est. speed input: 643.93 toks/s, output: 12.44 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:11<00:00, 11.57s/it, est. speed input: 643.93 toks/s, output: 12.44 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:11<00:00, 11.57s/it, est. speed input: 643.93 toks/s, output: 12.44 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 27.12it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:16<00:00, 16.70s/it, est. speed input: 466.98 toks/s, output: 13.42 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:16<00:00, 16.70s/it, est. speed input: 466.98 toks/s, output: 13.42 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:16<00:00, 16.70s/it, est. speed input: 466.98 toks/s, output: 13.42 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 24.78it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:19<00:00, 19.31s/it, est. speed input: 435.66 toks/s, output: 13.67 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:19<00:00, 19.31s/it, est. speed input: 435.66 toks/s, output: 13.67 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:19<00:00, 19.31s/it, est. speed input: 435.66 toks/s, output: 13.67 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 20.72it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:23<00:00, 23.24s/it, est. speed input: 381.60 toks/s, output: 14.16 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:23<00:00, 23.24s/it, est. speed input: 381.60 toks/s, output: 14.16 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:23<00:00, 23.24s/it, est. speed input: 381.60 toks/s, output: 14.16 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 28.11it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:16<00:00, 16.08s/it, est. speed input: 476.40 toks/s, output: 13.50 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:16<00:00, 16.08s/it, est. speed input: 476.40 toks/s, output: 13.50 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:16<00:00, 16.08s/it, est. speed input: 476.40 toks/s, output: 13.50 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 53.24it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:20<00:00, 20.17s/it, est. speed input: 402.25 toks/s, output: 14.18 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:20<00:00, 20.17s/it, est. speed input: 402.25 toks/s, output: 14.18 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:20<00:00, 20.17s/it, est. speed input: 402.25 toks/s, output: 14.18 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 25.54it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:28<00:00, 28.68s/it, est. speed input: 299.70 toks/s, output: 14.58 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:28<00:00, 28.68s/it, est. speed input: 299.70 toks/s, output: 14.58 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:28<00:00, 28.68s/it, est. speed input: 299.70 toks/s, output: 14.58 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 26.90it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:15<00:00, 15.85s/it, est. speed input: 497.96 toks/s, output: 13.50 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:15<00:00, 15.85s/it, est. speed input: 497.96 toks/s, output: 13.50 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:15<00:00, 15.85s/it, est. speed input: 497.96 toks/s, output: 13.50 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 22.86it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:13<00:00, 13.36s/it, est. speed input: 613.81 toks/s, output: 12.05 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:13<00:00, 13.36s/it, est. speed input: 613.81 toks/s, output: 12.05 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:13<00:00, 13.36s/it, est. speed input: 613.81 toks/s, output: 12.05 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 25.99it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:13<00:00, 13.07s/it, est. speed input: 625.61 toks/s, output: 11.79 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:13<00:00, 13.07s/it, est. speed input: 625.61 toks/s, output: 11.79 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:13<00:00, 13.07s/it, est. speed input: 625.61 toks/s, output: 11.79 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 28.20it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:16<00:00, 16.79s/it, est. speed input: 459.19 toks/s, output: 13.58 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:16<00:00, 16.79s/it, est. speed input: 459.19 toks/s, output: 13.58 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:16<00:00, 16.79s/it, est. speed input: 459.19 toks/s, output: 13.58 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 25.45it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:19<00:00, 19.83s/it, est. speed input: 417.14 toks/s, output: 13.97 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:19<00:00, 19.83s/it, est. speed input: 417.14 toks/s, output: 13.97 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:19<00:00, 19.83s/it, est. speed input: 417.14 toks/s, output: 13.97 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 24.04it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:21<00:00, 21.39s/it, est. speed input: 406.41 toks/s, output: 13.79 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:21<00:00, 21.39s/it, est. speed input: 406.41 toks/s, output: 13.79 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:21<00:00, 21.39s/it, est. speed input: 406.41 toks/s, output: 13.79 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 21.38it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:16<00:00, 16.31s/it, est. speed input: 470.72 toks/s, output: 13.43 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:16<00:00, 16.31s/it, est. speed input: 470.72 toks/s, output: 13.43 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:16<00:00, 16.31s/it, est. speed input: 470.72 toks/s, output: 13.43 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 26.41it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:21<00:00, 21.41s/it, est. speed input: 381.79 toks/s, output: 13.87 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:21<00:00, 21.41s/it, est. speed input: 381.79 toks/s, output: 13.87 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:21<00:00, 21.41s/it, est. speed input: 381.79 toks/s, output: 13.87 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 25.30it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:25<00:00, 25.83s/it, est. speed input: 331.13 toks/s, output: 14.59 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:25<00:00, 25.83s/it, est. speed input: 331.13 toks/s, output: 14.59 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:25<00:00, 25.83s/it, est. speed input: 331.13 toks/s, output: 14.59 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 24.39it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:15<00:00, 15.04s/it, est. speed input: 573.41 toks/s, output: 12.37 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:15<00:00, 15.04s/it, est. speed input: 573.41 toks/s, output: 12.37 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:15<00:00, 15.04s/it, est. speed input: 573.41 toks/s, output: 12.37 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 16.31it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:18<00:00, 18.26s/it, est. speed input: 520.86 toks/s, output: 12.71 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:18<00:00, 18.26s/it, est. speed input: 520.86 toks/s, output: 12.71 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:18<00:00, 18.26s/it, est. speed input: 520.86 toks/s, output: 12.71 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 19.75it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:23<00:00, 23.61s/it, est. speed input: 441.17 toks/s, output: 12.83 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:23<00:00, 23.61s/it, est. speed input: 441.17 toks/s, output: 12.83 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:23<00:00, 23.62s/it, est. speed input: 441.17 toks/s, output: 12.83 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 22.15it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:19<00:00, 19.66s/it, est. speed input: 440.84 toks/s, output: 13.48 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:19<00:00, 19.66s/it, est. speed input: 440.84 toks/s, output: 13.48 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:19<00:00, 19.66s/it, est. speed input: 440.84 toks/s, output: 13.48 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 22.33it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:19<00:00, 19.30s/it, est. speed input: 496.25 toks/s, output: 12.23 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:19<00:00, 19.30s/it, est. speed input: 496.25 toks/s, output: 12.23 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:19<00:00, 19.30s/it, est. speed input: 496.25 toks/s, output: 12.23 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 20.67it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:23<00:00, 23.46s/it, est. speed input: 445.40 toks/s, output: 12.57 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:23<00:00, 23.46s/it, est. speed input: 445.40 toks/s, output: 12.57 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:23<00:00, 23.46s/it, est. speed input: 445.40 toks/s, output: 12.57 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 21.78it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:18<00:00, 18.32s/it, est. speed input: 444.39 toks/s, output: 13.60 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:18<00:00, 18.32s/it, est. speed input: 444.39 toks/s, output: 13.60 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:18<00:00, 18.32s/it, est. speed input: 444.39 toks/s, output: 13.60 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 26.49it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:18<00:00, 18.76s/it, est. speed input: 431.14 toks/s, output: 13.70 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:18<00:00, 18.76s/it, est. speed input: 431.14 toks/s, output: 13.70 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:18<00:00, 18.76s/it, est. speed input: 431.14 toks/s, output: 13.70 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 23.78it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:17<00:00, 17.95s/it, est. speed input: 487.19 toks/s, output: 13.09 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:17<00:00, 17.95s/it, est. speed input: 487.19 toks/s, output: 13.09 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:17<00:00, 17.95s/it, est. speed input: 487.19 toks/s, output: 13.09 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 16.72it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:26<00:00, 26.28s/it, est. speed input: 355.21 toks/s, output: 14.34 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:26<00:00, 26.28s/it, est. speed input: 355.21 toks/s, output: 14.34 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:26<00:00, 26.28s/it, est. speed input: 355.21 toks/s, output: 14.34 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 26.66it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:18<00:00, 18.81s/it, est. speed input: 423.27 toks/s, output: 13.72 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:18<00:00, 18.81s/it, est. speed input: 423.27 toks/s, output: 13.72 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:18<00:00, 18.81s/it, est. speed input: 423.27 toks/s, output: 13.72 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 23.58it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:22<00:00, 22.57s/it, est. speed input: 387.26 toks/s, output: 13.78 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:22<00:00, 22.57s/it, est. speed input: 387.26 toks/s, output: 13.78 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:22<00:00, 22.57s/it, est. speed input: 387.26 toks/s, output: 13.78 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 20.66it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:27<00:00, 27.20s/it, est. speed input: 351.58 toks/s, output: 13.75 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:27<00:00, 27.20s/it, est. speed input: 351.58 toks/s, output: 13.75 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:27<00:00, 27.20s/it, est. speed input: 351.58 toks/s, output: 13.75 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 22.30it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:16<00:00, 16.06s/it, est. speed input: 517.55 toks/s, output: 12.77 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:16<00:00, 16.06s/it, est. speed input: 517.55 toks/s, output: 12.77 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:16<00:00, 16.06s/it, est. speed input: 517.55 toks/s, output: 12.77 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 17.63it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:19<00:00, 19.10s/it, est. speed input: 474.81 toks/s, output: 13.20 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:19<00:00, 19.10s/it, est. speed input: 474.81 toks/s, output: 13.20 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:19<00:00, 19.10s/it, est. speed input: 474.81 toks/s, output: 13.20 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 21.79it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:22<00:00, 22.75s/it, est. speed input: 420.58 toks/s, output: 13.19 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:22<00:00, 22.75s/it, est. speed input: 420.58 toks/s, output: 13.19 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:22<00:00, 22.75s/it, est. speed input: 420.58 toks/s, output: 13.19 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 26.58it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:13<00:00, 13.61s/it, est. speed input: 579.83 toks/s, output: 12.34 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:13<00:00, 13.61s/it, est. speed input: 579.83 toks/s, output: 12.34 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:13<00:00, 13.61s/it, est. speed input: 579.83 toks/s, output: 12.34 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 23.80it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:16<00:00, 16.92s/it, est. speed input: 513.66 toks/s, output: 13.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:16<00:00, 16.92s/it, est. speed input: 513.66 toks/s, output: 13.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:16<00:00, 16.92s/it, est. speed input: 513.66 toks/s, output: 13.00 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 42.76it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:20<00:00, 20.45s/it, est. speed input: 457.46 toks/s, output: 12.91 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:20<00:00, 20.45s/it, est. speed input: 457.46 toks/s, output: 12.91 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:20<00:00, 20.45s/it, est. speed input: 457.46 toks/s, output: 12.91 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 57.37it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:12<00:00, 12.06s/it, est. speed input: 631.58 toks/s, output: 11.77 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:12<00:00, 12.06s/it, est. speed input: 631.58 toks/s, output: 11.77 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:12<00:00, 12.06s/it, est. speed input: 631.58 toks/s, output: 11.77 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 26.63it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:19<00:00, 19.18s/it, est. speed input: 424.33 toks/s, output: 13.71 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:19<00:00, 19.18s/it, est. speed input: 424.33 toks/s, output: 13.71 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:19<00:00, 19.18s/it, est. speed input: 424.33 toks/s, output: 13.71 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 23.04it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:22<00:00, 22.39s/it, est. speed input: 387.98 toks/s, output: 14.16 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:22<00:00, 22.39s/it, est. speed input: 387.98 toks/s, output: 14.16 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:22<00:00, 22.39s/it, est. speed input: 387.98 toks/s, output: 14.16 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 28.51it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:12<00:00, 12.59s/it, est. speed input: 598.24 toks/s, output: 12.70 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:12<00:00, 12.59s/it, est. speed input: 598.24 toks/s, output: 12.70 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:12<00:00, 12.59s/it, est. speed input: 598.24 toks/s, output: 12.70 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 23.31it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:19<00:00, 19.89s/it, est. speed input: 404.80 toks/s, output: 13.98 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:19<00:00, 19.89s/it, est. speed input: 404.80 toks/s, output: 13.98 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:19<00:00, 19.89s/it, est. speed input: 404.80 toks/s, output: 13.98 toks/s]
+
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts: 100%|██████████| 1/1 [00:00<00:00, 21.26it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:20<00:00, 20.19s/it, est. speed input: 430.52 toks/s, output: 13.37 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:20<00:00, 20.19s/it, est. speed input: 430.52 toks/s, output: 13.37 toks/s]
+Processed prompts: 100%|██████████| 1/1 [00:20<00:00, 20.19s/it, est. speed input: 430.52 toks/s, output: 13.37 toks/s]
+

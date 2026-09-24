@@ -1,0 +1,9 @@
+command: PYTHONPATH=src /home/wjeong/envs/jeongwoncheol_adol/bin/python -m kyra.judge merge --run-dir result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/main/20260923T0117Z-919654 --views prefix --shards result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/main/20260923T0117Z-919654/judge_J3.shard1of2.jsonl result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/main/20260923T0117Z-919654/judge_J3.shard2of2.jsonl --out result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/main/20260923T0117Z-919654/judge_J3.jsonl
+exit=0
+--- stdout ---
+merged shards=2 total=564 ok=562 error=2 out=result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/main/20260923T0117Z-919654/judge_J3.jsonl
+judge_file_sha256=e3181289e1c03e816a79b60822eba0a985197fe6cb608d54e3a2ce5838740d3f
+meta=result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/main/20260923T0117Z-919654/judge_J3.meta.json
+
+--- stderr ---
+

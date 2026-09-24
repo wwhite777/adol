@@ -1,0 +1,8 @@
+command: PYTHONPATH=src /home/wjeong/envs/jeongwoncheol_adol/bin/python -m kyra.panel --judges result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/repeat_1/20260923T0206Z-8bca3d/judge_J1.jsonl result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/repeat_1/20260923T0206Z-8bca3d/judge_J2.jsonl result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/repeat_1/20260923T0206Z-8bca3d/judge_J3.jsonl --family-map result/raw/phaseA_T1/family_map_phaseA_T1.json --evaluated-family kakao --out result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/repeat_1/20260923T0206Z-8bca3d/panel.jsonl
+exit=0
+--- stdout ---
+views=116 conversations=31 ok=116 insufficient=0 evaluated_family=kakao
+out=result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/repeat_1/20260923T0206Z-8bca3d/panel.jsonl
+
+--- stderr ---
+
