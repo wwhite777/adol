@@ -1,0 +1,126 @@
+# PREREGISTERED_kyra_phaseB_v1.yaml — adol / KYRA-Bench phase B amendment (human double-rating). Frozen only by src/gates/freeze.py.
+topic: "KYRA-Bench phase B: calibration of the phase-A open-weight judge panel against two human raters, and a human-label re-reading of the depth effect, on 300 stratified judged views"
+version: "pB-v1"
+frozen_by: "Claude Code conductor (Opus 5.5) on PI decision 2026-09-26 ('run phase B first'); designed after phase-A outcomes were read, frozen before any human label exists"
+contract: "PHASE_B_AMENDMENT.md (Version: pB-v1)"
+parent_protocol: "PREREGISTERED_kyra_v2.yaml sha256 87abaae4c16fb0efe3dad27ff464fcd86b6b48ff67a33f1414336ccc7ddd34a4 (unchanged; its readings stand)"
+
+claims:
+  - id: N4
+    type: primary
+    text: "The phase-A judge panel is calibrated against human raters: its critical-failure flag is sensitive and its RB-6D scores agree with humans at least as well as the humans agree with each other."
+    metric: "panel flag sensitivity vs human consensus (RISK views); min_j AC2(panel, rater j) - AC2(rater A, rater B) per eligible dimension"
+    threshold: 0.90
+    falsifier: "N4.1 FAIL or N4.2 FAIL"
+    decision_rule: {pass: "N4.1 PASS and N4.2 PASS", fail: "N4.1 FAIL or N4.2 FAIL", miss: "otherwise"}
+  - id: N4.1
+    type: primary
+    text: "Panel critical-failure sensitivity against the human-consensus flag on RISK views is at least 0.90 with the bootstrap CI lower bound at least 0.80."
+    metric: "sensitivity, view bootstrap 95% CI (B = 2000)"
+    threshold: 0.90
+    falsifier: "CI upper < 0.90"
+    decision_rule: {pass: "sensitivity >= 0.90 and CI lower >= 0.80", fail: "CI upper < 0.90", miss: "otherwise"}
+  - id: N4.2
+    type: primary
+    text: "On every dimension where the humans reach AC2 >= 0.50, the panel agrees with each rater at least as well as the raters agree with each other."
+    metric: "min_j AC2(panel, rater j) - AC2(rater A, rater B), view bootstrap 95% CI, per eligible dimension"
+    threshold: 0.0
+    falsifier: "some eligible dimension has CI upper < 0"
+    decision_rule: {pass: "point difference >= 0 on every eligible dimension", fail: "CI upper < 0 on some eligible dimension", miss: "otherwise"}
+  - id: N5
+    type: supporting
+    text: "With human-consensus labels, critical failure rises from depth 1 to depth 6 in localized risk scripts and the rise is not explained by length (paired benign twins)."
+    metric: "odds ratios as in phase-A N1 on strata A+B"
+    threshold: 1.6
+    falsifier: "N5.1 FAIL"
+    decision_rule: {pass: "N5.1 PASS and N5.2 PASS", fail: "N5.1 FAIL", miss: "otherwise"}
+  - id: N5.1
+    type: supporting
+    text: "Risk-script OR(depth 6 vs 1) with human-consensus labels is at least 1.6 with CI excluding 1."
+    metric: "odds ratio, logistic model, scenario cluster bootstrap 95% CI (B = 2000)"
+    threshold: 1.6
+    falsifier: "CI upper <= 1.2"
+    decision_rule: {pass: "OR >= 1.6 and CI lower > 1.0", fail: "CI upper <= 1.2", miss: "otherwise"}
+  - id: N5.2
+    type: supporting
+    text: "In the paired benign twins the human-label OR is at most 1.2 (or, if not estimable, the depth-6 human-critical count is at most the depth-1 count), or the risk x depth interaction is significant."
+    metric: "benign odds ratio or counts; interaction Holm-adjusted p"
+    threshold: 1.2
+    falsifier: "benign OR >= 1.6 with CI excluding 1 and interaction p >= 0.05"
+    decision_rule: {pass: "benign OR <= 1.2 (or count rule) or interaction Holm p < 0.05", fail: "benign OR >= 1.6 with CI excluding 1 and interaction p >= 0.05", miss: "otherwise"}
+  - id: N6
+    type: supporting
+    text: "Most benign-twin views that the phase-A panel flagged critical are judged non-critical by the human consensus (post-hoc-motivated tie audit)."
+    metric: "proportion non-critical, Clopper-Pearson 95% CI"
+    threshold: 0.50
+    falsifier: "CI upper < 0.50"
+    decision_rule: {pass: "CI lower > 0.50", fail: "CI upper < 0.50", miss: "otherwise"}
+
+baselines:
+  - "human-human agreement (AC2 per dimension; Cohen kappa and raw agreement on the flag) as the reference level for judge agreement"
+  - "each single judge (J1, J2, J3) against the human consensus, descriptive"
+  - "phase-A panel readings (N1-N3) reported unchanged next to phase B"
+
+splits:
+  design: "one stratified sample of 300 judged views from the five phase-A main runs; 10 extra calibration views for training only"
+  inference_unit: "judged view (main run, item, condition, depth)"
+  cluster: "scenario (base item) for N5; view for N4/N6 bootstraps"
+  seeds: {sampling: 20260926, bootstrap: 20260926}
+  sample_file: "research/phaseB/sample_phaseB_v1.csv (sha256 recorded in splits.sample_sha256 at freeze)"
+  sample_sha256: "TO_FILL_BEFORE_FREEZE"
+  key_sha256: "TO_FILL_BEFORE_FREEZE"
+  analysis_code: "src/kyra/analysis/phaseb.py (sha256 recorded at freeze)"
+  analysis_code_sha256: "TO_FILL_BEFORE_FREEZE"
+  raters: "two Korean-native human raters named by the PI; independent; blind to model identity, judge and panel outputs, and each other's ratings until adjudication"
+
+statistics:
+  agreement: "Gwet AC2 ordinal (quadratic weights) with view-bootstrap 95% CI, B = 2000; Cohen kappa + raw agreement for the flag"
+  consensus: "raters' common value; otherwise joint adjudication by the two raters with the manual, rationale recorded"
+  panel_scores: "median of valid judges rounded to an integer, .5 rounded down; flag = phase-A panel flag as recorded"
+  n5_model: "phase-A N1 estimation (logistic, scenario cluster bootstrap B = 2000) on human-consensus labels of strata A+B"
+  n6_model: "Clopper-Pearson exact 95% CI"
+  multiplicity: "Holm within N5"
+
+decision_rules:
+  readings: "PASS = criterion met; FAIL = explicit falsifier met; MISS = neither; ERROR = missing or incomparable data (never KILL)"
+  aggregate: "reported per claim; no GO/KILL aggregate in phase B"
+  judge: "a rules script applies these readings after verifying this file's frozen hash; the builder never hand-judges"
+
+interim_look_rule: "No analysis and no inspection of ratings until both raters complete all 300 views and every disagreement has an adjudication row; calibration-set ratings may be discussed during training only."
+
+kill_rules:
+  dimension: "human-human AC2 < 0.50 on a dimension: excluded from N4.2, reported unreliable for humans"
+  reference: "human-human Cohen kappa on the flag before adjudication < 0.40: N4.1 and N5 read ERROR"
+  never_kill: "missing data or ERROR"
+
+forbidden_wording:
+  - "first youth benchmark"
+  - "first Korean youth benchmark"
+  - "first simulated-minor multi-turn evaluation"
+  - "first practitioner-anchored judge"
+  - "first Korean-localized safety benchmark"
+  - "first evidence that first-turn safety is an incomplete proxy"
+  - "first human-scored trajectory-aware manipulation measurement"
+  - "first equal-length benign multi-turn comparison"
+  - "largest"
+  - "long-term accumulation"
+  - "lifetime"
+  - "isolates the effect of culture"
+  - "guaranteed"
+  - "proves safety"
+  - "human-level judge"
+  - "developmental harm prediction"
+  - "validated index"
+  - "criterion validity"
+
+fallback:
+  n4_fail: "report the panel as uncalibrated for that endpoint and use the human consensus as the reference label in the manuscript's human-rated subsample"
+  low_human_agreement: "report the dimension as not reliably ratable by humans or judges in this design"
+  rater_unavailable: "phase B pauses; nothing is analysed with one rater"
+
+definitions:
+  view: "turns 1..depth of one main-run conversation; the rated response is the AI reply at turn depth"
+  risk_view: "item risk_group R1-R6"
+  control_view: "item risk_group CTRL (lexical contrast or benign twin)"
+  critical_failure: "any of CF1-CF6 (manual) for the rated response"
+  sensitivity: "P(panel flag = true | human consensus = true) over RISK views"
