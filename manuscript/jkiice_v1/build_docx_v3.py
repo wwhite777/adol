@@ -12,9 +12,7 @@ from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
 
 HERE = pathlib.Path(__file__).resolve().parent
-REVIEW = "--review" in sys.argv
-ARGS = [a for a in sys.argv[1:] if a != "--review"]
-OUT = HERE / (ARGS[0] if ARGS else ("kyra_phaseA_jkiice_ko_v4_review.docx" if REVIEW else "kyra_phaseA_jkiice_ko_v4.docx"))
+OUT = HERE / sys.argv[1] if len(sys.argv) > 1 else HERE / "kyra_phaseA_jkiice_ko_v3.docx"
 DC = json.load(open(HERE / "refs_datacite_20260924.json", encoding="utf-8"))
 
 KO_BODY, KO_HEAD, EN_SERIF, EN_SANS = "바탕", "맑은 고딕", "Times New Roman", "Arial"
@@ -507,34 +505,30 @@ def add_figure(key):
     fname, cap = FIGS[key]
     def f():
         p = doc.add_paragraph(); p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        from PIL import Image
-        jpg = HERE / (pathlib.Path(fname).stem + ".jpg")
-        Image.open(HERE / fname).convert("RGB").save(jpg, "JPEG", quality=95, dpi=(300, 300))
-        p.add_run().add_picture(str(jpg), width=Mm(95 if key == "fig3" else 145))
+        p.add_run().add_picture(str(HERE / fname), width=Mm(95 if key == "fig3" else 145))
         para(cap, EN_SANS, KO_HEAD, 8, spacing=1.3, after=6)
     one_col_block(f)
 
 # ---------------------------------------------------------------- front matter (1 column)
 s0 = doc.sections[0]; page_setup(s0); set_cols(s0, 1)
+para("⟪게재 권호·쪽: 출판사 작성⟫", EN_SERIF, KO_BODY, 8, spacing=1.0, after=8)
 para(TITLE_KO, EN_SANS, KO_HEAD, 17, bold=True, spacing=1.3, after=6)
-if not REVIEW:
-    p = para("", spacing=1.2, after=6)
-    add_runs(p, "정원철", EN_SERIF, KO_BODY, 12); r = p.add_run("1"); set_fonts(r, EN_SERIF, KO_BODY, 8); r.font.superscript = True
-    add_runs(p, " · 오하영", EN_SERIF, KO_BODY, 12); r = p.add_run("2*"); set_fonts(r, EN_SERIF, KO_BODY, 8); r.font.superscript = True
+p = para("", spacing=1.2, after=6)
+add_runs(p, "정원철", EN_SERIF, KO_BODY, 12); r = p.add_run("1"); set_fonts(r, EN_SERIF, KO_BODY, 8); r.font.superscript = True
+add_runs(p, " · 오하영", EN_SERIF, KO_BODY, 12); r = p.add_run("2*"); set_fonts(r, EN_SERIF, KO_BODY, 8); r.font.superscript = True
 para(TITLE_EN, EN_SANS, KO_HEAD, 12.5, bold=True, spacing=1.2, after=6)
-if not REVIEW:
-    p = para("", spacing=1.2, after=4)
-    add_runs(p, "Woncheol Jeong", EN_SERIF, KO_BODY, 10.5); r = p.add_run("1"); set_fonts(r, EN_SERIF, KO_BODY, 7); r.font.superscript = True
-    add_runs(p, " · Hayoung Oh", EN_SERIF, KO_BODY, 10.5); r = p.add_run("2*"); set_fonts(r, EN_SERIF, KO_BODY, 7); r.font.superscript = True
-    for aff in ["1Research Professor, Intelligent Digital Therapeutics Research Center, Sungkyunkwan University, Seoul, 03063 Korea",
-                "2Associate Professor, Department of Applied AI, Sungkyunkwan University, Seoul, 03063 Korea",
-                "*Corresponding author"]:
-        p = para("", spacing=1.2)
-        if aff[0].isdigit():
-            r = p.add_run(aff[0]); set_fonts(r, EN_SERIF, KO_BODY, 7); r.font.superscript = True
-            add_runs(p, aff[1:], EN_SERIF, KO_BODY, 9)
-        else:
-            add_runs(p, aff, EN_SERIF, KO_BODY, 9)
+p = para("", spacing=1.2, after=4)
+add_runs(p, "Woncheol Jeong", EN_SERIF, KO_BODY, 10.5); r = p.add_run("1"); set_fonts(r, EN_SERIF, KO_BODY, 7); r.font.superscript = True
+add_runs(p, " · Hayoung Oh", EN_SERIF, KO_BODY, 10.5); r = p.add_run("2*"); set_fonts(r, EN_SERIF, KO_BODY, 7); r.font.superscript = True
+for aff in ["1Research Professor, Intelligent Digital Therapeutics Research Center, Sungkyunkwan University, Seoul, 03063 Korea",
+            "2Associate Professor, Department of Applied AI, Sungkyunkwan University, Seoul, 03063 Korea",
+            "*Corresponding author"]:
+    p = para("", spacing=1.2)
+    if aff[0].isdigit():
+        r = p.add_run(aff[0]); set_fonts(r, EN_SERIF, KO_BODY, 7); r.font.superscript = True
+        add_runs(p, aff[1:], EN_SERIF, KO_BODY, 9)
+    else:
+        add_runs(p, aff, EN_SERIF, KO_BODY, 9)
 para("요  약", EN_SANS, KO_HEAD, 10, bold=True, spacing=1.6, before=10)
 para(cite(ABS_KO), EN_SERIF, KO_BODY, 9.2, indent_pt=10, spacing=1.3, align=WD_ALIGN_PARAGRAPH.JUSTIFY)
 para("ABSTRACT", EN_SANS, KO_HEAD, 10, bold=True, spacing=1.6, before=8)
@@ -543,9 +537,9 @@ p = para("", spacing=1.56, before=8)
 add_runs(p, "키워드 : ", EN_SANS, KO_HEAD, 10, bold=True); add_runs(p, KW_KO, EN_SERIF, KO_BODY, 8.5)
 p = para("", spacing=1.56)
 add_runs(p, "Keywords : ", EN_SANS, KO_HEAD, 10, bold=True); add_runs(p, KW_EN, EN_SERIF, KO_BODY, 8.5)
-if not REVIEW:
-    para("* Corresponding Author Hayoung Oh (E-mail: hyoh79@skku.edu, Tel: +82-10-5389-5996)", EN_SERIF, KO_BODY, 8, spacing=1.2, before=14)
-    para("Associate Professor, Department of Applied AI, Sungkyunkwan University, Seoul, 03063 Korea", EN_SERIF, KO_BODY, 8, spacing=1.2)
+para("Received ⟪ ⟫,   Revised ⟪ ⟫,   Accepted ⟪ ⟫ (출판사에서 작성)", EN_SERIF, KO_BODY, 8, spacing=1.2, before=14)
+para("* Corresponding Author Hayoung Oh (E-mail: hyoh79@skku.edu, Tel: +82-10-5389-5996)", EN_SERIF, KO_BODY, 8, spacing=1.2)
+para("Associate Professor, Department of Applied AI, Sungkyunkwan University, Seoul, 03063 Korea", EN_SERIF, KO_BODY, 8, spacing=1.2)
 
 # ---------------------------------------------------------------- body (2 columns, new page)
 sb = doc.add_section(WD_SECTION.NEW_PAGE); page_setup(sb); set_cols(sb, 2)
@@ -570,9 +564,8 @@ for b in BODY:
     elif kind == "figure":
         add_figure(b[1])
 
-if not REVIEW:
-    para("감사의 글", EN_SANS, KO_HEAD, 9.5, bold=True, spacing=1.5, before=10, after=2)
-    para(ACK, **BODY_KW)
+para("감사의 글", EN_SANS, KO_HEAD, 9.5, bold=True, spacing=1.5, before=10, after=2)
+para(ACK, **BODY_KW)
 para("생성형 AI 활용 공개", EN_SANS, KO_HEAD, 9.5, bold=True, spacing=1.5, before=6, after=2)
 para(AI_USE, indent_pt=9.2, **BODY_KW)
 para("REFERENCES", EN_SANS, KO_HEAD, 11, bold=True, spacing=1.5, before=14, after=4)
@@ -592,15 +585,12 @@ BIOS = [("정원철(Woncheol Jeong)", ["1999년 2월 : 서울대학교 재료공
          "2013년 9월 ～ 2016년 8월: 숭실대학교, 조교수", "2016년 9월 ～ 2020년 2월: 아주대학교, 조교수",
          "2020년 3월 ～ 현재: 성균관대학교, 부교수", "2025년 3월 ～ 현재: 인공지능융합학과, 학과장",
          "2024년 4월 ～ 현재: 지능형디지털치료기기센터, 센터장", "※관심분야 : AI"])]
-for name, lines in ([] if REVIEW else BIOS):
+for name, lines in BIOS:
     para(name, EN_SANS, KO_HEAD, 9, bold=True, spacing=1.3, before=10)
     para("약력", EN_SERIF, KO_BODY, 8, spacing=1.3)
     for ln in lines:
         para(("" if ln.startswith("※") else "․") + ln, EN_SERIF, KO_BODY, 8, spacing=1.3)
 
-cp = doc.core_properties
-cp.author = "" if REVIEW else "Woncheol Jeong; Hayoung Oh"
-cp.last_modified_by = ""; cp.comments = ""; cp.title = TITLE_EN; cp.keywords = ""
 doc.save(OUT)
 print("wrote", OUT)
 print("references cited:", len(order), "unused:", unused)
