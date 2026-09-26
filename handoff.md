@@ -57,3 +57,4 @@ Instruction conflicts: none unresolved (the model switch is PI-directed and logg
 - PI decisions open: (a) authorship (정원철 + 오하영*) and the funding line; (b) visual check in Word/한글; (c) submit this measurement-caution framing to JKIICE now, or run phase B human double-rating first.
 - Cleanup after the PI's answer: chmod 755 bin/score_phaseA.sh + OPS-6 function wrap; delete snapshots/phaseA_scoring_d6e7507/.cache and the old session scratchpad snapshot (/tmp/claude-1011/-home-wjeong/407cdd4b-…/scratchpad; no live PIDs now); home cleanup; REHYDRATE.md.
 
+- 2026-09-26 later: PI strategy — JKIICE done by the conductor alone. Upload deliverables/kyra_phaseA_jkiice_ko_v4_review.docx (anonymized per 심사투고양식; JPG figures; blank metadata); full version v4.docx for after acceptance. Phase B PARKED for the Q1 line (needs human raters; the conductor cannot rate); its build is being finished by a coder and is NOT to be frozen or used until the PI assigns raters. Response v15.

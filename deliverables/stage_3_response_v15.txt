@@ -1,0 +1,18 @@
+adol — JKIICE submission files + raters question (2026-09-26, conductor Opus 5.5)
+
+Your questions:
+- Can I do phase B alone? No. Phase B exists to measure agreement with HUMANS. If I rated, I would be a fourth AI judge, which cannot validate the other three.
+- Does JKIICE need raters? No. The paper reports the inconclusive verdict honestly and names human rating as future work. That fits your strategy: papers at this level are done by me and submitted.
+- Does rater work matter for SCI Q1 / T1? Yes. Our judges missed their agreement bar (N3 FAIL), and reviewers at that level expect human agreement for an AI-judged safety benchmark. Phase B is the core of the Q1 version, so it is parked for that line, not dropped.
+
+Submission files (Word; you make the HWP):
+1. deliverables/kyra_phaseA_jkiice_ko_v4_review.docx: UPLOAD THIS for review. JKIICE's 심사투고양식 has no author block, so this version drops authors, affiliations, the corresponding-author note, the acknowledgment and the bios. The Word metadata author field is blank. An identity scan found 0 tokens; the same scan finds 12 in the full version, so the check works.
+2. deliverables/kyra_phaseA_jkiice_ko_v4.docx: the full version (정원철 + 오하영*, ANCHOR + KOCCA funding, bios) for after acceptance.
+Both embed the figures as JPG, as the template requires. Content is identical to v3; the 57 numbers were checked against the analysis files.
+
+For your upload on DBpiaONE (membership; the corresponding author's dues must be paid):
+- the copyright transfer and conflict-of-interest forms (HWP in adol/research/venue/jkiice_template_2023/);
+- review fee 40,000 KRW;
+- the funding text names a collaboration with Emotionwave, so declare it on the COI form if it applies.
+
+Phase B: the design (amendment + preregistration draft) and the build (sampler, rater workbooks, analysis code; a coder is finishing it) stay on disk, unfrozen and unused, until you assign raters for the Q1 paper.
