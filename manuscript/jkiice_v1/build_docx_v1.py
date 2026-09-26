@@ -12,7 +12,7 @@ from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
 
 HERE = pathlib.Path(__file__).resolve().parent
-OUT = HERE / sys.argv[1] if len(sys.argv) > 1 else HERE / "kyra_phaseA_jkiice_ko_v2.docx"
+OUT = HERE / sys.argv[1] if len(sys.argv) > 1 else HERE / "kyra_phaseA_jkiice_ko_v1.docx"
 DC = json.load(open(HERE / "refs_datacite_20260924.json", encoding="utf-8"))
 
 KO_BODY, KO_HEAD, EN_SERIF, EN_SANS = "바탕", "맑은 고딕", "Times New Roman", "Arial"
@@ -102,23 +102,20 @@ ABS_KO = ("청소년 대상 생성형 AI의 안전성 평가는 주로 단일 �
           "길이·턴 수를 맞춘 안전 쌍둥이 24개로 구성된다. 모델 응답은 각 대화의 1–6턴 접두마다 서로 다른 계열의 개방형 "
           "판정자 3종이 채점하였다. 배치 디코딩은 동일 설정에서도 판정 출력을 재현하지 못하였으므로 판정은 순차 디코딩으로 "
           "고정하였고, 이 절차는 세 판정자 모두에서 시험 뷰 88/88을 바이트 단위로 재현하였다. "
-          "위험 대본에서 치명적 실패의 6턴 대 1턴 오즈비는 5.51(95% CI 2.15–13.76)이었으나, 길이를 맞춘 안전 쌍둥이에서도 "
-          "9.71(4.85–19.98)로 증가하여 사전 규칙상 위험 특이적 누적은 확인되지 않았다. 사후 진단에서 안전 쌍둥이의 6턴 치명적 "
-          "실패 표시 20건 중 16건은 판정 오류로 남은 두 판정자가 엇갈린 동점을 보수 규칙이 처리한 결과였다. 직역 대비 현지화의 "
-          "차이는 0.000(95% CI −0.060–0.060)으로 효과와 동등성 모두 확인되지 않았고, 판정자 간 AC2는 0.44–0.69로 사전 기준 "
-          "0.70에 미달하였다. 사전 규칙에 따른 종합 판정은 ‘결론 유보(INCONCLUSIVE)’이며, 모든 가설과 판정 기준은 점수 열람 "
-          "전에 고정하였다.")
+          "⟪결과 대기: N1 6턴 대 1턴 치명적 실패 OR과 95% CI, 안전 쌍둥이 대비; N2 현지화 − 직역 차이와 CI·TOST; "
+          "N3 차원별 AC2; G6 종합 판정 — 2–3문장⟫ 모든 가설과 판정 기준은 점수 열람 전에 고정하였다.")
 
 ABS_EN = ("Safety evaluations of conversational AI for adolescents mostly score single refusals, whereas relational "
           "risks such as secrecy inducement, exclusivity, weakening of offline relationships and emotional pressure "
           "may build across turns. We evaluated five open-weight Korean-capable language models on 156 Korean items "
           "simulating adolescents aged 12–17: 72 localized risk items in six risk groups, 36 literal-translation twins, "
           "24 lexical benign contrasts, and 24 length-matched benign twins of the six-turn risk scripts. Every "
-          "conversation prefix was scored by three open-weight judges from disjoint model families using sequential "
-          "decoding, which reproduced its outputs exactly. Critical failure rose from one to six turns in risk scripts "
-          "(odds ratio 5.51, 95% CI 2.15–13.76) but also in benign twins (9.71, 4.85–19.98), mostly through judge "
-          "ties. Localization showed no difference (0.000, CI ±0.060), inter-judge AC2 was 0.44–0.69, and the "
-          "pre-registered verdict was inconclusive.")
+          "conversation prefix was scored by three open-weight judges from disjoint model families. Because batched "
+          "decoding did not reproduce its own judge outputs, judging was pinned to sequential decoding, which "
+          "reproduced 88/88 test views exactly for all three judges. "
+          "⟪RESULT PENDING: N1 odds ratio (6 vs 1 turn) with 95% CI and the benign-twin contrast; N2 localized minus "
+          "literal difference with CI/TOST; N3 per-dimension AC2; G6 verdict — 7–37 words (the text above is 123 words) so that the "
+          "abstract totals 130–160 words⟫")
 
 KW_KO = "청소년 AI 안전, 다중 턴 평가, 관계적 위험, 문화적 현지화, LLM 판정자"
 KW_EN = "Adolescent AI safety, LLM-as-a-judge, Localization, Multi-turn evaluation, Relational risk"
@@ -224,9 +221,8 @@ BODY = [
       "같은 채점 매뉴얼 발췌와 앵커 예시를 공유한다. 판정 프롬프트는 사전 규칙이 허용한 1회의 개정을 거친 v0.3이다. 첫 채점에서 "
       "출력 형식 위반이 2% 기준을 크게 넘었기 때문에(J1 26.2%), 예시 배열의 길이를 뷰의 턴 수에 맞추고 대조 문항의 필드 의무를 "
       "무조건문으로 명시하였다. 파싱에 실패한 뷰는 한 번 다시 묻고, 그래도 실패하면 오류로 기록한다. 개정 후에도 파싱 오류율이 "
-      "2%를 넘는 판정자는 교체한다. 패널 점수는 뷰마다 세 판정자의 중앙값이며, 치명적 실패 표시는 다수결로 정한다. 한 판정자가 오류이고 남은 두 "
-      "판정자의 표시가 엇갈리면 보수적으로 치명적 실패로 처리하며, 유효 판정이 2개 미만인 뷰는 판정 불충분으로 처리한다. "
-      "이 규칙은 모두 채점 전에 고정하였다."),
+      "2%를 넘는 판정자는 교체한다. 패널 점수는 뷰마다 세 판정자의 중앙값이며, 유효 판정이 2개 미만인 뷰는 판정 불충분으로 "
+      "처리한다."),
 ("h2", "3.4 판정 디코딩의 재현성"),
 ("p", "판정 출력이 실행마다 달라지면 판정자 신뢰도(N3)와 모든 결과가 절차의 우연에 좌우된다. 이에 채점 전에 디코딩 방식별로 "
       "같은 입력을 두 번 판정하여 출력의 바이트 단위 동일성을 측정하였다(표 3). 온도 0의 배치 디코딩(배치 64)은 같은 564개 뷰에서 "
@@ -258,74 +254,40 @@ BODY = [
 
 ("h1", "Ⅳ. 실험 결과"),
 ("h2", "4.1 생성 및 판정 완료 현황"),
-("p", "응답 생성은 5개 모델의 대화 1,245개가 모두 정상 완료되었다(3.2절). 판정은 20개 실행 디렉터리의 접두 뷰 4,560개 × "
-      "판정자 3종으로 수행되었다. 판정자별 오류율(재질문 후에도 파싱 또는 호출에 실패한 비율)은 전체 뷰 기준 J1 82/4,560(1.80%), "
-      "J2 0/4,560(0.00%), J3 48/4,560(1.05%)으로 모두 2% 기준 이하였다. 다만 모델별로 보면 J1이 Gemma(23/912, 2.52%)와 "
-      "EXAONE(20/912, 2.19%)에서, J3가 HyperCLOVA(28/912, 3.07%)에서 2%를 넘었다. J3 오류의 대부분은 6턴 뷰에서 긴 대화가 "
-      "판정자의 문맥 길이(16,384토큰)를 넘거나 판정 출력이 700토큰 상한에서 잘린 경우였다. 판정자는 채점 전 게이트를 "
-      "통과하였고 모든 뷰에 유효 판정이 2개 이상 남았으므로(판정 불충분 0/4,560), 결과를 열람하기 전에 세 판정자를 모두 "
-      "유지하고 모델별 오류율을 공개하기로 결정하였다."),
+("p", "응답 생성은 5개 모델의 대화 1,245개가 모두 정상 완료되었다(3.2절). "
+      "⟪결과 대기: 판정 완료 현황 — 판정자별·모델별 파싱 오류율(주 실행 기준, 분모 564), 재질문 비율, 판정 불충분 뷰 수. "
+      "모든 판정자가 2% 기준 이하인지 명시⟫"),
 ("h2", "4.2 턴 깊이에 따른 치명적 실패(N1)"),
-("p", "그림 2와 표 4는 6턴 현지화 위험 대본 24개와 그 안전 쌍둥이 24개(각 5모델, 120대화)의 접두 깊이별 치명적 실패율이다. "
-      "위험 대본에서 치명적 실패율은 1턴 14/120(0.117), 3턴 14/120(0.117), 6턴 34/120(0.283)이었고, 6턴 대 1턴 오즈비는 "
-      "5.51(95% CI 2.15–13.76)로 N1.1의 기준(OR ≥ 1.6, CI 하한 > 1)을 충족하였다. GEE 민감도 분석의 오즈비는 2.99(1.42–6.31)였고, "
-      "보조 대비인 3턴 대 1턴 오즈비는 0.88(0.26–2.67)이었다. 그러나 안전 쌍둥이에서도 치명적 실패 표시가 1턴 1/120, 3턴 0/120, "
-      "6턴 20/120으로 증가하여 오즈비 9.71(4.85–19.98)을 보였고, 위험 × 깊이 상호작용은 유의하지 않았다(OR 0.47, Holm 보정 "
-      "p = 0.204). 따라서 사전 반증 조건에 따라 N1.2는 FAIL, N1은 MISS로 판독되며, 턴 깊이에 따른 증가가 위험 내용에 특이적이라고 "
-      "말할 수 없다."),
-("p", "사후 진단(사전 계획에 없던 분석): 표시의 출처를 확인한 결과, 위험 대본의 치명적 실패 표시(1·3·6턴 14·14·34건)는 모두 "
-      "세 판정자가 유효한 패널에서 나왔다. 반면 안전 쌍둥이의 6턴 표시 20건 중 16건은 한 판정자의 오류로 남은 두 판정자가 "
-      "엇갈려 보수 규칙이 적용된 동점이었고, 세 판정자 패널에서 나온 표시는 4건이었다. 즉 안전 쌍둥이에서의 증가는 긴 대화에서의 "
-      "판정 오류와 동점 규칙이 결합한 측정상의 현상일 가능성이 크며, 모델이 무해한 대화에서 실패했다는 근거로 읽어서는 안 된다. "
-      "이 진단은 판독을 바꾸지 않으며, 인간 평정 없이 어느 쪽이 옳은지 확정할 수 없다."),
-("figure", "fig2"),
+("ph", "⟪결과 대기: 그림 2 — 접두 깊이(1, 3, 6턴)별 치명적 실패율, 위험 대본 대 안전 쌍둥이, 모델별. 표 4 — N1.1 OR과 부트스트랩 "
+       "95% CI, N1.2 안전 쌍둥이 OR과 상호작용 Holm 보정 p, 1턴 대 3턴 보조 대비, GEE 민감도. 판독(PASS/FAIL/MISS/ERROR)은 G6 출력 "
+       "그대로 기재⟫"),
 ("table", "t4"),
 ("h2", "4.3 직역 대 현지화(N2)"),
-("p", "다중 턴 위험 문항 36쌍 × 5모델(180쌍)에서 대화 중 치명적 실패 비율은 직역 58/180(0.322), 현지화 58/180(0.322)으로 "
-      "같았고, 한쪽에서만 실패한 쌍도 15쌍씩으로 같았다. 짝지은 차이는 0.000(95% CI −0.060–0.060)으로 기준(|Δ| ≥ 0.03, CI가 0 "
-      "제외)을 충족하지 않았고, ±0.03의 TOST도 동등성을 보이지 못하였다(p = 0.163). 따라서 N2는 MISS이다. 이 표본에서는 "
-      "현지화가 측정된 실패율을 바꾼다는 근거도, 바꾸지 않는다는 근거도 얻지 못하였다. 1단계는 문항마다 한 가지 재작성만 적용하였으므로 "
-      "재작성 구성요소별 효과는 분리할 수 없다."),
+("ph", "⟪결과 대기: 36쌍 × 5모델의 짝지은 차이(현지화 − 직역) 평균과 95% CI, TOST ±0.03 결과, 모델별 차이, 재작성 구성요소별 "
+       "보고. 판독은 G6 출력 그대로⟫"),
 ("h2", "4.4 판정자 패널의 신뢰도(N3)"),
-("p", "그림 3과 표 5는 20개 실행의 위험 문항 접두 뷰 3,195개에 대한 판정자 간 일치도이다(대조 문항 뷰 1,365개는 RB-6D 대상이 "
-      "아니므로 제외). 차원별 AC2는 D1 0.627, D2 0.667, D3 0.665, D4 0.487, D5 0.444, D6 0.694로 모든 차원이 0.70에 미달하였고, "
-      "D1–D5는 95% CI 상한도 0.70 미만이어서 N3.1은 FAIL이다. 치명적 실패 표시의 판정자 쌍 일치율은 0.823으로 기준 0.80을 "
-      "넘었다. 사전 규칙에 따라 AC2가 0.50 미만인 D4(대안 제시)와 D5(자원 연결)는 신뢰할 수 없는 차원으로 보고한다. 계열 "
-      "제외 분석은 사전 문구상 평가 대상과 같은 계열의 판정자를 제외하는 것이나, 본 설계에서는 그런 판정자가 없어 제외되는 판정자가 "
-      "없다. 구현된 분석은 판정자 계열을 하나씩 제외하였으며, Meta 계열(J1)을 제외하면 AC2가 차원별로 0.17–0.22 높아져(최대 0.222) "
-      "N3.2는 이 기준으로 FAIL이다. 이는 J1이 다른 두 판정자와 가장 크게 어긋난다는 뜻이다."),
-("figure", "fig3"),
+("ph", "⟪결과 대기: 그림 3 — 차원 D1–D6별 AC2와 부트스트랩 95% CI(기준선 0.70 표시), 치명적 실패 일치율(기준 0.80), 언어(직역/현지화)·"
+       "위험군별 층화. 판정자 계열이 평가 대상과 모두 달라 계열 제외 재계산에서 제거되는 판정자가 없다는 점과 그에 따른 N3.2 판독을 "
+       "G6 출력대로 기술⟫"),
 ("table", "t5"),
 ("h2", "4.5 기술 통계"),
-("p", "무해한 대조 문항 240개(모델당 48개) 중 과잉거부로 판정된 응답은 0건이었다(정확 95% 상한: 전체 0.015, 모델별 0.074). "
-      "이는 판정자가 과잉거부를 놓쳤을 가능성을 배제하지 못한다. 위험 문항(모델당 108대화)에서 대화 중 치명적 실패가 표시된 "
-      "비율은 Qwen2.5 0.139(95% CI 0.065–0.229), HyperCLOVA 0.204(0.117–0.302), Gemma 3 0.278(0.180–0.385), EXAONE "
-      "0.324(0.225–0.434), Kanana 0.352(0.242–0.463)였다. 주 실행 780대화 중 590대화는 실패 사건이 없었고, 첫 실패는 1턴에서 "
-      "가장 많았다(89대화). 첫 실패 후 다음 턴에서 회복한 대화는 39/107, 이후 어느 턴에서든 회복한 대화는 55/107이었으며, 83대화는 "
-      "마지막 턴 실패로 중도 절단되었다. CRRI의 평균은 0.607(범위 0–8)이었다."),
+("ph", "⟪결과 대기: 모델별 안전–과잉거부 파레토(어휘 대조 24개 기준, CI 포함), CRRI 분포, 첫 실패 턴과 즉시·지연 회복 수, "
+       "중도 절단 수, 반복 실행의 비결정성 분산 성분⟫"),
 ("h2", "4.6 종합 판정"),
-("p", "사전 규칙에 따른 판정 스크립트의 종합 판정은 INCONCLUSIVE이다. 개별 판독은 N1.1 PASS, N1.2 FAIL, N1 MISS, N2 MISS, "
-      "N3 FAIL(N3.1 FAIL, N3.2 FAIL)이다. 사전 대비책에 따라 본 논문은 턴 누적 결과를 신뢰구간과 함께 결론 유보로 보고하고, "
-      "문항 은행과 판정 절차, 그 신뢰도에 대한 결과를 함께 보고한다."),
+("ph", "⟪결과 대기: G6 종합 판정(GO / KILL / KILL_WITH_SURVIVOR / INCONCLUSIVE)과 각 주장의 판독을 스크립트 출력 그대로. "
+       "N1이 KILL 또는 INCONCLUSIVE이면 사전 대비책대로 신뢰구간과 함께 영가설 결과로 보고⟫"),
 
 ("h1", "Ⅴ. 결  론"),
-("p", "본 연구는 12–17세 청소년을 가정한 한국어 다중 턴 대화에서 개방형 모델 5종의 관계적 안전성을 사전 고정한 절차로 "
-      "평가하였다. 위험 대본에서 치명적 실패는 6턴에서 1턴보다 많았으나(OR 5.51), 길이를 맞춘 안전 쌍둥이에서도 증가가 관측되어 "
-      "위험 특이적 누적은 확인되지 않았다(결론 유보). 사후 진단은 그 증가의 상당 부분이 긴 대화에서의 판정 오류와 동점 규칙에서 "
-      "비롯되었음을 보여, 다중 턴 안전성 평가에서 판정 절차 자체가 결과를 만들어 낼 수 있음을 시사한다. 직역과 현지화의 차이는 "
-      "관측되지 않았으나 동등성도 확인되지 않았다. 개방형 판정자 3종의 일치도는 사전 기준에 미달하였고, 특히 대안 제시와 자원 "
-      "연결 차원은 신뢰하기 어려웠다. 실무적으로는 LLM 판정자만으로 청소년 대상 다중 턴 안전성을 평가할 때 판정 오류의 처리 "
-      "규칙과 대화 길이에 따른 판정 실패를 함께 보고해야 하며, 자원 연결처럼 판정이 불안정한 차원은 인간 평정으로 보완해야 한다."),
+("ph", "⟪결과 대기: 세 연구 질문에 대한 답을 결과 수치와 함께 한 문단으로 요약하고, 국내 청소년 대상 서비스 평가에 주는 함의를 "
+       "과장 없이 기술⟫"),
 ("p", "본 연구에는 다음의 한계가 있다. 첫째, 인간 평정 기준이 없으므로 판정자 패널의 정확도는 알 수 없으며, 본 논문은 판정자 간 "
       "신뢰도만 보고한다. CRRI의 인간 평정 기준 대비 타당성 검증은 공동 연구자의 이중 평정을 거쳐 별도로 고정한 수정 계획으로만 "
       "수행한다. 둘째, 평가 대상은 개방형 가중치 모델 5종이며 상용 서비스는 포함하지 않았다. 계획한 Qwen3 대신 디스크 제약으로 "
       "Qwen2.5-14B를 사용하였고, 이 대체는 결과 열람 전에 기록하였다. 셋째, 문항은 156개이고 대화 창은 6턴 이하이며, 반복 실행은 "
       "20% 부분집합에 한정된다. 넷째, 판정 프롬프트의 허용된 1회 개정을 사용하였고, 개정 후에도 J1과 J3는 첫 시도에서 파싱에 "
       "실패해 다시 물은 비율이 높았다. 다섯째, 판정 출력은 배치 구성과 커널 같은 미세한 수치 조건에 민감하였으며, 본 연구는 이를 "
-      "순차 디코딩으로 고정하여 재현성을 확보하였을 뿐 그 민감도 자체를 제거하지는 않았다. 여섯째, 판정자 간 일치도가 사전 기준에 미달하였고 대조 문항의 과잉거부 0건과 안전 쌍둥이의 치명적 실패 표시는 판정자의 "
-      "민감도와 오류 처리 규칙에 좌우될 수 있으므로, 모든 수치는 개방형 판정자 패널이 측정한 값으로 읽어야 한다. 최종 분석 전에 "
-      "여러 실행을 결합하는 분석 코드의 오류를 발견하여 수정하였고, 수정 전 출력은 사용하지 않았다. 향후 과제는 인간 평정에 의한 "
-      "판정자 보정과 동점 규칙의 검증, 상용 모델과 더 긴 대화 창으로의 확장이다."),
+      "순차 디코딩으로 고정하여 재현성을 확보하였을 뿐 그 민감도 자체를 제거하지는 않았다. 향후 과제는 인간 평정에 의한 판정자 "
+      "보정, 상용 모델과 더 긴 대화 창으로의 확장이다."),
 ]
 
 ACK = "⟪PI 확인: 연구비 지원 기관·과제명·과제번호. 선행 게재 논문의 두 과제(ANCHOR, KOCCA)를 그대로 쓸지, ETRI 과제를 표기할지 결정⟫"
@@ -362,31 +324,19 @@ TABLES = {
          ["Sequential, cache off (J2)", "88", "88 (100%)", "88 (100%)"],
          ["Sequential, cache off (J3)", "88", "88 (100%)", "88 (100%)"],
          ["Sequential, 2 shards vs 1 engine (J2)", "88", "88 (100%)", "88 (100%)"]], False),
- "t4": ("Table 4. N1: odds ratios of critical failure by prefix depth (24 scenarios x 5 models; 120 conversations per arm). CI: scenario-cluster bootstrap, B = 2,000. N1 reading: MISS.",
+ "t4": ("Table 4. N1: critical failure by prefix depth (placeholder until the analysis run).",
         ["Contrast", "OR", "95% CI", "Holm p", "Reading"],
-        [["Risk scripts, 6 vs 1 turn (N1.1)", "5.51", "2.15-13.76", "-", "PASS"],
-         ["Benign twins, 6 vs 1 turn", "9.71", "4.85-19.98", "-", ""],
-         ["Risk x depth interaction (N1.2)", "0.47", "0.19-1.56", "0.204", "FAIL"],
-         ["Risk scripts, 3 vs 1 turn (secondary)", "0.88", "0.26-2.67", "-", "-"],
-         ["Risk scripts, 6 vs 1 turn, GEE (sensitivity)", "2.99", "1.42-6.31", "-", "-"]], False),
- "t5": ("Table 5. N3: inter-judge agreement over 3,195 risk-item views (20 runs). Bar: AC2 >= 0.70; flag agreement >= 0.80. * Mean pairwise percent agreement. N3 reading: FAIL.",
+        [["Risk scripts, 6 vs 1 turn (N1.1)", "⟪ ⟫", "⟪ ⟫", "-", "⟪ ⟫"],
+         ["Benign twins, 6 vs 1 turn", "⟪ ⟫", "⟪ ⟫", "-", ""],
+         ["Risk x depth interaction (N1.2)", "-", "-", "⟪ ⟫", "⟪ ⟫"],
+         ["Risk scripts, 3 vs 1 turn (secondary)", "⟪ ⟫", "⟪ ⟫", "-", "-"]], False),
+ "t5": ("Table 5. N3: inter-judge agreement per dimension (placeholder until the analysis run). Bar: AC2 >= 0.70; flag agreement >= 0.80.",
         ["Dimension", "AC2", "95% CI", "Reading"],
-        [["D1 Risk recognition", "0.627", "0.605-0.649", "below bar"],
-         ["D2 Boundary setting", "0.667", "0.645-0.687", "below bar"],
-         ["D3 Safe refusal", "0.665", "0.645-0.685", "below bar"],
-         ["D4 Alternatives", "0.487", "0.462-0.513", "unreliable (< 0.50)"],
-         ["D5 Resource linkage", "0.444", "0.424-0.465", "unreliable (< 0.50)"],
-         ["D6 Transparency", "0.694", "0.674-0.713", "below bar"],
-         ["Critical-failure flag", "0.823 *", "-", "meets 0.80"]], False),
+        [[d, "⟪ ⟫", "⟪ ⟫", "⟪ ⟫"] for d in ["D1 Risk recognition", "D2 Boundary setting", "D3 Safe refusal",
+                                             "D4 Alternatives", "D5 Resource linkage", "D6 Transparency",
+                                             "Critical-failure flag"]], False),
 }
-FIGS = {"fig2": ("fig2_depth.png",
-                 "Fig. 2 Critical-failure rate by prefix depth for (a) localized six-turn risk scripts and (b) their "
-                 "item-paired benign twins; thin lines are models, the thick line is the pooled rate with a 95% "
-                 "scenario-cluster bootstrap band. 16 of the 20 benign flags at depth 6 are panel ties after a judge error."),
-        "fig3": ("fig3_reliability.png",
-                 "Fig. 3 Inter-judge agreement: Gwet AC2 with bootstrap 95% CI per RB-6D dimension (bar 0.70) and "
-                 "pairwise agreement on the critical-failure flag (bar 0.80). Points are estimates, not significance marks."),
-        "fig1": ("fig1_design.png",
+FIGS = {"fig1": ("fig1_design.png",
                  "Fig. 1 Study design of KYRA-Bench phase A. (a) Item bank; (b) response generation by five open-weight "
                  "models; (c) prefix-view judging by a three-judge panel from disjoint model families; (d) the three "
                  "claims fixed before any score was read, evaluated by a decision script.")}
@@ -500,7 +450,7 @@ def add_figure(key):
     fname, cap = FIGS[key]
     def f():
         p = doc.add_paragraph(); p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        p.add_run().add_picture(str(HERE / fname), width=Mm(95 if key == "fig3" else 145))
+        p.add_run().add_picture(str(HERE / fname), width=Mm(140))
         para(cap, EN_SANS, KO_HEAD, 8, spacing=1.3, after=6)
     one_col_block(f)
 
