@@ -1,0 +1,33 @@
+test_bad_adjudication_rows_are_refused (test_phaseb.TestPhaseBAnalysis) ... ok
+test_disagreement_uses_adjudicated_value (test_phaseb.TestPhaseBAnalysis) ... ok
+test_identical_raters_give_ac2_one_and_kappa_one (test_phaseb.TestPhaseBAnalysis) ... ok
+test_missing_adjudication_is_refused_by_cli (test_phaseb.TestPhaseBAnalysis) ... FAIL
+test_missing_required_cell_is_refused (test_phaseb.TestPhaseBAnalysis) ... ok
+test_n5_counts_and_estimates_present (test_phaseb.TestPhaseBAnalysis) ... ok
+test_n6_known_counts_and_clopper_pearson (test_phaseb.TestPhaseBAnalysis) ... ok
+test_panel_equal_to_humans_gives_zero_difference_and_sensitivity_one (test_phaseb.TestPhaseBAnalysis) ... ok
+test_raters_flipping_every_flag_give_sensitivity_zero (test_phaseb.TestPhaseBAnalysis) ... ok
+test_redaction_rule (test_phaseb.TestPhaseBAnalysis) ... ok
+test_round_half_down (test_phaseb.TestPhaseBAnalysis) ... ok
+test_xlsx_roundtrip_matches_csv (test_phaseb.TestPhaseBAnalysis) ... ok
+test_calibration_outside_sample (test_phaseb.TestPhaseBSample) ... ok
+test_columns_and_counts (test_phaseb.TestPhaseBSample) ... ok
+test_stratum_a_design (test_phaseb.TestPhaseBSample) ... ok
+test_stratum_c_and_d (test_phaseb.TestPhaseBSample) ... ok
+test_no_identity_in_raw_xlsx_parts (test_phaseb.TestRaterWorkbooks) ... ok
+test_no_identity_or_judge_output_in_any_cell (test_phaseb.TestRaterWorkbooks) ... ok
+test_scan_catches_a_planted_model_id (test_phaseb.TestRaterWorkbooks) ... ok
+test_workbooks_open_with_dropdowns_and_all_views (test_phaseb.TestRaterWorkbooks) ... ok
+
+======================================================================
+FAIL: test_missing_adjudication_is_refused_by_cli (test_phaseb.TestPhaseBAnalysis)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/wjeong/adol/test/test_phaseb.py", line 293, in test_missing_adjudication_is_refused_by_cli
+    self.assertEqual(p.returncode, 4, p.stderr)
+AssertionError: 0 != 4 : 
+
+----------------------------------------------------------------------
+Ran 20 tests in 38.901s
+
+FAILED (failures=1)

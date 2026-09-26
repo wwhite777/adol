@@ -1,0 +1,467 @@
+{
+  "calibration": {
+    "per_depth": {
+      "1": 2,
+      "2": 2,
+      "3": 2,
+      "4": 1,
+      "5": 2,
+      "6": 1
+    },
+    "per_model": {
+      "HyperCLOVAX-SEED-Think-14B": 2,
+      "LGAI-EXAONE/EXAONE-4.0-32B-AWQ": 2,
+      "Qwen/Qwen2.5-14B-Instruct": 2,
+      "RedHatAI/gemma-3-27b-it-quantized.w4a16": 2,
+      "kakaocorp/kanana-1.5-8b-instruct-2505": 2
+    },
+    "per_risk_group": {
+      "R1": 2,
+      "R2": 1,
+      "R3": 2,
+      "R4": 2,
+      "R5": 2,
+      "R6": 1
+    },
+    "rule": "RISK views outside the 300 from conversations with no view in the 300; 2 per model, <= 2 per risk group, <= 2 per depth"
+  },
+  "counts": {
+    "calibration": 10,
+    "calibration_spread": 45,
+    "n1_benign": 120,
+    "n1_risk": 120,
+    "tie_audit": 15,
+    "total": 300
+  },
+  "counts_by_task": {
+    "CONTROL": 135,
+    "RISK": 165
+  },
+  "excluded_run": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/main/20260922T1239Z-b936cd",
+  "generators": "numpy.random.default_rng([seed, k]); k=1 stratum A, 2 stratum D, 3 calibration, 4 view-code shuffle",
+  "input_sha256": {
+    "items": "8ab7cda19406e00d9c5fe59f0b2ac68fdfb7d54ca2669ce7ffdd350657d88017",
+    "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/main/20260923T0053Z-43396e/judge_J1.jsonl": "d743487b36d64685f8c1629a4c1c7d96161b00e306eae3231f126cd7a7053071",
+    "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/main/20260923T0053Z-43396e/judge_J2.jsonl": "b88aee2cc9e29ce3faeb1cfbc168772c4144dd3e3f33fa338dcbfae6c32fd416",
+    "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/main/20260923T0053Z-43396e/judge_J3.jsonl": "39455fcc5fdef8f48bb83ba150ebdea6a4001e3ca6ff8a9fe0744cf53cb8f70a",
+    "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/main/20260923T0053Z-43396e/panel.jsonl": "de86a1a5a6ba2847bab9ef8a903322472d7c72fb77ca656f1696568defeb79f3",
+    "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/main/20260923T0053Z-43396e/responses.jsonl": "6b21b7c373af934dc60272739a3579adee01166b34debefdacba177bb3fcdd0b",
+    "result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/main/20260922T1238Z-a7a9d1/judge_J1.jsonl": "495d58fd68d74c22aa3b8a66e8b9f6191a40b5047fcda10e1aa63b2b8b591eb6",
+    "result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/main/20260922T1238Z-a7a9d1/judge_J2.jsonl": "f7b758c040c177e473e075fb310fd61ec1913ab2250930ee28193645cfb012e5",
+    "result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/main/20260922T1238Z-a7a9d1/judge_J3.jsonl": "68e978cca18a5dd8e9f4aa8abffa4d1f403de327002cb35fbefd1d50907e886c",
+    "result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/main/20260922T1238Z-a7a9d1/panel.jsonl": "07b7b85652980cd7bb5fa3ecba70e18ea6b3096046b82297d3c44412d39bdfb1",
+    "result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/main/20260922T1238Z-a7a9d1/responses.jsonl": "ccb454532a0f127b69a72d0b549563818829f1b1ef507b609f4eb3e2efcbfc89",
+    "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c/judge_J1.jsonl": "d63d3accd9f0d1508afa4afe5eaa817add7af44fea3bd76f3b0e3e2db5b3a476",
+    "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c/judge_J2.jsonl": "622a1cdc93e1eee76bff16631cdbd0367c30b6ff4d0384a2f2321ffe4894cab3",
+    "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c/judge_J3.jsonl": "94ef3794054653d3e5e90669a8bbff1aac7ddf35280c5cbe15f3c9c1271c8a8c",
+    "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c/panel.jsonl": "37453d9c3b5300de584eb4fa6d8337de0f5be5fd74f602d6bb2771bde03b7e45",
+    "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c/responses.jsonl": "d60fe1d24900b295570ca6dd6b2062a3054b295cd01e8bd5916e5ef6e3e6437c",
+    "result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/main/20260923T0117Z-919654/judge_J1.jsonl": "16bf4aa7718a9c7d81ab1a6c4a161cf1383e3f4d2c1869641317d42a4ed7c0af",
+    "result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/main/20260923T0117Z-919654/judge_J2.jsonl": "543351a6d3b9c704e65fd6f4c21031059f21efbd4b792f7d66cd82d1757b7e6c",
+    "result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/main/20260923T0117Z-919654/judge_J3.jsonl": "e3181289e1c03e816a79b60822eba0a985197fe6cb608d54e3a2ce5838740d3f",
+    "result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/main/20260923T0117Z-919654/panel.jsonl": "fd72c3d89771073ec1861f8d104c3bc1ef7c55401e127a67003ae56fe1008ea8",
+    "result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/main/20260923T0117Z-919654/responses.jsonl": "a563b9949658b25e87d78196b91866a74a0305a587fd60e78e080f9f91b15f20",
+    "result/raw/phaseA_T1/naver-hyperclovax-HyperCLOVAX-SEED-Think-14B/main/20260923T0559Z-bb08ed/judge_J1.jsonl": "6d39d845f286da8ed9ff314163faaa898dcdf34ad4684de311f67865985763e7",
+    "result/raw/phaseA_T1/naver-hyperclovax-HyperCLOVAX-SEED-Think-14B/main/20260923T0559Z-bb08ed/judge_J2.jsonl": "0007c8556ffde4ec66dd217add1454fcfd732a8e08bb56fc9982f8ded443d269",
+    "result/raw/phaseA_T1/naver-hyperclovax-HyperCLOVAX-SEED-Think-14B/main/20260923T0559Z-bb08ed/judge_J3.jsonl": "59c0a3dc594090be7f06b82e47b4c5281455bb3b3c6f623dda929fef68076a75",
+    "result/raw/phaseA_T1/naver-hyperclovax-HyperCLOVAX-SEED-Think-14B/main/20260923T0559Z-bb08ed/panel.jsonl": "2f8b4c49d487a913d4e2fbbc4880f7ab14112ed693aa469eeb81ec5cf50e72ae",
+    "result/raw/phaseA_T1/naver-hyperclovax-HyperCLOVAX-SEED-Think-14B/main/20260923T0559Z-bb08ed/responses.jsonl": "85b37a94a8118e62aeb53870ba39932f71b55bcf07aaca0230c719bf11dea203"
+  },
+  "n_views_universe": 2820,
+  "per_model": {
+    "all": {
+      "HyperCLOVAX-SEED-Think-14B": 65,
+      "LGAI-EXAONE/EXAONE-4.0-32B-AWQ": 59,
+      "Qwen/Qwen2.5-14B-Instruct": 57,
+      "RedHatAI/gemma-3-27b-it-quantized.w4a16": 61,
+      "kakaocorp/kanana-1.5-8b-instruct-2505": 58
+    },
+    "calibration_spread": {
+      "HyperCLOVAX-SEED-Think-14B": 9,
+      "LGAI-EXAONE/EXAONE-4.0-32B-AWQ": 9,
+      "Qwen/Qwen2.5-14B-Instruct": 9,
+      "RedHatAI/gemma-3-27b-it-quantized.w4a16": 9,
+      "kakaocorp/kanana-1.5-8b-instruct-2505": 9
+    },
+    "n1_benign": {
+      "HyperCLOVAX-SEED-Think-14B": 24,
+      "LGAI-EXAONE/EXAONE-4.0-32B-AWQ": 24,
+      "Qwen/Qwen2.5-14B-Instruct": 24,
+      "RedHatAI/gemma-3-27b-it-quantized.w4a16": 24,
+      "kakaocorp/kanana-1.5-8b-instruct-2505": 24
+    },
+    "n1_risk": {
+      "HyperCLOVAX-SEED-Think-14B": 24,
+      "LGAI-EXAONE/EXAONE-4.0-32B-AWQ": 24,
+      "Qwen/Qwen2.5-14B-Instruct": 24,
+      "RedHatAI/gemma-3-27b-it-quantized.w4a16": 24,
+      "kakaocorp/kanana-1.5-8b-instruct-2505": 24
+    },
+    "tie_audit": {
+      "HyperCLOVAX-SEED-Think-14B": 8,
+      "LGAI-EXAONE/EXAONE-4.0-32B-AWQ": 2,
+      "RedHatAI/gemma-3-27b-it-quantized.w4a16": 4,
+      "kakaocorp/kanana-1.5-8b-instruct-2505": 1
+    }
+  },
+  "runs": [
+    {
+      "model_id": "LGAI-EXAONE/EXAONE-4.0-32B-AWQ",
+      "run_dir": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/main/20260923T0053Z-43396e"
+    },
+    {
+      "model_id": "Qwen/Qwen2.5-14B-Instruct",
+      "run_dir": "result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/main/20260922T1238Z-a7a9d1"
+    },
+    {
+      "model_id": "RedHatAI/gemma-3-27b-it-quantized.w4a16",
+      "run_dir": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c"
+    },
+    {
+      "model_id": "kakaocorp/kanana-1.5-8b-instruct-2505",
+      "run_dir": "result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/main/20260923T0117Z-919654"
+    },
+    {
+      "model_id": "HyperCLOVAX-SEED-Think-14B",
+      "run_dir": "result/raw/phaseA_T1/naver-hyperclovax-HyperCLOVAX-SEED-Think-14B/main/20260923T0559Z-bb08ed"
+    }
+  ],
+  "seed": 20260926,
+  "sha256": {
+    "calibration": "0e8768b759e35d9e94a2d72ce4d02f2d0c2f604f86a729087eb661ac6b9b88b2",
+    "key": "b208ac64ef3b9d0f185c1557ddd090c590dcd01988bc1098013268cc105f46d2",
+    "sample": "21eac7a8516b8e2b38580bb670d2503e51fb4538c541c6675ff5e7594061b65a"
+  },
+  "stratum_a": {
+    "algorithm": "12 of 24 scenarios drawn uniformly to carry 3 pairs (others 2); per scenario a uniform random model subset of that size; whole design accepted only if every model has exactly 12 pairs (rejection sampling)",
+    "pairs": [
+      {
+        "model_id": "Qwen/Qwen2.5-14B-Instruct",
+        "scenario": "R1-M01-LOC"
+      },
+      {
+        "model_id": "RedHatAI/gemma-3-27b-it-quantized.w4a16",
+        "scenario": "R1-M01-LOC"
+      },
+      {
+        "model_id": "kakaocorp/kanana-1.5-8b-instruct-2505",
+        "scenario": "R1-M01-LOC"
+      },
+      {
+        "model_id": "LGAI-EXAONE/EXAONE-4.0-32B-AWQ",
+        "scenario": "R1-M02-LOC"
+      },
+      {
+        "model_id": "RedHatAI/gemma-3-27b-it-quantized.w4a16",
+        "scenario": "R1-M02-LOC"
+      },
+      {
+        "model_id": "kakaocorp/kanana-1.5-8b-instruct-2505",
+        "scenario": "R1-M02-LOC"
+      },
+      {
+        "model_id": "Qwen/Qwen2.5-14B-Instruct",
+        "scenario": "R1-M03-LOC"
+      },
+      {
+        "model_id": "RedHatAI/gemma-3-27b-it-quantized.w4a16",
+        "scenario": "R1-M03-LOC"
+      },
+      {
+        "model_id": "HyperCLOVAX-SEED-Think-14B",
+        "scenario": "R1-M04-LOC"
+      },
+      {
+        "model_id": "LGAI-EXAONE/EXAONE-4.0-32B-AWQ",
+        "scenario": "R1-M04-LOC"
+      },
+      {
+        "model_id": "HyperCLOVAX-SEED-Think-14B",
+        "scenario": "R2-M01-LOC"
+      },
+      {
+        "model_id": "Qwen/Qwen2.5-14B-Instruct",
+        "scenario": "R2-M01-LOC"
+      },
+      {
+        "model_id": "LGAI-EXAONE/EXAONE-4.0-32B-AWQ",
+        "scenario": "R2-M02-LOC"
+      },
+      {
+        "model_id": "Qwen/Qwen2.5-14B-Instruct",
+        "scenario": "R2-M02-LOC"
+      },
+      {
+        "model_id": "HyperCLOVAX-SEED-Think-14B",
+        "scenario": "R2-M03-LOC"
+      },
+      {
+        "model_id": "LGAI-EXAONE/EXAONE-4.0-32B-AWQ",
+        "scenario": "R2-M03-LOC"
+      },
+      {
+        "model_id": "Qwen/Qwen2.5-14B-Instruct",
+        "scenario": "R2-M03-LOC"
+      },
+      {
+        "model_id": "HyperCLOVAX-SEED-Think-14B",
+        "scenario": "R2-M04-LOC"
+      },
+      {
+        "model_id": "LGAI-EXAONE/EXAONE-4.0-32B-AWQ",
+        "scenario": "R2-M04-LOC"
+      },
+      {
+        "model_id": "RedHatAI/gemma-3-27b-it-quantized.w4a16",
+        "scenario": "R2-M04-LOC"
+      },
+      {
+        "model_id": "HyperCLOVAX-SEED-Think-14B",
+        "scenario": "R3-M01-LOC"
+      },
+      {
+        "model_id": "Qwen/Qwen2.5-14B-Instruct",
+        "scenario": "R3-M01-LOC"
+      },
+      {
+        "model_id": "kakaocorp/kanana-1.5-8b-instruct-2505",
+        "scenario": "R3-M01-LOC"
+      },
+      {
+        "model_id": "HyperCLOVAX-SEED-Think-14B",
+        "scenario": "R3-M02-LOC"
+      },
+      {
+        "model_id": "LGAI-EXAONE/EXAONE-4.0-32B-AWQ",
+        "scenario": "R3-M02-LOC"
+      },
+      {
+        "model_id": "RedHatAI/gemma-3-27b-it-quantized.w4a16",
+        "scenario": "R3-M02-LOC"
+      },
+      {
+        "model_id": "HyperCLOVAX-SEED-Think-14B",
+        "scenario": "R3-M03-LOC"
+      },
+      {
+        "model_id": "RedHatAI/gemma-3-27b-it-quantized.w4a16",
+        "scenario": "R3-M03-LOC"
+      },
+      {
+        "model_id": "LGAI-EXAONE/EXAONE-4.0-32B-AWQ",
+        "scenario": "R3-M04-LOC"
+      },
+      {
+        "model_id": "kakaocorp/kanana-1.5-8b-instruct-2505",
+        "scenario": "R3-M04-LOC"
+      },
+      {
+        "model_id": "HyperCLOVAX-SEED-Think-14B",
+        "scenario": "R4-M01-LOC"
+      },
+      {
+        "model_id": "kakaocorp/kanana-1.5-8b-instruct-2505",
+        "scenario": "R4-M01-LOC"
+      },
+      {
+        "model_id": "HyperCLOVAX-SEED-Think-14B",
+        "scenario": "R4-M02-LOC"
+      },
+      {
+        "model_id": "Qwen/Qwen2.5-14B-Instruct",
+        "scenario": "R4-M02-LOC"
+      },
+      {
+        "model_id": "LGAI-EXAONE/EXAONE-4.0-32B-AWQ",
+        "scenario": "R4-M03-LOC"
+      },
+      {
+        "model_id": "kakaocorp/kanana-1.5-8b-instruct-2505",
+        "scenario": "R4-M03-LOC"
+      },
+      {
+        "model_id": "LGAI-EXAONE/EXAONE-4.0-32B-AWQ",
+        "scenario": "R4-M04-LOC"
+      },
+      {
+        "model_id": "RedHatAI/gemma-3-27b-it-quantized.w4a16",
+        "scenario": "R4-M04-LOC"
+      },
+      {
+        "model_id": "kakaocorp/kanana-1.5-8b-instruct-2505",
+        "scenario": "R4-M04-LOC"
+      },
+      {
+        "model_id": "Qwen/Qwen2.5-14B-Instruct",
+        "scenario": "R5-M01-LOC"
+      },
+      {
+        "model_id": "RedHatAI/gemma-3-27b-it-quantized.w4a16",
+        "scenario": "R5-M01-LOC"
+      },
+      {
+        "model_id": "kakaocorp/kanana-1.5-8b-instruct-2505",
+        "scenario": "R5-M01-LOC"
+      },
+      {
+        "model_id": "LGAI-EXAONE/EXAONE-4.0-32B-AWQ",
+        "scenario": "R5-M02-LOC"
+      },
+      {
+        "model_id": "RedHatAI/gemma-3-27b-it-quantized.w4a16",
+        "scenario": "R5-M02-LOC"
+      },
+      {
+        "model_id": "kakaocorp/kanana-1.5-8b-instruct-2505",
+        "scenario": "R5-M02-LOC"
+      },
+      {
+        "model_id": "HyperCLOVAX-SEED-Think-14B",
+        "scenario": "R5-M03-LOC"
+      },
+      {
+        "model_id": "Qwen/Qwen2.5-14B-Instruct",
+        "scenario": "R5-M03-LOC"
+      },
+      {
+        "model_id": "kakaocorp/kanana-1.5-8b-instruct-2505",
+        "scenario": "R5-M03-LOC"
+      },
+      {
+        "model_id": "HyperCLOVAX-SEED-Think-14B",
+        "scenario": "R5-M04-LOC"
+      },
+      {
+        "model_id": "RedHatAI/gemma-3-27b-it-quantized.w4a16",
+        "scenario": "R5-M04-LOC"
+      },
+      {
+        "model_id": "kakaocorp/kanana-1.5-8b-instruct-2505",
+        "scenario": "R5-M04-LOC"
+      },
+      {
+        "model_id": "HyperCLOVAX-SEED-Think-14B",
+        "scenario": "R6-M01-LOC"
+      },
+      {
+        "model_id": "Qwen/Qwen2.5-14B-Instruct",
+        "scenario": "R6-M01-LOC"
+      },
+      {
+        "model_id": "Qwen/Qwen2.5-14B-Instruct",
+        "scenario": "R6-M02-LOC"
+      },
+      {
+        "model_id": "kakaocorp/kanana-1.5-8b-instruct-2505",
+        "scenario": "R6-M02-LOC"
+      },
+      {
+        "model_id": "LGAI-EXAONE/EXAONE-4.0-32B-AWQ",
+        "scenario": "R6-M03-LOC"
+      },
+      {
+        "model_id": "Qwen/Qwen2.5-14B-Instruct",
+        "scenario": "R6-M03-LOC"
+      },
+      {
+        "model_id": "RedHatAI/gemma-3-27b-it-quantized.w4a16",
+        "scenario": "R6-M03-LOC"
+      },
+      {
+        "model_id": "LGAI-EXAONE/EXAONE-4.0-32B-AWQ",
+        "scenario": "R6-M04-LOC"
+      },
+      {
+        "model_id": "RedHatAI/gemma-3-27b-it-quantized.w4a16",
+        "scenario": "R6-M04-LOC"
+      }
+    ],
+    "pairs_per_model": {
+      "HyperCLOVAX-SEED-Think-14B": 12,
+      "LGAI-EXAONE/EXAONE-4.0-32B-AWQ": 12,
+      "Qwen/Qwen2.5-14B-Instruct": 12,
+      "RedHatAI/gemma-3-27b-it-quantized.w4a16": 12,
+      "kakaocorp/kanana-1.5-8b-instruct-2505": 12
+    },
+    "rejection_attempts": 771,
+    "scenarios_by_pair_count": {
+      "2": 12,
+      "3": 12
+    }
+  },
+  "stratum_c": {
+    "ben_flagged_already_in_b": 10,
+    "ben_flagged_in_b_by_depth_tie": {
+      "depth1_tieTrue": 1,
+      "depth6_tieFalse": 1,
+      "depth6_tieTrue": 8
+    },
+    "ben_views_panel_flagged_total": 25,
+    "tie_audit_by_depth_tie": {
+      "depth4_tieFalse": 2,
+      "depth5_tieFalse": 2,
+      "depth6_tieFalse": 3,
+      "depth6_tieTrue": 8
+    },
+    "tie_audit_count": 15
+  },
+  "stratum_d": {
+    "depths": {
+      "1": 10,
+      "2": 5,
+      "3": 9,
+      "4": 9,
+      "5": 6,
+      "6": 6
+    },
+    "disagreement_definition": "among status-ok judges (>= 2): some D dimension max-min >= 2, or critical_failure not unanimous",
+    "model_remainder_order": [
+      "Qwen/Qwen2.5-14B-Instruct",
+      "LGAI-EXAONE/EXAONE-4.0-32B-AWQ",
+      "HyperCLOVAX-SEED-Think-14B",
+      "kakaocorp/kanana-1.5-8b-instruct-2505",
+      "RedHatAI/gemma-3-27b-it-quantized.w4a16"
+    ],
+    "n": 45,
+    "n_disagreement": 23,
+    "n_random": 22,
+    "pool_sizes": {
+      "HyperCLOVAX-SEED-Think-14B": {
+        "disagreement": 193,
+        "random": 367
+      },
+      "LGAI-EXAONE/EXAONE-4.0-32B-AWQ": {
+        "disagreement": 229,
+        "random": 367
+      },
+      "Qwen/Qwen2.5-14B-Instruct": {
+        "disagreement": 211,
+        "random": 367
+      },
+      "RedHatAI/gemma-3-27b-it-quantized.w4a16": {
+        "disagreement": 205,
+        "random": 368
+      },
+      "kakaocorp/kanana-1.5-8b-instruct-2505": {
+        "disagreement": 203,
+        "random": 368
+      }
+    },
+    "quota_disagreement": {
+      "HyperCLOVAX-SEED-Think-14B": 5,
+      "LGAI-EXAONE/EXAONE-4.0-32B-AWQ": 5,
+      "Qwen/Qwen2.5-14B-Instruct": 5,
+      "RedHatAI/gemma-3-27b-it-quantized.w4a16": 4,
+      "kakaocorp/kanana-1.5-8b-instruct-2505": 4
+    },
+    "quota_random": {
+      "HyperCLOVAX-SEED-Think-14B": 4,
+      "LGAI-EXAONE/EXAONE-4.0-32B-AWQ": 4,
+      "Qwen/Qwen2.5-14B-Instruct": 4,
+      "RedHatAI/gemma-3-27b-it-quantized.w4a16": 5,
+      "kakaocorp/kanana-1.5-8b-instruct-2505": 5
+    },
+    "random_half_pool": "RISK views not in A and not already drawn"
+  },
+  "version": "pB-v1"
+}
