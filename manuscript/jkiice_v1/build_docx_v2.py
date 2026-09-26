@@ -12,7 +12,7 @@ from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
 
 HERE = pathlib.Path(__file__).resolve().parent
-OUT = HERE / sys.argv[1] if len(sys.argv) > 1 else HERE / "kyra_phaseA_jkiice_ko_v3.docx"
+OUT = HERE / sys.argv[1] if len(sys.argv) > 1 else HERE / "kyra_phaseA_jkiice_ko_v2.docx"
 DC = json.load(open(HERE / "refs_datacite_20260924.json", encoding="utf-8"))
 
 KO_BODY, KO_HEAD, EN_SERIF, EN_SANS = "바탕", "맑은 고딕", "Times New Roman", "Arial"
@@ -328,12 +328,7 @@ BODY = [
       "판정자 보정과 동점 규칙의 검증, 상용 모델과 더 긴 대화 창으로의 확장이다."),
 ]
 
-ACK = ("This research was supported by the following funding sources: (1) ANCHOR through the Seoul ANCHOR Center, funded "
-       "by the Ministry of Education (MOE) and the Seoul Metropolitan Government (2026-ANCHOR-01-018-04), in collaboration "
-       "with Emotionwave (https://emotionwave.com). (2) The Sports and Tourism R&D Program through the Korea Creative "
-       "Content Agency (KOCCA), funded by the Ministry of Culture, Sports and Tourism in 2024, under the project titled "
-       "“Development of game-based digital therapeutics technology for adolescent mental health (psychological and "
-       "behavioral control) management” (grant number: RS-2024-00344893).")
+ACK = "⟪PI 확인: 연구비 지원 기관·과제명·과제번호. 선행 게재 논문의 두 과제(ANCHOR, KOCCA)를 그대로 쓸지, ETRI 과제를 표기할지 결정⟫"
 AI_USE = ("본 연구의 실험 파이프라인 구현·실행과 원고 초안 작성에 생성형 AI 도구(Anthropic Claude)를 사용하였다. "
           "평가 대상 모델 5종과 판정자 모델 3종은 연구 방법의 일부이며 3장에 명시하였다. "
           "본문의 모든 수치는 저장된 결과 파일에서 추적할 수 있다. 저자는 모든 내용을 검토하였으며 이에 대한 책임을 진다.")
