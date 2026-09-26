@@ -48,3 +48,12 @@ Instruction conflicts: none unresolved (the model switch is PI-directed and logg
 - PI to confirm: authorship (정원철 + 오하영*, as in the example paper), funding acknowledgment, and a visual check in Word (no renderer on the host).
 - 04:25Z: kanana8b pass VERIFIED (bin/verify_scoring_pass.py PASS, marker exit=0; judge ERROR rates 0–1.77%, max J1 main 10/564; log test/logs/verify_kanana8b_*.log), committed 120af70. Scheduler 73192 skipped kanana8b (complete) and launched gemma27b at 04:25Z (launcher PID 315687, from the durable snapshot; log test/logs/score_phaseA_T1_gemma27b_20260924T0425Z.log); Gemma main J1 merged 06:52Z. 8/20 run dirs complete. HyperCLOVA (4081869) still running on GPU 1 → EXAONE next.
 - Fig. 2/3 scripts ready: manuscript/jkiice_v1/fig2_depth.py (same loader args as n1; refuses < 20 panels) and fig3_reliability.py <n3.json> <png>; tested on synthetic fixtures only (commit 4a6590d).
+
+## 2026-09-26 ~03:00Z — session 7: SCORING DONE, FIRST VALID ANALYSIS, MANUSCRIPT v2 (read this block first)
+- All 20 run dirs scored; schedulers ended (Gemma 09-24 18:09Z, EXAONE 09-25 02:16Z). The verifier flagged per-run J1/J3 ERROR bars; the PI kept all three judges BEFORE any outcome (DECISION_LOG 09-26). Pooled per judge: J1 1.80%, J2 0.00%, J3 1.05%; 0 INSUFFICIENT views.
+- Analysis bug (loader and n3 keyed without run identity; runner doubled judge files) fixed by the coder in 861fd5f; the conductor re-ran 518 tests OK. The void run 20260926T0152Z stays on disk; the VALID run is result/analysis/phaseA_T1/20260926T0213Z.
+- G6 INCONCLUSIVE: N1.1 PASS (OR 5.51 [2.15, 13.76]), N1.2 FAIL (benign OR 9.71; 16/20 benign depth-6 flags are judge-error ties, post-hoc), N2 MISS (Δ 0.000 ± 0.060), N3 FAIL (AC2 0.444–0.694; D4/D5 < 0.50 unreliable). CLAIM_LEDGER filled.
+- Manuscript v2: deliverables/kyra_phaseA_jkiice_ko_v2.docx (builder manuscript/jkiice_v1/build_docx.py; v1 builder kept as build_docx_v1.py); Figs. 2–3 from the analysis; 57 numbers checked against the JSONs; response v14.
+- PI decisions open: (a) authorship (정원철 + 오하영*) and the funding line; (b) visual check in Word/한글; (c) submit this measurement-caution framing to JKIICE now, or run phase B human double-rating first.
+- Cleanup after the PI's answer: chmod 755 bin/score_phaseA.sh + OPS-6 function wrap; delete snapshots/phaseA_scoring_d6e7507/.cache and the old session scratchpad snapshot (/tmp/claude-1011/-home-wjeong/407cdd4b-…/scratchpad; no live PIDs now); home cleanup; REHYDRATE.md.
+

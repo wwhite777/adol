@@ -8,7 +8,7 @@ venue:
   phase_a: domestic — 한국정보통신학회 JKIICE or 한국융합학회 (PI 2026-09-22); no cross-family audit (PI rule 2026-09-11)
   phase_b: optional Q1 attempt (JMIR Formative / Sci Rep / JMIR MH) after co-author double rating; T1 conference only if H5 strong
 stage: S3
-status: 'in_progress   # generation COMPLETE 5/5; procedure pinned (sequential, caching off, batch-invariant; sharded 2×, J3 @0.45; --resume); SCORING RUNNING: Qwen (GPU 1, single engine, ends ~20:40Z), Kanana resume (GPU 2, ~23:00Z); EXAONE/Gemma/HyperCLOVA queued; projected end ≈ 2026-09-24 06:00Z; no outcome read'
+status: 'in_progress   # S3 analysis DONE 2026-09-26 (result/analysis/phaseA_T1/20260926T0213Z): G6 INCONCLUSIVE (N1.1 PASS, N1.2 FAIL, N2 MISS, N3 FAIL); CLAIM_LEDGER filled; JKIICE manuscript v2 delivered; waiting on PI (authorship, funding, framing vs phase B)'
 stage_history:
 - stage: S0
   status: completed

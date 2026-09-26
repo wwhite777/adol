@@ -40,6 +40,9 @@ Phase B (optional, PI decision later): co-author double rating of 200–300 conv
 - Manuscript skeleton (frozen facts only, result placeholders, JKIICE structure): manuscript/kyra_phaseA_ko_skeleton_v0.md (2026-09-23).
 - Recommendation (conductor): JKIICE full paper. Writing plan unchanged: CLAIM_LEDGER → 3 figures → results → method → related work → intro/abstract; Korean body with the template's structure (Ⅰ 서론 … Ⅴ 결론, REFERENCES in English).
 
+## Next action (updated 2026-09-26 ~03:00Z, session 7)
+Scoring 20/20; valid analysis 20260926T0213Z → G6 INCONCLUSIVE (N1.1 PASS, N1.2 FAIL, N2 MISS, N3 FAIL); ledger filled; JKIICE manuscript v2 delivered (deliverables/kyra_phaseA_jkiice_ko_v2.docx). Next: PI read-through + authorship/funding + framing decision (submit now vs phase B human rating first) → v3 → HWP conversion by the PI → DBpiaONE submission.
+
 ## Next action (updated 2026-09-24 ~01:30Z, session 6 end — VENUE DECIDED: JKIICE; scoring 6/20 run dirs; conductor restarts on Opus 5.5)
 VENUE (PI, 2026-09-24, verbatim): "first, go to jkiice and then we will think about q1 journal" → the phase-A paper goes to JKIICE (한국정보통신학회논문지, KCI 등재; kit research/venue/; Korean text, English abstract 130–160 words, references in English with DOI; HWP or PDF); the SCI Q1 version (JMIR MH / npj DM line with phase-B human raters) is a later PI decision. Scoring continues under two detached schedulers (bin/sched_gpu.sh; GPU 2 Kanana→Gemma, GPU 1 HyperCLOVA→EXAONE; ≈ 12 h per pass; last pass ≈ 2026-09-25 00:30Z). Then: verify each pass → bin/analyze_phaseA.sh 1 over exactly 20 panels (first outcome read) → G6 → CLAIM_LEDGER → 3 figures → stage_3 report v2 → Korean manuscript on the JKIICE skeleton → PI review. Production toolchain to set up first (DECISION_LOG 2026-09-24 ~01:20Z): CJK font; python-docx (docx → the PI converts to HWP) and/or XeLaTeX PDF. Domestic venue → no cross-family audit.
 
