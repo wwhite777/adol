@@ -3,7 +3,7 @@ localized six-turn risk scripts vs their item-paired benign twins, per model and
 
 Same inputs as kyra.analysis.n1_escalation (the loader's tidy table), so the plotted
 rates are the ones N1 models. Pooled CIs: scenario-cluster bootstrap (B, seed below).
-Interim-look guard: real data only with exactly 20 panel files (all runs scored);
+Guard: real data only when all 20 runs are scored, with exactly the 5 MAIN panels as input;
 --fixture input is stamped SYNTHETIC on the figure.
   python fig2_depth.py --items I --runs R... --panels P... --family-map F --out fig2.json --png fig2.png
   python fig2_depth.py --fixture test.csv --out o.json --png o.png"""
@@ -51,9 +51,14 @@ def main(argv=None):
     p.add_argument("--png", required=True)
     a = p.parse_args(argv)
     synthetic = bool(a.fixture)
-    if not synthetic and len(a.panels or []) != 20:
-        sys.stderr.write("REFUSING: %d panels, expected 20 (interim-look rule)\n" % len(a.panels or []))
-        return 3
+    if not synthetic:
+        import glob
+        root = pathlib.Path(__file__).resolve().parents[2]
+        n_all = len(glob.glob(str(root / "result/raw/phaseA_T1/*/*/*/panel.jsonl")))
+        if n_all != 20 or len(a.panels or []) != 5 or not all("/main/" in x for x in a.panels):
+            sys.stderr.write("REFUSING: need all 20 scored panels on disk (found %d) and exactly the 5 MAIN panels as input "
+                             "(got %d) - interim-look rule and the main-run pin (DECISION_LOG 2026-09-26)\n" % (n_all, len(a.panels or [])))
+            return 3
     df = loader.resolve_table(a)
     rng = np.random.default_rng(SEED)
     res = {"synthetic": synthetic, "B": B, "seed": SEED, "depths": list(DEPTHS), "arms": {}}
