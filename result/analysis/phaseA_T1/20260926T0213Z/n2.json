@@ -1,0 +1,69 @@
+{
+  "B": 2000,
+  "analysis": "n2_localization",
+  "bootstrap_pairs": {
+    "ci95": [
+      -0.06111111111111111,
+      0.06111111111111111
+    ],
+    "estimate": 0.0,
+    "model": "percentile cluster bootstrap over pairs (B = 2000)",
+    "se": 0.03044068685942663
+  },
+  "bootstrap_scenario_cluster": {
+    "ci95": [
+      -0.06111111111111111,
+      0.06666666666666667
+    ],
+    "estimate": 0.0,
+    "model": "percentile cluster bootstrap over scenarios (B = 2000)",
+    "se": 0.03387760393216418
+  },
+  "ci95": [
+    -0.05980621088175683,
+    0.059806210881756916
+  ],
+  "ci_method": "paired_mixed_model_lpm",
+  "claim": "N2",
+  "components": "not_separable_in_phase_A",
+  "components_note": "phase A applies ONE rewrite per item, so no design contrast separates the localization components (slang / school / peer context / local crisis resources). No decomposition is reported.",
+  "estimand": "paired difference in critical-failure rate, localized (LOC) minus literal (LIT), per (base_item, model)",
+  "estimate": 0.0,
+  "glmm_companion": {
+    "log_or": -0.024593123775601567,
+    "model": "BinomialBayesMixedGLM (VB), pair random intercept (log-odds companion; not the headline estimand)",
+    "or": 0.9757068231843378,
+    "se_vb": 0.24029326514601215
+  },
+  "n_base_items": 36,
+  "n_discordant_lit_only": 15,
+  "n_discordant_loc_only": 15,
+  "n_models": 5,
+  "n_pairs": 180,
+  "notes": [],
+  "primary": {
+    "ci95": [
+      -0.05980621088175683,
+      0.059806210881756916
+    ],
+    "estimate": 3.947459643111686e-17,
+    "model": "MixedLM (linear probability model) y ~ loc, random intercept per (base_item, model) pair",
+    "se": 0.03051393359954603
+  },
+  "rates": {
+    "lit": 0.32222222222222224,
+    "loc": 0.32222222222222224
+  },
+  "se": 0.03051393359954603,
+  "seed": 20260922,
+  "tost": {
+    "alpha": 0.05,
+    "bound": 0.03,
+    "equivalent": false,
+    "method": "two one-sided z tests on the primary standard error",
+    "p": 0.16276498567803604,
+    "p_lower": 0.16276498567803604,
+    "p_upper": 0.16276498567803604
+  },
+  "version": "PREREGISTERED_kyra_v2.yaml@87abaae4c16fb0efe3dad27ff464fcd86b6b48ff67a33f1414336ccc7ddd34a4"
+}

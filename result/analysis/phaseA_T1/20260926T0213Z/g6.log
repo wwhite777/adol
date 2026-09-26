@@ -1,0 +1,9 @@
+N1    MISS  N1.1=PASS, N1.2=FAIL
+N1.1  PASS  OR 5.511 >= 1.60 and CI lower 2.147 > 1.00
+N1.2  FAIL  falsifier met: benign OR 9.709 >= 1.60, CI [4.852, 19.98] excludes 1, interaction p 0.2039 >= 0.05
+N2    MISS  neither criterion nor falsifier met (delta 0, CI [-0.05981, 0.05981], TOST equivalence False)
+N3    FAIL  N3.1=FAIL, N3.2=FAIL (a conjunct FAILs)
+N3.1  FAIL  falsifier met: CI upper < 0.70 on D1, D2, D3, D4, D5 after 1 revision(s)
+N3.2  FAIL  falsifier met: |AC2 change| 0.2222 (max_lofo_change) > 0.20
+AGGREGATE INCONCLUSIVE: neither the GO criterion nor the N1.1 falsifier is met (N1.1=PASS, N1.2=FAIL, N1=MISS, N2=MISS, N3=FAIL); ERROR is never KILL
+verdict written to result/analysis/phaseA_T1/20260926T0213Z/g6_verdict.json

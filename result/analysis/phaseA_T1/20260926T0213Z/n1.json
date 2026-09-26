@@ -1,0 +1,134 @@
+{
+  "B": 2000,
+  "analysis": "n1_escalation",
+  "benign": {
+    "bootstrap_b": 2000,
+    "bootstrap_failures": 0,
+    "bootstrap_used": 2000,
+    "ci95": [
+      4.852069627357609,
+      19.983308352030015
+    ],
+    "ci95_log_or": [
+      1.5794053412174238,
+      2.9948973426977106
+    ],
+    "log_or": 2.273027745753403,
+    "n_events": 21,
+    "n_models": 5,
+    "n_rows": 240,
+    "n_scenarios": 24,
+    "or": 9.708751990310294,
+    "p_bootstrap": 0.0009995002498750624,
+    "p_holm": 0.0029985007496251873,
+    "p_holm_vb": 5.627708547057248e-18,
+    "p_wald_vb": 1.8759028490190827e-18,
+    "se_vb": 0.2593445235398072
+  },
+  "benign_ci95": [
+    4.852069627357609,
+    19.983308352030015
+  ],
+  "benign_or": 9.708751990310294,
+  "ci95": [
+    2.14729609217977,
+    13.756879205675427
+  ],
+  "ci_method": "percentile scenario cluster bootstrap, estimator refitted per replicate",
+  "claim": "N1 / N1.1 / N1.2",
+  "counts": {
+    "ben_conversations": 120,
+    "loc_conversations": 120,
+    "models": 5,
+    "scenarios": 24
+  },
+  "estimator": "BinomialBayesMixedGLM (variational Bayes), scenario (base_item) random intercept",
+  "interaction": {
+    "bootstrap_b": 2000,
+    "bootstrap_failures": 0,
+    "bootstrap_used": 2000,
+    "ci95": [
+      0.18883026931706948,
+      1.5588311637072363
+    ],
+    "ci95_log_or": [
+      -1.6669067133487658,
+      0.4439362863965345
+    ],
+    "log_or": -0.7645954798114608,
+    "n_rows": 480,
+    "or": 0.46552220602176625,
+    "p_bootstrap": 0.20389805097451275,
+    "p_holm": 0.20389805097451275,
+    "p_holm_vb": 0.0009102635808430434,
+    "p_wald_vb": 0.0009102635808430434,
+    "se_vb": 0.2305159726453369,
+    "term": "depth6:risk"
+  },
+  "interaction_p": 0.20389805097451275,
+  "interaction_p_vb": 0.0009102635808430434,
+  "multiplicity": "Holm within the N1 family {risk depth, benign depth, risk x depth}",
+  "n": 120,
+  "or": 5.51078469381433,
+  "outcome": "critical failure observed by turn depth d (fixed prefixes of 1, 3 and 6 turns) on the same 6-turn conversation",
+  "p_method": "two-sided percentile bootstrap p from the scenario cluster bootstrap distribution of the coefficient; the VB Wald p (optimistic posterior SDs) is reported as the secondary *_vb reading. Bootstrap CIs are the intervals of record.",
+  "primary_contrast": "depth 6 vs depth 1, LOC risk conversations",
+  "risk": {
+    "bootstrap_b": 2000,
+    "bootstrap_failures": 0,
+    "bootstrap_used": 2000,
+    "ci95": [
+      2.14729609217977,
+      13.756879205675427
+    ],
+    "ci95_log_or": [
+      0.7642094191130628,
+      2.621539004868631
+    ],
+    "log_or": 1.7067070256955787,
+    "n_events": 48,
+    "n_models": 5,
+    "n_rows": 240,
+    "n_scenarios": 24,
+    "or": 5.51078469381433,
+    "p_bootstrap": 0.0009995002498750624,
+    "p_holm": 0.0029985007496251873,
+    "p_holm_vb": 3.224726347131979e-10,
+    "p_wald_vb": 1.6123631735659895e-10,
+    "se_vb": 0.2669087842679864
+  },
+  "risk_depth3_vs_1": {
+    "bootstrap_b": 2000,
+    "bootstrap_failures": 0,
+    "bootstrap_used": 2000,
+    "ci95": [
+      0.2567963060383834,
+      2.667341265319157
+    ],
+    "ci95_log_or": [
+      -1.3594720918555245,
+      0.9810821955137581
+    ],
+    "log_or": -0.12284844544868408,
+    "n_events": 28,
+    "n_models": 5,
+    "n_rows": 240,
+    "n_scenarios": 24,
+    "or": 0.884397686899188,
+    "p_bootstrap": 0.8025987006496752,
+    "p_wald_vb": 0.7346719162962763,
+    "se_vb": 0.3624730577405597
+  },
+  "seed": 20260922,
+  "sensitivity_gee": {
+    "ci95": [
+      1.4207249768068901,
+      6.306763931275924
+    ],
+    "log_or": 1.096394992859462,
+    "model": "GEE binomial, exchangeable working correlation, clusters = scenario (base_item), robust SE",
+    "or": 2.9933554817275745,
+    "p": 0.003932313556495633
+  },
+  "version": "PREREGISTERED_kyra_v2.yaml@87abaae4c16fb0efe3dad27ff464fcd86b6b48ff67a33f1414336ccc7ddd34a4"
+}

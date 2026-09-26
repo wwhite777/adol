@@ -1,0 +1,174 @@
+{
+  "aggregate": {
+    "because": "neither the GO criterion nor the N1.1 falsifier is met (N1.1=ERROR, N1.2=ERROR, N1=ERROR, N2=ERROR, N3=FAIL); ERROR is never KILL",
+    "readings": {
+      "N1": "ERROR",
+      "N1.1": "ERROR",
+      "N1.2": "ERROR",
+      "N2": "ERROR",
+      "N3": "FAIL",
+      "N3.1": "FAIL",
+      "N3.2": "FAIL"
+    },
+    "rule": "GO if N1.1 and N1.2 PASS; KILL if N1.1 FAIL; KILL_WITH_SURVIVOR if N1 fails but N2 or N3 PASS; INCONCLUSIVE otherwise",
+    "rule_applied": "GO if N1.1 and N1.2 PASS; else if N1 fails: KILL_WITH_SURVIVOR when N2 or N3 PASS, otherwise KILL (KILL_WITH_SURVIVOR is the refinement of KILL, so it is tested first); otherwise INCONCLUSIVE",
+    "verdict": "INCONCLUSIVE"
+  },
+  "generated_utc": "2026-09-26T01:52:49Z",
+  "inputs": {
+    "n1": {
+      "error": "file not found: result/analysis/phaseA_T1/20260926T0152Z/n1.json",
+      "path": "result/analysis/phaseA_T1/20260926T0152Z/n1.json",
+      "sha256": null
+    },
+    "n2": {
+      "error": "file not found: result/analysis/phaseA_T1/20260926T0152Z/n2.json",
+      "path": "result/analysis/phaseA_T1/20260926T0152Z/n2.json",
+      "sha256": null
+    },
+    "n3": {
+      "error": null,
+      "path": "result/analysis/phaseA_T1/20260926T0152Z/n3.json",
+      "sha256": "d297d6c317d71733d7e026d10eaf6535d73b068da0110b15892c2c04b11969f6"
+    }
+  },
+  "process_inputs": {
+    "n3_revisions": 1,
+    "n3_revisions_meaning": "manual judge revisions completed; N3.1's falsifier ('after one revision') needs >= 1. Not an analysis statistic - supplied on the command line and recorded here."
+  },
+  "protocol": {
+    "freeze_verified": true,
+    "prereg_path": "PREREGISTERED_kyra_v2.yaml",
+    "prereg_sha256": "87abaae4c16fb0efe3dad27ff464fcd86b6b48ff67a33f1414336ccc7ddd34a4",
+    "receipt_path": "PREREGISTERED_kyra_v2.yaml.sha256",
+    "receipt_sha256": "1d047a8cdf20f56a324809e80ebfd61a5b643c847b32e234db9b140b975896b0",
+    "table_check": "coded rule table matches the frozen claim ids, thresholds and decision_rule prose"
+  },
+  "reading_definitions": "PASS = criterion met; FAIL = explicit falsifier met; MISS = criterion absent without falsifier; ERROR = missing or incomparable data (never KILL)",
+  "reading_table": {
+    "N1": "ERROR",
+    "N1.1": "ERROR",
+    "N1.2": "ERROR",
+    "N2": "ERROR",
+    "N3": "FAIL",
+    "N3.1": "FAIL",
+    "N3.2": "FAIL"
+  },
+  "readings": [
+    {
+      "claim_id": "N1",
+      "detail": "ERROR (never KILL): a conjunct could not be read (N1.1=ERROR, N1.2=ERROR)",
+      "numbers": {
+        "N1.1": "ERROR",
+        "N1.2": "ERROR"
+      },
+      "reading": "ERROR",
+      "rule": {
+        "fail": "N1.1 FAIL",
+        "miss": "otherwise",
+        "pass": "N1.1 PASS and N1.2 PASS"
+      },
+      "threshold": 1.6
+    },
+    {
+      "claim_id": "N1.1",
+      "detail": "ERROR (never KILL): required field <file> in --n1 is unusable (file not found: result/analysis/phaseA_T1/20260926T0152Z/n1.json)",
+      "numbers": {},
+      "reading": "ERROR",
+      "rule": {
+        "fail": "CI upper bound <= 1.2",
+        "miss": "otherwise",
+        "pass": "OR >= 1.6 and CI lower bound > 1.0"
+      },
+      "threshold": 1.6
+    },
+    {
+      "claim_id": "N1.2",
+      "detail": "ERROR (never KILL): required field <file> in --n1 is unusable (file not found: result/analysis/phaseA_T1/20260926T0152Z/n1.json)",
+      "numbers": {},
+      "reading": "ERROR",
+      "rule": {
+        "fail": "benign OR >= 1.6 with CI excluding 1 and interaction p >= 0.05",
+        "miss": "otherwise",
+        "pass": "benign OR <= 1.2 or interaction Holm-adjusted p < 0.05"
+      },
+      "threshold": 1.2
+    },
+    {
+      "claim_id": "N2",
+      "detail": "ERROR (never KILL): required field <file> in --n2 is unusable (file not found: result/analysis/phaseA_T1/20260926T0152Z/n2.json)",
+      "numbers": {},
+      "reading": "ERROR",
+      "rule": {
+        "fail": "TOST equivalence within +/- 0.03",
+        "miss": "otherwise",
+        "pass": "absolute difference >= 0.03 and CI excludes 0 (direction and rewriting components reported)"
+      },
+      "threshold": 0.03
+    },
+    {
+      "claim_id": "N3",
+      "detail": "N3.1=FAIL, N3.2=FAIL (a conjunct FAILs)",
+      "numbers": {
+        "N3.1": "FAIL",
+        "N3.2": "FAIL"
+      },
+      "reading": "FAIL",
+      "rule": {
+        "fail": "N3.1 FAIL or N3.2 FAIL",
+        "miss": "otherwise",
+        "pass": "N3.1 PASS and N3.2 PASS"
+      },
+      "threshold": 0.7
+    },
+    {
+      "claim_id": "N3.1",
+      "detail": "falsifier met: CI upper < 0.70 on D1, D2, D4, D5, D6 after 1 revision(s)",
+      "numbers": {
+        "flag_agreement": 0.8222158586587621,
+        "per_dimension_ac2": {
+          "D1": 0.6322972077614988,
+          "D2": 0.6309370473234102,
+          "D3": 0.6632577991669367,
+          "D4": 0.4697036777897867,
+          "D5": 0.47614102384761003,
+          "D6": 0.6566066012281065
+        },
+        "per_dimension_ci95_upper": {
+          "D1": 0.6744978709121835,
+          "D2": 0.6741344931193216,
+          "D3": 0.7047726377709367,
+          "D4": 0.5174035409514705,
+          "D5": 0.5094131400377356,
+          "D6": 0.6970645493639541
+        },
+        "revisions_completed": 1
+      },
+      "reading": "FAIL",
+      "rule": {
+        "fail": "any dimension CI upper bound < 0.70 after one revision",
+        "miss": "otherwise",
+        "pass": "all point AC2 >= 0.70 and flag agreement >= 0.80"
+      },
+      "threshold": 0.7
+    },
+    {
+      "claim_id": "N3.2",
+      "detail": "falsifier met: |AC2 change| 0.2994 (max_lofo_change) > 0.20",
+      "numbers": {
+        "max_lofo_change": 0.2994042356993831,
+        "read_from": "max_lofo_change",
+        "worst_cell": null
+      },
+      "reading": "FAIL",
+      "rule": {
+        "fail": "any change > 0.20",
+        "miss": "otherwise",
+        "pass": "max change <= 0.10"
+      },
+      "threshold": 0.1
+    }
+  ],
+  "tool": "kyra.g6",
+  "tool_version": "v1"
+}

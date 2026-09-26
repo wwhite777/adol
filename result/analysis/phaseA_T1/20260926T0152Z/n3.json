@@ -1,0 +1,186 @@
+{
+  "B": 2000,
+  "analysis": "n3_reliability",
+  "ci_method": "percentile bootstrap resampling conversations, B = 2000",
+  "claim": "N3 / N3.1 / N3.2",
+  "families": [
+    "meta",
+    "microsoft",
+    "mistral"
+  ],
+  "flag_agreement": 0.8222158586587621,
+  "flag_agreement_detail": {
+    "agreement": 0.8222158586587621,
+    "definition": "mean over conversations of the pairwise percent agreement on critical_failure",
+    "n_subjects": 249
+  },
+  "leave_one_family_out": [
+    {
+      "complete": true,
+      "dropped_family": "meta",
+      "n_judge_records": 18144,
+      "per_dimension": {
+        "D1": {
+          "abs_change": 0.24880408878690352,
+          "ac2": 0.8811012965484023
+        },
+        "D2": {
+          "abs_change": 0.21255498853817556,
+          "ac2": 0.8434920358615857
+        },
+        "D3": {
+          "abs_change": 0.20361171337613126,
+          "ac2": 0.866869512543068
+        },
+        "D4": {
+          "abs_change": 0.2994042356993831,
+          "ac2": 0.7691079134891698
+        },
+        "D5": {
+          "abs_change": 0.23624730864177368,
+          "ac2": 0.7123883324893837
+        },
+        "D6": {
+          "abs_change": 0.21634332351678442,
+          "ac2": 0.872949924744891
+        }
+      }
+    },
+    {
+      "complete": true,
+      "dropped_family": "microsoft",
+      "n_judge_records": 18076,
+      "per_dimension": {
+        "D1": {
+          "abs_change": 0.13278693395093927,
+          "ac2": 0.4995102738105595
+        },
+        "D2": {
+          "abs_change": 0.09798215152630074,
+          "ac2": 0.5329548957971094
+        },
+        "D3": {
+          "abs_change": 0.102450394693411,
+          "ac2": 0.5608074044735257
+        },
+        "D4": {
+          "abs_change": 0.10437810251740925,
+          "ac2": 0.36532557527237747
+        },
+        "D5": {
+          "abs_change": 0.10044814488125725,
+          "ac2": 0.3756928789663528
+        },
+        "D6": {
+          "abs_change": 0.09242968336460167,
+          "ac2": 0.5641769178635049
+        }
+      }
+    },
+    {
+      "complete": true,
+      "dropped_family": "mistral",
+      "n_judge_records": 17980,
+      "per_dimension": {
+        "D1": {
+          "abs_change": 0.0878053440961698,
+          "ac2": 0.544491863665329
+        },
+        "D2": {
+          "abs_change": 0.08462272791010239,
+          "ac2": 0.5463143194133078
+        },
+        "D3": {
+          "abs_change": 0.07914077004760178,
+          "ac2": 0.5841170291193349
+        },
+        "D4": {
+          "abs_change": 0.12162276059106913,
+          "ac2": 0.3480809171987176
+        },
+        "D5": {
+          "abs_change": 0.10203509960754709,
+          "ac2": 0.37410592424006295
+        },
+        "D6": {
+          "abs_change": 0.10000426888652458,
+          "ac2": 0.556602332341582
+        }
+      }
+    }
+  ],
+  "max_lofo_change": 0.2994042356993831,
+  "n_conversations": 249,
+  "n_judges": 3,
+  "per_dimension": {
+    "D1": {
+      "ac2": 0.6322972077614988,
+      "bootstrap_used": 2000,
+      "ci95": [
+        0.5865643298508658,
+        0.6744978709121835
+      ],
+      "n_subjects": 249,
+      "p_a": 0.7630504764279159,
+      "p_e": 0.3555949843905654
+    },
+    "D2": {
+      "ac2": 0.6309370473234102,
+      "bootstrap_used": 2000,
+      "ci95": [
+        0.5844047355218627,
+        0.6741344931193216
+      ],
+      "n_subjects": 249,
+      "p_a": 0.7722246100666921,
+      "p_e": 0.38282781221634093
+    },
+    "D3": {
+      "ac2": 0.6632577991669367,
+      "bootstrap_used": 2000,
+      "ci95": [
+        0.6201090179391305,
+        0.7047726377709367
+      ],
+      "n_subjects": 249,
+      "p_a": 0.7733965889602842,
+      "p_e": 0.3270715387643017
+    },
+    "D4": {
+      "ac2": 0.4697036777897867,
+      "bootstrap_used": 2000,
+      "ci95": [
+        0.42134255760594197,
+        0.5174035409514705
+      ],
+      "n_subjects": 249,
+      "p_a": 0.7053207662027315,
+      "p_e": 0.4443121299256239
+    },
+    "D5": {
+      "ac2": 0.47614102384761003,
+      "bootstrap_used": 2000,
+      "ci95": [
+        0.44374625946339835,
+        0.5094131400377356
+      ],
+      "n_subjects": 249,
+      "p_a": 0.8066884423274538,
+      "p_e": 0.6309855009216984
+    },
+    "D6": {
+      "ac2": 0.6566066012281065,
+      "bootstrap_used": 2000,
+      "ci95": [
+        0.6139755926168494,
+        0.6970645493639541
+      ],
+      "n_subjects": 249,
+      "p_a": 0.7792248278829623,
+      "p_e": 0.35707799594688083
+    }
+  },
+  "seed": 20260922,
+  "statistic": "Gwet's AC2, ordinal (quadratic) weights, categories {0, 1, 2}, computed from the individual judge records",
+  "version": "PREREGISTERED_kyra_v2.yaml@87abaae4c16fb0efe3dad27ff464fcd86b6b48ff67a33f1414336ccc7ddd34a4"
+}

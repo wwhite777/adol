@@ -1,0 +1,9 @@
+N1    ERROR ERROR (never KILL): a conjunct could not be read (N1.1=ERROR, N1.2=ERROR)
+N1.1  ERROR ERROR (never KILL): required field <file> in --n1 is unusable (file not found: result/analysis/phaseA_T1/20260926T0152Z/n1.json)
+N1.2  ERROR ERROR (never KILL): required field <file> in --n1 is unusable (file not found: result/analysis/phaseA_T1/20260926T0152Z/n1.json)
+N2    ERROR ERROR (never KILL): required field <file> in --n2 is unusable (file not found: result/analysis/phaseA_T1/20260926T0152Z/n2.json)
+N3    FAIL  N3.1=FAIL, N3.2=FAIL (a conjunct FAILs)
+N3.1  FAIL  falsifier met: CI upper < 0.70 on D1, D2, D4, D5, D6 after 1 revision(s)
+N3.2  FAIL  falsifier met: |AC2 change| 0.2994 (max_lofo_change) > 0.20
+AGGREGATE INCONCLUSIVE: neither the GO criterion nor the N1.1 falsifier is met (N1.1=ERROR, N1.2=ERROR, N1=ERROR, N2=ERROR, N3=FAIL); ERROR is never KILL
+verdict written to result/analysis/phaseA_T1/20260926T0152Z/g6_verdict.json

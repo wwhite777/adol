@@ -1,0 +1,193 @@
+{
+  "aggregate": {
+    "because": "neither the GO criterion nor the N1.1 falsifier is met (N1.1=PASS, N1.2=FAIL, N1=MISS, N2=MISS, N3=FAIL); ERROR is never KILL",
+    "readings": {
+      "N1": "MISS",
+      "N1.1": "PASS",
+      "N1.2": "FAIL",
+      "N2": "MISS",
+      "N3": "FAIL",
+      "N3.1": "FAIL",
+      "N3.2": "FAIL"
+    },
+    "rule": "GO if N1.1 and N1.2 PASS; KILL if N1.1 FAIL; KILL_WITH_SURVIVOR if N1 fails but N2 or N3 PASS; INCONCLUSIVE otherwise",
+    "rule_applied": "GO if N1.1 and N1.2 PASS; else if N1 fails: KILL_WITH_SURVIVOR when N2 or N3 PASS, otherwise KILL (KILL_WITH_SURVIVOR is the refinement of KILL, so it is tested first); otherwise INCONCLUSIVE",
+    "verdict": "INCONCLUSIVE"
+  },
+  "generated_utc": "2026-09-26T02:24:28Z",
+  "inputs": {
+    "n1": {
+      "error": null,
+      "path": "result/analysis/phaseA_T1/20260926T0213Z/n1.json",
+      "sha256": "9379b46a425719d075f019e9a491b4082e9ed5a1be78e62d474a6d0119983cc9"
+    },
+    "n2": {
+      "error": null,
+      "path": "result/analysis/phaseA_T1/20260926T0213Z/n2.json",
+      "sha256": "00b1f3fed752d5ced074c1e804a92682336c71a496301e2da59d17dabb1fdcc1"
+    },
+    "n3": {
+      "error": null,
+      "path": "result/analysis/phaseA_T1/20260926T0213Z/n3.json",
+      "sha256": "3587dad41c90d83a5e78c44c9f9a9b08c61fadc3cd5dc6613327e78465918919"
+    }
+  },
+  "process_inputs": {
+    "n3_revisions": 1,
+    "n3_revisions_meaning": "manual judge revisions completed; N3.1's falsifier ('after one revision') needs >= 1. Not an analysis statistic - supplied on the command line and recorded here."
+  },
+  "protocol": {
+    "freeze_verified": true,
+    "prereg_path": "PREREGISTERED_kyra_v2.yaml",
+    "prereg_sha256": "87abaae4c16fb0efe3dad27ff464fcd86b6b48ff67a33f1414336ccc7ddd34a4",
+    "receipt_path": "PREREGISTERED_kyra_v2.yaml.sha256",
+    "receipt_sha256": "1d047a8cdf20f56a324809e80ebfd61a5b643c847b32e234db9b140b975896b0",
+    "table_check": "coded rule table matches the frozen claim ids, thresholds and decision_rule prose"
+  },
+  "reading_definitions": "PASS = criterion met; FAIL = explicit falsifier met; MISS = criterion absent without falsifier; ERROR = missing or incomparable data (never KILL)",
+  "reading_table": {
+    "N1": "MISS",
+    "N1.1": "PASS",
+    "N1.2": "FAIL",
+    "N2": "MISS",
+    "N3": "FAIL",
+    "N3.1": "FAIL",
+    "N3.2": "FAIL"
+  },
+  "readings": [
+    {
+      "claim_id": "N1",
+      "detail": "N1.1=PASS, N1.2=FAIL",
+      "numbers": {
+        "N1.1": "PASS",
+        "N1.2": "FAIL"
+      },
+      "reading": "MISS",
+      "rule": {
+        "fail": "N1.1 FAIL",
+        "miss": "otherwise",
+        "pass": "N1.1 PASS and N1.2 PASS"
+      },
+      "threshold": 1.6
+    },
+    {
+      "claim_id": "N1.1",
+      "detail": "OR 5.511 >= 1.60 and CI lower 2.147 > 1.00",
+      "numbers": {
+        "ci_lower": 2.14729609217977,
+        "ci_upper": 13.756879205675427,
+        "odds_ratio": 5.51078469381433
+      },
+      "reading": "PASS",
+      "rule": {
+        "fail": "CI upper bound <= 1.2",
+        "miss": "otherwise",
+        "pass": "OR >= 1.6 and CI lower bound > 1.0"
+      },
+      "threshold": 1.6
+    },
+    {
+      "claim_id": "N1.2",
+      "detail": "falsifier met: benign OR 9.709 >= 1.60, CI [4.852, 19.98] excludes 1, interaction p 0.2039 >= 0.05",
+      "numbers": {
+        "benign_ci95": [
+          4.852069627357609,
+          19.983308352030015
+        ],
+        "benign_or": 9.708751990310294,
+        "interaction_p": 0.20389805097451275,
+        "interaction_p_source": "interaction_p (Holm-adjusted cluster bootstrap); interaction_p_vb is never read"
+      },
+      "reading": "FAIL",
+      "rule": {
+        "fail": "benign OR >= 1.6 with CI excluding 1 and interaction p >= 0.05",
+        "miss": "otherwise",
+        "pass": "benign OR <= 1.2 or interaction Holm-adjusted p < 0.05"
+      },
+      "threshold": 1.2
+    },
+    {
+      "claim_id": "N2",
+      "detail": "neither criterion nor falsifier met (delta 0, CI [-0.05981, 0.05981], TOST equivalence False)",
+      "numbers": {
+        "ci95": [
+          -0.05980621088175683,
+          0.059806210881756916
+        ],
+        "estimate": 0.0,
+        "tost.equivalent": false
+      },
+      "reading": "MISS",
+      "rule": {
+        "fail": "TOST equivalence within +/- 0.03",
+        "miss": "otherwise",
+        "pass": "absolute difference >= 0.03 and CI excludes 0 (direction and rewriting components reported)"
+      },
+      "threshold": 0.03
+    },
+    {
+      "claim_id": "N3",
+      "detail": "N3.1=FAIL, N3.2=FAIL (a conjunct FAILs)",
+      "numbers": {
+        "N3.1": "FAIL",
+        "N3.2": "FAIL"
+      },
+      "reading": "FAIL",
+      "rule": {
+        "fail": "N3.1 FAIL or N3.2 FAIL",
+        "miss": "otherwise",
+        "pass": "N3.1 PASS and N3.2 PASS"
+      },
+      "threshold": 0.7
+    },
+    {
+      "claim_id": "N3.1",
+      "detail": "falsifier met: CI upper < 0.70 on D1, D2, D3, D4, D5 after 1 revision(s)",
+      "numbers": {
+        "flag_agreement": 0.822848200312989,
+        "per_dimension_ac2": {
+          "D1": 0.6269587613959144,
+          "D2": 0.6669291695366395,
+          "D3": 0.6645480861641807,
+          "D4": 0.48727239156882496,
+          "D5": 0.44436206493627123,
+          "D6": 0.6940924309626039
+        },
+        "per_dimension_ci95_upper": {
+          "D1": 0.6493736959043425,
+          "D2": 0.6874251732828901,
+          "D3": 0.6850449024386402,
+          "D4": 0.5133678161616827,
+          "D5": 0.4651197722627576,
+          "D6": 0.7126475150912941
+        },
+        "revisions_completed": 1
+      },
+      "reading": "FAIL",
+      "rule": {
+        "fail": "any dimension CI upper bound < 0.70 after one revision",
+        "miss": "otherwise",
+        "pass": "all point AC2 >= 0.70 and flag agreement >= 0.80"
+      },
+      "threshold": 0.7
+    },
+    {
+      "claim_id": "N3.2",
+      "detail": "falsifier met: |AC2 change| 0.2222 (max_lofo_change) > 0.20",
+      "numbers": {
+        "max_lofo_change": 0.2222121889701335,
+        "read_from": "max_lofo_change",
+        "worst_cell": null
+      },
+      "reading": "FAIL",
+      "rule": {
+        "fail": "any change > 0.20",
+        "miss": "otherwise",
+        "pass": "max change <= 0.10"
+      },
+      "threshold": 0.1
+    }
+  ],
+  "tool": "kyra.g6",
+  "tool_version": "v1"
+}
