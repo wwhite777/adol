@@ -1,0 +1,148 @@
+test_n1_and_descriptives_run_on_the_multi_run_table (test_analysis_multirun.TestLoaderMultiRun) ... ERROR
+test_n1_cli_exits_nonzero_on_two_runs_of_one_model (test_analysis_multirun.TestLoaderMultiRun) ... FAIL
+test_one_row_per_run_and_item (test_analysis_multirun.TestLoaderMultiRun) ... ERROR
+test_panel_outside_the_runs_raises (test_analysis_multirun.TestLoaderMultiRun) ... FAIL
+test_relative_run_and_absolute_panel_match (test_analysis_multirun.TestLoaderMultiRun) ... ERROR
+test_same_run_dir_twice_raises (test_analysis_multirun.TestLoaderMultiRun) ... FAIL
+test_single_run_input_unchanged (test_analysis_multirun.TestLoaderMultiRun) ... ERROR
+test_two_runs_of_one_model_are_refused (test_analysis_multirun.TestLoaderMultiRun) ... ERROR
+test_a_judge_rating_one_view_twice_raises (test_analysis_multirun.TestN3Subjects) ... FAIL
+test_ac2_and_lofo_match_an_independent_subject_table (test_analysis_multirun.TestN3Subjects) ... FAIL
+test_subject_is_the_judged_view_and_controls_are_excluded (test_analysis_multirun.TestN3Subjects) ... FAIL
+test_the_same_judge_file_twice_is_refused_by_the_cli (test_analysis_multirun.TestN3Subjects) ... FAIL
+
+======================================================================
+ERROR: test_n1_and_descriptives_run_on_the_multi_run_table (test_analysis_multirun.TestLoaderMultiRun)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/wjeong/adol/test/test_analysis_multirun.py", line 154, in test_n1_and_descriptives_run_on_the_multi_run_table
+    df = loader.build_tidy(self.items, runs, panels)
+  File "/home/wjeong/adol/src/kyra/analysis/loader.py", line 539, in build_tidy
+    depths, d2, d6, crit, full, n_turns = _conversation_from_views(views, where)
+  File "/home/wjeong/adol/src/kyra/analysis/loader.py", line 459, in _conversation_from_views
+    raise ValueError("%s: duplicate prefix depths %s in the panel records"
+ValueError: /tmp/kyra_multirun_3mv4r6rt/raw/model_A/main/r1/panel.jsonl: R1-S01-LOC/base: duplicate prefix depths [1, 1, 3, 3, 6, 6] in the panel records
+
+======================================================================
+ERROR: test_one_row_per_run_and_item (test_analysis_multirun.TestLoaderMultiRun)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/wjeong/adol/test/test_analysis_multirun.py", line 125, in test_one_row_per_run_and_item
+    df = loader.build_tidy(self.items, runs, panels)
+  File "/home/wjeong/adol/src/kyra/analysis/loader.py", line 539, in build_tidy
+    depths, d2, d6, crit, full, n_turns = _conversation_from_views(views, where)
+  File "/home/wjeong/adol/src/kyra/analysis/loader.py", line 459, in _conversation_from_views
+    raise ValueError("%s: duplicate prefix depths %s in the panel records"
+ValueError: /tmp/kyra_multirun_3mv4r6rt/raw/model_A/main/r1/panel.jsonl: R1-S01-LOC/base: duplicate prefix depths [1, 1, 3, 3, 6, 6] in the panel records
+
+======================================================================
+ERROR: test_relative_run_and_absolute_panel_match (test_analysis_multirun.TestLoaderMultiRun)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/wjeong/adol/test/test_analysis_multirun.py", line 138, in test_relative_run_and_absolute_panel_match
+    df = loader.build_tidy(self.items, rel, [p.resolve() for p in panels])
+  File "/home/wjeong/adol/src/kyra/analysis/loader.py", line 539, in build_tidy
+    depths, d2, d6, crit, full, n_turns = _conversation_from_views(views, where)
+  File "/home/wjeong/adol/src/kyra/analysis/loader.py", line 459, in _conversation_from_views
+    raise ValueError("%s: duplicate prefix depths %s in the panel records"
+ValueError: /tmp/kyra_multirun_3mv4r6rt/raw/model_A/main/r1/panel.jsonl: R1-S01-LOC/base: duplicate prefix depths [1, 1, 3, 3, 6, 6] in the panel records
+
+======================================================================
+ERROR: test_single_run_input_unchanged (test_analysis_multirun.TestLoaderMultiRun)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/pandas/core/indexes/base.py", line 3812, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "pandas/_libs/index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7096, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'run_dir'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/wjeong/adol/test/test_analysis_multirun.py", line 197, in test_single_run_input_unchanged
+    self.assertEqual(set(df["run_dir"]), {str(self.a_main)})
+  File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/pandas/core/frame.py", line 4113, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "/home/wjeong/envs/jeongwoncheol_adol/lib/python3.10/site-packages/pandas/core/indexes/base.py", line 3819, in get_loc
+    raise KeyError(key) from err
+KeyError: 'run_dir'
+
+======================================================================
+ERROR: test_two_runs_of_one_model_are_refused (test_analysis_multirun.TestLoaderMultiRun)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/wjeong/adol/test/test_analysis_multirun.py", line 168, in test_two_runs_of_one_model_are_refused
+    df = loader.build_tidy(self.items, runs, [r / "panel.jsonl" for r in runs])
+  File "/home/wjeong/adol/src/kyra/analysis/loader.py", line 539, in build_tidy
+    depths, d2, d6, crit, full, n_turns = _conversation_from_views(views, where)
+  File "/home/wjeong/adol/src/kyra/analysis/loader.py", line 459, in _conversation_from_views
+    raise ValueError("%s: duplicate prefix depths %s in the panel records"
+ValueError: /tmp/kyra_multirun_3mv4r6rt/raw/model_A/main/r1/panel.jsonl: R1-S01-LOC/base: duplicate prefix depths [1, 1, 3, 3, 6, 6] in the panel records
+
+======================================================================
+FAIL: test_n1_cli_exits_nonzero_on_two_runs_of_one_model (test_analysis_multirun.TestLoaderMultiRun)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/wjeong/adol/test/test_analysis_multirun.py", line 191, in test_n1_cli_exits_nonzero_on_two_runs_of_one_model
+    self.assertIn("more than one run dir", proc.stderr)
+AssertionError: 'more than one run dir' not found in 'ERROR: /tmp/kyra_multirun_3mv4r6rt/raw/model_A/main/r1/panel.jsonl: R1-S01-LOC/base: duplicate prefix depths [1, 1, 3, 3, 6, 6] in the panel records\n'
+
+======================================================================
+FAIL: test_panel_outside_the_runs_raises (test_analysis_multirun.TestLoaderMultiRun)
+----------------------------------------------------------------------
+ValueError: /tmp/kyra_multirun_3mv4r6rt/raw/model_A/main/r1/panel.jsonl: R1-S01-LOC/base: duplicate prefix depths [1, 1, 3, 3, 6, 6] in the panel records
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/wjeong/adol/test/test_analysis_multirun.py", line 143, in test_panel_outside_the_runs_raises
+    with self.assertRaisesRegex(ValueError, "not inside any of the given run dirs"):
+AssertionError: "not inside any of the given run dirs" does not match "/tmp/kyra_multirun_3mv4r6rt/raw/model_A/main/r1/panel.jsonl: R1-S01-LOC/base: duplicate prefix depths [1, 1, 3, 3, 6, 6] in the panel records"
+
+======================================================================
+FAIL: test_same_run_dir_twice_raises (test_analysis_multirun.TestLoaderMultiRun)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/wjeong/adol/test/test_analysis_multirun.py", line 148, in test_same_run_dir_twice_raises
+    with self.assertRaisesRegex(ValueError, "run directory given twice"):
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_a_judge_rating_one_view_twice_raises (test_analysis_multirun.TestN3Subjects)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/wjeong/adol/test/test_analysis_multirun.py", line 281, in test_a_judge_rating_one_view_twice_raises
+    with self.assertRaisesRegex(ValueError, "rated the same judged view twice"):
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_ac2_and_lofo_match_an_independent_subject_table (test_analysis_multirun.TestN3Subjects)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/wjeong/adol/test/test_analysis_multirun.py", line 267, in test_ac2_and_lofo_match_an_independent_subject_table
+    self.assertAlmostEqual(res["per_dimension"]["D1"]["ac2"],
+AssertionError: 0.007861208999729153 != -0.15729047072330613 within 12 places (0.16515167972303527 difference)
+
+======================================================================
+FAIL: test_subject_is_the_judged_view_and_controls_are_excluded (test_analysis_multirun.TestN3Subjects)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/wjeong/adol/test/test_analysis_multirun.py", line 249, in test_subject_is_the_judged_view_and_controls_are_excluded
+    self.assertEqual(df["conversation_id"].nunique(), n_views)
+AssertionError: 6 != 24
+
+======================================================================
+FAIL: test_the_same_judge_file_twice_is_refused_by_the_cli (test_analysis_multirun.TestN3Subjects)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/wjeong/adol/test/test_analysis_multirun.py", line 292, in test_the_same_judge_file_twice_is_refused_by_the_cli
+    self.assertEqual(proc.returncode, loader.EXIT_BAD_INPUT, proc.stderr)
+AssertionError: 0 != 4 : 
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.985s
+
+FAILED (failures=7, errors=5)

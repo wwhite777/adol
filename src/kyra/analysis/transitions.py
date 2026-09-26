@@ -129,6 +129,7 @@ def _group_summary(g: pd.DataFrame) -> Dict[str, Any]:
 def analyse(df: pd.DataFrame) -> Dict[str, Any]:
     if len(df) == 0:
         raise EmptyInput("zero conversations: nothing to count")
+    loader.require_one_run_per_model(df, "transitions")
     if not df["per_turn_available"].any():
         raise ValueError(
             "no conversation carries a per-turn series (crit_turns), so "

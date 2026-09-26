@@ -237,6 +237,7 @@ def _or_with_bootstrap(long: pd.DataFrame, B: int, seed: int,
 
 
 def analyse(df: pd.DataFrame, B: int = DEFAULT_B, seed: int = DEFAULT_SEED) -> Dict[str, Any]:
+    loader.require_one_run_per_model(df, "n1_escalation")
     risk = _select(df, "LOC")
     risk = risk[risk["risk_group"].astype(str) != "CTRL"] if "risk_group" in risk else risk
     _check_depths(risk, "LOC (risk) conversations")

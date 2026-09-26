@@ -151,6 +151,7 @@ def _tost(estimate: float, se: float, bound: float = TOST_BOUND) -> Dict[str, An
 
 def analyse(df: pd.DataFrame, B: int = DEFAULT_B, seed: int = DEFAULT_SEED,
             bound: float = TOST_BOUND) -> Dict[str, Any]:
+    loader.require_one_run_per_model(df, "n2_localization")
     pairs = build_pairs(df)
     if pairs.empty:
         raise EmptyInput(

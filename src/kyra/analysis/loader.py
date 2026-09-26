@@ -47,7 +47,19 @@ demonstrated by test/fixtures/analysis/prefix_run/panel.jsonl:
      "critical_failure": false, "cf_codes": [], "n_turns": 3,
      "over_refusal": false, "helpfulness": 2, ...}
 
-Records sharing (item_id, condition) are one conversation; the depths
+RUN IDENTITY (fixed 2026-09-26): a panel.jsonl belongs to the run
+directory that contains it (panel path's parent, both sides resolved, so a
+relative and an absolute spelling of one directory match).  Manifest
+entries and panel records are keyed by (run_dir, item_id, condition), and
+the tidy table carries a `run_dir` column (the --runs entry as given), so
+several run dirs -- different models, or main + repeat runs of one model --
+never collide.  With two or more --runs, a panel whose directory is not
+one of them is an error; with exactly one --runs entry every panel is
+attributed to that run (the legacy single-run behaviour).  The
+confirmatory analyses (n1, n2, transitions, pareto) take exactly one run
+per model and call require_one_run_per_model().
+
+Records sharing (run_dir, item_id, condition) are one conversation; the depths
 present become `view_depths`, and D2/D6/critical of each view become the
 series.  n_turns = the deepest view; CRRI comes from that view's A list;
 over_refusal / helpfulness come from that view.  A record without a
@@ -103,6 +115,7 @@ TIDY_COLUMNS = (
     "model_id",
     "family",
     "run_condition",
+    "run_dir",
     "status",
     "n_turns",
     "d1",
@@ -180,6 +193,36 @@ def split_item_id(item_id: str):
 
 def source_group_of(base_item: str) -> str:
     return str(base_item).split("-")[0]
+
+
+def run_key(path) -> str:
+    """Canonical identity of a run directory (resolved absolute path)."""
+    return str(Path(path).resolve())
+
+
+def require_one_run_per_model(df: pd.DataFrame, analysis: str) -> None:
+    """Refuse a table in which one model_id comes from two or more run dirs.
+
+    The confirmatory analyses use exactly one (main) run per model; pooling
+    a main and a repeat run of the same model would count its conversations
+    twice.  Rows without a run_dir (fixture CSVs) are not checked.
+    """
+    if "run_dir" not in df.columns:
+        return
+    sub = df[df["run_dir"].notna()]
+    if sub.empty:
+        return
+    n_runs = sub.groupby(sub["model_id"].astype(str))["run_dir"].nunique()
+    multi = n_runs[n_runs > 1]
+    if len(multi):
+        detail = "; ".join(
+            "%s <- %s" % (m, ", ".join(sorted(sub.loc[sub["model_id"].astype(str) == m,
+                                                      "run_dir"].astype(str).unique())))
+            for m in multi.index)
+        raise ValueError(
+            "%s: model_id(s) with more than one run dir in the input (%s). This "
+            "analysis takes exactly one (main) run dir per model; pass the main "
+            "run of each model only." % (analysis, detail))
 
 
 def parse_series(value: Any) -> Optional[List[float]]:
@@ -489,31 +532,49 @@ def build_tidy(items_path, run_dirs: Iterable[str], panel_paths: Iterable[str],
     if not items:
         raise ValueError("items file has zero items: %s" % items_path)
 
+    run_dirs = list(run_dirs)
+    panel_paths = list(panel_paths)
     manifest: Dict[Any, Dict[str, Any]] = {}
+    run_label: Dict[str, str] = {}      # run_key -> the --runs entry as given
     for run_dir in run_dirs:
         d = Path(run_dir)
         if not d.is_dir():
             raise ValueError("run directory not found: %s" % d)
+        rkey = run_key(d)
+        if rkey in run_label:
+            raise ValueError("run directory given twice: %s and %s"
+                             % (run_label[rkey], run_dir))
+        run_label[rkey] = str(run_dir)
         for rec in _read_jsonl(d / "manifest.jsonl"):
             for field in ("item_id", "condition", "model_id"):
                 if field not in rec:
                     raise ValueError("%s/manifest.jsonl: missing field %r" % (d, field))
-            manifest[(rec["item_id"], rec["condition"])] = rec
+            manifest[(rkey, rec["item_id"], rec["condition"])] = rec
         if not (d / "responses.jsonl").is_file():
             raise ValueError("run directory has no responses.jsonl: %s" % d)
     if not manifest:
         raise ValueError("no manifest records found in: %s" % ", ".join(map(str, run_dirs)))
+    single_run = next(iter(run_label)) if len(run_label) == 1 else None
 
-    grouped: "Dict[Tuple[str, str], List[Dict[str, Any]]]" = {}
+    grouped: "Dict[Tuple[str, str, str], List[Dict[str, Any]]]" = {}
     order: List[Any] = []
     for panel_path in panel_paths:
+        # a panel belongs to the run dir that contains it
+        pkey = run_key(Path(panel_path).parent)
+        if pkey not in run_label:
+            if single_run is None:
+                raise ValueError(
+                    "%s: panel file is not inside any of the given run dirs (%s); "
+                    "with several --runs every panel.jsonl must sit in its run dir"
+                    % (panel_path, ", ".join(run_label.values())))
+            pkey = single_run    # legacy single-run input: the one run owns it
         for rec in _read_jsonl(panel_path):
             for field in ("item_id", "condition", "status"):
                 if field not in rec:
                     raise ValueError("%s: panel record missing %r" % (panel_path, field))
             if rec["status"] != "ok":
                 continue
-            key = (rec["item_id"], rec["condition"])
+            key = (pkey, rec["item_id"], rec["condition"])
             if key not in grouped:
                 grouped[key] = []
                 order.append(key)
@@ -522,11 +583,12 @@ def build_tidy(items_path, run_dirs: Iterable[str], panel_paths: Iterable[str],
 
     rows: List[Dict[str, Any]] = []
     for key in order:
-        item_id, run_condition = key
+        rkey, item_id, run_condition = key
         views = grouped[key]
         where = "%s: %s/%s" % (views[0]["_path"], item_id, run_condition)
         if key not in manifest:
-            raise ValueError("%s has no manifest entry in the given run dirs" % where)
+            raise ValueError("%s has no manifest entry in its run dir %s"
+                             % (where, run_label[rkey]))
         if item_id not in items:
             raise ValueError("%s: panel record for unknown item_id %r" % (where, item_id))
         item = items[item_id]
@@ -565,6 +627,7 @@ def build_tidy(items_path, run_dirs: Iterable[str], panel_paths: Iterable[str],
             "model_id": model_id,
             "family": fam,
             "run_condition": run_condition,
+            "run_dir": run_label[rkey],
             "status": full["status"],
             "n_turns": n_turns,
             "d1": D.get("D1", np.nan),

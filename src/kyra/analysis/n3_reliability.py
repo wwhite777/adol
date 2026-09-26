@@ -34,6 +34,18 @@ CLI:
 The fixture CSV is one row per (conversation, judge):
   conversation_id, judge_id, family, D1..D6, critical_failure
 
+SUBJECT UNIT (fixed 2026-09-26).  From judge files the subject is one
+judged VIEW = (run dir of the judge file, item_id, condition, depth): each
+judge rates it once, and a judge contributing two records for one subject
+is an error (never counted twice).  Control views (is_control true or
+risk_group CTRL) are EXCLUDED: control items are scored for
+over_refusal/helpfulness, not RB-6D (manual/RB6D_v2), so their D1..D6 and
+flag are not part of N3; their number is reported.  A record with
+is_control null (control status unknown, bare probe) is kept and counted
+in n_control_unknown_included.  The same judge file given twice (e.g. via
+--judges and via --runs) is an error.  From a fixture CSV the subject is
+the conversation_id column.
+
 Output JSON schema (the names G6 reads)
 ---------------------------------------
 version                    "PREREGISTERED_kyra_v2.yaml@<sha256>"
@@ -42,6 +54,9 @@ per_dimension.D1..D6       {ac2, ci95 [lo, hi] | null, p_a, p_e,
                             n_subjects, bootstrap_used}
 flag_agreement             float   mean pairwise percent agreement on the flag
 flag_agreement_detail      {agreement, n_subjects, definition}
+subject_unit               prose naming the subject (see SUBJECT UNIT)
+n_subjects                 int   distinct subjects in the input
+n_control_views_excluded, n_control_records_excluded, n_control_unknown_included
 leave_one_family_out[]     {dropped_family, n_judge_records, complete,
                             per_dimension.D*.{ac2, abs_change}}
 max_lofo_change            float   max |AC2(all) - AC2(LOFO)| over dims/families
@@ -204,21 +219,53 @@ def _read_jsonl(path) -> List[Dict[str, Any]]:
     return rows
 
 
+SUBJECT_UNIT_VIEWS = ("judged view (run_dir, item_id, condition, depth); "
+                      "control views excluded")
+SUBJECT_UNIT_FIXTURE = "conversation_id column of the fixture CSV"
+
+
 def long_from_judge_files(paths: Sequence[str],
                           family_map: Optional[Dict[str, str]] = None) -> pd.DataFrame:
-    """judge_<id>.jsonl files -> long table (conversation x judge)."""
+    """judge_<id>.jsonl files -> long table (judged view x judge).
+
+    The subject (column `conversation_id`, name kept for the fixture path)
+    is "<run dir>|<item_id>|<condition>|<depth>", the run dir being the
+    resolved directory holding the judge file.  Control views are dropped
+    and counted (df.attrs); a judge rating one subject twice raises.
+    """
     rows: List[Dict[str, Any]] = []
+    seen: Dict[Tuple[str, str], str] = {}
+    control_views = set()
+    n_control_records = 0
+    n_control_unknown = 0
     for path in paths:
+        run = loader.run_key(Path(path).parent)
         for rec in _read_jsonl(path):
             if rec.get("status") != "ok":
                 continue
+            depth = rec.get("depth", rec.get("n_turns"))
+            if depth is None or isinstance(depth, bool) or int(depth) < 1:
+                raise ValueError("%s: 'ok' record for %s/%s has no usable depth (%r)"
+                                 % (path, rec.get("item_id"), rec.get("condition"), depth))
+            subject = "%s|%s|%s|%d" % (run, rec["item_id"], rec.get("condition"), int(depth))
+            if rec.get("is_control") is True or rec.get("risk_group") == "CTRL":
+                n_control_records += 1
+                control_views.add(subject)
+                continue
+            if rec.get("is_control") is None:
+                n_control_unknown += 1
             r = rec.get("record") or {}
             D = r.get("D") or {}
             if any(k not in D for k in D_KEYS):
                 raise ValueError("%s: an 'ok' record is missing D1..D6" % path)
             jid = rec["judge_id"]
+            if (subject, jid) in seen:
+                raise ValueError(
+                    "judge %s rated the same judged view twice: %s (in %s and %s); "
+                    "each judge must rate a subject once" % (jid, subject, seen[(subject, jid)], path))
+            seen[(subject, jid)] = str(path)
             row = {
-                "conversation_id": "%s|%s" % (rec["item_id"], rec.get("condition")),
+                "conversation_id": subject,
                 "judge_id": jid,
                 "family": (family_map or {}).get(jid, rec.get("family")),
                 "critical_failure": int(bool(r.get("critical_failure"))),
@@ -228,9 +275,15 @@ def long_from_judge_files(paths: Sequence[str],
             rows.append(row)
     if not rows:
         raise EmptyInput(
-            "zero usable judge records (status 'ok') in: %s" % ", ".join(map(str, paths))
+            "zero usable judge records (status 'ok', non-control) in: %s"
+            % ", ".join(map(str, paths))
         )
-    return pd.DataFrame(rows)
+    df = pd.DataFrame(rows)
+    df.attrs["subject_unit"] = SUBJECT_UNIT_VIEWS
+    df.attrs["n_control_views_excluded"] = len(control_views)
+    df.attrs["n_control_records_excluded"] = n_control_records
+    df.attrs["n_control_unknown_included"] = n_control_unknown
+    return df
 
 
 def long_from_fixture(path) -> pd.DataFrame:
@@ -246,6 +299,7 @@ def long_from_fixture(path) -> pd.DataFrame:
         raise ValueError("fixture CSV is missing column(s): %s" % ", ".join(missing))
     if "family" not in df.columns:
         df["family"] = df["judge_id"]
+    df.attrs["subject_unit"] = SUBJECT_UNIT_FIXTURE
     return df
 
 
@@ -308,6 +362,14 @@ def _dimension_block(df: pd.DataFrame, B: int, seed: int) -> Dict[str, Any]:
 def analyse(df: pd.DataFrame, B: int = DEFAULT_B, seed: int = DEFAULT_SEED) -> Dict[str, Any]:
     if len(df) == 0:
         raise EmptyInput("zero judge records: no reliability statistic is defined")
+    dup = df.groupby(["conversation_id", "judge_id"]).size()
+    dup = dup[dup > 1]
+    if len(dup):
+        (subj, jid), n = next(iter(dup.items()))
+        raise ValueError(
+            "%d (subject, judge) pair(s) carry more than one rating, e.g. judge %s "
+            "rated %s %d times: each judge must rate a subject once"
+            % (len(dup), jid, subj, int(n)))
     usable = df.groupby("conversation_id")["judge_id"].nunique()
     if not (usable >= MIN_RATERS).any():
         raise EmptyInput(
@@ -351,7 +413,13 @@ def analyse(df: pd.DataFrame, B: int = DEFAULT_B, seed: int = DEFAULT_SEED) -> D
         "claim": "N3 / N3.1 / N3.2",
         "statistic": "Gwet's AC2, ordinal (quadratic) weights, categories "
                      "{0, 1, 2}, computed from the individual judge records",
-        "ci_method": "percentile bootstrap resampling conversations, B = %d" % B,
+        "ci_method": "percentile bootstrap resampling subjects (see "
+                     "subject_unit), B = %d" % B,
+        "subject_unit": df.attrs.get("subject_unit", SUBJECT_UNIT_FIXTURE),
+        "n_subjects": int(df["conversation_id"].nunique()),
+        "n_control_views_excluded": df.attrs.get("n_control_views_excluded"),
+        "n_control_records_excluded": df.attrs.get("n_control_records_excluded"),
+        "n_control_unknown_included": df.attrs.get("n_control_unknown_included"),
         "per_dimension": dims,
         "flag_agreement": flags["agreement"],
         "flag_agreement_detail": flags,
@@ -398,6 +466,12 @@ def main(argv=None) -> int:
                 paths += discover_judge_files(args.runs)
             if not paths:
                 raise ValueError("need --judges, --runs or --fixture")
+            resolved = [str(Path(x).resolve()) for x in paths]
+            twice = sorted({x for x in resolved if resolved.count(x) > 1})
+            if twice:
+                raise ValueError(
+                    "judge file(s) given more than once (e.g. by --judges and by "
+                    "--runs): %s" % ", ".join(twice))
             df = long_from_judge_files(paths, fam_map)
         result = analyse(df, B=args.bootstrap, seed=args.seed)
     except EmptyInput as exc:

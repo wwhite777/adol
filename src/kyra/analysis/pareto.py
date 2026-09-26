@@ -100,6 +100,7 @@ def analyse(df: pd.DataFrame, B: int = DEFAULT_B, seed: int = DEFAULT_SEED,
             proxy_d3d4: bool = False) -> Dict[str, Any]:
     if len(df) == 0:
         raise EmptyInput("zero conversations: no Pareto point can be computed")
+    loader.require_one_run_per_model(df, "pareto")
     if "risk_group" not in df.columns or df["risk_group"].isna().all():
         raise ValueError("risk_group is missing: risk and control items cannot "
                          "be separated")

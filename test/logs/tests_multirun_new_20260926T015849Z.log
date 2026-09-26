@@ -1,0 +1,17 @@
+test_n1_and_descriptives_run_on_the_multi_run_table (test_analysis_multirun.TestLoaderMultiRun) ... ok
+test_n1_cli_exits_nonzero_on_two_runs_of_one_model (test_analysis_multirun.TestLoaderMultiRun) ... ok
+test_one_row_per_run_and_item (test_analysis_multirun.TestLoaderMultiRun) ... ok
+test_panel_outside_the_runs_raises (test_analysis_multirun.TestLoaderMultiRun) ... ok
+test_relative_run_and_absolute_panel_match (test_analysis_multirun.TestLoaderMultiRun) ... ok
+test_same_run_dir_twice_raises (test_analysis_multirun.TestLoaderMultiRun) ... ok
+test_single_run_input_unchanged (test_analysis_multirun.TestLoaderMultiRun) ... ok
+test_two_runs_of_one_model_are_refused (test_analysis_multirun.TestLoaderMultiRun) ... ok
+test_a_judge_rating_one_view_twice_raises (test_analysis_multirun.TestN3Subjects) ... ok
+test_ac2_and_lofo_match_an_independent_subject_table (test_analysis_multirun.TestN3Subjects) ... ok
+test_subject_is_the_judged_view_and_controls_are_excluded (test_analysis_multirun.TestN3Subjects) ... ok
+test_the_same_judge_file_twice_is_refused_by_the_cli (test_analysis_multirun.TestN3Subjects) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 9.252s
+
+OK
