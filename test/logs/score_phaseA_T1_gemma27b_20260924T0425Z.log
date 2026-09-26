@@ -1,0 +1,67 @@
+compile caches: TORCHINDUCTOR_CACHE_DIR=/home/wjeong/adol/snapshots/phaseA_scoring_d6e7507/.cache/torchinductor TRITON_CACHE_DIR=/home/wjeong/adol/snapshots/phaseA_scoring_d6e7507/.cache/triton (inherited: none)
+SCORING PLAN cohort=phaseA_T1
+items: research/items/items_phaseA_v1.jsonl (sha256=8ab7cda19406e00d9c5fe59f0b2ac68fdfb7d54ca2669ce7ffdd350657d88017)
+views: prefix (control ids = risk_group CTRL from the items file)
+anchors: research/judge_anchors_v1.json (sha256=7f54fdbded6071d7f5e202d1b7820fe4a64b454dc695b6eb39def227c3373679)
+judges: J1/meta (vllm, 2 shards), J2/mistral (vllm, 2 shards), J3/microsoft (vllm, 2 shards)
+resume: on (prompt_template_sha256=65460efc95d2415f85f5020a3c028165b0a6051c0e28eb6bf86213869bf94921, engine_kwargs={"attention_backend":"FLASH_ATTN","enable_prefix_caching":false,"max_model_len":16384}, vllm_env={"VLLM_BATCH_INVARIANT":"1"})
+RUN result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c class=confirmatory (EXPERIMENTS row phaseA_T1__RedHatAI-gemma-3-27b-it-quantized.w4a16__main__20260923T0237Z-7f582c) model=RedHatAI/gemma-3-27b-it-quantized.w4a16 evaluated_family=google
+  MARKER sha256=b4074ce4bddb5ac5f893c8ceb0f1840a98746f5187df366c842a3f8b9f2113ac
+  judge -> result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c/judge_J1.jsonl  [to run]
+  judge -> result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c/judge_J2.jsonl  [to run]
+  judge -> result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c/judge_J3.jsonl  [to run]
+  items: 156 (48 control) - every id present in the items file
+  panel -> result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c/panel.jsonl
+RUN result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a class=confirmatory (EXPERIMENTS row phaseA_T1__RedHatAI-gemma-3-27b-it-quantized.w4a16__repeat_1__20260923T0338Z-dbbe1a) model=RedHatAI/gemma-3-27b-it-quantized.w4a16 evaluated_family=google
+  MARKER sha256=65f788a822e2ba41a8678efc13ac695eb4ce67f0eb460366db01c7876408c14d
+  judge -> result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a/judge_J1.jsonl  [to run]
+  judge -> result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a/judge_J2.jsonl  [to run]
+  judge -> result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a/judge_J3.jsonl  [to run]
+  items: 31 (10 control) - every id present in the items file
+  panel -> result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a/panel.jsonl
+RUN result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_2/20260923T0352Z-fd283d class=confirmatory (EXPERIMENTS row phaseA_T1__RedHatAI-gemma-3-27b-it-quantized.w4a16__repeat_2__20260923T0352Z-fd283d) model=RedHatAI/gemma-3-27b-it-quantized.w4a16 evaluated_family=google
+  MARKER sha256=65f788a822e2ba41a8678efc13ac695eb4ce67f0eb460366db01c7876408c14d
+  judge -> result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_2/20260923T0352Z-fd283d/judge_J1.jsonl  [to run]
+  judge -> result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_2/20260923T0352Z-fd283d/judge_J2.jsonl  [to run]
+  judge -> result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_2/20260923T0352Z-fd283d/judge_J3.jsonl  [to run]
+  items: 31 (10 control) - every id present in the items file
+  panel -> result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_2/20260923T0352Z-fd283d/panel.jsonl
+RUN result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77 class=confirmatory (EXPERIMENTS row phaseA_T1__RedHatAI-gemma-3-27b-it-quantized.w4a16__repeat_3__20260923T0405Z-0dda77) model=RedHatAI/gemma-3-27b-it-quantized.w4a16 evaluated_family=google
+  MARKER sha256=65f788a822e2ba41a8678efc13ac695eb4ce67f0eb460366db01c7876408c14d
+  judge -> result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77/judge_J1.jsonl  [to run]
+  judge -> result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77/judge_J2.jsonl  [to run]
+  judge -> result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77/judge_J3.jsonl  [to run]
+  items: 31 (10 control) - every id present in the items file
+  panel -> result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77/panel.jsonl
+freeze: OK sha256=87abaae4c16fb0efe3dad27ff464fcd86b6b48ff67a33f1414336ccc7ddd34a4
+gpu: GPU 2 via --gpu flag (candidates [0, 1, 2]; GPU 3 never used) -> CUDA_VISIBLE_DEVICES=2
+GPU: pinned CUDA_VISIBLE_DEVICES=2 (physical GPU 2)
+JUDGE J1 on result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c (2 concurrent shards)
+  OK result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c/judge_J1.jsonl
+JUDGE J2 on result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c (2 concurrent shards)
+  OK result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c/judge_J2.jsonl
+JUDGE J3 on result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c (2 concurrent shards)
+  OK result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c/judge_J3.jsonl
+  PANEL result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c/panel.jsonl
+JUDGE J1 on result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a (2 concurrent shards)
+  OK result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a/judge_J1.jsonl
+JUDGE J2 on result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a (2 concurrent shards)
+  OK result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a/judge_J2.jsonl
+JUDGE J3 on result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a (2 concurrent shards)
+  OK result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a/judge_J3.jsonl
+  PANEL result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a/panel.jsonl
+JUDGE J1 on result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_2/20260923T0352Z-fd283d (2 concurrent shards)
+  OK result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_2/20260923T0352Z-fd283d/judge_J1.jsonl
+JUDGE J2 on result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_2/20260923T0352Z-fd283d (2 concurrent shards)
+  OK result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_2/20260923T0352Z-fd283d/judge_J2.jsonl
+JUDGE J3 on result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_2/20260923T0352Z-fd283d (2 concurrent shards)
+  OK result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_2/20260923T0352Z-fd283d/judge_J3.jsonl
+  PANEL result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_2/20260923T0352Z-fd283d/panel.jsonl
+JUDGE J1 on result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77 (2 concurrent shards)
+  OK result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77/judge_J1.jsonl
+JUDGE J2 on result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77 (2 concurrent shards)
+  OK result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77/judge_J2.jsonl
+JUDGE J3 on result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77 (2 concurrent shards)
+  OK result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77/judge_J3.jsonl
+  PANEL result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77/panel.jsonl
+SCORING phaseA_T1 completed: 12 judge run(s), 4 panel(s); record: result/raw/phaseA_T1/campaign_phaseA_T1__20260924T0425Z-ea845a_scoring.json
