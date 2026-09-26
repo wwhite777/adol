@@ -1,0 +1,9 @@
+command: PYTHONPATH=src /home/wjeong/envs/jeongwoncheol_adol/bin/python -m kyra.judge merge --run-dir result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77 --views prefix --shards result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77/judge_J1.shard1of2.jsonl result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77/judge_J1.shard2of2.jsonl --out result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77/judge_J1.jsonl
+exit=0
+--- stdout ---
+merged shards=2 total=116 ok=113 error=3 out=result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77/judge_J1.jsonl
+judge_file_sha256=097bea4f16868f512b021dd3eb96143f2f8d842a1dac43d64dc6bc74b14d7dbb
+meta=result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77/judge_J1.meta.json
+
+--- stderr ---
+

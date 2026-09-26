@@ -1,0 +1,8 @@
+command: PYTHONPATH=src /home/wjeong/envs/jeongwoncheol_adol/bin/python -m kyra.panel --judges result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a/judge_J1.jsonl result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a/judge_J2.jsonl result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a/judge_J3.jsonl --family-map result/raw/phaseA_T1/family_map_phaseA_T1.json --evaluated-family google --out result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a/panel.jsonl
+exit=0
+--- stdout ---
+views=116 conversations=31 ok=116 insufficient=0 evaluated_family=google
+out=result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a/panel.jsonl
+
+--- stderr ---
+

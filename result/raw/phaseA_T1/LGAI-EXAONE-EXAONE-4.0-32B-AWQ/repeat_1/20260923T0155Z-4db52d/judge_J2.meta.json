@@ -1,0 +1,69 @@
+{
+  "anchors_path": "research/judge_anchors_v1.json",
+  "anchors_sha256": "7f54fdbded6071d7f5e202d1b7820fe4a64b454dc695b6eb39def227c3373679",
+  "batch_size": 1,
+  "decode_mode": "sequential",
+  "family": "mistral",
+  "finished_utc": "2026-09-24T21:42:14Z",
+  "items_path": "research/items/items_phaseA_v1.jsonl",
+  "items_sha256": "8ab7cda19406e00d9c5fe59f0b2ac68fdfb7d54ca2669ce7ffdd350657d88017",
+  "judge_id": "J2",
+  "max_retries": 1,
+  "merged_utc": "2026-09-24T21:42:16Z",
+  "model_id": "21907bf9a442ec05c91e059ef17b08a8b44983f5",
+  "model_path": "/home/wjeong/adol/models/hf/hub/models--Intel--Mistral-Small-3.2-24B-Instruct-2506-int4-AutoRound/snapshots/21907bf9a442ec05c91e059ef17b08a8b44983f5",
+  "n_error_final": 0,
+  "n_ok": 116,
+  "n_parse_errors_first_pass": 0,
+  "n_retried": 0,
+  "n_views": 116,
+  "out_path": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_1/20260923T0155Z-4db52d/judge_J2.jsonl",
+  "prompt_template_path": "/home/wjeong/adol/snapshots/phaseA_scoring_d6e7507/src/kyra/judge_prompt_v0_3.md",
+  "prompt_template_sha256": "65460efc95d2415f85f5020a3c028165b0a6051c0e28eb6bf86213869bf94921",
+  "provider": "vllm",
+  "provider_effective_params": {
+    "chat_template_kwargs": {},
+    "engine_kwargs": {
+      "attention_backend": "FLASH_ATTN",
+      "enable_prefix_caching": false,
+      "max_model_len": 16384
+    },
+    "max_tokens": 700,
+    "stop_token_ids": [],
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "vllm_env": {
+      "VLLM_BATCH_INVARIANT": "1"
+    }
+  },
+  "run_dir": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_1/20260923T0155Z-4db52d",
+  "shard_runs": [
+    {
+      "finished_utc": "2026-09-24T21:41:41Z",
+      "n_error_final": 0,
+      "n_ok": 58,
+      "n_parse_errors_first_pass": 0,
+      "n_retried": 0,
+      "n_views": 58,
+      "path": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_1/20260923T0155Z-4db52d/judge_J2.shard1of2.jsonl",
+      "sha256": "42f0c0ecf5aa0c41818b6ee8add807e1f3046ede644262aebc96674e9563c76a",
+      "shard": "1/2",
+      "started_utc": "2026-09-24T21:23:35Z"
+    },
+    {
+      "finished_utc": "2026-09-24T21:42:14Z",
+      "n_error_final": 0,
+      "n_ok": 58,
+      "n_parse_errors_first_pass": 0,
+      "n_retried": 0,
+      "n_views": 58,
+      "path": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_1/20260923T0155Z-4db52d/judge_J2.shard2of2.jsonl",
+      "sha256": "cb97eede148962f19da822a317a7510b920b959c7bbc40b730dcfd6f9f09ea72",
+      "shard": "2/2",
+      "started_utc": "2026-09-24T21:23:35Z"
+    }
+  ],
+  "shards": 2,
+  "started_utc": "2026-09-24T21:23:35Z",
+  "views": "prefix"
+}

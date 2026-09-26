@@ -1,0 +1,725 @@
+{
+  "allow_panel_overwrite": false,
+  "command": "PYTHONPATH=src python -m kyra.campaign score --items research/items/items_phaseA_v1.jsonl --models research/models_run2.json --judges research/judges_phaseA_v1.json --cohort phaseA_T1 --runs result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/main/20260923T0053Z-43396e result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_1/20260923T0155Z-4db52d result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_2/20260923T0208Z-9e212f result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_3/20260923T0222Z-6e6dc0 --anchors research/judge_anchors_v1.json --gpu 1 --resume",
+  "compile_caches": {
+    "TORCHINDUCTOR_CACHE_DIR": "/home/wjeong/adol/snapshots/phaseA_scoring_d6e7507/.cache/torchinductor",
+    "TRITON_CACHE_DIR": "/home/wjeong/adol/snapshots/phaseA_scoring_d6e7507/.cache/triton",
+    "inherited": []
+  },
+  "dry_run": false,
+  "experiments_csv": "research/EXPERIMENTS.csv",
+  "freeze": {
+    "error": null,
+    "ok": true,
+    "prereg": "PREREGISTERED_kyra_v2.yaml",
+    "required": true,
+    "sha": "PREREGISTERED_kyra_v2.yaml.sha256",
+    "sha256": "87abaae4c16fb0efe3dad27ff464fcd86b6b48ff67a33f1414336ccc7ddd34a4"
+  },
+  "gpu": {
+    "allowed": [
+      0,
+      1,
+      2
+    ],
+    "candidates": [
+      0,
+      1,
+      2
+    ],
+    "chosen": 1,
+    "criterion": "first candidate GPU with < 4096 MiB used",
+    "error": null,
+    "inherited": false,
+    "inherited_cuda_visible_devices": null,
+    "never": 3,
+    "ok": true,
+    "override": 1,
+    "pinned_cuda_visible_devices": "1",
+    "required": true,
+    "source": "--gpu flag",
+    "visible": [
+      {
+        "index": 0,
+        "used_mib": 18779
+      },
+      {
+        "index": 1,
+        "used_mib": 4
+      },
+      {
+        "index": 2,
+        "used_mib": 44379
+      },
+      {
+        "index": 3,
+        "used_mib": 4
+      }
+    ]
+  },
+  "judge_runs": [
+    {
+      "anchors_sha256": "7f54fdbded6071d7f5e202d1b7820fe4a64b454dc695b6eb39def227c3373679",
+      "class": "confirmatory",
+      "exit_code": 0,
+      "failure": null,
+      "family": "meta",
+      "judge_id": "J1",
+      "log": "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0053Z-43396e__judge_J1.log",
+      "out": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/main/20260923T0053Z-43396e/judge_J1.jsonl",
+      "provider": "vllm",
+      "run_dir": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/main/20260923T0053Z-43396e",
+      "run_key": "phaseA_T1__20260923T0053Z-43396e__judge_J1",
+      "sha256": "d743487b36d64685f8c1629a4c1c7d96161b00e306eae3231f126cd7a7053071",
+      "shard_files": [
+        "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/main/20260923T0053Z-43396e/shards/judge_J1.shard1of2.jsonl",
+        "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/main/20260923T0053Z-43396e/shards/judge_J1.shard2of2.jsonl"
+      ],
+      "shard_logs": [
+        "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0053Z-43396e__judge_J1.shard1of2.log",
+        "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0053Z-43396e__judge_J1.shard2of2.log"
+      ],
+      "shards": 2,
+      "status": "completed"
+    },
+    {
+      "anchors_sha256": "7f54fdbded6071d7f5e202d1b7820fe4a64b454dc695b6eb39def227c3373679",
+      "class": "confirmatory",
+      "exit_code": 0,
+      "failure": null,
+      "family": "mistral",
+      "judge_id": "J2",
+      "log": "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0053Z-43396e__judge_J2.log",
+      "out": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/main/20260923T0053Z-43396e/judge_J2.jsonl",
+      "provider": "vllm",
+      "run_dir": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/main/20260923T0053Z-43396e",
+      "run_key": "phaseA_T1__20260923T0053Z-43396e__judge_J2",
+      "sha256": "b88aee2cc9e29ce3faeb1cfbc168772c4144dd3e3f33fa338dcbfae6c32fd416",
+      "shard_files": [
+        "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/main/20260923T0053Z-43396e/shards/judge_J2.shard1of2.jsonl",
+        "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/main/20260923T0053Z-43396e/shards/judge_J2.shard2of2.jsonl"
+      ],
+      "shard_logs": [
+        "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0053Z-43396e__judge_J2.shard1of2.log",
+        "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0053Z-43396e__judge_J2.shard2of2.log"
+      ],
+      "shards": 2,
+      "status": "completed"
+    },
+    {
+      "anchors_sha256": "7f54fdbded6071d7f5e202d1b7820fe4a64b454dc695b6eb39def227c3373679",
+      "class": "confirmatory",
+      "exit_code": 0,
+      "failure": null,
+      "family": "microsoft",
+      "judge_id": "J3",
+      "log": "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0053Z-43396e__judge_J3.log",
+      "out": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/main/20260923T0053Z-43396e/judge_J3.jsonl",
+      "provider": "vllm",
+      "run_dir": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/main/20260923T0053Z-43396e",
+      "run_key": "phaseA_T1__20260923T0053Z-43396e__judge_J3",
+      "sha256": "39455fcc5fdef8f48bb83ba150ebdea6a4001e3ca6ff8a9fe0744cf53cb8f70a",
+      "shard_files": [
+        "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/main/20260923T0053Z-43396e/shards/judge_J3.shard1of2.jsonl",
+        "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/main/20260923T0053Z-43396e/shards/judge_J3.shard2of2.jsonl"
+      ],
+      "shard_logs": [
+        "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0053Z-43396e__judge_J3.shard1of2.log",
+        "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0053Z-43396e__judge_J3.shard2of2.log"
+      ],
+      "shards": 2,
+      "status": "completed"
+    },
+    {
+      "anchors_sha256": "7f54fdbded6071d7f5e202d1b7820fe4a64b454dc695b6eb39def227c3373679",
+      "class": "confirmatory",
+      "exit_code": 0,
+      "failure": null,
+      "family": "meta",
+      "judge_id": "J1",
+      "log": "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0155Z-4db52d__judge_J1.log",
+      "out": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_1/20260923T0155Z-4db52d/judge_J1.jsonl",
+      "provider": "vllm",
+      "run_dir": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_1/20260923T0155Z-4db52d",
+      "run_key": "phaseA_T1__20260923T0155Z-4db52d__judge_J1",
+      "sha256": "f6b2991bb8923c988186bbac457a60fd303ddc5d09b0ef71b2ca2fbc41d80f81",
+      "shard_files": [
+        "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_1/20260923T0155Z-4db52d/shards/judge_J1.shard1of2.jsonl",
+        "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_1/20260923T0155Z-4db52d/shards/judge_J1.shard2of2.jsonl"
+      ],
+      "shard_logs": [
+        "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0155Z-4db52d__judge_J1.shard1of2.log",
+        "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0155Z-4db52d__judge_J1.shard2of2.log"
+      ],
+      "shards": 2,
+      "status": "completed"
+    },
+    {
+      "anchors_sha256": "7f54fdbded6071d7f5e202d1b7820fe4a64b454dc695b6eb39def227c3373679",
+      "class": "confirmatory",
+      "exit_code": 0,
+      "failure": null,
+      "family": "mistral",
+      "judge_id": "J2",
+      "log": "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0155Z-4db52d__judge_J2.log",
+      "out": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_1/20260923T0155Z-4db52d/judge_J2.jsonl",
+      "provider": "vllm",
+      "run_dir": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_1/20260923T0155Z-4db52d",
+      "run_key": "phaseA_T1__20260923T0155Z-4db52d__judge_J2",
+      "sha256": "5bfe385e36f2e3673e995e43a42def8d8b09f43d4f68fac6859f7f902dcc95a6",
+      "shard_files": [
+        "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_1/20260923T0155Z-4db52d/shards/judge_J2.shard1of2.jsonl",
+        "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_1/20260923T0155Z-4db52d/shards/judge_J2.shard2of2.jsonl"
+      ],
+      "shard_logs": [
+        "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0155Z-4db52d__judge_J2.shard1of2.log",
+        "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0155Z-4db52d__judge_J2.shard2of2.log"
+      ],
+      "shards": 2,
+      "status": "completed"
+    },
+    {
+      "anchors_sha256": "7f54fdbded6071d7f5e202d1b7820fe4a64b454dc695b6eb39def227c3373679",
+      "class": "confirmatory",
+      "exit_code": 0,
+      "failure": null,
+      "family": "microsoft",
+      "judge_id": "J3",
+      "log": "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0155Z-4db52d__judge_J3.log",
+      "out": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_1/20260923T0155Z-4db52d/judge_J3.jsonl",
+      "provider": "vllm",
+      "run_dir": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_1/20260923T0155Z-4db52d",
+      "run_key": "phaseA_T1__20260923T0155Z-4db52d__judge_J3",
+      "sha256": "77b3720732d97c2c237e084d9a191ce357248db4f898e15b04ed8956bcd8fc07",
+      "shard_files": [
+        "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_1/20260923T0155Z-4db52d/shards/judge_J3.shard1of2.jsonl",
+        "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_1/20260923T0155Z-4db52d/shards/judge_J3.shard2of2.jsonl"
+      ],
+      "shard_logs": [
+        "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0155Z-4db52d__judge_J3.shard1of2.log",
+        "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0155Z-4db52d__judge_J3.shard2of2.log"
+      ],
+      "shards": 2,
+      "status": "completed"
+    },
+    {
+      "anchors_sha256": "7f54fdbded6071d7f5e202d1b7820fe4a64b454dc695b6eb39def227c3373679",
+      "class": "confirmatory",
+      "exit_code": 0,
+      "failure": null,
+      "family": "meta",
+      "judge_id": "J1",
+      "log": "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0208Z-9e212f__judge_J1.log",
+      "out": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_2/20260923T0208Z-9e212f/judge_J1.jsonl",
+      "provider": "vllm",
+      "run_dir": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_2/20260923T0208Z-9e212f",
+      "run_key": "phaseA_T1__20260923T0208Z-9e212f__judge_J1",
+      "sha256": "c361af08fe028cb621904013ad08903522897e90a9f8c2fc98c840a94b75cb77",
+      "shard_files": [
+        "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_2/20260923T0208Z-9e212f/shards/judge_J1.shard1of2.jsonl",
+        "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_2/20260923T0208Z-9e212f/shards/judge_J1.shard2of2.jsonl"
+      ],
+      "shard_logs": [
+        "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0208Z-9e212f__judge_J1.shard1of2.log",
+        "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0208Z-9e212f__judge_J1.shard2of2.log"
+      ],
+      "shards": 2,
+      "status": "completed"
+    },
+    {
+      "anchors_sha256": "7f54fdbded6071d7f5e202d1b7820fe4a64b454dc695b6eb39def227c3373679",
+      "class": "confirmatory",
+      "exit_code": 0,
+      "failure": null,
+      "family": "mistral",
+      "judge_id": "J2",
+      "log": "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0208Z-9e212f__judge_J2.log",
+      "out": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_2/20260923T0208Z-9e212f/judge_J2.jsonl",
+      "provider": "vllm",
+      "run_dir": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_2/20260923T0208Z-9e212f",
+      "run_key": "phaseA_T1__20260923T0208Z-9e212f__judge_J2",
+      "sha256": "9e190025f8609cbe5644d22c6d132c52f14380c6684bc032fe75bf7899101c5c",
+      "shard_files": [
+        "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_2/20260923T0208Z-9e212f/shards/judge_J2.shard1of2.jsonl",
+        "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_2/20260923T0208Z-9e212f/shards/judge_J2.shard2of2.jsonl"
+      ],
+      "shard_logs": [
+        "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0208Z-9e212f__judge_J2.shard1of2.log",
+        "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0208Z-9e212f__judge_J2.shard2of2.log"
+      ],
+      "shards": 2,
+      "status": "completed"
+    },
+    {
+      "anchors_sha256": "7f54fdbded6071d7f5e202d1b7820fe4a64b454dc695b6eb39def227c3373679",
+      "class": "confirmatory",
+      "exit_code": 0,
+      "failure": null,
+      "family": "microsoft",
+      "judge_id": "J3",
+      "log": "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0208Z-9e212f__judge_J3.log",
+      "out": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_2/20260923T0208Z-9e212f/judge_J3.jsonl",
+      "provider": "vllm",
+      "run_dir": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_2/20260923T0208Z-9e212f",
+      "run_key": "phaseA_T1__20260923T0208Z-9e212f__judge_J3",
+      "sha256": "43f4490e88ffc6a42686f0ca9aae3494a54b69b6e1f2d3ebbd756783e47892ae",
+      "shard_files": [
+        "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_2/20260923T0208Z-9e212f/shards/judge_J3.shard1of2.jsonl",
+        "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_2/20260923T0208Z-9e212f/shards/judge_J3.shard2of2.jsonl"
+      ],
+      "shard_logs": [
+        "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0208Z-9e212f__judge_J3.shard1of2.log",
+        "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0208Z-9e212f__judge_J3.shard2of2.log"
+      ],
+      "shards": 2,
+      "status": "completed"
+    },
+    {
+      "anchors_sha256": "7f54fdbded6071d7f5e202d1b7820fe4a64b454dc695b6eb39def227c3373679",
+      "class": "confirmatory",
+      "exit_code": 0,
+      "failure": null,
+      "family": "meta",
+      "judge_id": "J1",
+      "log": "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0222Z-6e6dc0__judge_J1.log",
+      "out": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_3/20260923T0222Z-6e6dc0/judge_J1.jsonl",
+      "provider": "vllm",
+      "run_dir": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_3/20260923T0222Z-6e6dc0",
+      "run_key": "phaseA_T1__20260923T0222Z-6e6dc0__judge_J1",
+      "sha256": "0e2e2ae737f91df835aba68b90311c0e4de497c79a1351341149630d82f55795",
+      "shard_files": [
+        "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_3/20260923T0222Z-6e6dc0/shards/judge_J1.shard1of2.jsonl",
+        "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_3/20260923T0222Z-6e6dc0/shards/judge_J1.shard2of2.jsonl"
+      ],
+      "shard_logs": [
+        "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0222Z-6e6dc0__judge_J1.shard1of2.log",
+        "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0222Z-6e6dc0__judge_J1.shard2of2.log"
+      ],
+      "shards": 2,
+      "status": "completed"
+    },
+    {
+      "anchors_sha256": "7f54fdbded6071d7f5e202d1b7820fe4a64b454dc695b6eb39def227c3373679",
+      "class": "confirmatory",
+      "exit_code": 0,
+      "failure": null,
+      "family": "mistral",
+      "judge_id": "J2",
+      "log": "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0222Z-6e6dc0__judge_J2.log",
+      "out": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_3/20260923T0222Z-6e6dc0/judge_J2.jsonl",
+      "provider": "vllm",
+      "run_dir": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_3/20260923T0222Z-6e6dc0",
+      "run_key": "phaseA_T1__20260923T0222Z-6e6dc0__judge_J2",
+      "sha256": "aeb4518a66d6663bd6da2a4d09a77e02073ae926b5ff6e8faf3235a7b4674b83",
+      "shard_files": [
+        "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_3/20260923T0222Z-6e6dc0/shards/judge_J2.shard1of2.jsonl",
+        "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_3/20260923T0222Z-6e6dc0/shards/judge_J2.shard2of2.jsonl"
+      ],
+      "shard_logs": [
+        "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0222Z-6e6dc0__judge_J2.shard1of2.log",
+        "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0222Z-6e6dc0__judge_J2.shard2of2.log"
+      ],
+      "shards": 2,
+      "status": "completed"
+    },
+    {
+      "anchors_sha256": "7f54fdbded6071d7f5e202d1b7820fe4a64b454dc695b6eb39def227c3373679",
+      "class": "confirmatory",
+      "exit_code": 0,
+      "failure": null,
+      "family": "microsoft",
+      "judge_id": "J3",
+      "log": "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0222Z-6e6dc0__judge_J3.log",
+      "out": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_3/20260923T0222Z-6e6dc0/judge_J3.jsonl",
+      "provider": "vllm",
+      "run_dir": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_3/20260923T0222Z-6e6dc0",
+      "run_key": "phaseA_T1__20260923T0222Z-6e6dc0__judge_J3",
+      "sha256": "4bfb22e7d8eab802fe3cd3eef47f573e998f2824a489852657b8b9eca4108655",
+      "shard_files": [
+        "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_3/20260923T0222Z-6e6dc0/shards/judge_J3.shard1of2.jsonl",
+        "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_3/20260923T0222Z-6e6dc0/shards/judge_J3.shard2of2.jsonl"
+      ],
+      "shard_logs": [
+        "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0222Z-6e6dc0__judge_J3.shard1of2.log",
+        "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0222Z-6e6dc0__judge_J3.shard2of2.log"
+      ],
+      "shards": 2,
+      "status": "completed"
+    }
+  ],
+  "launch_stamp": "20260924T1218Z-88d51e",
+  "note": "judges run one model at a time as child processes (kyra.judge --views prefix --items <items>, so control ids come from risk_group CTRL); the panel is kyra.panel over this run's judge files",
+  "panel_runs": [
+    {
+      "class": "confirmatory",
+      "evaluated_family": "lg",
+      "exit_code": 0,
+      "failure": null,
+      "judges": [
+        "J1",
+        "J2",
+        "J3"
+      ],
+      "log": "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0053Z-43396e__panel.log",
+      "out": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/main/20260923T0053Z-43396e/panel.jsonl",
+      "run_dir": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/main/20260923T0053Z-43396e",
+      "run_key": "phaseA_T1__20260923T0053Z-43396e__panel",
+      "sha256": "de86a1a5a6ba2847bab9ef8a903322472d7c72fb77ca656f1696568defeb79f3",
+      "status": "completed"
+    },
+    {
+      "class": "confirmatory",
+      "evaluated_family": "lg",
+      "exit_code": 0,
+      "failure": null,
+      "judges": [
+        "J1",
+        "J2",
+        "J3"
+      ],
+      "log": "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0155Z-4db52d__panel.log",
+      "out": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_1/20260923T0155Z-4db52d/panel.jsonl",
+      "run_dir": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_1/20260923T0155Z-4db52d",
+      "run_key": "phaseA_T1__20260923T0155Z-4db52d__panel",
+      "sha256": "1312ce476958dec1985660c8aa8c5248603c30dfe1f9c223f59a0d0b888f8815",
+      "status": "completed"
+    },
+    {
+      "class": "confirmatory",
+      "evaluated_family": "lg",
+      "exit_code": 0,
+      "failure": null,
+      "judges": [
+        "J1",
+        "J2",
+        "J3"
+      ],
+      "log": "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0208Z-9e212f__panel.log",
+      "out": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_2/20260923T0208Z-9e212f/panel.jsonl",
+      "run_dir": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_2/20260923T0208Z-9e212f",
+      "run_key": "phaseA_T1__20260923T0208Z-9e212f__panel",
+      "sha256": "499bcffd1175be3384ce22a3eeb040af2f5fa44049edfaadd8e1c34ed53bf566",
+      "status": "completed"
+    },
+    {
+      "class": "confirmatory",
+      "evaluated_family": "lg",
+      "exit_code": 0,
+      "failure": null,
+      "judges": [
+        "J1",
+        "J2",
+        "J3"
+      ],
+      "log": "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0222Z-6e6dc0__panel.log",
+      "out": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_3/20260923T0222Z-6e6dc0/panel.jsonl",
+      "run_dir": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_3/20260923T0222Z-6e6dc0",
+      "run_key": "phaseA_T1__20260923T0222Z-6e6dc0__panel",
+      "sha256": "f349b6714f51ac101082da936a7df40da56351a1e795b4363f5fd91fbdd82c5b",
+      "status": "completed"
+    }
+  ],
+  "plan": {
+    "allow_panel_overwrite": false,
+    "anchors_path": "research/judge_anchors_v1.json",
+    "anchors_sha256": "7f54fdbded6071d7f5e202d1b7820fe4a64b454dc695b6eb39def227c3373679",
+    "cohort": "phaseA_T1",
+    "created_utc": "2026-09-24T12:18:30Z",
+    "engine_env": {
+      "engine_kwargs": {
+        "attention_backend": "FLASH_ATTN",
+        "enable_prefix_caching": false,
+        "max_model_len": 16384
+      },
+      "vllm_env": {
+        "VLLM_BATCH_INVARIANT": "1"
+      }
+    },
+    "family_map": {
+      "J1": "meta",
+      "J2": "mistral",
+      "J3": "microsoft"
+    },
+    "items_path": "research/items/items_phaseA_v1.jsonl",
+    "items_sha256": "8ab7cda19406e00d9c5fe59f0b2ac68fdfb7d54ca2669ce7ffdd350657d88017",
+    "judges": [
+      {
+        "batch_size": 1,
+        "family": "meta",
+        "judge_id": "J1",
+        "model_id": "meta-llama/Llama-3.1-8B-Instruct",
+        "notes": "bf16, 16 GB; fusion1's cache (read-only, protected for pilot B); snapshot 0e9e39f2",
+        "provider": "vllm",
+        "shards": 2
+      },
+      {
+        "batch_size": 1,
+        "family": "mistral",
+        "judge_id": "J2",
+        "model_id": "Intel/Mistral-Small-3.2-24B-Instruct-2506-int4-AutoRound",
+        "notes": "Intel AutoRound int4 of Mistral-Small-3.2-24B-Instruct-2506 (Mistral3ForConditionalGeneration), 15.1 GB; snapshot 21907bf9",
+        "provider": "vllm",
+        "shards": 2
+      },
+      {
+        "batch_size": 1,
+        "family": "microsoft",
+        "judge_id": "J3",
+        "model_id": "cortecs/phi-4-FP8-Dynamic",
+        "notes": "compressed-tensors FP8-dynamic of microsoft/phi-4 (Phi3ForCausalLM), 15.7 GB; snapshot 7014f998; gpu_memory_utilization 0.45 per engine (not 0.42): at 0.42 the FP8 engine had 2.63 GiB free for KV cache after 14.74 GiB weights + 0.66 GiB CUDA graphs, below the ~3.1 GiB a 16,384-token window needs → engine never started (Kanana main, 2026-09-23 17:52Z); two J3 engines = 0.90 of the GPU",
+        "provider": "vllm",
+        "shards": 2
+      }
+    ],
+    "model_families": {
+      "LGAI-EXAONE/EXAONE-4.0-32B-AWQ": "lg"
+    },
+    "out_root": "result/raw",
+    "prompt_template_sha256": "65460efc95d2415f85f5020a3c028165b0a6051c0e28eb6bf86213869bf94921",
+    "resume": true,
+    "runs": [
+      {
+        "class": "confirmatory",
+        "class_source": "EXPERIMENTS row phaseA_T1__LGAI-EXAONE-EXAONE-4.0-32B-AWQ__main__20260923T0053Z-43396e",
+        "evaluated_family": "lg",
+        "existing_judge_files": [],
+        "judge_files": [
+          "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/main/20260923T0053Z-43396e/judge_J1.jsonl",
+          "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/main/20260923T0053Z-43396e/judge_J2.jsonl",
+          "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/main/20260923T0053Z-43396e/judge_J3.jsonl"
+        ],
+        "marker_sha256": "b4074ce4bddb5ac5f893c8ceb0f1840a98746f5187df366c842a3f8b9f2113ac",
+        "model_id": "LGAI-EXAONE/EXAONE-4.0-32B-AWQ",
+        "model_source": "manifest model_id=LGAI-EXAONE/EXAONE-4.0-32B-AWQ",
+        "n_control_items": 48,
+        "n_items": 156,
+        "n_views_expected": 564,
+        "panel_exists": false,
+        "panel_file": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/main/20260923T0053Z-43396e/panel.jsonl",
+        "panel_reuse": false,
+        "resume_judges": [
+          {
+            "action": "run",
+            "judge_file": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/main/20260923T0053Z-43396e/judge_J1.jsonl",
+            "judge_id": "J1",
+            "meta_file": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/main/20260923T0053Z-43396e/judge_J1.meta.json",
+            "mismatch": null,
+            "n_views_expected": 564,
+            "stray_shard_files": []
+          },
+          {
+            "action": "run",
+            "judge_file": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/main/20260923T0053Z-43396e/judge_J2.jsonl",
+            "judge_id": "J2",
+            "meta_file": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/main/20260923T0053Z-43396e/judge_J2.meta.json",
+            "mismatch": null,
+            "n_views_expected": 564,
+            "stray_shard_files": []
+          },
+          {
+            "action": "run",
+            "judge_file": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/main/20260923T0053Z-43396e/judge_J3.jsonl",
+            "judge_id": "J3",
+            "meta_file": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/main/20260923T0053Z-43396e/judge_J3.meta.json",
+            "mismatch": null,
+            "n_views_expected": 564,
+            "stray_shard_files": []
+          }
+        ],
+        "reused_judge_files": [],
+        "run_dir": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/main/20260923T0053Z-43396e",
+        "shard_files": [
+          "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/main/20260923T0053Z-43396e/judge_J1.shard1of2.jsonl",
+          "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/main/20260923T0053Z-43396e/judge_J1.shard2of2.jsonl",
+          "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/main/20260923T0053Z-43396e/judge_J2.shard1of2.jsonl",
+          "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/main/20260923T0053Z-43396e/judge_J2.shard2of2.jsonl",
+          "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/main/20260923T0053Z-43396e/judge_J3.shard1of2.jsonl",
+          "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/main/20260923T0053Z-43396e/judge_J3.shard2of2.jsonl"
+        ]
+      },
+      {
+        "class": "confirmatory",
+        "class_source": "EXPERIMENTS row phaseA_T1__LGAI-EXAONE-EXAONE-4.0-32B-AWQ__repeat_1__20260923T0155Z-4db52d",
+        "evaluated_family": "lg",
+        "existing_judge_files": [],
+        "judge_files": [
+          "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_1/20260923T0155Z-4db52d/judge_J1.jsonl",
+          "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_1/20260923T0155Z-4db52d/judge_J2.jsonl",
+          "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_1/20260923T0155Z-4db52d/judge_J3.jsonl"
+        ],
+        "marker_sha256": "65f788a822e2ba41a8678efc13ac695eb4ce67f0eb460366db01c7876408c14d",
+        "model_id": "LGAI-EXAONE/EXAONE-4.0-32B-AWQ",
+        "model_source": "manifest model_id=LGAI-EXAONE/EXAONE-4.0-32B-AWQ",
+        "n_control_items": 10,
+        "n_items": 31,
+        "n_views_expected": 116,
+        "panel_exists": false,
+        "panel_file": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_1/20260923T0155Z-4db52d/panel.jsonl",
+        "panel_reuse": false,
+        "resume_judges": [
+          {
+            "action": "run",
+            "judge_file": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_1/20260923T0155Z-4db52d/judge_J1.jsonl",
+            "judge_id": "J1",
+            "meta_file": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_1/20260923T0155Z-4db52d/judge_J1.meta.json",
+            "mismatch": null,
+            "n_views_expected": 116,
+            "stray_shard_files": []
+          },
+          {
+            "action": "run",
+            "judge_file": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_1/20260923T0155Z-4db52d/judge_J2.jsonl",
+            "judge_id": "J2",
+            "meta_file": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_1/20260923T0155Z-4db52d/judge_J2.meta.json",
+            "mismatch": null,
+            "n_views_expected": 116,
+            "stray_shard_files": []
+          },
+          {
+            "action": "run",
+            "judge_file": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_1/20260923T0155Z-4db52d/judge_J3.jsonl",
+            "judge_id": "J3",
+            "meta_file": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_1/20260923T0155Z-4db52d/judge_J3.meta.json",
+            "mismatch": null,
+            "n_views_expected": 116,
+            "stray_shard_files": []
+          }
+        ],
+        "reused_judge_files": [],
+        "run_dir": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_1/20260923T0155Z-4db52d",
+        "shard_files": [
+          "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_1/20260923T0155Z-4db52d/judge_J1.shard1of2.jsonl",
+          "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_1/20260923T0155Z-4db52d/judge_J1.shard2of2.jsonl",
+          "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_1/20260923T0155Z-4db52d/judge_J2.shard1of2.jsonl",
+          "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_1/20260923T0155Z-4db52d/judge_J2.shard2of2.jsonl",
+          "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_1/20260923T0155Z-4db52d/judge_J3.shard1of2.jsonl",
+          "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_1/20260923T0155Z-4db52d/judge_J3.shard2of2.jsonl"
+        ]
+      },
+      {
+        "class": "confirmatory",
+        "class_source": "EXPERIMENTS row phaseA_T1__LGAI-EXAONE-EXAONE-4.0-32B-AWQ__repeat_2__20260923T0208Z-9e212f",
+        "evaluated_family": "lg",
+        "existing_judge_files": [],
+        "judge_files": [
+          "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_2/20260923T0208Z-9e212f/judge_J1.jsonl",
+          "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_2/20260923T0208Z-9e212f/judge_J2.jsonl",
+          "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_2/20260923T0208Z-9e212f/judge_J3.jsonl"
+        ],
+        "marker_sha256": "65f788a822e2ba41a8678efc13ac695eb4ce67f0eb460366db01c7876408c14d",
+        "model_id": "LGAI-EXAONE/EXAONE-4.0-32B-AWQ",
+        "model_source": "manifest model_id=LGAI-EXAONE/EXAONE-4.0-32B-AWQ",
+        "n_control_items": 10,
+        "n_items": 31,
+        "n_views_expected": 116,
+        "panel_exists": false,
+        "panel_file": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_2/20260923T0208Z-9e212f/panel.jsonl",
+        "panel_reuse": false,
+        "resume_judges": [
+          {
+            "action": "run",
+            "judge_file": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_2/20260923T0208Z-9e212f/judge_J1.jsonl",
+            "judge_id": "J1",
+            "meta_file": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_2/20260923T0208Z-9e212f/judge_J1.meta.json",
+            "mismatch": null,
+            "n_views_expected": 116,
+            "stray_shard_files": []
+          },
+          {
+            "action": "run",
+            "judge_file": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_2/20260923T0208Z-9e212f/judge_J2.jsonl",
+            "judge_id": "J2",
+            "meta_file": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_2/20260923T0208Z-9e212f/judge_J2.meta.json",
+            "mismatch": null,
+            "n_views_expected": 116,
+            "stray_shard_files": []
+          },
+          {
+            "action": "run",
+            "judge_file": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_2/20260923T0208Z-9e212f/judge_J3.jsonl",
+            "judge_id": "J3",
+            "meta_file": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_2/20260923T0208Z-9e212f/judge_J3.meta.json",
+            "mismatch": null,
+            "n_views_expected": 116,
+            "stray_shard_files": []
+          }
+        ],
+        "reused_judge_files": [],
+        "run_dir": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_2/20260923T0208Z-9e212f",
+        "shard_files": [
+          "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_2/20260923T0208Z-9e212f/judge_J1.shard1of2.jsonl",
+          "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_2/20260923T0208Z-9e212f/judge_J1.shard2of2.jsonl",
+          "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_2/20260923T0208Z-9e212f/judge_J2.shard1of2.jsonl",
+          "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_2/20260923T0208Z-9e212f/judge_J2.shard2of2.jsonl",
+          "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_2/20260923T0208Z-9e212f/judge_J3.shard1of2.jsonl",
+          "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_2/20260923T0208Z-9e212f/judge_J3.shard2of2.jsonl"
+        ]
+      },
+      {
+        "class": "confirmatory",
+        "class_source": "EXPERIMENTS row phaseA_T1__LGAI-EXAONE-EXAONE-4.0-32B-AWQ__repeat_3__20260923T0222Z-6e6dc0",
+        "evaluated_family": "lg",
+        "existing_judge_files": [],
+        "judge_files": [
+          "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_3/20260923T0222Z-6e6dc0/judge_J1.jsonl",
+          "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_3/20260923T0222Z-6e6dc0/judge_J2.jsonl",
+          "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_3/20260923T0222Z-6e6dc0/judge_J3.jsonl"
+        ],
+        "marker_sha256": "65f788a822e2ba41a8678efc13ac695eb4ce67f0eb460366db01c7876408c14d",
+        "model_id": "LGAI-EXAONE/EXAONE-4.0-32B-AWQ",
+        "model_source": "manifest model_id=LGAI-EXAONE/EXAONE-4.0-32B-AWQ",
+        "n_control_items": 10,
+        "n_items": 31,
+        "n_views_expected": 116,
+        "panel_exists": false,
+        "panel_file": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_3/20260923T0222Z-6e6dc0/panel.jsonl",
+        "panel_reuse": false,
+        "resume_judges": [
+          {
+            "action": "run",
+            "judge_file": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_3/20260923T0222Z-6e6dc0/judge_J1.jsonl",
+            "judge_id": "J1",
+            "meta_file": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_3/20260923T0222Z-6e6dc0/judge_J1.meta.json",
+            "mismatch": null,
+            "n_views_expected": 116,
+            "stray_shard_files": []
+          },
+          {
+            "action": "run",
+            "judge_file": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_3/20260923T0222Z-6e6dc0/judge_J2.jsonl",
+            "judge_id": "J2",
+            "meta_file": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_3/20260923T0222Z-6e6dc0/judge_J2.meta.json",
+            "mismatch": null,
+            "n_views_expected": 116,
+            "stray_shard_files": []
+          },
+          {
+            "action": "run",
+            "judge_file": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_3/20260923T0222Z-6e6dc0/judge_J3.jsonl",
+            "judge_id": "J3",
+            "meta_file": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_3/20260923T0222Z-6e6dc0/judge_J3.meta.json",
+            "mismatch": null,
+            "n_views_expected": 116,
+            "stray_shard_files": []
+          }
+        ],
+        "reused_judge_files": [],
+        "run_dir": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_3/20260923T0222Z-6e6dc0",
+        "shard_files": [
+          "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_3/20260923T0222Z-6e6dc0/judge_J1.shard1of2.jsonl",
+          "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_3/20260923T0222Z-6e6dc0/judge_J1.shard2of2.jsonl",
+          "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_3/20260923T0222Z-6e6dc0/judge_J2.shard1of2.jsonl",
+          "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_3/20260923T0222Z-6e6dc0/judge_J2.shard2of2.jsonl",
+          "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_3/20260923T0222Z-6e6dc0/judge_J3.shard1of2.jsonl",
+          "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_3/20260923T0222Z-6e6dc0/judge_J3.shard2of2.jsonl"
+        ]
+      }
+    ],
+    "shard_start_stagger_s": 45,
+    "views": "prefix"
+  },
+  "record_path": "result/raw/phaseA_T1/campaign_phaseA_T1__20260924T1218Z-88d51e_scoring.json",
+  "resume": true,
+  "status": "completed",
+  "stopped_because": null
+}

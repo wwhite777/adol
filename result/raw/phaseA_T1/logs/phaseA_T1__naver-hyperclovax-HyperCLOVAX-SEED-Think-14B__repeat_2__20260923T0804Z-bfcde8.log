@@ -1,0 +1,8 @@
+run_key=phaseA_T1__naver-hyperclovax-HyperCLOVAX-SEED-Think-14B__repeat_2__20260923T0804Z-bfcde8
+started_utc=2026-09-23T08:04:01Z
+model_id=naver-hyperclovax/HyperCLOVAX-SEED-Think-14B family=naver provider=vllm path=/home/wjeong/adol/models/hf/patched/HyperCLOVAX-SEED-Think-14B
+tag=repeat_2 condition=repeat_2 temperature=0.7 seed=20260924
+items=31 gpu=2 run_dir=result/raw/phaseA_T1/naver-hyperclovax-HyperCLOVAX-SEED-Think-14B/repeat_2/20260923T0804Z-bfcde8
+provider_ready model_id=HyperCLOVAX-SEED-Think-14B api_version=0.19.0
+MARKER sha256=65f788a822e2ba41a8678efc13ac695eb4ce67f0eb460366db01c7876408c14d
+finished_utc=2026-09-23T08:26:45Z

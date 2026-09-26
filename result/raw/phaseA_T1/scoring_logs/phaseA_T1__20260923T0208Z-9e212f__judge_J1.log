@@ -1,0 +1,9 @@
+command: PYTHONPATH=src /home/wjeong/envs/jeongwoncheol_adol/bin/python -m kyra.judge merge --run-dir result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_2/20260923T0208Z-9e212f --views prefix --shards result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_2/20260923T0208Z-9e212f/judge_J1.shard1of2.jsonl result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_2/20260923T0208Z-9e212f/judge_J1.shard2of2.jsonl --out result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_2/20260923T0208Z-9e212f/judge_J1.jsonl
+exit=0
+--- stdout ---
+merged shards=2 total=116 ok=111 error=5 out=result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_2/20260923T0208Z-9e212f/judge_J1.jsonl
+judge_file_sha256=c361af08fe028cb621904013ad08903522897e90a9f8c2fc98c840a94b75cb77
+meta=result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_2/20260923T0208Z-9e212f/judge_J1.meta.json
+
+--- stderr ---
+

@@ -1,0 +1,8 @@
+run_key=phaseA_T1__kakaocorp-kanana-1.5-8b-instruct-2505__repeat_3__20260923T0227Z-c9705b
+started_utc=2026-09-23T02:27:55Z
+model_id=kakaocorp/kanana-1.5-8b-instruct-2505 family=kakao provider=vllm path=kakaocorp/kanana-1.5-8b-instruct-2505
+tag=repeat_3 condition=repeat_3 temperature=0.7 seed=20260925
+items=31 gpu=2 run_dir=result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/repeat_3/20260923T0227Z-c9705b
+provider_ready model_id=kakaocorp/kanana-1.5-8b-instruct-2505 api_version=0.19.0
+MARKER sha256=65f788a822e2ba41a8678efc13ac695eb4ce67f0eb460366db01c7876408c14d
+finished_utc=2026-09-23T02:38:43Z

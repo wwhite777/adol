@@ -1,0 +1,8 @@
+command: PYTHONPATH=src /home/wjeong/envs/jeongwoncheol_adol/bin/python -m kyra.panel --judges result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_2/20260923T0208Z-9e212f/judge_J1.jsonl result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_2/20260923T0208Z-9e212f/judge_J2.jsonl result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_2/20260923T0208Z-9e212f/judge_J3.jsonl --family-map result/raw/phaseA_T1/family_map_phaseA_T1.json --evaluated-family lg --out result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_2/20260923T0208Z-9e212f/panel.jsonl
+exit=0
+--- stdout ---
+views=116 conversations=31 ok=116 insufficient=0 evaluated_family=lg
+out=result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_2/20260923T0208Z-9e212f/panel.jsonl
+
+--- stderr ---
+

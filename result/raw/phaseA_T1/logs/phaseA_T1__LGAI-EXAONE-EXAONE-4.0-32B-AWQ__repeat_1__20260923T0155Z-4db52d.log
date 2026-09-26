@@ -1,0 +1,8 @@
+run_key=phaseA_T1__LGAI-EXAONE-EXAONE-4.0-32B-AWQ__repeat_1__20260923T0155Z-4db52d
+started_utc=2026-09-23T01:55:28Z
+model_id=LGAI-EXAONE/EXAONE-4.0-32B-AWQ family=lg provider=vllm path=LGAI-EXAONE/EXAONE-4.0-32B-AWQ
+tag=repeat_1 condition=repeat_1 temperature=0.7 seed=20260923
+items=31 gpu=1 run_dir=result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_1/20260923T0155Z-4db52d
+provider_ready model_id=LGAI-EXAONE/EXAONE-4.0-32B-AWQ api_version=0.19.0
+MARKER sha256=65f788a822e2ba41a8678efc13ac695eb4ce67f0eb460366db01c7876408c14d
+finished_utc=2026-09-23T02:08:34Z

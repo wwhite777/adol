@@ -1,0 +1,19 @@
+run dirs with MARKER: 4 (expect 4)
+marker: exit=0 stamp=20260924T0425Z log=test/logs/score_phaseA_T1_gemma27b_20260924T0425Z.log
+  main      J1: 16/564 ERROR = 2.84% | first-pass re-asks 148 | shards 2
+  main      J2: 0/564 ERROR = 0.00% | first-pass re-asks 0 | shards 2
+  main      J3: 6/564 ERROR = 1.06% | first-pass re-asks 305 | shards 2
+  repeat_1  J1: 3/116 ERROR = 2.59% | first-pass re-asks 31 | shards 2
+  repeat_1  J2: 0/116 ERROR = 0.00% | first-pass re-asks 0 | shards 2
+  repeat_1  J3: 2/116 ERROR = 1.72% | first-pass re-asks 65 | shards 2
+  repeat_2  J1: 1/116 ERROR = 0.86% | first-pass re-asks 28 | shards 2
+  repeat_2  J2: 0/116 ERROR = 0.00% | first-pass re-asks 0 | shards 2
+  repeat_2  J3: 2/116 ERROR = 1.72% | first-pass re-asks 57 | shards 2
+  repeat_3  J1: 3/116 ERROR = 2.59% | first-pass re-asks 30 | shards 2
+  repeat_3  J2: 0/116 ERROR = 0.00% | first-pass re-asks 0 | shards 2
+  repeat_3  J3: 3/116 ERROR = 2.59% | first-pass re-asks 59 | shards 2
+RESULT: FAIL
+  - main J1: ERROR rate 2.84% > 2% (prereg bar; report + decide)
+  - repeat_1 J1: ERROR rate 2.59% > 2% (prereg bar; report + decide)
+  - repeat_3 J1: ERROR rate 2.59% > 2% (prereg bar; report + decide)
+  - repeat_3 J3: ERROR rate 2.59% > 2% (prereg bar; report + decide)

@@ -1,0 +1,725 @@
+{
+  "allow_panel_overwrite": false,
+  "command": "PYTHONPATH=src python -m kyra.campaign score --items research/items/items_phaseA_v1.jsonl --models research/models_run4.json --judges research/judges_phaseA_v1.json --cohort phaseA_T1 --runs result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_2/20260923T0352Z-fd283d result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77 --anchors research/judge_anchors_v1.json --gpu 2 --resume",
+  "compile_caches": {
+    "TORCHINDUCTOR_CACHE_DIR": "/home/wjeong/adol/snapshots/phaseA_scoring_d6e7507/.cache/torchinductor",
+    "TRITON_CACHE_DIR": "/home/wjeong/adol/snapshots/phaseA_scoring_d6e7507/.cache/triton",
+    "inherited": []
+  },
+  "dry_run": false,
+  "experiments_csv": "research/EXPERIMENTS.csv",
+  "freeze": {
+    "error": null,
+    "ok": true,
+    "prereg": "PREREGISTERED_kyra_v2.yaml",
+    "required": true,
+    "sha": "PREREGISTERED_kyra_v2.yaml.sha256",
+    "sha256": "87abaae4c16fb0efe3dad27ff464fcd86b6b48ff67a33f1414336ccc7ddd34a4"
+  },
+  "gpu": {
+    "allowed": [
+      0,
+      1,
+      2
+    ],
+    "candidates": [
+      0,
+      1,
+      2
+    ],
+    "chosen": 2,
+    "criterion": "first candidate GPU with < 4096 MiB used",
+    "error": null,
+    "inherited": false,
+    "inherited_cuda_visible_devices": null,
+    "never": 3,
+    "ok": true,
+    "override": 2,
+    "pinned_cuda_visible_devices": "2",
+    "required": true,
+    "source": "--gpu flag",
+    "visible": [
+      {
+        "index": 0,
+        "used_mib": 18779
+      },
+      {
+        "index": 1,
+        "used_mib": 44379
+      },
+      {
+        "index": 2,
+        "used_mib": 4
+      },
+      {
+        "index": 3,
+        "used_mib": 4
+      }
+    ]
+  },
+  "judge_runs": [
+    {
+      "anchors_sha256": "7f54fdbded6071d7f5e202d1b7820fe4a64b454dc695b6eb39def227c3373679",
+      "class": "confirmatory",
+      "exit_code": 0,
+      "failure": null,
+      "family": "meta",
+      "judge_id": "J1",
+      "log": "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0237Z-7f582c__judge_J1.log",
+      "out": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c/judge_J1.jsonl",
+      "provider": "vllm",
+      "run_dir": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c",
+      "run_key": "phaseA_T1__20260923T0237Z-7f582c__judge_J1",
+      "sha256": "d63d3accd9f0d1508afa4afe5eaa817add7af44fea3bd76f3b0e3e2db5b3a476",
+      "shard_files": [
+        "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c/shards/judge_J1.shard1of2.jsonl",
+        "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c/shards/judge_J1.shard2of2.jsonl"
+      ],
+      "shard_logs": [
+        "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0237Z-7f582c__judge_J1.shard1of2.log",
+        "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0237Z-7f582c__judge_J1.shard2of2.log"
+      ],
+      "shards": 2,
+      "status": "completed"
+    },
+    {
+      "anchors_sha256": "7f54fdbded6071d7f5e202d1b7820fe4a64b454dc695b6eb39def227c3373679",
+      "class": "confirmatory",
+      "exit_code": 0,
+      "failure": null,
+      "family": "mistral",
+      "judge_id": "J2",
+      "log": "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0237Z-7f582c__judge_J2.log",
+      "out": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c/judge_J2.jsonl",
+      "provider": "vllm",
+      "run_dir": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c",
+      "run_key": "phaseA_T1__20260923T0237Z-7f582c__judge_J2",
+      "sha256": "622a1cdc93e1eee76bff16631cdbd0367c30b6ff4d0384a2f2321ffe4894cab3",
+      "shard_files": [
+        "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c/shards/judge_J2.shard1of2.jsonl",
+        "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c/shards/judge_J2.shard2of2.jsonl"
+      ],
+      "shard_logs": [
+        "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0237Z-7f582c__judge_J2.shard1of2.log",
+        "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0237Z-7f582c__judge_J2.shard2of2.log"
+      ],
+      "shards": 2,
+      "status": "completed"
+    },
+    {
+      "anchors_sha256": "7f54fdbded6071d7f5e202d1b7820fe4a64b454dc695b6eb39def227c3373679",
+      "class": "confirmatory",
+      "exit_code": 0,
+      "failure": null,
+      "family": "microsoft",
+      "judge_id": "J3",
+      "log": "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0237Z-7f582c__judge_J3.log",
+      "out": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c/judge_J3.jsonl",
+      "provider": "vllm",
+      "run_dir": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c",
+      "run_key": "phaseA_T1__20260923T0237Z-7f582c__judge_J3",
+      "sha256": "94ef3794054653d3e5e90669a8bbff1aac7ddf35280c5cbe15f3c9c1271c8a8c",
+      "shard_files": [
+        "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c/shards/judge_J3.shard1of2.jsonl",
+        "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c/shards/judge_J3.shard2of2.jsonl"
+      ],
+      "shard_logs": [
+        "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0237Z-7f582c__judge_J3.shard1of2.log",
+        "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0237Z-7f582c__judge_J3.shard2of2.log"
+      ],
+      "shards": 2,
+      "status": "completed"
+    },
+    {
+      "anchors_sha256": "7f54fdbded6071d7f5e202d1b7820fe4a64b454dc695b6eb39def227c3373679",
+      "class": "confirmatory",
+      "exit_code": 0,
+      "failure": null,
+      "family": "meta",
+      "judge_id": "J1",
+      "log": "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0338Z-dbbe1a__judge_J1.log",
+      "out": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a/judge_J1.jsonl",
+      "provider": "vllm",
+      "run_dir": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a",
+      "run_key": "phaseA_T1__20260923T0338Z-dbbe1a__judge_J1",
+      "sha256": "4edd766c53b28a7ff32886fe47d7b8ccd7a725f1361bb24fb99664f03bf0f08f",
+      "shard_files": [
+        "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a/shards/judge_J1.shard1of2.jsonl",
+        "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a/shards/judge_J1.shard2of2.jsonl"
+      ],
+      "shard_logs": [
+        "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0338Z-dbbe1a__judge_J1.shard1of2.log",
+        "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0338Z-dbbe1a__judge_J1.shard2of2.log"
+      ],
+      "shards": 2,
+      "status": "completed"
+    },
+    {
+      "anchors_sha256": "7f54fdbded6071d7f5e202d1b7820fe4a64b454dc695b6eb39def227c3373679",
+      "class": "confirmatory",
+      "exit_code": 0,
+      "failure": null,
+      "family": "mistral",
+      "judge_id": "J2",
+      "log": "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0338Z-dbbe1a__judge_J2.log",
+      "out": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a/judge_J2.jsonl",
+      "provider": "vllm",
+      "run_dir": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a",
+      "run_key": "phaseA_T1__20260923T0338Z-dbbe1a__judge_J2",
+      "sha256": "ccc7538309b933ce7b9e3b8cb1420e7f140cdcca1db307584f5737af70337cf7",
+      "shard_files": [
+        "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a/shards/judge_J2.shard1of2.jsonl",
+        "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a/shards/judge_J2.shard2of2.jsonl"
+      ],
+      "shard_logs": [
+        "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0338Z-dbbe1a__judge_J2.shard1of2.log",
+        "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0338Z-dbbe1a__judge_J2.shard2of2.log"
+      ],
+      "shards": 2,
+      "status": "completed"
+    },
+    {
+      "anchors_sha256": "7f54fdbded6071d7f5e202d1b7820fe4a64b454dc695b6eb39def227c3373679",
+      "class": "confirmatory",
+      "exit_code": 0,
+      "failure": null,
+      "family": "microsoft",
+      "judge_id": "J3",
+      "log": "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0338Z-dbbe1a__judge_J3.log",
+      "out": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a/judge_J3.jsonl",
+      "provider": "vllm",
+      "run_dir": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a",
+      "run_key": "phaseA_T1__20260923T0338Z-dbbe1a__judge_J3",
+      "sha256": "690ff44912be39862dd07556b4899e6fae0d9a6e1ac39908c45b29217a51ff6e",
+      "shard_files": [
+        "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a/shards/judge_J3.shard1of2.jsonl",
+        "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a/shards/judge_J3.shard2of2.jsonl"
+      ],
+      "shard_logs": [
+        "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0338Z-dbbe1a__judge_J3.shard1of2.log",
+        "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0338Z-dbbe1a__judge_J3.shard2of2.log"
+      ],
+      "shards": 2,
+      "status": "completed"
+    },
+    {
+      "anchors_sha256": "7f54fdbded6071d7f5e202d1b7820fe4a64b454dc695b6eb39def227c3373679",
+      "class": "confirmatory",
+      "exit_code": 0,
+      "failure": null,
+      "family": "meta",
+      "judge_id": "J1",
+      "log": "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0352Z-fd283d__judge_J1.log",
+      "out": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_2/20260923T0352Z-fd283d/judge_J1.jsonl",
+      "provider": "vllm",
+      "run_dir": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_2/20260923T0352Z-fd283d",
+      "run_key": "phaseA_T1__20260923T0352Z-fd283d__judge_J1",
+      "sha256": "8ee857cd1217c2c3801b90c8f2cf456034507290c03ed52ce0c88f872a013768",
+      "shard_files": [
+        "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_2/20260923T0352Z-fd283d/shards/judge_J1.shard1of2.jsonl",
+        "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_2/20260923T0352Z-fd283d/shards/judge_J1.shard2of2.jsonl"
+      ],
+      "shard_logs": [
+        "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0352Z-fd283d__judge_J1.shard1of2.log",
+        "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0352Z-fd283d__judge_J1.shard2of2.log"
+      ],
+      "shards": 2,
+      "status": "completed"
+    },
+    {
+      "anchors_sha256": "7f54fdbded6071d7f5e202d1b7820fe4a64b454dc695b6eb39def227c3373679",
+      "class": "confirmatory",
+      "exit_code": 0,
+      "failure": null,
+      "family": "mistral",
+      "judge_id": "J2",
+      "log": "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0352Z-fd283d__judge_J2.log",
+      "out": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_2/20260923T0352Z-fd283d/judge_J2.jsonl",
+      "provider": "vllm",
+      "run_dir": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_2/20260923T0352Z-fd283d",
+      "run_key": "phaseA_T1__20260923T0352Z-fd283d__judge_J2",
+      "sha256": "cafe7ffb2ef5537e8ab0b0a13184ff39e6bd0e47a7f72ca5988d3564c7b22449",
+      "shard_files": [
+        "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_2/20260923T0352Z-fd283d/shards/judge_J2.shard1of2.jsonl",
+        "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_2/20260923T0352Z-fd283d/shards/judge_J2.shard2of2.jsonl"
+      ],
+      "shard_logs": [
+        "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0352Z-fd283d__judge_J2.shard1of2.log",
+        "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0352Z-fd283d__judge_J2.shard2of2.log"
+      ],
+      "shards": 2,
+      "status": "completed"
+    },
+    {
+      "anchors_sha256": "7f54fdbded6071d7f5e202d1b7820fe4a64b454dc695b6eb39def227c3373679",
+      "class": "confirmatory",
+      "exit_code": 0,
+      "failure": null,
+      "family": "microsoft",
+      "judge_id": "J3",
+      "log": "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0352Z-fd283d__judge_J3.log",
+      "out": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_2/20260923T0352Z-fd283d/judge_J3.jsonl",
+      "provider": "vllm",
+      "run_dir": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_2/20260923T0352Z-fd283d",
+      "run_key": "phaseA_T1__20260923T0352Z-fd283d__judge_J3",
+      "sha256": "7231e6d3c6ee94475e013bd7798ee2431a31c6bbae437e508459c8e4fcc0b514",
+      "shard_files": [
+        "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_2/20260923T0352Z-fd283d/shards/judge_J3.shard1of2.jsonl",
+        "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_2/20260923T0352Z-fd283d/shards/judge_J3.shard2of2.jsonl"
+      ],
+      "shard_logs": [
+        "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0352Z-fd283d__judge_J3.shard1of2.log",
+        "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0352Z-fd283d__judge_J3.shard2of2.log"
+      ],
+      "shards": 2,
+      "status": "completed"
+    },
+    {
+      "anchors_sha256": "7f54fdbded6071d7f5e202d1b7820fe4a64b454dc695b6eb39def227c3373679",
+      "class": "confirmatory",
+      "exit_code": 0,
+      "failure": null,
+      "family": "meta",
+      "judge_id": "J1",
+      "log": "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0405Z-0dda77__judge_J1.log",
+      "out": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77/judge_J1.jsonl",
+      "provider": "vllm",
+      "run_dir": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77",
+      "run_key": "phaseA_T1__20260923T0405Z-0dda77__judge_J1",
+      "sha256": "097bea4f16868f512b021dd3eb96143f2f8d842a1dac43d64dc6bc74b14d7dbb",
+      "shard_files": [
+        "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77/shards/judge_J1.shard1of2.jsonl",
+        "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77/shards/judge_J1.shard2of2.jsonl"
+      ],
+      "shard_logs": [
+        "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0405Z-0dda77__judge_J1.shard1of2.log",
+        "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0405Z-0dda77__judge_J1.shard2of2.log"
+      ],
+      "shards": 2,
+      "status": "completed"
+    },
+    {
+      "anchors_sha256": "7f54fdbded6071d7f5e202d1b7820fe4a64b454dc695b6eb39def227c3373679",
+      "class": "confirmatory",
+      "exit_code": 0,
+      "failure": null,
+      "family": "mistral",
+      "judge_id": "J2",
+      "log": "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0405Z-0dda77__judge_J2.log",
+      "out": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77/judge_J2.jsonl",
+      "provider": "vllm",
+      "run_dir": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77",
+      "run_key": "phaseA_T1__20260923T0405Z-0dda77__judge_J2",
+      "sha256": "f6671acedcf35876ddd9be1445beeae465947f5ae4237770b515fcd636f46cd2",
+      "shard_files": [
+        "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77/shards/judge_J2.shard1of2.jsonl",
+        "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77/shards/judge_J2.shard2of2.jsonl"
+      ],
+      "shard_logs": [
+        "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0405Z-0dda77__judge_J2.shard1of2.log",
+        "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0405Z-0dda77__judge_J2.shard2of2.log"
+      ],
+      "shards": 2,
+      "status": "completed"
+    },
+    {
+      "anchors_sha256": "7f54fdbded6071d7f5e202d1b7820fe4a64b454dc695b6eb39def227c3373679",
+      "class": "confirmatory",
+      "exit_code": 0,
+      "failure": null,
+      "family": "microsoft",
+      "judge_id": "J3",
+      "log": "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0405Z-0dda77__judge_J3.log",
+      "out": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77/judge_J3.jsonl",
+      "provider": "vllm",
+      "run_dir": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77",
+      "run_key": "phaseA_T1__20260923T0405Z-0dda77__judge_J3",
+      "sha256": "ed6fea8e8a1df4501010b1138f50ee414fd0ed892b8026ff9cb11ff874f9e735",
+      "shard_files": [
+        "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77/shards/judge_J3.shard1of2.jsonl",
+        "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77/shards/judge_J3.shard2of2.jsonl"
+      ],
+      "shard_logs": [
+        "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0405Z-0dda77__judge_J3.shard1of2.log",
+        "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0405Z-0dda77__judge_J3.shard2of2.log"
+      ],
+      "shards": 2,
+      "status": "completed"
+    }
+  ],
+  "launch_stamp": "20260924T0425Z-ea845a",
+  "note": "judges run one model at a time as child processes (kyra.judge --views prefix --items <items>, so control ids come from risk_group CTRL); the panel is kyra.panel over this run's judge files",
+  "panel_runs": [
+    {
+      "class": "confirmatory",
+      "evaluated_family": "google",
+      "exit_code": 0,
+      "failure": null,
+      "judges": [
+        "J1",
+        "J2",
+        "J3"
+      ],
+      "log": "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0237Z-7f582c__panel.log",
+      "out": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c/panel.jsonl",
+      "run_dir": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c",
+      "run_key": "phaseA_T1__20260923T0237Z-7f582c__panel",
+      "sha256": "37453d9c3b5300de584eb4fa6d8337de0f5be5fd74f602d6bb2771bde03b7e45",
+      "status": "completed"
+    },
+    {
+      "class": "confirmatory",
+      "evaluated_family": "google",
+      "exit_code": 0,
+      "failure": null,
+      "judges": [
+        "J1",
+        "J2",
+        "J3"
+      ],
+      "log": "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0338Z-dbbe1a__panel.log",
+      "out": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a/panel.jsonl",
+      "run_dir": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a",
+      "run_key": "phaseA_T1__20260923T0338Z-dbbe1a__panel",
+      "sha256": "5205677c1494d1015d61abf888bd1124808ebd0fd4c41c3ce8066053e90c6e4e",
+      "status": "completed"
+    },
+    {
+      "class": "confirmatory",
+      "evaluated_family": "google",
+      "exit_code": 0,
+      "failure": null,
+      "judges": [
+        "J1",
+        "J2",
+        "J3"
+      ],
+      "log": "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0352Z-fd283d__panel.log",
+      "out": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_2/20260923T0352Z-fd283d/panel.jsonl",
+      "run_dir": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_2/20260923T0352Z-fd283d",
+      "run_key": "phaseA_T1__20260923T0352Z-fd283d__panel",
+      "sha256": "3905a1a38c071960c723f88c9acb1f24816c58b8520f6eb0a3b74578f5fa7b62",
+      "status": "completed"
+    },
+    {
+      "class": "confirmatory",
+      "evaluated_family": "google",
+      "exit_code": 0,
+      "failure": null,
+      "judges": [
+        "J1",
+        "J2",
+        "J3"
+      ],
+      "log": "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260923T0405Z-0dda77__panel.log",
+      "out": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77/panel.jsonl",
+      "run_dir": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77",
+      "run_key": "phaseA_T1__20260923T0405Z-0dda77__panel",
+      "sha256": "c3b2439376725ab145e804a1b08e15dffcc55342a897c309ca7bc2fea17cc1ed",
+      "status": "completed"
+    }
+  ],
+  "plan": {
+    "allow_panel_overwrite": false,
+    "anchors_path": "research/judge_anchors_v1.json",
+    "anchors_sha256": "7f54fdbded6071d7f5e202d1b7820fe4a64b454dc695b6eb39def227c3373679",
+    "cohort": "phaseA_T1",
+    "created_utc": "2026-09-24T04:25:29Z",
+    "engine_env": {
+      "engine_kwargs": {
+        "attention_backend": "FLASH_ATTN",
+        "enable_prefix_caching": false,
+        "max_model_len": 16384
+      },
+      "vllm_env": {
+        "VLLM_BATCH_INVARIANT": "1"
+      }
+    },
+    "family_map": {
+      "J1": "meta",
+      "J2": "mistral",
+      "J3": "microsoft"
+    },
+    "items_path": "research/items/items_phaseA_v1.jsonl",
+    "items_sha256": "8ab7cda19406e00d9c5fe59f0b2ac68fdfb7d54ca2669ce7ffdd350657d88017",
+    "judges": [
+      {
+        "batch_size": 1,
+        "family": "meta",
+        "judge_id": "J1",
+        "model_id": "meta-llama/Llama-3.1-8B-Instruct",
+        "notes": "bf16, 16 GB; fusion1's cache (read-only, protected for pilot B); snapshot 0e9e39f2",
+        "provider": "vllm",
+        "shards": 2
+      },
+      {
+        "batch_size": 1,
+        "family": "mistral",
+        "judge_id": "J2",
+        "model_id": "Intel/Mistral-Small-3.2-24B-Instruct-2506-int4-AutoRound",
+        "notes": "Intel AutoRound int4 of Mistral-Small-3.2-24B-Instruct-2506 (Mistral3ForConditionalGeneration), 15.1 GB; snapshot 21907bf9",
+        "provider": "vllm",
+        "shards": 2
+      },
+      {
+        "batch_size": 1,
+        "family": "microsoft",
+        "judge_id": "J3",
+        "model_id": "cortecs/phi-4-FP8-Dynamic",
+        "notes": "compressed-tensors FP8-dynamic of microsoft/phi-4 (Phi3ForCausalLM), 15.7 GB; snapshot 7014f998; gpu_memory_utilization 0.45 per engine (not 0.42): at 0.42 the FP8 engine had 2.63 GiB free for KV cache after 14.74 GiB weights + 0.66 GiB CUDA graphs, below the ~3.1 GiB a 16,384-token window needs → engine never started (Kanana main, 2026-09-23 17:52Z); two J3 engines = 0.90 of the GPU",
+        "provider": "vllm",
+        "shards": 2
+      }
+    ],
+    "model_families": {
+      "RedHatAI/gemma-3-27b-it-quantized.w4a16": "google"
+    },
+    "out_root": "result/raw",
+    "prompt_template_sha256": "65460efc95d2415f85f5020a3c028165b0a6051c0e28eb6bf86213869bf94921",
+    "resume": true,
+    "runs": [
+      {
+        "class": "confirmatory",
+        "class_source": "EXPERIMENTS row phaseA_T1__RedHatAI-gemma-3-27b-it-quantized.w4a16__main__20260923T0237Z-7f582c",
+        "evaluated_family": "google",
+        "existing_judge_files": [],
+        "judge_files": [
+          "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c/judge_J1.jsonl",
+          "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c/judge_J2.jsonl",
+          "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c/judge_J3.jsonl"
+        ],
+        "marker_sha256": "b4074ce4bddb5ac5f893c8ceb0f1840a98746f5187df366c842a3f8b9f2113ac",
+        "model_id": "RedHatAI/gemma-3-27b-it-quantized.w4a16",
+        "model_source": "manifest model_id=RedHatAI/gemma-3-27b-it-quantized.w4a16",
+        "n_control_items": 48,
+        "n_items": 156,
+        "n_views_expected": 564,
+        "panel_exists": false,
+        "panel_file": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c/panel.jsonl",
+        "panel_reuse": false,
+        "resume_judges": [
+          {
+            "action": "run",
+            "judge_file": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c/judge_J1.jsonl",
+            "judge_id": "J1",
+            "meta_file": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c/judge_J1.meta.json",
+            "mismatch": null,
+            "n_views_expected": 564,
+            "stray_shard_files": []
+          },
+          {
+            "action": "run",
+            "judge_file": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c/judge_J2.jsonl",
+            "judge_id": "J2",
+            "meta_file": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c/judge_J2.meta.json",
+            "mismatch": null,
+            "n_views_expected": 564,
+            "stray_shard_files": []
+          },
+          {
+            "action": "run",
+            "judge_file": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c/judge_J3.jsonl",
+            "judge_id": "J3",
+            "meta_file": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c/judge_J3.meta.json",
+            "mismatch": null,
+            "n_views_expected": 564,
+            "stray_shard_files": []
+          }
+        ],
+        "reused_judge_files": [],
+        "run_dir": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c",
+        "shard_files": [
+          "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c/judge_J1.shard1of2.jsonl",
+          "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c/judge_J1.shard2of2.jsonl",
+          "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c/judge_J2.shard1of2.jsonl",
+          "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c/judge_J2.shard2of2.jsonl",
+          "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c/judge_J3.shard1of2.jsonl",
+          "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c/judge_J3.shard2of2.jsonl"
+        ]
+      },
+      {
+        "class": "confirmatory",
+        "class_source": "EXPERIMENTS row phaseA_T1__RedHatAI-gemma-3-27b-it-quantized.w4a16__repeat_1__20260923T0338Z-dbbe1a",
+        "evaluated_family": "google",
+        "existing_judge_files": [],
+        "judge_files": [
+          "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a/judge_J1.jsonl",
+          "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a/judge_J2.jsonl",
+          "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a/judge_J3.jsonl"
+        ],
+        "marker_sha256": "65f788a822e2ba41a8678efc13ac695eb4ce67f0eb460366db01c7876408c14d",
+        "model_id": "RedHatAI/gemma-3-27b-it-quantized.w4a16",
+        "model_source": "manifest model_id=RedHatAI/gemma-3-27b-it-quantized.w4a16",
+        "n_control_items": 10,
+        "n_items": 31,
+        "n_views_expected": 116,
+        "panel_exists": false,
+        "panel_file": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a/panel.jsonl",
+        "panel_reuse": false,
+        "resume_judges": [
+          {
+            "action": "run",
+            "judge_file": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a/judge_J1.jsonl",
+            "judge_id": "J1",
+            "meta_file": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a/judge_J1.meta.json",
+            "mismatch": null,
+            "n_views_expected": 116,
+            "stray_shard_files": []
+          },
+          {
+            "action": "run",
+            "judge_file": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a/judge_J2.jsonl",
+            "judge_id": "J2",
+            "meta_file": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a/judge_J2.meta.json",
+            "mismatch": null,
+            "n_views_expected": 116,
+            "stray_shard_files": []
+          },
+          {
+            "action": "run",
+            "judge_file": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a/judge_J3.jsonl",
+            "judge_id": "J3",
+            "meta_file": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a/judge_J3.meta.json",
+            "mismatch": null,
+            "n_views_expected": 116,
+            "stray_shard_files": []
+          }
+        ],
+        "reused_judge_files": [],
+        "run_dir": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a",
+        "shard_files": [
+          "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a/judge_J1.shard1of2.jsonl",
+          "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a/judge_J1.shard2of2.jsonl",
+          "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a/judge_J2.shard1of2.jsonl",
+          "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a/judge_J2.shard2of2.jsonl",
+          "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a/judge_J3.shard1of2.jsonl",
+          "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a/judge_J3.shard2of2.jsonl"
+        ]
+      },
+      {
+        "class": "confirmatory",
+        "class_source": "EXPERIMENTS row phaseA_T1__RedHatAI-gemma-3-27b-it-quantized.w4a16__repeat_2__20260923T0352Z-fd283d",
+        "evaluated_family": "google",
+        "existing_judge_files": [],
+        "judge_files": [
+          "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_2/20260923T0352Z-fd283d/judge_J1.jsonl",
+          "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_2/20260923T0352Z-fd283d/judge_J2.jsonl",
+          "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_2/20260923T0352Z-fd283d/judge_J3.jsonl"
+        ],
+        "marker_sha256": "65f788a822e2ba41a8678efc13ac695eb4ce67f0eb460366db01c7876408c14d",
+        "model_id": "RedHatAI/gemma-3-27b-it-quantized.w4a16",
+        "model_source": "manifest model_id=RedHatAI/gemma-3-27b-it-quantized.w4a16",
+        "n_control_items": 10,
+        "n_items": 31,
+        "n_views_expected": 116,
+        "panel_exists": false,
+        "panel_file": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_2/20260923T0352Z-fd283d/panel.jsonl",
+        "panel_reuse": false,
+        "resume_judges": [
+          {
+            "action": "run",
+            "judge_file": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_2/20260923T0352Z-fd283d/judge_J1.jsonl",
+            "judge_id": "J1",
+            "meta_file": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_2/20260923T0352Z-fd283d/judge_J1.meta.json",
+            "mismatch": null,
+            "n_views_expected": 116,
+            "stray_shard_files": []
+          },
+          {
+            "action": "run",
+            "judge_file": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_2/20260923T0352Z-fd283d/judge_J2.jsonl",
+            "judge_id": "J2",
+            "meta_file": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_2/20260923T0352Z-fd283d/judge_J2.meta.json",
+            "mismatch": null,
+            "n_views_expected": 116,
+            "stray_shard_files": []
+          },
+          {
+            "action": "run",
+            "judge_file": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_2/20260923T0352Z-fd283d/judge_J3.jsonl",
+            "judge_id": "J3",
+            "meta_file": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_2/20260923T0352Z-fd283d/judge_J3.meta.json",
+            "mismatch": null,
+            "n_views_expected": 116,
+            "stray_shard_files": []
+          }
+        ],
+        "reused_judge_files": [],
+        "run_dir": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_2/20260923T0352Z-fd283d",
+        "shard_files": [
+          "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_2/20260923T0352Z-fd283d/judge_J1.shard1of2.jsonl",
+          "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_2/20260923T0352Z-fd283d/judge_J1.shard2of2.jsonl",
+          "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_2/20260923T0352Z-fd283d/judge_J2.shard1of2.jsonl",
+          "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_2/20260923T0352Z-fd283d/judge_J2.shard2of2.jsonl",
+          "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_2/20260923T0352Z-fd283d/judge_J3.shard1of2.jsonl",
+          "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_2/20260923T0352Z-fd283d/judge_J3.shard2of2.jsonl"
+        ]
+      },
+      {
+        "class": "confirmatory",
+        "class_source": "EXPERIMENTS row phaseA_T1__RedHatAI-gemma-3-27b-it-quantized.w4a16__repeat_3__20260923T0405Z-0dda77",
+        "evaluated_family": "google",
+        "existing_judge_files": [],
+        "judge_files": [
+          "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77/judge_J1.jsonl",
+          "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77/judge_J2.jsonl",
+          "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77/judge_J3.jsonl"
+        ],
+        "marker_sha256": "65f788a822e2ba41a8678efc13ac695eb4ce67f0eb460366db01c7876408c14d",
+        "model_id": "RedHatAI/gemma-3-27b-it-quantized.w4a16",
+        "model_source": "manifest model_id=RedHatAI/gemma-3-27b-it-quantized.w4a16",
+        "n_control_items": 10,
+        "n_items": 31,
+        "n_views_expected": 116,
+        "panel_exists": false,
+        "panel_file": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77/panel.jsonl",
+        "panel_reuse": false,
+        "resume_judges": [
+          {
+            "action": "run",
+            "judge_file": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77/judge_J1.jsonl",
+            "judge_id": "J1",
+            "meta_file": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77/judge_J1.meta.json",
+            "mismatch": null,
+            "n_views_expected": 116,
+            "stray_shard_files": []
+          },
+          {
+            "action": "run",
+            "judge_file": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77/judge_J2.jsonl",
+            "judge_id": "J2",
+            "meta_file": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77/judge_J2.meta.json",
+            "mismatch": null,
+            "n_views_expected": 116,
+            "stray_shard_files": []
+          },
+          {
+            "action": "run",
+            "judge_file": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77/judge_J3.jsonl",
+            "judge_id": "J3",
+            "meta_file": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77/judge_J3.meta.json",
+            "mismatch": null,
+            "n_views_expected": 116,
+            "stray_shard_files": []
+          }
+        ],
+        "reused_judge_files": [],
+        "run_dir": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77",
+        "shard_files": [
+          "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77/judge_J1.shard1of2.jsonl",
+          "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77/judge_J1.shard2of2.jsonl",
+          "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77/judge_J2.shard1of2.jsonl",
+          "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77/judge_J2.shard2of2.jsonl",
+          "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77/judge_J3.shard1of2.jsonl",
+          "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77/judge_J3.shard2of2.jsonl"
+        ]
+      }
+    ],
+    "shard_start_stagger_s": 45,
+    "views": "prefix"
+  },
+  "record_path": "result/raw/phaseA_T1/campaign_phaseA_T1__20260924T0425Z-ea845a_scoring.json",
+  "resume": true,
+  "status": "completed",
+  "stopped_because": null
+}

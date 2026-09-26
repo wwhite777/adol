@@ -1,0 +1,206 @@
+{
+  "allow_panel_overwrite": false,
+  "command": "PYTHONPATH=src python -m kyra.campaign score --items research/items/items_phaseA_v1.jsonl --models research/models_run1.json --judges research/judges_phaseA_v1.json --cohort phaseA_T1 --runs result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/main/20260922T1238Z-a7a9d1 result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/repeat_1/20260922T1353Z-ceaf18 result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/repeat_2/20260922T1411Z-877729 result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/repeat_3/20260922T1428Z-709a14 --anchors research/judge_anchors_v1.json --gpu 1",
+  "compile_caches": {
+    "TORCHINDUCTOR_CACHE_DIR": "/tmp/claude-1011/-home-wjeong/407cdd4b-f055-4859-8e47-fbc41fca59f3/scratchpad/snap_scoring/.cache/torchinductor",
+    "TRITON_CACHE_DIR": "/tmp/claude-1011/-home-wjeong/407cdd4b-f055-4859-8e47-fbc41fca59f3/scratchpad/snap_scoring/.cache/triton",
+    "inherited": []
+  },
+  "dry_run": false,
+  "experiments_csv": "research/EXPERIMENTS.csv",
+  "freeze": {
+    "error": null,
+    "ok": true,
+    "prereg": "PREREGISTERED_kyra_v2.yaml",
+    "required": true,
+    "sha": "PREREGISTERED_kyra_v2.yaml.sha256",
+    "sha256": "87abaae4c16fb0efe3dad27ff464fcd86b6b48ff67a33f1414336ccc7ddd34a4"
+  },
+  "gpu": {
+    "allowed": [
+      0,
+      1,
+      2
+    ],
+    "candidates": [
+      0,
+      1,
+      2
+    ],
+    "chosen": 1,
+    "criterion": "first candidate GPU with < 4096 MiB used",
+    "error": null,
+    "inherited": false,
+    "inherited_cuda_visible_devices": null,
+    "never": 3,
+    "ok": true,
+    "override": 1,
+    "pinned_cuda_visible_devices": "1",
+    "required": true,
+    "source": "--gpu flag",
+    "visible": [
+      {
+        "index": 0,
+        "used_mib": 18779
+      },
+      {
+        "index": 1,
+        "used_mib": 4
+      },
+      {
+        "index": 2,
+        "used_mib": 40679
+      },
+      {
+        "index": 3,
+        "used_mib": 4
+      }
+    ]
+  },
+  "judge_runs": [
+    {
+      "anchors_sha256": "7f54fdbded6071d7f5e202d1b7820fe4a64b454dc695b6eb39def227c3373679",
+      "class": "confirmatory",
+      "exit_code": 4,
+      "failure": "ERROR: anchors file not found: research/judge_anchors_v1.json",
+      "family": "meta",
+      "judge_id": "J1",
+      "log": "result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260922T1238Z-a7a9d1__judge_J1.log",
+      "out": "result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/main/20260922T1238Z-a7a9d1/judge_J1.jsonl",
+      "provider": "vllm",
+      "run_dir": "result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/main/20260922T1238Z-a7a9d1",
+      "run_key": "phaseA_T1__20260922T1238Z-a7a9d1__judge_J1",
+      "sha256": null,
+      "status": "failed"
+    }
+  ],
+  "launch_stamp": "20260923T0936Z-97a913",
+  "note": "judges run one model at a time as child processes (kyra.judge --views prefix --items <items>, so control ids come from risk_group CTRL); the panel is kyra.panel over this run's judge files",
+  "panel_runs": [],
+  "plan": {
+    "allow_panel_overwrite": false,
+    "anchors_path": "research/judge_anchors_v1.json",
+    "anchors_sha256": "7f54fdbded6071d7f5e202d1b7820fe4a64b454dc695b6eb39def227c3373679",
+    "cohort": "phaseA_T1",
+    "created_utc": "2026-09-23T09:36:03Z",
+    "family_map": {
+      "J1": "meta",
+      "J2": "mistral",
+      "J3": "microsoft"
+    },
+    "items_path": "research/items/items_phaseA_v1.jsonl",
+    "items_sha256": "8ab7cda19406e00d9c5fe59f0b2ac68fdfb7d54ca2669ce7ffdd350657d88017",
+    "judges": [
+      {
+        "batch_size": 1,
+        "family": "meta",
+        "judge_id": "J1",
+        "model_id": "meta-llama/Llama-3.1-8B-Instruct",
+        "notes": "bf16, 16 GB; fusion1's cache (read-only, protected for pilot B); snapshot 0e9e39f2",
+        "provider": "vllm"
+      },
+      {
+        "batch_size": 1,
+        "family": "mistral",
+        "judge_id": "J2",
+        "model_id": "Intel/Mistral-Small-3.2-24B-Instruct-2506-int4-AutoRound",
+        "notes": "Intel AutoRound int4 of Mistral-Small-3.2-24B-Instruct-2506 (Mistral3ForConditionalGeneration), 15.1 GB; snapshot 21907bf9",
+        "provider": "vllm"
+      },
+      {
+        "batch_size": 1,
+        "family": "microsoft",
+        "judge_id": "J3",
+        "model_id": "cortecs/phi-4-FP8-Dynamic",
+        "notes": "compressed-tensors FP8-dynamic of microsoft/phi-4 (Phi3ForCausalLM), 15.7 GB; snapshot 7014f998",
+        "provider": "vllm"
+      }
+    ],
+    "model_families": {
+      "Qwen/Qwen2.5-14B-Instruct": "alibaba"
+    },
+    "out_root": "result/raw",
+    "runs": [
+      {
+        "class": "confirmatory",
+        "class_source": "EXPERIMENTS row phaseA_T1__Qwen-Qwen2.5-14B-Instruct__main__20260922T1238Z-a7a9d1",
+        "evaluated_family": "alibaba",
+        "existing_judge_files": [],
+        "judge_files": [
+          "result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/main/20260922T1238Z-a7a9d1/judge_J1.jsonl",
+          "result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/main/20260922T1238Z-a7a9d1/judge_J2.jsonl",
+          "result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/main/20260922T1238Z-a7a9d1/judge_J3.jsonl"
+        ],
+        "marker_sha256": "b4074ce4bddb5ac5f893c8ceb0f1840a98746f5187df366c842a3f8b9f2113ac",
+        "model_id": "Qwen/Qwen2.5-14B-Instruct",
+        "model_source": "manifest model_id=Qwen/Qwen2.5-14B-Instruct",
+        "n_control_items": 48,
+        "n_items": 156,
+        "panel_exists": false,
+        "panel_file": "result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/main/20260922T1238Z-a7a9d1/panel.jsonl",
+        "run_dir": "result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/main/20260922T1238Z-a7a9d1"
+      },
+      {
+        "class": "confirmatory",
+        "class_source": "EXPERIMENTS row phaseA_T1__Qwen-Qwen2.5-14B-Instruct__repeat_1__20260922T1353Z-ceaf18",
+        "evaluated_family": "alibaba",
+        "existing_judge_files": [],
+        "judge_files": [
+          "result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/repeat_1/20260922T1353Z-ceaf18/judge_J1.jsonl",
+          "result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/repeat_1/20260922T1353Z-ceaf18/judge_J2.jsonl",
+          "result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/repeat_1/20260922T1353Z-ceaf18/judge_J3.jsonl"
+        ],
+        "marker_sha256": "65f788a822e2ba41a8678efc13ac695eb4ce67f0eb460366db01c7876408c14d",
+        "model_id": "Qwen/Qwen2.5-14B-Instruct",
+        "model_source": "manifest model_id=Qwen/Qwen2.5-14B-Instruct",
+        "n_control_items": 10,
+        "n_items": 31,
+        "panel_exists": false,
+        "panel_file": "result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/repeat_1/20260922T1353Z-ceaf18/panel.jsonl",
+        "run_dir": "result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/repeat_1/20260922T1353Z-ceaf18"
+      },
+      {
+        "class": "confirmatory",
+        "class_source": "EXPERIMENTS row phaseA_T1__Qwen-Qwen2.5-14B-Instruct__repeat_2__20260922T1411Z-877729",
+        "evaluated_family": "alibaba",
+        "existing_judge_files": [],
+        "judge_files": [
+          "result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/repeat_2/20260922T1411Z-877729/judge_J1.jsonl",
+          "result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/repeat_2/20260922T1411Z-877729/judge_J2.jsonl",
+          "result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/repeat_2/20260922T1411Z-877729/judge_J3.jsonl"
+        ],
+        "marker_sha256": "65f788a822e2ba41a8678efc13ac695eb4ce67f0eb460366db01c7876408c14d",
+        "model_id": "Qwen/Qwen2.5-14B-Instruct",
+        "model_source": "manifest model_id=Qwen/Qwen2.5-14B-Instruct",
+        "n_control_items": 10,
+        "n_items": 31,
+        "panel_exists": false,
+        "panel_file": "result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/repeat_2/20260922T1411Z-877729/panel.jsonl",
+        "run_dir": "result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/repeat_2/20260922T1411Z-877729"
+      },
+      {
+        "class": "confirmatory",
+        "class_source": "EXPERIMENTS row phaseA_T1__Qwen-Qwen2.5-14B-Instruct__repeat_3__20260922T1428Z-709a14",
+        "evaluated_family": "alibaba",
+        "existing_judge_files": [],
+        "judge_files": [
+          "result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/repeat_3/20260922T1428Z-709a14/judge_J1.jsonl",
+          "result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/repeat_3/20260922T1428Z-709a14/judge_J2.jsonl",
+          "result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/repeat_3/20260922T1428Z-709a14/judge_J3.jsonl"
+        ],
+        "marker_sha256": "65f788a822e2ba41a8678efc13ac695eb4ce67f0eb460366db01c7876408c14d",
+        "model_id": "Qwen/Qwen2.5-14B-Instruct",
+        "model_source": "manifest model_id=Qwen/Qwen2.5-14B-Instruct",
+        "n_control_items": 10,
+        "n_items": 31,
+        "panel_exists": false,
+        "panel_file": "result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/repeat_3/20260922T1428Z-709a14/panel.jsonl",
+        "run_dir": "result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/repeat_3/20260922T1428Z-709a14"
+      }
+    ],
+    "views": "prefix"
+  },
+  "record_path": "result/raw/phaseA_T1/campaign_phaseA_T1__20260923T0936Z-97a913_scoring.json",
+  "status": "failed",
+  "stopped_because": "judge J1 failed on result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/main/20260922T1238Z-a7a9d1 (exit 4); see result/raw/phaseA_T1/scoring_logs/phaseA_T1__20260922T1238Z-a7a9d1__judge_J1.log"
+}

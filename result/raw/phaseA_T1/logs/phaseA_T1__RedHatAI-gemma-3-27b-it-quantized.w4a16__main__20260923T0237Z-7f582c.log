@@ -1,0 +1,8 @@
+run_key=phaseA_T1__RedHatAI-gemma-3-27b-it-quantized.w4a16__main__20260923T0237Z-7f582c
+started_utc=2026-09-23T02:37:51Z
+model_id=RedHatAI/gemma-3-27b-it-quantized.w4a16 family=google provider=vllm path=RedHatAI/gemma-3-27b-it-quantized.w4a16
+tag=main condition=base temperature=0.0 seed=20260922
+items=156 gpu=1 run_dir=result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c
+provider_ready model_id=RedHatAI/gemma-3-27b-it-quantized.w4a16 api_version=0.19.0
+MARKER sha256=b4074ce4bddb5ac5f893c8ceb0f1840a98746f5187df366c842a3f8b9f2113ac
+finished_utc=2026-09-23T03:38:35Z
