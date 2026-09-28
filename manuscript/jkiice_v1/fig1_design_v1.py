@@ -33,7 +33,7 @@ def panel(x, y0, w, color, tag, title, lines):
     for ln in lines:
         bold = ln.startswith("*")
         ax.text(x + 2.0, y, ln.lstrip("*"), fontsize=7.8, va="top", weight="bold" if bold else "normal")
-        y -= 2.85
+        y -= 3.1
 
 def arrow(p0, p1):
     ax.add_patch(FancyArrowPatch(p0, p1, arrowstyle="-|>", mutation_scale=14, lw=1.8, color="#444444"))
@@ -55,9 +55,9 @@ panel(53, 44, 46, C[1], "b", "Generation", [
     "  Qwen2.5-14B, EXAONE-4.0-32B,",
     "  Kanana-1.5-8B, Gemma-3-27B,",
     "  HyperCLOVAX-SEED-Think-14B",
-    "*main: 156 items, temperature 0",
+    "*main: 156 items, T = 0",
     "*repeats: 31-item subset,",
-    "  temperature 0.7, 3 runs",
+    "  T = 0.7 x 3",
     "*20 run directories",
     f"  {views} + 3 x 116 prefix views/model",
 ])
@@ -69,21 +69,20 @@ panel(53, 5, 46, C[2], "c", "Judging", [
     "  J1 Llama-3.1-8B",
     "  J2 Mistral-Small-3.2-24B",
     "  J3 Phi-4",
-    "*sequential decoding, temperature 0",
-    "*D1-D6: median of valid judges",
-    "*CF flag: majority vote;",
-    "  1-1 split after judge error -> CF",
+    "*sequential decoding, T = 0",
+    "*panel = median of 3",
+    "  RB-6D D1-D6, CF flag, A1-A4",
 ])
 arrow((52.2, 23), (47.8, 23))
-panel(1, 5, 46, C[3], "d", "Hypotheses and rules", [
-    "*N1 depth effect: OR(6 vs 1) >= 1.6,",
-    "  benign twins as length control",
-    "*N2 localization: |diff| >= 0.03",
-    "  with CI excluding 0;",
-    "  equivalence: TOST +/-0.03",
-    "*N3 judge agreement: AC2 >= 0.70,",
-    "  flag agreement >= 0.80",
-    "*rules fixed before outcome inspection",
+panel(1, 5, 46, C[3], "d", "Frozen claims", [
+    "*N1 escalation",
+    "  OR(6 vs 1 turn) >= 1.6",
+    "  benign twins as control",
+    "*N2 localization",
+    "  |delta| >= 0.03 (TOST)",
+    "*N3 judge reliability",
+    "  AC2 >= 0.70, flag >= 0.80",
+    "*G6 verdict (script)",
 ])
 pass
 out = pathlib.Path(__file__).with_name("fig1_design.png")

@@ -27,23 +27,10 @@ def main(argv):
             ax.plot(ci, [y, y], color="#2F6DB5", lw=1.4)
         ax.plot(r["ac2"], y, "o", color="#2F6DB5", ms=4)
     fa = n3["flag_agreement"]
-    rows = None
-    if len(argv) > 2 and argv[2].endswith(".csv"):
-        import csv
-        rows = {(r["set"], r["statistic"]): {k: (float(v) if k in ("value", "ci_lo", "ci_hi") else v) for k, v in r.items()}
-                for r in csv.DictReader(open(argv[2], encoding="utf-8"))}
-    extra = rows
     ax.plot(fa, ys[-1], "D", color="#C0692B", ms=4)
-    if extra and rows:
-        c = rows[("all_20_runs", "CF_mean_pairwise_agreement")]
-        ax.plot([c["ci_lo"], c["ci_hi"]], [ys[-1], ys[-1]], color="#C0692B", lw=1.4)
-        pa = rows[("all_20_runs", "CF_PA")]
-        ax.plot(pa["value"], ys[-1] - 0.35, "o", mfc="white", color="#C0692B", ms=4)
-        ax.plot([pa["ci_lo"], pa["ci_hi"]], [ys[-1] - 0.35, ys[-1] - 0.35], color="#C0692B", lw=1.0)
-        ax.text(pa["value"], ys[-1] - 0.75, "positive agreement", color="#C0692B", fontsize=5.5, ha="center")
     ax.plot([0.70, 0.70], [ys[-1] + 0.55, ys[0] + 0.5], color="#2F6DB5", ls="--", lw=0.8)
     ax.plot([0.80, 0.80], [ys[-1] - 0.45, ys[-1] + 0.45], color="#C0692B", ls=":", lw=1.0)
-    ax.set_yticks(ys); ax.set_yticklabels([NAMES[d] for d in dims] + ["CF flag: agreement /\npositive agreement"], fontsize=7)
+    ax.set_yticks(ys); ax.set_yticklabels([NAMES[d] for d in dims] + ["Critical-failure flag\n(pairwise agreement)"], fontsize=7)
     ax.set_xlim(min(0.0, min(n3["per_dimension"][d]["ac2"] for d in dims) - 0.05), 1.0)
     ax.set_xlabel("Gwet AC2 (dimensions) / agreement (flag)")
     ax.text(0.70, ys[0] + 0.6, "bar 0.70", color="#2F6DB5", fontsize=6, ha="center")

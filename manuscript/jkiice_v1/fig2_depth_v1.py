@@ -70,18 +70,6 @@ def main(argv=None):
         for m, g in d.groupby("model_id"):
             arm["per_model"][str(m)] = rates(g)
         res["arms"][label] = arm
-    if not synthetic:
-        # post hoc: benign-twin flags that did NOT come from the tie rule (panel cf_tie), main runs
-        items = {json.loads(l)["item_id"]: json.loads(l) for l in open(a.items, encoding="utf-8")}
-        cnt = {str(k): [0, 0] for k in DEPTHS}
-        for pp in a.panels:
-            for l in open(pp, encoding="utf-8"):
-                r = json.loads(l); it = items[r["item_id"]]
-                if it["risk_group"] != "CTRL" or len(it["turns"]) != 6 or r["depth"] not in DEPTHS or r["status"] != "ok":
-                    continue
-                cnt[str(r["depth"])][1] += 1
-                cnt[str(r["depth"])][0] += int(bool(r["critical_failure"]) and not r.get("cf_tie"))
-        res["benign_excl_tie"] = {k: {"events": v[0], "n": v[1], "rate": v[0] / v[1]} for k, v in cnt.items()}
     loader.write_json(res, a.out)
 
     plt.rcParams.update({"font.family": "DejaVu Sans", "font.size": 8})
@@ -97,17 +85,13 @@ def main(argv=None):
         pooled = [arm["pooled"][k]["rate"] for k in DEPTHS]
         lo = [arm["pooled_ci95"][k][0] for k in DEPTHS]; hi = [arm["pooled_ci95"][k][1] for k in DEPTHS]
         ax.fill_between(DEPTHS, lo, hi, color="black", alpha=0.12, lw=0)
-        if label == "benign" and res.get("benign_excl_tie"):
-            ex = res["benign_excl_tie"]
-            ax.plot(DEPTHS, [ex[str(k)]["rate"] for k in DEPTHS], color="black", lw=1.4, ls="--", marker="^", ms=3.5,
-                    label="pooled, tie-derived flags removed (post hoc)")
         ax.plot(DEPTHS, pooled, color="black", lw=2.0, marker="s", ms=4, label="pooled (95% cluster CI)")
         ymax = max(ymax, max(hi))
         n = arm["pooled"][1]["n"]
         ax.set_title(title + f"\nn = {n} conversations, {arm['n_scenarios']} scenarios", fontsize=8)
         ax.set_xticks(DEPTHS); ax.set_xlabel("Prefix depth (turns)")
         ax.grid(axis="y", lw=0.3, alpha=0.5)
-    axes[0].set_ylabel("Panel CF-flag rate")
+    axes[0].set_ylabel("Critical-failure rate")
     axes[0].set_ylim(0, min(1.0, ymax * 1.15 + 0.02))
     axes[1].legend(fontsize=6, frameon=False, loc="upper left", bbox_to_anchor=(1.01, 1.0))
     if synthetic:
