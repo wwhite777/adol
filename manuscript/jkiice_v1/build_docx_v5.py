@@ -15,7 +15,7 @@ from docx.oxml import OxmlElement
 HERE = pathlib.Path(__file__).resolve().parent
 REVIEW = "--review" in sys.argv
 ARGS = [a for a in sys.argv[1:] if a != "--review"]
-OUT = HERE / (ARGS[0] if ARGS else ("kyra_phaseA_jkiice_ko_v6_review.docx" if REVIEW else "kyra_phaseA_jkiice_ko_v6.docx"))
+OUT = HERE / (ARGS[0] if ARGS else ("kyra_phaseA_jkiice_ko_v5_review.docx" if REVIEW else "kyra_phaseA_jkiice_ko_v5.docx"))
 DC = json.load(open(HERE / "refs_datacite_20260924.json", encoding="utf-8"))
 
 KO_BODY, KO_HEAD, EN_SERIF, EN_SANS = "바탕", "맑은 고딕", "Times New Roman", "Arial"
@@ -107,7 +107,7 @@ REFS = {
 }
 
 # ---------------------------------------------------------------- content
-from content_v6 import *  # manuscript content v6 (v5 + output-repair check)
+from content_v5 import *  # manuscript content v5 (review revision)
 
 # ---------------------------------------------------------------- citation numbering
 order = []
