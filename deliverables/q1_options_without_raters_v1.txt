@@ -1,0 +1,24 @@
+adol — Q1 options without human raters (2026-09-28; from the second brain: ~/repos/ideas/IDEA_LEDGER.md I-18..I-21)
+
+Principle: without humans, validity must come from labels known BY CONSTRUCTION, from invariances that must hold, from groups known to differ, or from EXISTING human-labelled data. A stronger AI judge is not an anchor (rejected, I-21).
+
+A (I-18, recommended core) Label-free validity battery + failure-aware aggregation.
+   Planted violations: take real KYRA transcripts and insert one CF sentence at turn d, or delete the crisis resource, so the correct label is known. Measure judge sensitivity by depth and length.
+   Metamorphic tests: paraphrase or padding must not change the verdict; the insertion must.
+   Aggregation: compare the tie rule against invalid = missing.
+   Claim: judge output failures rise with transcript length, and missing-output rules turn them into depth effects. The battery measures and removes this artefact without raters.
+   Kill pilot: about 720 views, 3 judges, ~10 GPU-h, $0. KILL if planted-CF sensitivity is flat in depth and failures are flat in length, or if a length/keyword baseline matches the judges.
+   Seeds: our 16/20 tie flags, the crossfam parser case (499/9,600 labels), N4. A new mechanism row was added to negative-results.md.
+B (I-19, recommended second leg) Known-groups validity.
+   The same base models are pushed by system prompts at 4 doses toward secrecy, exclusivity and isolation (relational groups only; no sexual content, no self-harm methods).
+   The benchmark must order the doses monotonically.
+   KILL if Spearman < 0.5 or a length baseline orders the doses as well.
+C (I-20, conditional) Anchor on EXISTING human-labelled multi-turn safety datasets.
+   Calibrate the panel there, then test the transfer to Korean scripts.
+   Blocked on a data/license check; KILL if no usable corpus exists.
+Rejected: a frontier model (Claude/Gemini) as the reference label. It is another judge, not validation.
+
+Recommended paper: A + B in one Q1 manuscript ("measuring multi-turn youth-safety without raters"), with C added only if a corpus exists. It reuses the phase-A transcripts and judges; new compute ≈ 1–2 GPU-days; $0.
+Risks to prosecute at S1: prior work on judge biases (verbosity, position, length) and on metamorphic/perturbation testing of LLM judges. Our claim must be the multi-turn failure-handling artefact plus the label-free validity battery, not "judges are length-biased".
+Venue: SCI Q1 measurement / IR / AI-methods journal, or a T1 evaluations track; to be verified in the S1 brief. Authorship: with Hayoung Oh (Q1 line).
+Next step on your word: S1 brief (START PAPER) for A+B, with a dated concurrent-work search.
