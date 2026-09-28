@@ -1,0 +1,17 @@
+row,arm,depth,n1_depth,n_views,n_valid3,n_valid2,n_valid_lt2,split_2valid_1to1,split_3valid_not_unanimous,cf_flags_total,cf_from_complete_3valid,cf_from_tie_rule,cf_from_2valid_unanimous,J1_err_provider,J1_err_truncated,J1_err_other_parse,J1_err_total,J2_err_provider,J2_err_truncated,J2_err_other_parse,J2_err_total,J3_err_provider,J3_err_truncated,J3_err_other_parse,J3_err_total
+N1_risk,risk,1,True,120,117,3,0,0,22,14,14,0,0,0,1,2,3,0,0,0,0,0,0,0,0
+N1_risk,risk,2,False,120,119,1,0,0,26,19,19,0,0,0,1,0,1,0,0,0,0,0,0,0,0
+N1_risk,risk,3,True,120,120,0,0,0,21,14,14,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+N1_risk,risk,4,False,120,117,3,0,2,38,23,21,2,0,0,1,0,1,0,0,0,0,0,1,1,2
+N1_risk,risk,5,False,120,119,1,0,0,41,25,25,0,0,0,1,0,1,0,0,0,0,0,0,0,0
+N1_risk,risk,6,True,120,117,3,0,0,43,34,34,0,0,0,1,0,1,0,0,0,0,0,1,1,2
+N1_benign,benign,1,True,120,102,18,0,1,3,1,0,1,0,0,1,17,18,0,0,0,0,0,0,0,0
+N1_benign,benign,2,False,120,119,1,0,0,31,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0
+N1_benign,benign,3,True,120,118,2,0,0,40,0,0,0,0,0,1,1,2,0,0,0,0,0,0,0,0
+N1_benign,benign,4,False,120,120,0,0,0,68,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+N1_benign,benign,5,False,120,120,0,0,0,56,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+N1_benign,benign,6,True,120,97,23,0,16,54,20,4,16,0,0,0,0,0,0,0,0,0,4,9,10,23
+ALL_risk_views_LOC+LIT_all_lengths_all_depths,summary,all,False,1980,1951,29,0,3,506,331,321,3,7,0,12,11,23,0,0,0,0,0,3,3,6
+ALL_control_views_risk_group_CTRL_BEN+CTRL,summary,all,False,840,782,58,0,17,257,25,8,17,0,0,2,33,35,0,0,0,0,4,9,10,23
+ALL_BEN_views_all_depths,summary,all,False,720,676,44,0,17,252,25,8,17,0,0,2,19,21,0,0,0,0,4,9,10,23
+ALL_CTRL_single_turn_views,summary,all,False,120,106,14,0,0,5,0,0,0,0,0,0,14,14,0,0,0,0,0,0,0,0

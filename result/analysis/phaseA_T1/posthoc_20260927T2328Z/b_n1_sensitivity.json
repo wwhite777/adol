@@ -1,0 +1,1016 @@
+{
+  "crude_or_definition": "(e_d/(n_d-e_d)) / (e_1/(n_1-e_1)) over pooled rows; null when a cell is zero",
+  "estimator": "kyra.analysis.n1_escalation.analyse, unchanged (loader.build_tidy -> analyse, as the CLI does), B = 2000, seed = 20260922",
+  "label": "POST-HOC SENSITIVITY (not confirmatory)",
+  "note_dropped_views": "a view dropped as INSUFFICIENT removes that depth's row; when the depth-6 view is dropped the conversation's deepest view is < 6, so the frozen selection (n_turns >= 6) drops the whole conversation, including its depth-1 row",
+  "runs": [
+    "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/main/20260923T0053Z-43396e",
+    "result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/main/20260922T1238Z-a7a9d1",
+    "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c",
+    "result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/main/20260923T0117Z-919654",
+    "result/raw/phaseA_T1/naver-hyperclovax-HyperCLOVAX-SEED-Think-14B/main/20260923T0559Z-bb08ed"
+  ],
+  "s0_vs_frozen_n1": {
+    "bit_equal": {
+      "benign_ci95": false,
+      "benign_or": false,
+      "ci95": false,
+      "interaction_p": true,
+      "n": true,
+      "or": false
+    },
+    "frozen": {
+      "benign_ci95": [
+        4.852069627357609,
+        19.983308352030015
+      ],
+      "benign_or": 9.708751990310294,
+      "ci95": [
+        2.14729609217977,
+        13.756879205675427
+      ],
+      "interaction_p": 0.20389805097451275,
+      "n": 120,
+      "or": 5.51078469381433
+    },
+    "frozen_path": "result/analysis/phaseA_T1/20260926T0213Z/n1.json",
+    "max_rel_diff": {
+      "benign_ci95": 1.3904501238765087e-06,
+      "benign_or": 7.364205270777028e-07,
+      "ci95": 1.7745405150072072e-07,
+      "interaction_p": 0.0,
+      "n": 0.0,
+      "or": 1.0053634282072665e-06
+    },
+    "note": "statsmodels BinomialBayesMixedGLM.fit_vb draws its start values from fresh OS entropy (rng=None in the frozen _fit_vb), so a re-run of the unchanged estimator is not bit-identical to the frozen n1.json; this block quantifies the difference",
+    "s0": {
+      "benign_ci95": [
+        4.852070927368656,
+        19.98328056623644
+      ],
+      "benign_or": 9.708744840586036,
+      "ci95": [
+        2.1472957111333786,
+        13.756880867790937
+      ],
+      "interaction_p": 0.20389805097451275,
+      "n": 120,
+      "or": 5.510779153472938
+    }
+  },
+  "schemes": {
+    "S0": {
+      "benign": {
+        "bootstrap_failures": 0,
+        "bootstrap_used": 2000,
+        "ci95": [
+          4.852070927368656,
+          19.98328056623644
+        ],
+        "n_events": 21,
+        "n_rows": 240,
+        "n_scenarios": 24,
+        "or": 9.708744840586036,
+        "p_bootstrap": 0.0009995002498750624,
+        "p_holm": 0.0029985007496251873
+      },
+      "counts": {
+        "benign": {
+          "conversations_selected": 120,
+          "crude_or_depth3_vs_1": null,
+          "crude_or_depth6_vs_1": 23.8,
+          "depth1": {
+            "events": 1,
+            "rows": 120
+          },
+          "depth3": {
+            "events": 0,
+            "rows": 120
+          },
+          "depth6": {
+            "events": 20,
+            "rows": 120
+          }
+        },
+        "risk": {
+          "conversations_selected": 120,
+          "crude_or_depth3_vs_1": 1.0,
+          "crude_or_depth6_vs_1": 2.9933554817275745,
+          "depth1": {
+            "events": 14,
+            "rows": 120
+          },
+          "depth3": {
+            "events": 14,
+            "rows": 120
+          },
+          "depth6": {
+            "events": 34,
+            "rows": 120
+          }
+        }
+      },
+      "definition": "original panel labels (unchanged panel.jsonl; reproduction check)",
+      "full_result": {
+        "B": 2000,
+        "analysis": "n1_escalation",
+        "benign": {
+          "bootstrap_b": 2000,
+          "bootstrap_failures": 0,
+          "bootstrap_used": 2000,
+          "ci95": [
+            4.852070927368656,
+            19.98328056623644
+          ],
+          "ci95_log_or": [
+            1.5794056091465702,
+            2.99489595224662
+          ],
+          "log_or": 2.273027009332605,
+          "n_events": 21,
+          "n_models": 5,
+          "n_rows": 240,
+          "n_scenarios": 24,
+          "or": 9.708744840586036,
+          "p_bootstrap": 0.0009995002498750624,
+          "p_holm": 0.0029985007496251873,
+          "p_holm_vb": 5.62766294155715e-18,
+          "p_wald_vb": 1.8758876471857167e-18,
+          "se_vb": 0.259344412500306
+        },
+        "benign_ci95": [
+          4.852070927368656,
+          19.98328056623644
+        ],
+        "benign_or": 9.708744840586036,
+        "ci95": [
+          2.1472957111333786,
+          13.756880867790937
+        ],
+        "ci_method": "percentile scenario cluster bootstrap, estimator refitted per replicate",
+        "claim": "N1 / N1.1 / N1.2",
+        "counts": {
+          "ben_conversations": 120,
+          "loc_conversations": 120,
+          "models": 5,
+          "scenarios": 24
+        },
+        "estimator": "BinomialBayesMixedGLM (variational Bayes), scenario (base_item) random intercept",
+        "interaction": {
+          "bootstrap_b": 2000,
+          "bootstrap_failures": 0,
+          "bootstrap_used": 2000,
+          "ci95": [
+            0.18883045095175915,
+            1.5588284948392002
+          ],
+          "ci95_log_or": [
+            -1.6669057514552994,
+            0.4439345742994306
+          ],
+          "log_or": -0.764595905895486,
+          "n_rows": 480,
+          "or": 0.46552200767023316,
+          "p_bootstrap": 0.20389805097451275,
+          "p_holm": 0.20389805097451275,
+          "p_holm_vb": 0.000910247266662309,
+          "p_wald_vb": 0.000910247266662309,
+          "se_vb": 0.23051575309062175,
+          "term": "depth6:risk"
+        },
+        "interaction_p": 0.20389805097451275,
+        "interaction_p_vb": 0.000910247266662309,
+        "multiplicity": "Holm within the N1 family {risk depth, benign depth, risk x depth}",
+        "n": 120,
+        "or": 5.510779153472938,
+        "outcome": "critical failure observed by turn depth d (fixed prefixes of 1, 3 and 6 turns) on the same 6-turn conversation",
+        "p_method": "two-sided percentile bootstrap p from the scenario cluster bootstrap distribution of the coefficient; the VB Wald p (optimistic posterior SDs) is reported as the secondary *_vb reading. Bootstrap CIs are the intervals of record.",
+        "primary_contrast": "depth 6 vs depth 1, LOC risk conversations",
+        "risk": {
+          "bootstrap_b": 2000,
+          "bootstrap_failures": 0,
+          "bootstrap_used": 2000,
+          "ci95": [
+            2.1472957111333786,
+            13.756880867790937
+          ],
+          "ci95_log_or": [
+            0.7642092416589956,
+            2.6215391256893046
+          ],
+          "log_or": 1.706706020331645,
+          "n_events": 48,
+          "n_models": 5,
+          "n_rows": 240,
+          "n_scenarios": 24,
+          "or": 5.510779153472938,
+          "p_bootstrap": 0.0009995002498750624,
+          "p_holm": 0.0029985007496251873,
+          "p_holm_vb": 3.2249088429152146e-10,
+          "p_wald_vb": 1.6124544214576073e-10,
+          "se_vb": 0.2669089880180475
+        },
+        "risk_depth3_vs_1": {
+          "bootstrap_b": 2000,
+          "bootstrap_failures": 0,
+          "bootstrap_used": 2000,
+          "ci95": [
+            0.25679606100948915,
+            2.6673363200582756
+          ],
+          "ci95_log_or": [
+            -1.3594730460320659,
+            0.9810803415082245
+          ],
+          "log_or": -0.1228488314678323,
+          "n_events": 28,
+          "n_models": 5,
+          "n_rows": 240,
+          "n_scenarios": 24,
+          "or": 0.8843973455048121,
+          "p_bootstrap": 0.8025987006496752,
+          "p_wald_vb": 0.7346711603250601,
+          "se_vb": 0.36247312349493976
+        },
+        "seed": 20260922,
+        "sensitivity_gee": {
+          "ci95": [
+            1.420724976806889,
+            6.306763931275927
+          ],
+          "log_or": 1.0963949928594618,
+          "model": "GEE binomial, exchangeable working correlation, clusters = scenario (base_item), robust SE",
+          "or": 2.9933554817275736,
+          "p": 0.003932313556495672
+        },
+        "version": "PREREGISTERED_kyra_v2.yaml@87abaae4c16fb0efe3dad27ff464fcd86b6b48ff67a33f1414336ccc7ddd34a4"
+      },
+      "interaction": {
+        "bootstrap_failures": 0,
+        "bootstrap_used": 2000,
+        "ci95": [
+          0.18883045095175915,
+          1.5588284948392002
+        ],
+        "n_rows": 480,
+        "or": 0.46552200767023316,
+        "p_bootstrap": 0.20389805097451275,
+        "p_holm": 0.20389805097451275
+      },
+      "panel_changes": {
+        "cf_true_to_false": 0,
+        "dropped": 0,
+        "views": 2820
+      },
+      "risk": {
+        "bootstrap_failures": 0,
+        "bootstrap_used": 2000,
+        "ci95": [
+          2.1472957111333786,
+          13.756880867790937
+        ],
+        "n_events": 48,
+        "n_rows": 240,
+        "n_scenarios": 24,
+        "or": 5.510779153472938,
+        "p_bootstrap": 0.0009995002498750624,
+        "p_holm": 0.0029985007496251873
+      },
+      "risk_depth3_vs_1": {
+        "bootstrap_failures": 0,
+        "bootstrap_used": 2000,
+        "ci95": [
+          0.25679606100948915,
+          2.6673363200582756
+        ],
+        "n_events": 28,
+        "n_rows": 240,
+        "n_scenarios": 24,
+        "or": 0.8843973455048121,
+        "p_bootstrap": 0.8025987006496752
+      },
+      "run_dirs": [
+        "result/analysis/phaseA_T1/posthoc_20260927T2328Z/b_runs/S0/LGAI-EXAONE-EXAONE-4.0-32B-AWQ",
+        "result/analysis/phaseA_T1/posthoc_20260927T2328Z/b_runs/S0/Qwen-Qwen2.5-14B-Instruct",
+        "result/analysis/phaseA_T1/posthoc_20260927T2328Z/b_runs/S0/RedHatAI-gemma-3-27b-it-quantized.w4a16",
+        "result/analysis/phaseA_T1/posthoc_20260927T2328Z/b_runs/S0/kakaocorp-kanana-1.5-8b-instruct-2505",
+        "result/analysis/phaseA_T1/posthoc_20260927T2328Z/b_runs/S0/naver-hyperclovax-HyperCLOVAX-SEED-Think-14B"
+      ]
+    },
+    "S1": {
+      "benign": {
+        "bootstrap_failures": 238,
+        "bootstrap_used": 1762,
+        "ci95": [
+          1.0194187446932699,
+          5.125156648832155
+        ],
+        "n_events": 4,
+        "n_rows": 177,
+        "n_scenarios": 24,
+        "or": 2.0178423046569356,
+        "p_bootstrap": 0.01474758933635848,
+        "p_holm": 0.017991004497751123
+      },
+      "counts": {
+        "benign": {
+          "conversations_selected": 97,
+          "crude_or_depth3_vs_1": null,
+          "crude_or_depth6_vs_1": null,
+          "depth1": {
+            "events": 0,
+            "rows": 80
+          },
+          "depth3": {
+            "events": 0,
+            "rows": 95
+          },
+          "depth6": {
+            "events": 4,
+            "rows": 97
+          }
+        },
+        "risk": {
+          "conversations_selected": 117,
+          "crude_or_depth3_vs_1": 0.9708737864077669,
+          "crude_or_depth6_vs_1": 2.9259896729776242,
+          "depth1": {
+            "events": 14,
+            "rows": 114
+          },
+          "depth3": {
+            "events": 14,
+            "rows": 117
+          },
+          "depth6": {
+            "events": 34,
+            "rows": 117
+          }
+        }
+      },
+      "definition": "complete panels only: views without 3 valid judges dropped (INSUFFICIENT)",
+      "full_result": {
+        "B": 2000,
+        "analysis": "n1_escalation",
+        "benign": {
+          "bootstrap_b": 2000,
+          "bootstrap_failures": 238,
+          "bootstrap_used": 1762,
+          "ci95": [
+            1.0194187446932699,
+            5.125156648832155
+          ],
+          "ci95_log_or": [
+            0.019232606721463357,
+            1.634161090183139
+          ],
+          "log_or": 0.702028774505804,
+          "n_events": 4,
+          "n_models": 5,
+          "n_rows": 177,
+          "n_scenarios": 24,
+          "or": 2.0178423046569356,
+          "p_bootstrap": 0.01474758933635848,
+          "p_holm": 0.017991004497751123,
+          "p_holm_vb": 0.18784054747290524,
+          "p_wald_vb": 0.18784054747290524,
+          "se_vb": 0.5330537831719212
+        },
+        "benign_ci95": [
+          1.0194187446932699,
+          5.125156648832155
+        ],
+        "benign_or": 2.0178423046569356,
+        "ci95": [
+          2.1146054367487763,
+          13.87489907915824
+        ],
+        "ci_method": "percentile scenario cluster bootstrap, estimator refitted per replicate",
+        "claim": "N1 / N1.1 / N1.2",
+        "counts": {
+          "ben_conversations": 97,
+          "loc_conversations": 117,
+          "models": 5,
+          "scenarios": 24
+        },
+        "estimator": "BinomialBayesMixedGLM (variational Bayes), scenario (base_item) random intercept",
+        "interaction": {
+          "bootstrap_b": 2000,
+          "bootstrap_failures": 0,
+          "bootstrap_used": 2000,
+          "ci95": [
+            1.386144189177148,
+            15.613879362039222
+          ],
+          "ci95_log_or": [
+            0.32652592795204116,
+            2.7481602213994685
+          ],
+          "log_or": 1.3052109211397889,
+          "n_rows": 408,
+          "or": 3.6884669873260685,
+          "p_bootstrap": 0.008995502248875561,
+          "p_holm": 0.017991004497751123,
+          "p_holm_vb": 2.282974553389105e-06,
+          "p_wald_vb": 1.1414872766945524e-06,
+          "se_vb": 0.26825651067666634,
+          "term": "depth6:risk"
+        },
+        "interaction_p": 0.017991004497751123,
+        "interaction_p_vb": 1.1414872766945524e-06,
+        "multiplicity": "Holm within the N1 family {risk depth, benign depth, risk x depth}",
+        "n": 117,
+        "or": 5.373331952009499,
+        "outcome": "critical failure observed by turn depth d (fixed prefixes of 1, 3 and 6 turns) on the same 6-turn conversation",
+        "p_method": "two-sided percentile bootstrap p from the scenario cluster bootstrap distribution of the coefficient; the VB Wald p (optimistic posterior SDs) is reported as the secondary *_vb reading. Bootstrap CIs are the intervals of record.",
+        "primary_contrast": "depth 6 vs depth 1, LOC risk conversations",
+        "risk": {
+          "bootstrap_b": 2000,
+          "bootstrap_failures": 0,
+          "bootstrap_used": 2000,
+          "ci95": [
+            2.1146054367487763,
+            13.87489907915824
+          ],
+          "ci95_log_or": [
+            0.7488682403660324,
+            2.630081386031865
+          ],
+          "log_or": 1.6814481913401471,
+          "n_events": 48,
+          "n_models": 5,
+          "n_rows": 231,
+          "n_scenarios": 24,
+          "or": 5.373331952009499,
+          "p_bootstrap": 0.0009995002498750624,
+          "p_holm": 0.0029985007496251873,
+          "p_holm_vb": 1.3090338615522158e-09,
+          "p_wald_vb": 4.3634462051740527e-10,
+          "se_vb": 0.269443896429531
+        },
+        "risk_depth3_vs_1": {
+          "bootstrap_b": 2000,
+          "bootstrap_failures": 0,
+          "bootstrap_used": 2000,
+          "ci95": [
+            0.25473761551740914,
+            2.673754894023541
+          ],
+          "ci95_log_or": [
+            -1.3675212223204485,
+            0.9834838118096395
+          ],
+          "log_or": -0.13340641569138986,
+          "n_events": 28,
+          "n_models": 5,
+          "n_rows": 231,
+          "n_scenarios": 24,
+          "or": 0.8751093616501906,
+          "p_bootstrap": 0.7726136931534233,
+          "p_wald_vb": 0.7130268845745777,
+          "se_vb": 0.3627205332307109
+        },
+        "seed": 20260922,
+        "sensitivity_gee": {
+          "ci95": [
+            1.4071833174074202,
+            6.029166564968102
+          ],
+          "log_or": 1.0690994228122725,
+          "model": "GEE binomial, exchangeable working correlation, clusters = scenario (base_item), robust SE",
+          "or": 2.9127551575945607,
+          "p": 0.00397381570642161
+        },
+        "version": "PREREGISTERED_kyra_v2.yaml@87abaae4c16fb0efe3dad27ff464fcd86b6b48ff67a33f1414336ccc7ddd34a4"
+      },
+      "interaction": {
+        "bootstrap_failures": 0,
+        "bootstrap_used": 2000,
+        "ci95": [
+          1.386144189177148,
+          15.613879362039222
+        ],
+        "n_rows": 408,
+        "or": 3.6884669873260685,
+        "p_bootstrap": 0.008995502248875561,
+        "p_holm": 0.017991004497751123
+      },
+      "panel_changes": {
+        "cf_true_to_false": 0,
+        "dropped": 87,
+        "views": 2820
+      },
+      "risk": {
+        "bootstrap_failures": 0,
+        "bootstrap_used": 2000,
+        "ci95": [
+          2.1146054367487763,
+          13.87489907915824
+        ],
+        "n_events": 48,
+        "n_rows": 231,
+        "n_scenarios": 24,
+        "or": 5.373331952009499,
+        "p_bootstrap": 0.0009995002498750624,
+        "p_holm": 0.0029985007496251873
+      },
+      "risk_depth3_vs_1": {
+        "bootstrap_failures": 0,
+        "bootstrap_used": 2000,
+        "ci95": [
+          0.25473761551740914,
+          2.673754894023541
+        ],
+        "n_events": 28,
+        "n_rows": 231,
+        "n_scenarios": 24,
+        "or": 0.8751093616501906,
+        "p_bootstrap": 0.7726136931534233
+      },
+      "run_dirs": [
+        "result/analysis/phaseA_T1/posthoc_20260927T2328Z/b_runs/S1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ",
+        "result/analysis/phaseA_T1/posthoc_20260927T2328Z/b_runs/S1/Qwen-Qwen2.5-14B-Instruct",
+        "result/analysis/phaseA_T1/posthoc_20260927T2328Z/b_runs/S1/RedHatAI-gemma-3-27b-it-quantized.w4a16",
+        "result/analysis/phaseA_T1/posthoc_20260927T2328Z/b_runs/S1/kakaocorp-kanana-1.5-8b-instruct-2505",
+        "result/analysis/phaseA_T1/posthoc_20260927T2328Z/b_runs/S1/naver-hyperclovax-HyperCLOVAX-SEED-Think-14B"
+      ]
+    },
+    "S2": {
+      "benign": {
+        "bootstrap_failures": 238,
+        "bootstrap_used": 1762,
+        "ci95": [
+          1.209322088388125,
+          6.579166141287646
+        ],
+        "n_events": 4,
+        "n_rows": 207,
+        "n_scenarios": 24,
+        "or": 2.4437868197254744,
+        "p_bootstrap": 0.0011344299489506524,
+        "p_holm": 0.0029985007496251873
+      },
+      "counts": {
+        "benign": {
+          "conversations_selected": 104,
+          "crude_or_depth3_vs_1": null,
+          "crude_or_depth6_vs_1": null,
+          "depth1": {
+            "events": 0,
+            "rows": 103
+          },
+          "depth3": {
+            "events": 0,
+            "rows": 104
+          },
+          "depth6": {
+            "events": 4,
+            "rows": 104
+          }
+        },
+        "risk": {
+          "conversations_selected": 120,
+          "crude_or_depth3_vs_1": 1.0,
+          "crude_or_depth6_vs_1": 2.9933554817275745,
+          "depth1": {
+            "events": 14,
+            "rows": 120
+          },
+          "depth3": {
+            "events": 14,
+            "rows": 120
+          },
+          "depth6": {
+            "events": 34,
+            "rows": 120
+          }
+        }
+      },
+      "definition": "ties unresolved: views whose panel CF came from cf_tie dropped (INSUFFICIENT)",
+      "full_result": {
+        "B": 2000,
+        "analysis": "n1_escalation",
+        "benign": {
+          "bootstrap_b": 2000,
+          "bootstrap_failures": 238,
+          "bootstrap_used": 1762,
+          "ci95": [
+            1.209322088388125,
+            6.579166141287646
+          ],
+          "ci95_log_or": [
+            0.19005994507528026,
+            1.8839080110586983
+          ],
+          "log_or": 0.8935488115333691,
+          "n_events": 4,
+          "n_models": 5,
+          "n_rows": 207,
+          "n_scenarios": 24,
+          "or": 2.4437868197254744,
+          "p_bootstrap": 0.0011344299489506524,
+          "p_holm": 0.0029985007496251873,
+          "p_holm_vb": 0.09252478418568862,
+          "p_wald_vb": 0.09252478418568862,
+          "se_vb": 0.5311701006359638
+        },
+        "benign_ci95": [
+          1.209322088388125,
+          6.579166141287646
+        ],
+        "benign_or": 2.4437868197254744,
+        "ci95": [
+          2.1472964733956696,
+          13.756880366276048
+        ],
+        "ci_method": "percentile scenario cluster bootstrap, estimator refitted per replicate",
+        "claim": "N1 / N1.1 / N1.2",
+        "counts": {
+          "ben_conversations": 104,
+          "loc_conversations": 120,
+          "models": 5,
+          "scenarios": 24
+        },
+        "estimator": "BinomialBayesMixedGLM (variational Bayes), scenario (base_item) random intercept",
+        "interaction": {
+          "bootstrap_b": 2000,
+          "bootstrap_failures": 0,
+          "bootstrap_used": 2000,
+          "ci95": [
+            1.0371360309110242,
+            14.836431906956914
+          ],
+          "ci95_log_or": [
+            0.03646309799350152,
+            2.6970857712928997
+          ],
+          "log_or": 1.074943944037735,
+          "n_rows": 447,
+          "or": 2.9298286615655624,
+          "p_bootstrap": 0.044977511244377814,
+          "p_holm": 0.044977511244377814,
+          "p_holm_vb": 9.658613424813314e-05,
+          "p_wald_vb": 4.829306712406657e-05,
+          "se_vb": 0.26452098765902254,
+          "term": "depth6:risk"
+        },
+        "interaction_p": 0.044977511244377814,
+        "interaction_p_vb": 4.829306712406657e-05,
+        "multiplicity": "Holm within the N1 family {risk depth, benign depth, risk x depth}",
+        "n": 120,
+        "or": 5.510784537433474,
+        "outcome": "critical failure observed by turn depth d (fixed prefixes of 1, 3 and 6 turns) on the same 6-turn conversation",
+        "p_method": "two-sided percentile bootstrap p from the scenario cluster bootstrap distribution of the coefficient; the VB Wald p (optimistic posterior SDs) is reported as the secondary *_vb reading. Bootstrap CIs are the intervals of record.",
+        "primary_contrast": "depth 6 vs depth 1, LOC risk conversations",
+        "risk": {
+          "bootstrap_b": 2000,
+          "bootstrap_failures": 0,
+          "bootstrap_used": 2000,
+          "ci95": [
+            2.1472964733956696,
+            13.756880366276048
+          ],
+          "ci95_log_or": [
+            0.764209596646039,
+            2.621539089233737
+          ],
+          "log_or": 1.706706997318339,
+          "n_events": 48,
+          "n_models": 5,
+          "n_rows": 240,
+          "n_scenarios": 24,
+          "or": 5.510784537433474,
+          "p_bootstrap": 0.0009995002498750624,
+          "p_holm": 0.0029985007496251873,
+          "p_holm_vb": 4.837039387656048e-10,
+          "p_wald_vb": 1.6123464625520158e-10,
+          "se_vb": 0.26690871371917807
+        },
+        "risk_depth3_vs_1": {
+          "bootstrap_b": 2000,
+          "bootstrap_failures": 0,
+          "bootstrap_used": 2000,
+          "ci95": [
+            0.25679595911951614,
+            2.6673377058067858
+          ],
+          "ci95_log_or": [
+            -1.3594734428060384,
+            0.9810808610333177
+          ],
+          "log_or": -0.12284863438999176,
+          "n_events": 28,
+          "n_models": 5,
+          "n_rows": 240,
+          "n_scenarios": 24,
+          "or": 0.8843975197999483,
+          "p_bootstrap": 0.8025987006496752,
+          "p_wald_vb": 0.7346714322203675,
+          "se_vb": 0.36247292800223857
+        },
+        "seed": 20260922,
+        "sensitivity_gee": {
+          "ci95": [
+            1.420724976806889,
+            6.306763931275927
+          ],
+          "log_or": 1.0963949928594618,
+          "model": "GEE binomial, exchangeable working correlation, clusters = scenario (base_item), robust SE",
+          "or": 2.9933554817275736,
+          "p": 0.003932313556495672
+        },
+        "version": "PREREGISTERED_kyra_v2.yaml@87abaae4c16fb0efe3dad27ff464fcd86b6b48ff67a33f1414336ccc7ddd34a4"
+      },
+      "interaction": {
+        "bootstrap_failures": 0,
+        "bootstrap_used": 2000,
+        "ci95": [
+          1.0371360309110242,
+          14.836431906956914
+        ],
+        "n_rows": 447,
+        "or": 2.9298286615655624,
+        "p_bootstrap": 0.044977511244377814,
+        "p_holm": 0.044977511244377814
+      },
+      "panel_changes": {
+        "cf_true_to_false": 0,
+        "dropped": 20,
+        "views": 2820
+      },
+      "risk": {
+        "bootstrap_failures": 0,
+        "bootstrap_used": 2000,
+        "ci95": [
+          2.1472964733956696,
+          13.756880366276048
+        ],
+        "n_events": 48,
+        "n_rows": 240,
+        "n_scenarios": 24,
+        "or": 5.510784537433474,
+        "p_bootstrap": 0.0009995002498750624,
+        "p_holm": 0.0029985007496251873
+      },
+      "risk_depth3_vs_1": {
+        "bootstrap_failures": 0,
+        "bootstrap_used": 2000,
+        "ci95": [
+          0.25679595911951614,
+          2.6673377058067858
+        ],
+        "n_events": 28,
+        "n_rows": 240,
+        "n_scenarios": 24,
+        "or": 0.8843975197999483,
+        "p_bootstrap": 0.8025987006496752
+      },
+      "run_dirs": [
+        "result/analysis/phaseA_T1/posthoc_20260927T2328Z/b_runs/S2/LGAI-EXAONE-EXAONE-4.0-32B-AWQ",
+        "result/analysis/phaseA_T1/posthoc_20260927T2328Z/b_runs/S2/Qwen-Qwen2.5-14B-Instruct",
+        "result/analysis/phaseA_T1/posthoc_20260927T2328Z/b_runs/S2/RedHatAI-gemma-3-27b-it-quantized.w4a16",
+        "result/analysis/phaseA_T1/posthoc_20260927T2328Z/b_runs/S2/kakaocorp-kanana-1.5-8b-instruct-2505",
+        "result/analysis/phaseA_T1/posthoc_20260927T2328Z/b_runs/S2/naver-hyperclovax-HyperCLOVAX-SEED-Think-14B"
+      ]
+    },
+    "S3": {
+      "benign": {
+        "bootstrap_failures": 238,
+        "bootstrap_used": 1762,
+        "ci95": [
+          1.217611422423057,
+          6.612655451773772
+        ],
+        "n_events": 4,
+        "n_rows": 240,
+        "n_scenarios": 24,
+        "or": 2.44128141517991,
+        "p_bootstrap": 0.0011344299489506524,
+        "p_holm": 0.0029985007496251873
+      },
+      "counts": {
+        "benign": {
+          "conversations_selected": 120,
+          "crude_or_depth3_vs_1": null,
+          "crude_or_depth6_vs_1": null,
+          "depth1": {
+            "events": 0,
+            "rows": 120
+          },
+          "depth3": {
+            "events": 0,
+            "rows": 120
+          },
+          "depth6": {
+            "events": 4,
+            "rows": 120
+          }
+        },
+        "risk": {
+          "conversations_selected": 120,
+          "crude_or_depth3_vs_1": 1.0,
+          "crude_or_depth6_vs_1": 2.9933554817275745,
+          "depth1": {
+            "events": 14,
+            "rows": 120
+          },
+          "depth3": {
+            "events": 14,
+            "rows": 120
+          },
+          "depth6": {
+            "events": 34,
+            "rows": 120
+          }
+        }
+      },
+      "definition": "ties = non-critical: CF = strict majority of valid judges, a 1-1 split -> false",
+      "full_result": {
+        "B": 2000,
+        "analysis": "n1_escalation",
+        "benign": {
+          "bootstrap_b": 2000,
+          "bootstrap_failures": 238,
+          "bootstrap_used": 1762,
+          "ci95": [
+            1.217611422423057,
+            6.612655451773772
+          ],
+          "ci95_log_or": [
+            0.19689108917774809,
+            1.8889853056829524
+          ],
+          "log_or": 0.8925230716072274,
+          "n_events": 4,
+          "n_models": 5,
+          "n_rows": 240,
+          "n_scenarios": 24,
+          "or": 2.44128141517991,
+          "p_bootstrap": 0.0011344299489506524,
+          "p_holm": 0.0029985007496251873,
+          "p_holm_vb": 0.09155280645147397,
+          "p_wald_vb": 0.09155280645147397,
+          "se_vb": 0.5289768760904567
+        },
+        "benign_ci95": [
+          1.217611422423057,
+          6.612655451773772
+        ],
+        "benign_or": 2.44128141517991,
+        "ci95": [
+          2.147296300566068,
+          13.756880582337422
+        ],
+        "ci_method": "percentile scenario cluster bootstrap, estimator refitted per replicate",
+        "claim": "N1 / N1.1 / N1.2",
+        "counts": {
+          "ben_conversations": 120,
+          "loc_conversations": 120,
+          "models": 5,
+          "scenarios": 24
+        },
+        "estimator": "BinomialBayesMixedGLM (variational Bayes), scenario (base_item) random intercept",
+        "interaction": {
+          "bootstrap_b": 2000,
+          "bootstrap_failures": 0,
+          "bootstrap_used": 2000,
+          "ci95": [
+            1.0056063643966529,
+            15.160590888037362
+          ],
+          "ci95_log_or": [
+            0.0055907072283805275,
+            2.7186993562381176
+          ],
+          "log_or": 1.045241064294275,
+          "n_rows": 480,
+          "or": 2.844084048134634,
+          "p_bootstrap": 0.04897551224387806,
+          "p_holm": 0.04897551224387806,
+          "p_holm_vb": 0.0001573188696265399,
+          "p_wald_vb": 7.865943481326995e-05,
+          "se_vb": 0.2647219904896347,
+          "term": "depth6:risk"
+        },
+        "interaction_p": 0.04897551224387806,
+        "interaction_p_vb": 7.865943481326995e-05,
+        "multiplicity": "Holm within the N1 family {risk depth, benign depth, risk x depth}",
+        "n": 120,
+        "or": 5.510787050962602,
+        "outcome": "critical failure observed by turn depth d (fixed prefixes of 1, 3 and 6 turns) on the same 6-turn conversation",
+        "p_method": "two-sided percentile bootstrap p from the scenario cluster bootstrap distribution of the coefficient; the VB Wald p (optimistic posterior SDs) is reported as the secondary *_vb reading. Bootstrap CIs are the intervals of record.",
+        "primary_contrast": "depth 6 vs depth 1, LOC risk conversations",
+        "risk": {
+          "bootstrap_b": 2000,
+          "bootstrap_failures": 0,
+          "bootstrap_used": 2000,
+          "ci95": [
+            2.147296300566068,
+            13.756880582337422
+          ],
+          "ci95_log_or": [
+            0.7642095161589656,
+            2.6215391049394325
+          ],
+          "log_or": 1.7067074534291773,
+          "n_events": 48,
+          "n_models": 5,
+          "n_rows": 240,
+          "n_scenarios": 24,
+          "or": 5.510787050962602,
+          "p_bootstrap": 0.0009995002498750624,
+          "p_holm": 0.0029985007496251873,
+          "p_holm_vb": 4.837278018261388e-10,
+          "p_wald_vb": 1.612426006087129e-10,
+          "se_vb": 0.26690909972845067
+        },
+        "risk_depth3_vs_1": {
+          "bootstrap_b": 2000,
+          "bootstrap_failures": 0,
+          "bootstrap_used": 2000,
+          "ci95": [
+            0.25679610579685275,
+            2.6673382414920885
+          ],
+          "ci95_log_or": [
+            -1.3594728716237845,
+            0.981081061864749
+          ],
+          "log_or": -0.12284916261477649,
+          "n_events": 28,
+          "n_models": 5,
+          "n_rows": 240,
+          "n_scenarios": 24,
+          "or": 0.8843970526393822,
+          "p_bootstrap": 0.8025987006496752,
+          "p_wald_vb": 0.7346707889557174,
+          "se_vb": 0.3624735733469758
+        },
+        "seed": 20260922,
+        "sensitivity_gee": {
+          "ci95": [
+            1.420724976806889,
+            6.306763931275927
+          ],
+          "log_or": 1.0963949928594618,
+          "model": "GEE binomial, exchangeable working correlation, clusters = scenario (base_item), robust SE",
+          "or": 2.9933554817275736,
+          "p": 0.003932313556495672
+        },
+        "version": "PREREGISTERED_kyra_v2.yaml@87abaae4c16fb0efe3dad27ff464fcd86b6b48ff67a33f1414336ccc7ddd34a4"
+      },
+      "interaction": {
+        "bootstrap_failures": 0,
+        "bootstrap_used": 2000,
+        "ci95": [
+          1.0056063643966529,
+          15.160590888037362
+        ],
+        "n_rows": 480,
+        "or": 2.844084048134634,
+        "p_bootstrap": 0.04897551224387806,
+        "p_holm": 0.04897551224387806
+      },
+      "panel_changes": {
+        "cf_true_to_false": 20,
+        "dropped": 0,
+        "views": 2820
+      },
+      "risk": {
+        "bootstrap_failures": 0,
+        "bootstrap_used": 2000,
+        "ci95": [
+          2.147296300566068,
+          13.756880582337422
+        ],
+        "n_events": 48,
+        "n_rows": 240,
+        "n_scenarios": 24,
+        "or": 5.510787050962602,
+        "p_bootstrap": 0.0009995002498750624,
+        "p_holm": 0.0029985007496251873
+      },
+      "risk_depth3_vs_1": {
+        "bootstrap_failures": 0,
+        "bootstrap_used": 2000,
+        "ci95": [
+          0.25679610579685275,
+          2.6673382414920885
+        ],
+        "n_events": 28,
+        "n_rows": 240,
+        "n_scenarios": 24,
+        "or": 0.8843970526393822,
+        "p_bootstrap": 0.8025987006496752
+      },
+      "run_dirs": [
+        "result/analysis/phaseA_T1/posthoc_20260927T2328Z/b_runs/S3/LGAI-EXAONE-EXAONE-4.0-32B-AWQ",
+        "result/analysis/phaseA_T1/posthoc_20260927T2328Z/b_runs/S3/Qwen-Qwen2.5-14B-Instruct",
+        "result/analysis/phaseA_T1/posthoc_20260927T2328Z/b_runs/S3/RedHatAI-gemma-3-27b-it-quantized.w4a16",
+        "result/analysis/phaseA_T1/posthoc_20260927T2328Z/b_runs/S3/kakaocorp-kanana-1.5-8b-instruct-2505",
+        "result/analysis/phaseA_T1/posthoc_20260927T2328Z/b_runs/S3/naver-hyperclovax-HyperCLOVAX-SEED-Think-14B"
+      ]
+    }
+  },
+  "section": "b_n1_sensitivity"
+}

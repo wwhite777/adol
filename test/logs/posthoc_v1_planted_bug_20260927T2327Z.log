@@ -1,0 +1,47 @@
+test_cluster_of (test_posthoc_v1.TestClusterBootstrap) ... ok
+test_identical_judges (test_posthoc_v1.TestClusterBootstrap) ... ok
+test_pa_na_hand_example (test_posthoc_v1.TestClusterBootstrap) ... ok
+test_views_of_one_conversation_move_together (test_posthoc_v1.TestClusterBootstrap) ... ok
+test_crude_or (test_posthoc_v1.TestRelabel) ... ok
+test_majority_strict (test_posthoc_v1.TestRelabel) ... FAIL
+test_non_tie_views (test_posthoc_v1.TestRelabel) ... ok
+test_tie_view (test_posthoc_v1.TestRelabel) ... FAIL
+test_written_runs (test_posthoc_v1.TestRelabel) ... FAIL
+test_classify_error (test_posthoc_v1.TestValidityCounts) ... ok
+test_consistency_detects_tampered_flag (test_posthoc_v1.TestValidityCounts) ... ok
+test_counts (test_posthoc_v1.TestValidityCounts) ... ok
+
+======================================================================
+FAIL: test_majority_strict (test_posthoc_v1.TestRelabel)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/wjeong/adol/test/test_posthoc_v1.py", line 158, in test_majority_strict
+    self.assertFalse(ph.majority_strict([True, False]))
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_tie_view (test_posthoc_v1.TestRelabel)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/wjeong/adol/test/test_posthoc_v1.py", line 141, in test_tie_view
+    self.assertIs(s3["critical_failure"], False)
+AssertionError: True is not False
+
+======================================================================
+FAIL: test_written_runs (test_posthoc_v1.TestRelabel)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/wjeong/adol/test/test_posthoc_v1.py", line 166, in test_written_runs
+    self.assertEqual(changes, {"views": 6, "dropped": 0, "cf_true_to_false": 1})
+AssertionError: {'views': 6, 'dropped': 0, 'cf_true_to_false': 0} != {'views': 6, 'dropped': 0, 'cf_true_to_false': 1}
+- {'cf_true_to_false': 0, 'dropped': 0, 'views': 6}
+?                      ^
+
++ {'cf_true_to_false': 1, 'dropped': 0, 'views': 6}
+?                      ^
+
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.123s
+
+FAILED (failures=3)

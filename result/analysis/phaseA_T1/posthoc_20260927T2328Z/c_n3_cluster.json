@@ -1,0 +1,278 @@
+{
+  "all_20_point_equals_frozen_n3": {
+    "ac2": {
+      "D1": true,
+      "D2": true,
+      "D3": true,
+      "D4": true,
+      "D5": true,
+      "D6": true
+    },
+    "flag_agreement": true,
+    "frozen_path": "result/analysis/phaseA_T1/20260926T0213Z/n3.json",
+    "n_views": true
+  },
+  "cluster_unit": "conversation = (run_dir, item_id, condition); all its depth views are resampled together",
+  "label": "POST-HOC SENSITIVITY (not confirmatory)",
+  "pa_na_definition": "pooled over all judge pairs of all views with >= 2 valid judges: PA = 2a/(2a+b+c), NA = 2d/(2d+b+c)",
+  "section": "c_n3_cluster_bootstrap",
+  "sets": {
+    "all_20_runs": {
+      "B": 2000,
+      "cf_flag": {
+        "NA_ci95_cluster": [
+          0.8793705371927173,
+          0.9000763574248972
+        ],
+        "PA_ci95_cluster": [
+          0.4920803683140444,
+          0.5742944446627923
+        ],
+        "mean_pairwise_agreement": 0.822848200312989,
+        "mean_pairwise_agreement_ci95_cluster": [
+          0.8086234439620584,
+          0.8370491672243657
+        ],
+        "n_views_with_2plus_judges": 3195,
+        "negative_specific_agreement_NA": 0.8900741511643033,
+        "pairs_pooled": {
+          "a_both_true": 975,
+          "b_plus_c_discordant": 1690,
+          "d_both_false": 6842
+        },
+        "positive_specific_agreement_PA": 0.5357142857142857,
+        "views_by_n_judges_flagging": {
+          "flagged_by_0": 2104,
+          "flagged_by_1": 586,
+          "flagged_by_2": 270,
+          "flagged_by_3": 235
+        },
+        "views_by_valid_and_flagging": {
+          "valid2_flagged0": 26,
+          "valid2_flagged1": 4,
+          "valid2_flagged2": 9,
+          "valid3_flagged0": 2078,
+          "valid3_flagged1": 582,
+          "valid3_flagged2": 261,
+          "valid3_flagged3": 235
+        }
+      },
+      "n_clusters": 855,
+      "n_control_views_excluded": 1365,
+      "n_views": 3195,
+      "per_dimension": {
+        "D1": {
+          "ac2": 0.6269587613959144,
+          "bootstrap_used": 2000,
+          "ci95_cluster": [
+            0.5863709100783997,
+            0.6648256481913429
+          ],
+          "n_subjects": 3195,
+          "p_a": 0.7689619196661449,
+          "p_e": 0.3806634322832618
+        },
+        "D2": {
+          "ac2": 0.6669291695366395,
+          "bootstrap_used": 2000,
+          "ci95_cluster": [
+            0.6309510212990047,
+            0.699876490919538
+          ],
+          "n_subjects": 3195,
+          "p_a": 0.8070161711006782,
+          "p_e": 0.4205922246903245
+        },
+        "D3": {
+          "ac2": 0.6645480861641807,
+          "bootstrap_used": 2000,
+          "ci95_cluster": [
+            0.629401842689771,
+            0.6969494304956249
+          ],
+          "n_subjects": 3195,
+          "p_a": 0.7867240479916535,
+          "p_e": 0.3642130415367657
+        },
+        "D4": {
+          "ac2": 0.48727239156882496,
+          "bootstrap_used": 2000,
+          "ci95_cluster": [
+            0.44356891046621605,
+            0.5276186844293882
+          ],
+          "n_subjects": 3195,
+          "p_a": 0.7363067292644757,
+          "p_e": 0.48570495054408475
+        },
+        "D5": {
+          "ac2": 0.44436206493627123,
+          "bootstrap_used": 2000,
+          "ci95_cluster": [
+            0.4216320652556563,
+            0.46810600665457586
+          ],
+          "n_subjects": 3195,
+          "p_a": 0.8087115284298383,
+          "p_e": 0.6557318003346515
+        },
+        "D6": {
+          "ac2": 0.6940924309626039,
+          "bootstrap_used": 2000,
+          "ci95_cluster": [
+            0.661074803280231,
+            0.7244536979116388
+          ],
+          "n_subjects": 3195,
+          "p_a": 0.8113197704747002,
+          "p_e": 0.3832116344194338
+        }
+      },
+      "runs": [
+        "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/main/20260923T0053Z-43396e",
+        "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_1/20260923T0155Z-4db52d",
+        "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_2/20260923T0208Z-9e212f",
+        "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_3/20260923T0222Z-6e6dc0",
+        "result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/main/20260922T1238Z-a7a9d1",
+        "result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/repeat_1/20260922T1353Z-ceaf18",
+        "result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/repeat_2/20260922T1411Z-877729",
+        "result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/repeat_3/20260922T1428Z-709a14",
+        "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c",
+        "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a",
+        "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_2/20260923T0352Z-fd283d",
+        "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77",
+        "result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/main/20260923T0117Z-919654",
+        "result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/repeat_1/20260923T0206Z-8bca3d",
+        "result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/repeat_2/20260923T0217Z-cd918e",
+        "result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/repeat_3/20260923T0227Z-c9705b",
+        "result/raw/phaseA_T1/naver-hyperclovax-HyperCLOVAX-SEED-Think-14B/main/20260923T0559Z-bb08ed",
+        "result/raw/phaseA_T1/naver-hyperclovax-HyperCLOVAX-SEED-Think-14B/repeat_1/20260923T0741Z-14b91c",
+        "result/raw/phaseA_T1/naver-hyperclovax-HyperCLOVAX-SEED-Think-14B/repeat_2/20260923T0804Z-bfcde8",
+        "result/raw/phaseA_T1/naver-hyperclovax-HyperCLOVAX-SEED-Think-14B/repeat_3/20260923T0826Z-61b212"
+      ],
+      "seed": 20260922
+    },
+    "main_5_runs": {
+      "B": 2000,
+      "cf_flag": {
+        "NA_ci95_cluster": [
+          0.8798857043771825,
+          0.9056535190949023
+        ],
+        "PA_ci95_cluster": [
+          0.5007725227894813,
+          0.6033301331701275
+        ],
+        "mean_pairwise_agreement": 0.8281144781144781,
+        "mean_pairwise_agreement_ci95_cluster": [
+          0.8110729808826479,
+          0.8460779597976339
+        ],
+        "n_views_with_2plus_judges": 1980,
+        "negative_specific_agreement_NA": 0.8928985966023003,
+        "pairs_pooled": {
+          "a_both_true": 636,
+          "b_plus_c_discordant": 1015,
+          "d_both_false": 4231
+        },
+        "positive_specific_agreement_PA": 0.5561871447310888,
+        "views_by_n_judges_flagging": {
+          "flagged_by_0": 1310,
+          "flagged_by_1": 342,
+          "flagged_by_2": 174,
+          "flagged_by_3": 154
+        },
+        "views_by_valid_and_flagging": {
+          "valid2_flagged0": 19,
+          "valid2_flagged1": 3,
+          "valid2_flagged2": 7,
+          "valid3_flagged0": 1291,
+          "valid3_flagged1": 339,
+          "valid3_flagged2": 167,
+          "valid3_flagged3": 154
+        }
+      },
+      "n_clusters": 540,
+      "n_control_views_excluded": 840,
+      "n_views": 1980,
+      "per_dimension": {
+        "D1": {
+          "ac2": 0.6303443905644911,
+          "bootstrap_used": 2000,
+          "ci95_cluster": [
+            0.5826640636550109,
+            0.6779377012062116
+          ],
+          "n_subjects": 1980,
+          "p_a": 0.7750841750841752,
+          "p_e": 0.3915530586448081
+        },
+        "D2": {
+          "ac2": 0.6686274571780118,
+          "bootstrap_used": 2000,
+          "ci95_cluster": [
+            0.6269463851742347,
+            0.710004429965061
+          ],
+          "n_subjects": 1980,
+          "p_a": 0.8113215488215488,
+          "p_e": 0.4306153141969629
+        },
+        "D3": {
+          "ac2": 0.6598666179006621,
+          "bootstrap_used": 2000,
+          "ci95_cluster": [
+            0.617016804684909,
+            0.7026085531907718
+          ],
+          "n_subjects": 1980,
+          "p_a": 0.7869949494949495,
+          "p_e": 0.37376023138228426
+        },
+        "D4": {
+          "ac2": 0.5043328899636345,
+          "bootstrap_used": 2000,
+          "ci95_cluster": [
+            0.454139385416487,
+            0.5540141562710241
+          ],
+          "n_subjects": 1980,
+          "p_a": 0.7468013468013468,
+          "p_e": 0.4891760052829069
+        },
+        "D5": {
+          "ac2": 0.450555837075304,
+          "bootstrap_used": 2000,
+          "ci95_cluster": [
+            0.4199522286946922,
+            0.4819337147422996
+          ],
+          "n_subjects": 1980,
+          "p_a": 0.8120370370370371,
+          "p_e": 0.6579034310557884
+        },
+        "D6": {
+          "ac2": 0.6950673024960914,
+          "bootstrap_used": 2000,
+          "ci95_cluster": [
+            0.6541389737403392,
+            0.7338904337267513
+          ],
+          "n_subjects": 1980,
+          "p_a": 0.8150252525252525,
+          "p_e": 0.3933915615186643
+        }
+      },
+      "runs": [
+        "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/main/20260923T0053Z-43396e",
+        "result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/main/20260922T1238Z-a7a9d1",
+        "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c",
+        "result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/main/20260923T0117Z-919654",
+        "result/raw/phaseA_T1/naver-hyperclovax-HyperCLOVAX-SEED-Think-14B/main/20260923T0559Z-bb08ed"
+      ],
+      "seed": 20260922
+    }
+  },
+  "statistic": "Gwet AC2, quadratic weights, categories {0,1,2} (kyra.analysis.n3_reliability.ac2 / ac2_from_counts)",
+  "subject_unit": "judged view (run_dir, item_id, condition, depth); control views excluded"
+}

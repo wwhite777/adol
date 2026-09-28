@@ -1,0 +1,464 @@
+{
+  "cells": [
+    {
+      "arm": "risk",
+      "depth": 1,
+      "j3_errors_among_over_threshold": 0,
+      "j3_first_attempt_prompt_tokens": {
+        "max": 11163,
+        "mean": 10717.625,
+        "median": 10637.5,
+        "min": 10413,
+        "n": 120
+      },
+      "j3_frac_over_15684": 0.0,
+      "j3_n_over_15684": 0,
+      "j3_n_over_16384": 0,
+      "j3_truncated_among_over_threshold": 0,
+      "judge_errors": {
+        "J1": {
+          "by_type": {
+            "other_parse": 2,
+            "provider": 0,
+            "truncated": 1
+          },
+          "error_rate": 0.025,
+          "n_error": 3
+        },
+        "J2": {
+          "by_type": {
+            "other_parse": 0,
+            "provider": 0,
+            "truncated": 0
+          },
+          "error_rate": 0.0,
+          "n_error": 0
+        },
+        "J3": {
+          "by_type": {
+            "other_parse": 0,
+            "provider": 0,
+            "truncated": 0
+          },
+          "error_rate": 0.0,
+          "n_error": 0
+        }
+      },
+      "n_views": 120,
+      "response_chars_turn_d": {
+        "max": 809,
+        "mean": 356.7416666666667,
+        "median": 261.5,
+        "min": 41,
+        "n": 120
+      },
+      "transcript_chars": {
+        "max": 842,
+        "mean": 391.9916666666667,
+        "median": 294.0,
+        "min": 58,
+        "n": 120
+      }
+    },
+    {
+      "arm": "risk",
+      "depth": 3,
+      "j3_errors_among_over_threshold": 0,
+      "j3_first_attempt_prompt_tokens": {
+        "max": 12854,
+        "mean": 11744.841666666667,
+        "median": 11740.5,
+        "min": 10856,
+        "n": 120
+      },
+      "j3_frac_over_15684": 0.0,
+      "j3_n_over_15684": 0,
+      "j3_n_over_16384": 0,
+      "j3_truncated_among_over_threshold": 0,
+      "judge_errors": {
+        "J1": {
+          "by_type": {
+            "other_parse": 0,
+            "provider": 0,
+            "truncated": 0
+          },
+          "error_rate": 0.0,
+          "n_error": 0
+        },
+        "J2": {
+          "by_type": {
+            "other_parse": 0,
+            "provider": 0,
+            "truncated": 0
+          },
+          "error_rate": 0.0,
+          "n_error": 0
+        },
+        "J3": {
+          "by_type": {
+            "other_parse": 0,
+            "provider": 0,
+            "truncated": 0
+          },
+          "error_rate": 0.0,
+          "n_error": 0
+        }
+      },
+      "n_views": 120,
+      "response_chars_turn_d": {
+        "max": 814,
+        "mean": 428.03333333333336,
+        "median": 402.5,
+        "min": 66,
+        "n": 120
+      },
+      "transcript_chars": {
+        "max": 2394,
+        "mean": 1286.7083333333333,
+        "median": 1283.0,
+        "min": 275,
+        "n": 120
+      }
+    },
+    {
+      "arm": "risk",
+      "depth": 6,
+      "j3_errors_among_over_threshold": 0,
+      "j3_first_attempt_prompt_tokens": {
+        "max": 15291,
+        "mean": 13359.0,
+        "median": 13480.0,
+        "min": 11449,
+        "n": 120
+      },
+      "j3_frac_over_15684": 0.0,
+      "j3_n_over_15684": 0,
+      "j3_n_over_16384": 0,
+      "j3_truncated_among_over_threshold": 0,
+      "judge_errors": {
+        "J1": {
+          "by_type": {
+            "other_parse": 0,
+            "provider": 0,
+            "truncated": 1
+          },
+          "error_rate": 0.008333333333333333,
+          "n_error": 1
+        },
+        "J2": {
+          "by_type": {
+            "other_parse": 0,
+            "provider": 0,
+            "truncated": 0
+          },
+          "error_rate": 0.0,
+          "n_error": 0
+        },
+        "J3": {
+          "by_type": {
+            "other_parse": 1,
+            "provider": 0,
+            "truncated": 1
+          },
+          "error_rate": 0.016666666666666666,
+          "n_error": 2
+        }
+      },
+      "n_views": 120,
+      "response_chars_turn_d": {
+        "max": 779,
+        "mean": 417.775,
+        "median": 397.5,
+        "min": 77,
+        "n": 120
+      },
+      "transcript_chars": {
+        "max": 4751,
+        "mean": 2711.641666666667,
+        "median": 2744.0,
+        "min": 580,
+        "n": 120
+      }
+    },
+    {
+      "arm": "benign",
+      "depth": 1,
+      "j3_errors_among_over_threshold": 0,
+      "j3_first_attempt_prompt_tokens": {
+        "max": 11873,
+        "mean": 11432.758333333333,
+        "median": 11407.0,
+        "min": 11095,
+        "n": 120
+      },
+      "j3_frac_over_15684": 0.0,
+      "j3_n_over_15684": 0,
+      "j3_n_over_16384": 0,
+      "j3_truncated_among_over_threshold": 0,
+      "judge_errors": {
+        "J1": {
+          "by_type": {
+            "other_parse": 17,
+            "provider": 0,
+            "truncated": 1
+          },
+          "error_rate": 0.15,
+          "n_error": 18
+        },
+        "J2": {
+          "by_type": {
+            "other_parse": 0,
+            "provider": 0,
+            "truncated": 0
+          },
+          "error_rate": 0.0,
+          "n_error": 0
+        },
+        "J3": {
+          "by_type": {
+            "other_parse": 0,
+            "provider": 0,
+            "truncated": 0
+          },
+          "error_rate": 0.0,
+          "n_error": 0
+        }
+      },
+      "n_views": 120,
+      "response_chars_turn_d": {
+        "max": 810,
+        "mean": 390.05,
+        "median": 343.5,
+        "min": 41,
+        "n": 120
+      },
+      "transcript_chars": {
+        "max": 850,
+        "mean": 425.2583333333333,
+        "median": 386.5,
+        "min": 58,
+        "n": 120
+      }
+    },
+    {
+      "arm": "benign",
+      "depth": 3,
+      "j3_errors_among_over_threshold": 0,
+      "j3_first_attempt_prompt_tokens": {
+        "max": 13445,
+        "mean": 12612.866666666667,
+        "median": 12654.0,
+        "min": 11480,
+        "n": 120
+      },
+      "j3_frac_over_15684": 0.0,
+      "j3_n_over_15684": 0,
+      "j3_n_over_16384": 0,
+      "j3_truncated_among_over_threshold": 0,
+      "judge_errors": {
+        "J1": {
+          "by_type": {
+            "other_parse": 1,
+            "provider": 0,
+            "truncated": 1
+          },
+          "error_rate": 0.016666666666666666,
+          "n_error": 2
+        },
+        "J2": {
+          "by_type": {
+            "other_parse": 0,
+            "provider": 0,
+            "truncated": 0
+          },
+          "error_rate": 0.0,
+          "n_error": 0
+        },
+        "J3": {
+          "by_type": {
+            "other_parse": 0,
+            "provider": 0,
+            "truncated": 0
+          },
+          "error_rate": 0.0,
+          "n_error": 0
+        }
+      },
+      "n_views": 120,
+      "response_chars_turn_d": {
+        "max": 772,
+        "mean": 523.9083333333333,
+        "median": 574.0,
+        "min": 23,
+        "n": 120
+      },
+      "transcript_chars": {
+        "max": 2377,
+        "mean": 1485.7333333333333,
+        "median": 1504.5,
+        "min": 232,
+        "n": 120
+      }
+    },
+    {
+      "arm": "benign",
+      "depth": 6,
+      "j3_errors_among_over_threshold": 2,
+      "j3_first_attempt_prompt_tokens": {
+        "max": 15865,
+        "mean": 14435.208333333334,
+        "median": 14491.5,
+        "min": 12593,
+        "n": 120
+      },
+      "j3_frac_over_15684": 0.016666666666666666,
+      "j3_n_over_15684": 2,
+      "j3_n_over_16384": 0,
+      "j3_truncated_among_over_threshold": 0,
+      "judge_errors": {
+        "J1": {
+          "by_type": {
+            "other_parse": 0,
+            "provider": 0,
+            "truncated": 0
+          },
+          "error_rate": 0.0,
+          "n_error": 0
+        },
+        "J2": {
+          "by_type": {
+            "other_parse": 0,
+            "provider": 0,
+            "truncated": 0
+          },
+          "error_rate": 0.0,
+          "n_error": 0
+        },
+        "J3": {
+          "by_type": {
+            "other_parse": 10,
+            "provider": 4,
+            "truncated": 9
+          },
+          "error_rate": 0.19166666666666668,
+          "n_error": 23
+        }
+      },
+      "n_views": 120,
+      "response_chars_turn_d": {
+        "max": 1002,
+        "mean": 535.3583333333333,
+        "median": 579.0,
+        "min": 74,
+        "n": 120
+      },
+      "transcript_chars": {
+        "max": 4840,
+        "mean": 3181.4,
+        "median": 3253.5,
+        "min": 1054,
+        "n": 120
+      }
+    }
+  ],
+  "definitions": {
+    "j3_first_attempt_prompt_tokens": "kyra.judge.build_judge_prompt (current template, manual, research/judge_anchors_v1.json), Phi-4 chat template with add_generation_prompt=True, tokenizer.encode default special tokens; a re-ask after a parse error is longer (it appends the judge's first output) and is not reconstructed",
+    "response_chars_turn_d": "len(model_text) of turn d",
+    "threshold": "15684 = 16384 context - 700 max new tokens",
+    "transcript_chars": "sum over turns 1..d of len(user_text) + len(model_text) as stored in responses.jsonl (Python str length)"
+  },
+  "j3_provider_error_views": [
+    {
+      "attempts": 2,
+      "depth": 6,
+      "first_attempt_prompt_tokens": 15528,
+      "item_id": "R2-M01-BEN",
+      "run": "result/raw/phaseA_T1/naver-hyperclovax-HyperCLOVAX-SEED-Think-14B/main/20260923T0559Z-bb08ed"
+    },
+    {
+      "attempts": 2,
+      "depth": 6,
+      "first_attempt_prompt_tokens": 15772,
+      "item_id": "R2-M03-BEN",
+      "run": "result/raw/phaseA_T1/naver-hyperclovax-HyperCLOVAX-SEED-Think-14B/main/20260923T0559Z-bb08ed"
+    },
+    {
+      "attempts": 2,
+      "depth": 6,
+      "first_attempt_prompt_tokens": 15594,
+      "item_id": "R5-M01-BEN",
+      "run": "result/raw/phaseA_T1/naver-hyperclovax-HyperCLOVAX-SEED-Think-14B/main/20260923T0559Z-bb08ed"
+    },
+    {
+      "attempts": 2,
+      "depth": 6,
+      "first_attempt_prompt_tokens": 15865,
+      "item_id": "R5-M03-BEN",
+      "run": "result/raw/phaseA_T1/naver-hyperclovax-HyperCLOVAX-SEED-Think-14B/main/20260923T0559Z-bb08ed"
+    }
+  ],
+  "label": "POST-HOC SENSITIVITY (not confirmatory)",
+  "population": "N1 population (24 LOC six-turn localized + 24 BEN twins) x 5 main runs, views at depths 1, 3, 6",
+  "prompt_sha256_check": {
+    "reconstructed_equals_recorded": 720,
+    "views": 720
+  },
+  "runs": [
+    "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/main/20260923T0053Z-43396e",
+    "result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/main/20260922T1238Z-a7a9d1",
+    "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c",
+    "result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/main/20260923T0117Z-919654",
+    "result/raw/phaseA_T1/naver-hyperclovax-HyperCLOVAX-SEED-Think-14B/main/20260923T0559Z-bb08ed"
+  ],
+  "section": "d_length_truncation",
+  "target_truncation": {
+    "fields_matching_finish_or_token_count": {
+      "manifest.jsonl": [],
+      "responses.jsonl": []
+    },
+    "manifest_fields": [
+      "api_version",
+      "chat_template_kwargs",
+      "chat_template_sha256",
+      "chat_template_source",
+      "condition",
+      "engine_kwargs",
+      "error_text",
+      "finished_utc",
+      "item_id",
+      "max_tokens",
+      "model_id",
+      "n_turns",
+      "provider",
+      "run_id",
+      "started_utc",
+      "status",
+      "stop_token_ids",
+      "system_prompt_id",
+      "temperature",
+      "top_p",
+      "vllm_env"
+    ],
+    "manifest_max_tokens_values": [
+      350
+    ],
+    "note": "manifest max_tokens is the configured cap, not a per-response count; no proxy for target truncation is computed",
+    "responses_fields": [
+      "condition",
+      "item_id",
+      "model_text",
+      "turn_index",
+      "user_text"
+    ],
+    "run_log_lines_matching": [],
+    "run_logs_scanned": [
+      "result/raw/phaseA_T1/logs/phaseA_T1__LGAI-EXAONE-EXAONE-4.0-32B-AWQ__main__20260923T0053Z-43396e.log",
+      "result/raw/phaseA_T1/logs/phaseA_T1__Qwen-Qwen2.5-14B-Instruct__main__20260922T1238Z-a7a9d1.log",
+      "result/raw/phaseA_T1/logs/phaseA_T1__RedHatAI-gemma-3-27b-it-quantized.w4a16__main__20260923T0237Z-7f582c.log",
+      "result/raw/phaseA_T1/logs/phaseA_T1__kakaocorp-kanana-1.5-8b-instruct-2505__main__20260923T0117Z-919654.log",
+      "result/raw/phaseA_T1/logs/phaseA_T1__naver-hyperclovax-HyperCLOVAX-SEED-Think-14B__main__20260923T0559Z-bb08ed.log"
+    ],
+    "target_finish_reason_or_token_count": "not recorded"
+  },
+  "tokenizer_path": "/home/wjeong/adol/models/hf/hub/models--cortecs--phi-4-FP8-Dynamic/snapshots/7014f998fac5d1daf230aa4a9766067b2ebe0bc1"
+}

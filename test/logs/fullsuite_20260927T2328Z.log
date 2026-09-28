@@ -1,0 +1,615 @@
+test_empty_input_exits_nonzero_with_a_message (test_analysis.TestCliContract) ... ok
+test_fixture_and_run_inputs_are_mutually_exclusive (test_analysis.TestCliContract) ... ok
+test_g6_facing_field_names (test_analysis.TestCliContract)
+The names the G6 coder aligned to must all be present. ... ok
+test_outputs_are_valid_json_naming_the_frozen_protocol (test_analysis.TestCliContract) ... ok
+test_regeneration_reproduces_every_csv (test_analysis.TestFixturesAreDeterministic) ... ok
+test_base_item_condition_and_crri (test_analysis.TestLoaderDerivations) ... ok
+test_failure_event_recovery_and_censoring (test_analysis.TestLoaderDerivations) ... ok
+test_inconsistent_flag_is_an_error (test_analysis.TestLoaderDerivations) ... ok
+test_panel_v0_record_yields_no_series (test_analysis.TestLoaderDerivations)
+A record without `depth` is panel v0: no invented per-turn series. ... ok
+test_prefix_view_over_refusal_and_helpfulness (test_analysis.TestLoaderDerivations) ... ok
+test_prefix_view_panel_records (test_analysis.TestLoaderDerivations)
+One panel record per (item_id, condition, depth) -> series columns. ... ok
+test_benign_twin_and_interaction_reported (test_analysis.TestN1) ... ok
+test_bootstrap_p_helper (test_analysis.TestN1) ... ok
+test_gee_sensitivity_present (test_analysis.TestN1) ... ok
+test_holm_adjustment (test_analysis.TestN1) ... ok
+test_interaction_p_is_the_bootstrap_p_holm_adjusted (test_analysis.TestN1) ... ok
+test_null_fixture_ci_includes_one (test_analysis.TestN1) ... ok
+test_recovers_designed_odds_ratio (test_analysis.TestN1) ... ok
+test_vb_p_is_anticonservative_and_is_not_the_headline (test_analysis.TestN1)
+The VB Wald p is kept only as a secondary reading. ... ok
+test_ci_method_is_named (test_analysis.TestN2) ... ok
+test_effect_fixture_does_not_pass_tost (test_analysis.TestN2) ... ok
+test_null_fixture_passes_tost (test_analysis.TestN2) ... ok
+test_recovers_paired_difference (test_analysis.TestN2) ... ok
+test_hand_case_flag_agreement (test_analysis.TestN3) ... ok
+test_hand_case_matches_the_explicit_formula (test_analysis.TestN3) ... ok
+test_identity_weights_reduce_to_ac1 (test_analysis.TestN3) ... ok
+test_leave_one_family_out_is_reported (test_analysis.TestN3) ... ok
+test_simulated_panel_lands_in_its_band (test_analysis.TestN3) ... ok
+test_cis_bracket_the_point_estimates (test_analysis.TestPareto) ... ok
+test_default_method_is_the_panel_flag (test_analysis.TestPareto) ... ok
+test_missing_flag_without_the_opt_in_is_an_error (test_analysis.TestPareto)
+No silent fallback: an old panel without the flag must fail loudly. ... ok
+test_proxy_fallback_is_opt_in_and_named (test_analysis.TestPareto) ... ok
+test_rates_match_hand_counts (test_analysis.TestPareto) ... ok
+test_first_failure_distribution (test_analysis.TestTransitions) ... ok
+test_hazard (test_analysis.TestTransitions) ... ok
+test_per_turn_counts (test_analysis.TestTransitions) ... ok
+test_recovery_counts_with_denominators (test_analysis.TestTransitions) ... ok
+test_n1_and_descriptives_run_on_the_multi_run_table (test_analysis_multirun.TestLoaderMultiRun) ... ok
+test_n1_cli_exits_nonzero_on_two_runs_of_one_model (test_analysis_multirun.TestLoaderMultiRun) ... ok
+test_one_row_per_run_and_item (test_analysis_multirun.TestLoaderMultiRun) ... ok
+test_panel_outside_the_runs_raises (test_analysis_multirun.TestLoaderMultiRun) ... ok
+test_relative_run_and_absolute_panel_match (test_analysis_multirun.TestLoaderMultiRun) ... ok
+test_same_run_dir_twice_raises (test_analysis_multirun.TestLoaderMultiRun) ... ok
+test_single_run_input_unchanged (test_analysis_multirun.TestLoaderMultiRun) ... ok
+test_two_runs_of_one_model_are_refused (test_analysis_multirun.TestLoaderMultiRun) ... ok
+test_a_judge_rating_one_view_twice_raises (test_analysis_multirun.TestN3Subjects) ... ok
+test_ac2_and_lofo_match_an_independent_subject_table (test_analysis_multirun.TestN3Subjects) ... ok
+test_subject_is_the_judged_view_and_controls_are_excluded (test_analysis_multirun.TestN3Subjects) ... ok
+test_the_same_judge_file_twice_is_refused_by_the_cli (test_analysis_multirun.TestN3Subjects) ... ok
+test_default_floor_refuses_a_full_volume (test_campaign_hardening.TestCampaignInvocationHardening) ... ERROR: pre-flight refused for fake/tiny-vllm-a
+  disk: {'path': '/tmp/campaign_harden_h2lgcgcc/raw', 'free_gb': 5.0, 'required_gb': 20.0, 'min_free_gb_overridden': False, 'default_required_gb': 20.0, 'ok': False, 'enforced': True}
+campaign record: /tmp/campaign_harden_h2lgcgcc/raw/hardenfloor/campaign_hardenfloor__20260927T2334Z-880bd8.json
+ok
+test_dry_run_prints_the_cache_line_and_records_the_new_fields (test_campaign_hardening.TestCampaignInvocationHardening) ... ok
+test_override_lowers_the_floor_and_says_so (test_campaign_hardening.TestCampaignInvocationHardening) ... ok
+test_passing_the_default_value_is_not_an_override (test_campaign_hardening.TestCampaignInvocationHardening) ... ERROR: pre-flight refused for fake/tiny-vllm-a
+  disk: {'path': '/tmp/campaign_harden_r0087de0/raw', 'free_gb': 5.0, 'required_gb': 20.0, 'min_free_gb_overridden': False, 'default_required_gb': 20.0, 'ok': False, 'enforced': True}
+campaign record: /tmp/campaign_harden_r0087de0/raw/hardensame/campaign_hardensame__20260927T2334Z-d63315.json
+ok
+test_two_invocations_leave_two_distinct_records (test_campaign_hardening.TestCampaignInvocationHardening) ... ok
+test_preset_variables_are_left_alone_and_reported_as_inherited (test_campaign_hardening.TestPinCompileCaches) ... ok
+test_unset_variables_are_pinned_under_the_project (test_campaign_hardening.TestPinCompileCaches) ... ok
+test_cli_dry_run_exits_zero (test_g6_campaign.TestCampaignDryRun) ... ok
+test_confirmatory_refuses_a_mismatched_freeze_hash (test_g6_campaign.TestCampaignDryRun) ... ERROR: pre-flight refused for fake/tiny-vllm-a
+  freeze: FREEZE_MISMATCH: /tmp/campaign_dry_x56qd028/PREREGISTERED_kyra_v2.yaml sha256=6396ec8483d664da97f2bf9a06c840d40d97aa6416a7c0fda1fa3a49c076d488 does not match frozen receipt sha256=87abaae4c16fb0efe3dad27ff464fcd86b6b48ff67a33f1414336ccc7ddd34a4
+campaign record: /tmp/campaign_dry_x56qd028/raw/dryrun/campaign_dryrun__20260927T2334Z-1c82ba.json
+ok
+test_confirmatory_refuses_a_mock_provider (test_g6_campaign.TestCampaignDryRun) ... ERROR: models_fake.json[0] uses the mock provider; a mock run is never evidence and is refused for --class confirmatory
+ok
+test_dry_run_confirmatory_verifies_freeze_and_chooses_a_gpu (test_g6_campaign.TestCampaignDryRun) ... ok
+test_dry_run_plan_smoke (test_g6_campaign.TestCampaignDryRun) ... ok
+test_dry_run_without_out_root_writes_nothing (test_g6_campaign.TestCampaignDryRun) ... ok
+test_no_free_gpu_is_a_preflight_refusal (test_g6_campaign.TestCampaignDryRun) ... ERROR: pre-flight refused for fake/tiny-vllm-a
+  gpu: no free GPU among [0, 1, 2] (< 4096 MiB used)
+campaign record: /tmp/campaign_dry_hqlinbfu/raw/dryrun/campaign_dryrun__20260927T2334Z-ef7a38.json
+ok
+test_a_non_vllm_provider_warns_and_ignores_the_options (test_g6_campaign.TestCampaignGenerationOptions) ... ok
+test_config_string_carries_the_options_only_when_declared (test_g6_campaign.TestCampaignGenerationOptions) ... ok
+test_dry_run_plan_prints_the_options_and_the_record_carries_them (test_g6_campaign.TestCampaignGenerationOptions) ... ok
+test_invalid_options_are_bad_input_naming_the_model (test_g6_campaign.TestCampaignGenerationOptions) ... ok
+test_load_models_keeps_the_options_and_nulls_when_absent (test_g6_campaign.TestCampaignGenerationOptions) ... ok
+test_make_provider_passes_the_options_to_the_vllm_provider (test_g6_campaign.TestCampaignGenerationOptions) ... ok
+test_first_free_gpu_of_0_1_2 (test_g6_campaign.TestCampaignGpuGuard) ... ok
+test_gpu_three_is_never_chosen (test_g6_campaign.TestCampaignGpuGuard) ... ok
+test_gpu_zero_when_free (test_g6_campaign.TestCampaignGpuGuard) ... ok
+test_chosen_gpu_is_pinned_before_the_provider_is_built (test_g6_campaign.TestCampaignGpuPinning) ... ok
+test_cli_gpu_override_refusal_is_exit_7 (test_g6_campaign.TestCampaignGpuPinning) ... ERROR: pre-flight refused for fake/tiny-vllm-a
+  gpu: --gpu 3 refused: allowed GPUs are [0, 1, 2] and GPU 3 is another user's job
+campaign record: /tmp/campaign_gpu_yub977_b/raw2/gpubad/campaign_gpubad__20260927T2334Z-3f142a.json
+ok
+test_gpu_override_is_refused_when_busy_or_forbidden (test_g6_campaign.TestCampaignGpuPinning) ... ok
+test_inherited_cuda_visible_devices_restricts_the_candidates (test_g6_campaign.TestCampaignGpuPinning) ... ok
+test_1_dry_run_prints_the_plan (test_g6_campaign.TestCampaignScoring) ... ok
+test_2_two_fake_judges_and_panel_end_to_end (test_g6_campaign.TestCampaignScoring) ... ok
+test_3_existing_judge_file_is_refused (test_g6_campaign.TestCampaignScoring) ... ERROR: judge output already exists, refusing to overwrite: /tmp/campaign_score_j_cw82kv/raw/scoreme/fake-tiny-a/main/20260927T2334Z-a875dd/judge_JF1.jsonl, /tmp/campaign_score_j_cw82kv/raw/scoreme/fake-tiny-a/main/20260927T2334Z-a875dd/judge_JF2.jsonl
+campaign record: /tmp/campaign_score_j_cw82kv/raw/scoreagain/campaign_scoreagain__20260927T2334Z-185ce3_scoring.json
+ok
+test_4_single_judge_panel_is_insufficient (test_g6_campaign.TestCampaignScoring) ... ok
+test_5_missing_marker_is_refused (test_g6_campaign.TestCampaignScoring) ... ERROR: refusing to score /tmp/campaign_score_j_cw82kv/no_marker_run: no MARKER (an unvalidated run is not data)
+ok
+test_6_unknown_run_glob_is_refused (test_g6_campaign.TestCampaignScoring) ... ERROR: no run directory matches '/tmp/campaign_score_j_cw82kv/nothing_here_*' (a missing run is never scored silently)
+ok
+test_6a_items_not_covering_the_run_is_refused (test_g6_campaign.TestCampaignScoring)
+The mistake this guard exists for: scoring a smoke run against the ... ERROR: refusing to score /tmp/campaign_score_j_cw82kv/raw/scoreme/fake-tiny-a/repeat_2/20260927T2334Z-ba4121: 1 item_id(s) in responses.jsonl are absent from /home/wjeong/adol/research/items/items_phaseA_v1.jsonl, so their risk_group (and therefore which views are CTRL controls) is unknown: KYRA-SMK-001L
+ok
+test_6b_panel_overwrite_is_refused_without_the_flag (test_g6_campaign.TestCampaignScoring) ... ERROR: panel output already exists, refusing to overwrite: /tmp/campaign_score_j_cw82kv/raw/scoreme/fake-tiny-a/repeat_3/20260927T2334Z-7d94c4/panel.jsonl (pass --allow-panel-overwrite to replace it)
+campaign record: /tmp/campaign_score_j_cw82kv/raw/scorepanel2/campaign_scorepanel2__20260927T2334Z-9a863d_scoring.json
+ok
+test_7_declared_batch_size_reaches_the_judge_command_and_the_config (test_g6_campaign.TestCampaignScoring)
+judges.json "batch_size": 16 -> kyra.judge --batch-size 16 and a ... ok
+test_1_complete_judge_is_reused_and_only_the_missing_one_runs (test_g6_campaign.TestCampaignScoringResume) ... ok
+test_2_a_finished_run_reuses_every_judge_and_the_panel (test_g6_campaign.TestCampaignScoringResume) ... ok
+test_3_a_provenance_difference_refuses_naming_the_field (test_g6_campaign.TestCampaignScoringResume) ... ok
+test_3b_a_refusal_runs_nothing_and_overwrites_nothing (test_g6_campaign.TestCampaignScoringResume) ... ok
+test_4_engine_kwargs_and_vllm_env_are_compared_when_set (test_g6_campaign.TestCampaignScoringResume) ... ok
+test_5_stray_shard_files_are_archived_and_the_judge_re_runs (test_g6_campaign.TestCampaignScoringResume) ... ok
+test_5b_a_shard_beside_a_reusable_judge_file_is_refused_by_name (test_g6_campaign.TestCampaignScoringResume)
+An unmerged shard in the run dir ROOT next to a merged judge file is an ... ok
+test_6_without_resume_the_existing_refusal_is_unchanged (test_g6_campaign.TestCampaignScoringResume) ... ok
+test_6b_a_stray_shard_without_resume_is_still_refused (test_g6_campaign.TestCampaignScoringResume) ... ok
+test_a_failed_run_stops_the_campaign (test_g6_campaign.TestCampaignSmokeRun) ... ERROR: run stoptest__fake-tiny-a__repeat_1__20260927T2334Z-40f4f5 failed (missing file: responses.jsonl; manifest contains 1 record(s) with status=error: KYRA-SMK-001L; response record count mismatch: expected 1 response unit(s) (= 1 items x 1 conditions), found 0; no response records for item_id='KYRA-SMK-001L' condition='repeat_1'; input item_id 'KYRA-SMK-001L' missing from responses.jsonl); stopping the campaign - no later model is started.
+log: /tmp/campaign_run_7jxsg8gd/raw/stoptest/logs/stoptest__fake-tiny-a__repeat_1__20260927T2334Z-40f4f5.log
+campaign record: /tmp/campaign_run_7jxsg8gd/raw/stoptest/campaign_stoptest__20260927T2334Z-77fea1.json
+ok
+test_two_fake_models_end_to_end (test_g6_campaign.TestCampaignSmokeRun) ... ok
+test_every_stratum_is_represented (test_g6_campaign.TestCampaignSubset) ... ok
+test_seed_change_changes_the_draw (test_g6_campaign.TestCampaignSubset) ... ok
+test_smoke_items_subset (test_g6_campaign.TestCampaignSubset) ... ok
+test_subset_is_twenty_percent_and_deterministic (test_g6_campaign.TestCampaignSubset) ... ok
+test_error_is_never_kill (test_g6_campaign.TestG6Aggregate) ... ok
+test_go (test_g6_campaign.TestG6Aggregate) ... ok
+test_inconclusive_on_miss (test_g6_campaign.TestG6Aggregate) ... ok
+test_inconclusive_when_n1_1_passes_but_n1_2_does_not (test_g6_campaign.TestG6Aggregate) ... ok
+test_kill (test_g6_campaign.TestG6Aggregate) ... ok
+test_kill_with_survivor_n2 (test_g6_campaign.TestG6Aggregate) ... ok
+test_kill_with_survivor_n3 (test_g6_campaign.TestG6Aggregate) ... ok
+test_go_verdict_carries_hashes_and_numbers (test_g6_campaign.TestG6CLI) ... ok
+test_inconclusive_verdict (test_g6_campaign.TestG6CLI) ... ok
+test_kill_verdict (test_g6_campaign.TestG6CLI) ... ok
+test_kill_with_survivor_verdict (test_g6_campaign.TestG6CLI) ... ok
+test_missing_input_file_is_error_not_kill (test_g6_campaign.TestG6CLI) ... ok
+test_missing_prereg_file (test_g6_campaign.TestG6CLI) ... ok
+test_n3_revisions_is_recorded_and_changes_only_the_fail_branch (test_g6_campaign.TestG6CLI) ... ok
+test_refrozen_but_altered_table_is_an_error (test_g6_campaign.TestG6CLI)
+Hash matches its own receipt, yet the rules no longer match the code. ... ok
+test_tampered_prereg_refuses_before_any_reading (test_g6_campaign.TestG6CLI) ... ok
+test_n1_1_error_missing_field (test_g6_campaign.TestG6Readings) ... ok
+test_n1_1_error_nan (test_g6_campaign.TestG6Readings) ... ok
+test_n1_1_fail (test_g6_campaign.TestG6Readings) ... ok
+test_n1_1_fail_boundary_ci_upper_equals_1_2 (test_g6_campaign.TestG6Readings) ... ok
+test_n1_1_miss (test_g6_campaign.TestG6Readings) ... ok
+test_n1_1_pass (test_g6_campaign.TestG6Readings) ... ok
+test_n1_1_pass_needs_ci_lower_above_one (test_g6_campaign.TestG6Readings) ... ok
+test_n1_2_ci_including_one_is_not_a_fail (test_g6_campaign.TestG6Readings) ... ok
+test_n1_2_error (test_g6_campaign.TestG6Readings) ... ok
+test_n1_2_error_nan (test_g6_campaign.TestG6Readings) ... ok
+test_n1_2_fail (test_g6_campaign.TestG6Readings) ... ok
+test_n1_2_miss (test_g6_campaign.TestG6Readings) ... ok
+test_n1_2_pass_via_benign_or (test_g6_campaign.TestG6Readings) ... ok
+test_n1_2_pass_via_interaction (test_g6_campaign.TestG6Readings) ... ok
+test_n2_error (test_g6_campaign.TestG6Readings) ... ok
+test_n2_error_when_no_tost_decision_at_all (test_g6_campaign.TestG6Readings) ... ok
+test_n2_fail_explicit_equivalence (test_g6_campaign.TestG6Readings) ... ok
+test_n2_fail_from_two_one_sided_p_values (test_g6_campaign.TestG6Readings) ... ok
+test_n2_miss (test_g6_campaign.TestG6Readings) ... ok
+test_n2_pass (test_g6_campaign.TestG6Readings) ... ok
+test_n2_pass_needs_ci_excluding_zero (test_g6_campaign.TestG6Readings) ... ok
+test_n3_1_error (test_g6_campaign.TestG6Readings) ... ok
+test_n3_1_error_on_nan_flag_agreement (test_g6_campaign.TestG6Readings) ... ok
+test_n3_1_fail_after_one_revision (test_g6_campaign.TestG6Readings) ... ok
+test_n3_1_flag_agreement_below_bar_is_not_pass (test_g6_campaign.TestG6Readings) ... ok
+test_n3_1_miss (test_g6_campaign.TestG6Readings) ... ok
+test_n3_1_miss_when_no_revision_yet (test_g6_campaign.TestG6Readings) ... ok
+test_n3_1_pass (test_g6_campaign.TestG6Readings) ... ok
+test_n3_2_error (test_g6_campaign.TestG6Readings) ... ok
+test_n3_2_fail (test_g6_campaign.TestG6Readings) ... ok
+test_n3_2_miss (test_g6_campaign.TestG6Readings) ... ok
+test_n3_2_pass (test_g6_campaign.TestG6Readings) ... ok
+test_n3_2_pass_derived_from_the_lofo_block (test_g6_campaign.TestG6Readings) ... ok
+test_parent_n1 (test_g6_campaign.TestG6Readings) ... ok
+test_parent_n3 (test_g6_campaign.TestG6Readings) ... ok
+test_aggregate_rule_mismatch_is_reported (test_g6_campaign.TestG6Table) ... ok
+test_claim_id_mismatch_is_reported (test_g6_campaign.TestG6Table) ... ok
+test_coded_table_matches_the_frozen_prereg (test_g6_campaign.TestG6Table) ... ok
+test_decision_rule_prose_mismatch_is_reported (test_g6_campaign.TestG6Table) ... ok
+test_threshold_mismatch_is_reported (test_g6_campaign.TestG6Table) ... ok
+test_cli_condition_and_conditions_are_mutually_exclusive (test_g6_campaign.TestRunnerConditionOptions) ... ERROR: --condition and --conditions are mutually exclusive
+ok
+test_cli_rejects_a_malformed_condition_tag (test_g6_campaign.TestRunnerConditionOptions) ... ERROR: bad condition tag 'repeat 1!' (allowed: letters, digits, . _ -)
+ok
+test_cli_runs_a_tagged_condition (test_g6_campaign.TestRunnerConditionOptions) ... ok
+test_cli_temperature_seed_reach_the_provider_constructor (test_g6_campaign.TestRunnerConditionOptions)
+--temperature/--seed are provider options: a provider that does not ... ERROR: bad options for provider 'mock': MockProvider() takes no arguments
+ok
+test_free_condition_tag_reaches_the_manifest (test_g6_campaign.TestRunnerConditionOptions) ... ok
+test_requested_temperature_is_recorded_when_the_provider_declares_nothing (test_g6_campaign.TestRunnerConditionOptions) ... ok
+test_missing_top_level_key (test_items_build.TestBadInput) ... ok
+test_no_matching_source (test_items_build.TestBadInput) ... ok
+test_unknown_expect_group (test_items_build.TestBadInput) ... ok
+test_unparseable_yaml (test_items_build.TestBadInput) ... ok
+test_all_reasons_are_printed (test_items_build.TestGateFailures) ... ok
+test_duplicate_item_id (test_items_build.TestGateFailures) ... ok
+test_length_tolerance_violation (test_items_build.TestGateFailures)
+A benign turn far longer than its risk turn fails the +/-20% rule. ... ok
+test_missing_benign_twin (test_items_build.TestGateFailures) ... ok
+test_missing_expected_group (test_items_build.TestGateFailures) ... ok
+test_request_count_mismatch (test_items_build.TestGateFailures) ... ok
+test_unlisted_group (test_items_build.TestGateFailures) ... ok
+test_wrong_twin_length (test_items_build.TestGateFailures) ... ok
+test_endings_configured_in_one_place (test_items_build.TestRequestCounting) ... ok
+test_korean_request_endings (test_items_build.TestRequestCounting) ... ok
+test_line_breaks_split_sentences (test_items_build.TestRequestCounting) ... ok
+test_multiple_sentences_counted_separately (test_items_build.TestRequestCounting) ... ok
+test_other_verb_endings_are_not_requests (test_items_build.TestRequestCounting) ... ok
+test_question_mark_is_a_request (test_items_build.TestRequestCounting) ... ok
+test_statement_is_not_a_request (test_items_build.TestRequestCounting) ... ok
+test_suffix_match_covers_compound_verbs (test_items_build.TestRequestCounting)
+Verbs ending in one of the suffixes count without being listed. ... ok
+test_trailing_punctuation_is_stripped_before_matching (test_items_build.TestRequestCounting) ... ok
+test_build_writes_26_items (test_items_build.TestValidGroup) ... ok
+test_character_fallback_prints_warn (test_items_build.TestValidGroup) ... ok
+test_item_kinds_and_links (test_items_build.TestValidGroup) ... ok
+test_jsonl_records_are_schema_clean (test_items_build.TestValidGroup) ... ok
+test_real_tokenizer_path (test_items_build.TestValidGroup) ... skipped "local EXAONE tokenizer unavailable: WARN: tokenizer 'LGAI-EXAONE/EXAONE-4.0-1.2B' could not be loaded from HF_HOME=/home/wjeong/adol/models/hf (OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.); falling back to character counts for the +/-20% length check"
+test_stratification_csv (test_items_build.TestValidGroup) ... ok
+test_stratification_has_source_group (test_items_build.TestValidGroup)
+Contrasts and twins keep their origin group in the source_group column. ... ok
+test_control_fields_on_risk_item_raise (test_judge.TestControlParsing) ... ok
+test_control_record_carries_both_fields (test_judge.TestControlParsing) ... ok
+test_missing_control_fields_on_control_item_raises (test_judge.TestControlParsing) ... ok
+test_non_boolean_over_refusal_raises (test_judge.TestControlParsing) ... ok
+test_out_of_range_helpfulness_raises (test_judge.TestControlParsing) ... ok
+test_partial_control_fields_raise (test_judge.TestControlParsing) ... ok
+test_risk_record_is_unchanged (test_judge.TestControlParsing) ... ok
+test_bad_depth_or_view_is_refused (test_judge.TestFailClosed) ... ok
+test_control_flag_must_match_the_record (test_judge.TestFailClosed) ... ok
+test_error_record_carries_no_scores (test_judge.TestFailClosed) ... ok
+test_error_without_text_is_refused (test_judge.TestFailClosed) ... ok
+test_ok_record_passes_the_guard (test_judge.TestFailClosed) ... ok
+test_ok_whose_a_length_contradicts_depth_is_refused (test_judge.TestFailClosed) ... ok
+test_ok_with_incomplete_scores_is_refused (test_judge.TestFailClosed) ... ok
+test_ok_with_zeroed_missing_dimension_is_refused (test_judge.TestFailClosed) ... ok
+test_ok_without_scores_is_refused (test_judge.TestFailClosed) ... ok
+test_control_view_requires_control_fields (test_judge.TestJudgeConversation) ... ok
+test_empty_output_is_error (test_judge.TestJudgeConversation) ... ok
+test_malformed_then_valid_is_ok_after_retry (test_judge.TestJudgeConversation) ... ok
+test_malformed_twice_is_error_without_scores (test_judge.TestJudgeConversation) ... ok
+test_no_retry_when_max_retries_zero (test_judge.TestJudgeConversation) ... ok
+test_out_of_range_score_is_error_not_clamped (test_judge.TestJudgeConversation) ... ok
+test_provider_exception_is_error_not_retried (test_judge.TestJudgeConversation) ... ok
+test_valid_output_is_ok_in_one_attempt (test_judge.TestJudgeConversation) ... ok
+test_wrong_a_length_for_the_view_is_error (test_judge.TestJudgeConversation) ... ok
+test_a_permanent_engine_failure_writes_nothing_at_all (test_judge.TestJudgeEngineReady) ... ok
+test_a_provider_without_an_engine_reports_zero_attempts (test_judge.TestJudgeEngineReady) ... ok
+test_a_transient_engine_failure_is_retried_and_no_view_is_an_error (test_judge.TestJudgeEngineReady) ... ok
+test_cli_exit_5_and_no_judge_file_when_the_engine_never_comes_up (test_judge.TestJudgeEngineReady)
+End to end with the real VLLMProvider over a fake vllm whose engine ... ok
+test_cli_refuses_a_negative_start_delay (test_judge.TestJudgeEngineReady) ... ok
+test_cli_start_delay_delays_the_build (test_judge.TestJudgeEngineReady) ... ok
+test_cli_without_the_flag_does_not_wait (test_judge.TestJudgeEngineReady) ... ok
+test_ensure_provider_ready_waits_before_it_builds (test_judge.TestJudgeEngineReady) ... ok
+test_anchors_are_rendered (test_judge.TestJudgePrompt) ... ok
+test_bad_anchor_raises (test_judge.TestJudgePrompt) ... ok
+test_contains_every_dimension_axis_and_cf_code (test_judge.TestJudgePrompt) ... ok
+test_contains_json_schema_keys (test_judge.TestJudgePrompt) ... ok
+test_control_prompt_adds_the_control_rules_and_fields (test_judge.TestJudgePrompt) ... ok
+test_empty_anchors_leave_a_stated_placeholder (test_judge.TestJudgePrompt) ... ok
+test_empty_conversation_raises (test_judge.TestJudgePrompt) ... ok
+test_make_views_final_is_the_whole_conversation (test_judge.TestJudgePrompt) ... ok
+test_make_views_rejects_unknown_mode_and_empty (test_judge.TestJudgePrompt) ... ok
+test_make_views_single_turn_is_one_view (test_judge.TestJudgePrompt) ... ok
+test_manual_excerpt_is_embedded (test_judge.TestJudgePrompt) ... ok
+test_missing_model_text_raises (test_judge.TestJudgePrompt) ... ok
+test_no_unfilled_slots (test_judge.TestJudgePrompt) ... ok
+test_prefix_view_prompt_hides_later_turns (test_judge.TestJudgePrompt) ... ok
+test_prefix_view_states_the_scored_turn (test_judge.TestJudgePrompt) ... ok
+test_risk_prompt_forbids_the_control_fields (test_judge.TestJudgePrompt) ... ok
+test_roles (test_judge.TestJudgePrompt) ... ok
+test_template_file_keeps_both_anchor_slots (test_judge.TestJudgePrompt) ... ok
+test_turn_count_and_indexed_conversation (test_judge.TestJudgePrompt) ... ok
+test_all_error_run_still_exits_with_a_file_and_no_scores (test_judge.TestJudgeRun) ... ok
+test_cli_control_ids (test_judge.TestJudgeRun) ... ok
+test_cli_items_file_covering_the_run_is_accepted (test_judge.TestJudgeRun) ... ok
+test_cli_items_file_must_cover_every_run_item (test_judge.TestJudgeRun) ... ok
+test_cli_no_items_records_unknown_control_status (test_judge.TestJudgeRun) ... ok
+test_cli_prefix_views_require_an_items_source (test_judge.TestJudgeRun) ... ok
+test_cli_rejects_missing_run_dir (test_judge.TestJudgeRun) ... ok
+test_cli_with_fake_provider (test_judge.TestJudgeRun) ... ok
+test_control_items_are_judged_with_the_control_schema (test_judge.TestJudgeRun) ... ok
+test_control_output_on_a_risk_item_is_an_error (test_judge.TestJudgeRun) ... ok
+test_mixed_outcomes_counts_and_rate (test_judge.TestJudgeRun) ... ok
+test_prefix_views_produce_one_record_per_depth (test_judge.TestJudgeRun) ... ok
+test_refuses_to_append_to_an_existing_judge_file (test_judge.TestJudgeRun) ... ok
+test_unknown_view_mode_raises (test_judge.TestJudgeRun) ... ok
+test_views_final_reproduces_the_single_view (test_judge.TestJudgeRun) ... ok
+test_three_fake_judges_then_panel (test_judge.TestJudgeToPanel) ... ok
+test_aggregates_per_depth (test_judge.TestPanel) ... ok
+test_all_judges_dropped_raises (test_judge.TestPanel) ... ok
+test_control_over_refusal_tie_is_conservative (test_judge.TestPanel) ... ok
+test_control_record_without_control_fields_is_rejected (test_judge.TestPanel) ... ok
+test_control_view_over_refusal_majority_and_helpfulness_median (test_judge.TestPanel) ... ok
+test_family_map_disagreement_raises (test_judge.TestPanel) ... ok
+test_insufficient_after_family_drop (test_judge.TestPanel) ... ok
+test_insufficient_when_fewer_than_two_ok_judges (test_judge.TestPanel) ... ok
+test_judge_file_with_ok_but_no_record_is_rejected (test_judge.TestPanel) ... ok
+test_judge_file_without_depth_is_rejected (test_judge.TestPanel) ... ok
+test_judge_whose_a_length_contradicts_depth_is_dropped_and_named (test_judge.TestPanel) ... ok
+test_judges_disagreeing_on_is_control_raise (test_judge.TestPanel) ... ok
+test_leave_one_family_out_drops_the_shared_family_judge (test_judge.TestPanel) ... ok
+test_majority_false_yields_no_codes (test_judge.TestPanel) ... ok
+test_median_and_majority_over_three_judges (test_judge.TestPanel) ... ok
+test_panel_cli (test_judge.TestPanel) ... ok
+test_panel_cli_bad_input_exits_4 (test_judge.TestPanel) ... ok
+test_panel_write_guard_rejects_depth_mismatch (test_judge.TestPanel) ... ok
+test_panel_write_guard_rejects_ok_with_one_judge (test_judge.TestPanel) ... ok
+test_panel_write_guard_rejects_ok_without_scores (test_judge.TestPanel) ... ok
+test_unknown_judge_id_raises (test_judge.TestPanel) ... ok
+test_write_panel_roundtrip (test_judge.TestPanel) ... ok
+test_groups_and_orders_turns (test_judge.TestReadConversations) ... ok
+test_missing_file_raises (test_judge.TestReadConversations) ... ok
+test_non_contiguous_turn_index_raises (test_judge.TestReadConversations) ... ok
+test_real_smoke_run_is_readable (test_judge.TestReadConversations) ... ok
+test_batch_size_1_is_the_sequential_per_view_sequence (test_judge_batch.TestCallSequence) ... ok
+test_batch_size_64_makes_ceil_n_over_64_calls_when_nothing_is_retried (test_judge_batch.TestCallSequence) ... ok
+test_chunking_is_consecutive_and_sized (test_judge_batch.TestCallSequence) ... ok
+test_the_retry_pass_carries_only_the_failed_views (test_judge_batch.TestCallSequence) ... ok
+test_the_retry_prompt_is_the_same_re_ask_as_the_sequential_path (test_judge_batch.TestCallSequence) ... ok
+test_declared_batch_size_is_passed_through (test_judge_batch.TestCampaignBatchSize) ... ok
+test_load_judges_reads_and_validates_batch_size (test_judge_batch.TestCampaignBatchSize) ... ok
+test_undeclared_batch_size_passes_no_flag (test_judge_batch.TestCampaignBatchSize) ... ok
+test_cli_rejects_a_zero_batch_size (test_judge_batch.TestJudgeCLI) ... ok
+test_cli_runs_batched_and_writes_the_sidecar (test_judge_batch.TestJudgeCLI) ... ok
+test_default_batch_size_is_64 (test_judge_batch.TestJudgeCLI) ... ok
+test_declared_provenance_reaches_the_sidecar (test_judge_batch.TestMetaSidecar) ... ok
+test_sequential_sidecar_says_sequential (test_judge_batch.TestMetaSidecar) ... ok
+test_sidecar_is_written_next_to_the_judge_file_with_the_declared_fields (test_judge_batch.TestMetaSidecar) ... ok
+test_unknown_provenance_is_null_not_omitted (test_judge_batch.TestMetaSidecar) ... ok
+test_mock_maps_the_single_path (test_judge_batch.TestMockProviderGenerateMany) ... ok
+test_a_provider_failure_inside_a_batch_is_attributed_to_its_own_view (test_judge_batch.TestRecordsAreIdentical)
+A batched call fails as a whole, so the judge re-issues that chunk one ... ok
+test_all_ok_files_are_byte_identical (test_judge_batch.TestRecordsAreIdentical) ... ok
+test_batch_size_must_be_a_positive_int (test_judge_batch.TestRecordsAreIdentical) ... ok
+test_no_retry_budget_is_identical_too (test_judge_batch.TestRecordsAreIdentical) ... ok
+test_retry_run_files_are_byte_identical (test_judge_batch.TestRecordsAreIdentical) ... ok
+test_a_short_output_list_is_an_error (test_judge_batch.TestVLLMGenerateMany) ... ok
+test_empty_completion_in_a_batch_is_an_error (test_judge_batch.TestVLLMGenerateMany) ... ok
+test_engine_failure_propagates_as_provider_error (test_judge_batch.TestVLLMGenerateMany) ... ok
+test_no_conversations_is_an_error (test_judge_batch.TestVLLMGenerateMany) ... ok
+test_one_engine_call_for_the_whole_list_in_input_order (test_judge_batch.TestVLLMGenerateMany) ... ok
+test_same_sampling_params_and_template_kwargs_as_the_single_call (test_judge_batch.TestVLLMGenerateMany) ... ok
+test_1_run_subprocesses_runs_the_children_at_the_same_time (test_judge_shard.TestCampaignShards) ... ok
+test_2_two_shards_per_judge_merge_into_the_judge_file (test_judge_shard.TestCampaignShards) ... ok
+test_3_existing_shard_file_is_refused (test_judge_shard.TestCampaignShards) ... ok
+test_3b_a_shard_left_in_the_shards_directory_is_refused_too (test_judge_shard.TestCampaignShards) ... ok
+test_4_shards_1_is_exactly_the_previous_command_and_config (test_judge_shard.TestCampaignShards) ... ok
+test_5_a_failing_shard_stops_the_batch_before_the_merge (test_judge_shard.TestCampaignShards)
+An unusable --fake-outputs file makes every shard child exit 4: the ... ok
+test_6_judge_command_and_merge_command_shapes (test_judge_shard.TestCampaignShards) ... ok
+test_7_load_judges_validates_shards (test_judge_shard.TestCampaignShards) ... ok
+test_8_a_failed_merge_leaves_the_shard_files_in_the_run_dir_root (test_judge_shard.TestCampaignShards)
+A stale judge file makes `kyra.judge merge` refuse: the shards must ... ok
+test_a_provider_failure_inside_a_shard_lands_on_its_own_view (test_judge_shard.TestMergeEqualsSingleEngine) ... ok
+test_a_retried_view_and_an_error_view_survive_the_split (test_judge_shard.TestMergeEqualsSingleEngine)
+views 2 and 5 parse only on the re-ask, view 7 never parses; the split ... ok
+test_batched_shards_merge_to_the_batched_single_engine_file (test_judge_shard.TestMergeEqualsSingleEngine) ... ok
+test_merge_cli (test_judge_shard.TestMergeEqualsSingleEngine) ... ok
+test_merge_parser_shape (test_judge_shard.TestMergeEqualsSingleEngine) ... ok
+test_three_shards_merge_the_same_way (test_judge_shard.TestMergeEqualsSingleEngine) ... ok
+test_two_shards_merge_to_the_single_engine_file (test_judge_shard.TestMergeEqualsSingleEngine) ... ok
+test_a_duplicate_key_is_refused_naming_the_duplicated_views (test_judge_shard.TestMergeRefusals) ... ok
+test_a_missing_shard_is_refused_naming_the_missing_views (test_judge_shard.TestMergeRefusals) ... ok
+test_a_missing_sidecar_is_refused (test_judge_shard.TestMergeRefusals) ... ok
+test_a_record_for_a_view_the_run_does_not_have_is_refused (test_judge_shard.TestMergeRefusals) ... ok
+test_an_existing_merged_file_is_never_overwritten (test_judge_shard.TestMergeRefusals) ... ok
+test_disagreeing_engine_knobs_are_refused (test_judge_shard.TestMergeRefusals) ... ok
+test_disagreeing_items_anchors_model_or_batch_size_is_refused (test_judge_shard.TestMergeRefusals) ... ok
+test_disagreeing_prompt_template_is_refused (test_judge_shard.TestMergeRefusals) ... ok
+test_merge_cli_exit_code_is_4 (test_judge_shard.TestMergeRefusals) ... ok
+test_a_shard_file_in_the_run_dir_root_is_an_error_naming_it (test_judge_shard.TestN3IgnoresShardFiles) ... ok
+test_shard_files_under_the_shards_subdirectory_are_ignored (test_judge_shard.TestN3IgnoresShardFiles) ... ok
+test_the_merged_judge_files_are_found (test_judge_shard.TestN3IgnoresShardFiles) ... ok
+test_cli_rejects_a_malformed_shard_before_the_provider (test_judge_shard.TestShardOneOfOne) ... ok
+test_cli_shard_1_of_1_is_byte_identical_to_no_flag (test_judge_shard.TestShardOneOfOne) ... ok
+test_library_shard_1_1_is_byte_identical_to_no_shard (test_judge_shard.TestShardOneOfOne) ... ok
+test_shard_1_1_keeps_the_sidecar_key_set (test_judge_shard.TestShardOneOfOne) ... ok
+test_a_shard_sidecar_says_which_shard_it_is (test_judge_shard.TestShardSidecars) ... ok
+test_merged_sidecar_fields (test_judge_shard.TestShardSidecars) ... ok
+test_merged_sidecar_keeps_a_batched_decode_mode (test_judge_shard.TestShardSidecars) ... ok
+test_a_shard_with_no_views_still_writes_an_empty_file (test_judge_shard.TestShardSlicing) ... ok
+test_judge_run_rejects_an_impossible_shard (test_judge_shard.TestShardSlicing) ... ok
+test_ordered_view_keys_is_the_order_judge_run_writes (test_judge_shard.TestShardSlicing) ... ok
+test_parse_shard (test_judge_shard.TestShardSlicing) ... ok
+test_shard_takes_every_nth_view_in_the_original_order (test_judge_shard.TestShardSlicing) ... ok
+test_an_unsharded_judge_gets_no_delay_flag_at_all (test_judge_shard.TestShardStagger) ... ok
+test_the_delay_reaches_the_child_from_judges_json (test_judge_shard.TestShardStagger)
+judges.json "shards": 2 -> the second child's argv carries 45 s. ... ok
+test_the_first_shard_starts_now_and_the_second_45_seconds_later (test_judge_shard.TestShardStagger) ... ok
+test_the_stagger_constant_is_45_seconds (test_judge_shard.TestShardStagger) ... ok
+test_three_shards_are_spread_45_seconds_apart (test_judge_shard.TestShardStagger) ... ok
+test_panel_loads_and_aggregates_the_error_record (test_judge_v0_3.TestConsumersTolerateRawText) ... ok
+test_reliability_reader_ignores_the_error_record (test_judge_v0_3.TestConsumersTolerateRawText) ... ok
+test_a_real_rationale_still_parses (test_judge_v0_3.TestCopiedRationaleGuard) ... ok
+test_exact_example_rationale_is_a_parse_error (test_judge_v0_3.TestCopiedRationaleGuard) ... ok
+test_guard_also_applies_to_control_records (test_judge_v0_3.TestCopiedRationaleGuard) ... ok
+test_paraphrase_containing_the_marker_is_a_parse_error (test_judge_v0_3.TestCopiedRationaleGuard) ... ok
+test_whitespace_variant_is_a_parse_error (test_judge_v0_3.TestCopiedRationaleGuard) ... ok
+test_a_retry_that_stops_copying_is_scored (test_judge_v0_3.TestCopiedRationaleInARun) ... ok
+test_copy_is_retried_once_and_recorded_as_error (test_judge_v0_3.TestCopiedRationaleInARun) ... ok
+test_control_view_states_seven_keys_and_the_control_header (test_judge_v0_3.TestExampleRendering) ... ok
+test_example_a_has_exactly_n_turns_objects (test_judge_v0_3.TestExampleRendering) ... ok
+test_example_block_is_schema_valid_once_the_rationale_is_replaced (test_judge_v0_3.TestExampleRendering) ... ok
+test_example_turns_cycle_and_reject_a_bad_length (test_judge_v0_3.TestExampleRendering) ... ok
+test_no_unfilled_slots (test_judge_v0_3.TestExampleRendering) ... ok
+test_rendered_example_is_fenced_json (test_judge_v0_3.TestExampleRendering) ... ok
+test_risk_view_states_five_keys_and_the_risk_header (test_judge_v0_3.TestExampleRendering) ... ok
+test_cli_exits_4_before_any_provider_is_built (test_judge_v0_3.TestManualIsMandatory) ... ok
+test_cli_with_the_real_manual_still_runs (test_judge_v0_3.TestManualIsMandatory) ... ok
+test_default_manual_loads_and_is_not_empty (test_judge_v0_3.TestManualIsMandatory) ... ok
+test_empty_manual_raises_naming_the_path (test_judge_v0_3.TestManualIsMandatory) ... ok
+test_judge_run_without_inline_text_needs_the_manual_file (test_judge_v0_3.TestManualIsMandatory) ... ok
+test_missing_manual_raises_naming_the_path (test_judge_v0_3.TestManualIsMandatory) ... ok
+test_an_ok_record_carrying_raw_text_is_refused (test_judge_v0_3.TestRawTextOnError) ... ok
+test_error_record_carries_the_last_raw_text (test_judge_v0_3.TestRawTextOnError) ... ok
+test_ok_record_has_no_raw_text_key (test_judge_v0_3.TestRawTextOnError) ... ok
+test_provider_error_records_a_null_raw_text (test_judge_v0_3.TestRawTextOnError) ... ok
+test_control_reminder_names_seven_keys_and_both_control_keys (test_judge_v0_3.TestRetryReminder) ... ok
+test_reminder_keeps_the_json_only_instruction (test_judge_v0_3.TestRetryReminder) ... ok
+test_reminder_states_the_number_of_a_objects (test_judge_v0_3.TestRetryReminder) ... ok
+test_reminder_without_a_depth_states_no_number (test_judge_v0_3.TestRetryReminder) ... ok
+test_risk_reminder_names_five_keys_and_neither_control_key (test_judge_v0_3.TestRetryReminder) ... ok
+test_control_view_retry_message_in_both_paths (test_judge_v0_3.TestRetryReminderInBothPaths) ... ok
+test_risk_view_retry_message_in_both_paths (test_judge_v0_3.TestRetryReminderInBothPaths) ... ok
+test_default_template_is_v0_3 (test_judge_v0_3.TestTemplateFiles) ... ok
+test_v0_2_template_is_untouched (test_judge_v0_3.TestTemplateFiles) ... ok
+test_v0_3_template_has_the_v0_3_slots_and_no_schema_extra (test_judge_v0_3.TestTemplateFiles) ... ok
+test_an_inline_template_claims_no_path (test_judge_v0_3.TestTemplateProvenance) ... ok
+test_cli_prints_the_template_file (test_judge_v0_3.TestTemplateProvenance) ... ok
+test_meta_names_the_template_file_and_its_hash (test_judge_v0_3.TestTemplateProvenance) ... ok
+test_bad_adjudication_rows_are_refused (test_phaseb.TestPhaseBAnalysis) ... ok
+test_disagreement_uses_adjudicated_value (test_phaseb.TestPhaseBAnalysis) ... ok
+test_identical_raters_give_ac2_one_and_kappa_one (test_phaseb.TestPhaseBAnalysis) ... ok
+test_missing_adjudication_is_refused_by_cli (test_phaseb.TestPhaseBAnalysis) ... ok
+test_missing_required_cell_is_refused (test_phaseb.TestPhaseBAnalysis) ... ok
+test_n5_counts_and_estimates_present (test_phaseb.TestPhaseBAnalysis) ... ok
+test_n6_known_counts_and_clopper_pearson (test_phaseb.TestPhaseBAnalysis) ... ok
+test_panel_equal_to_humans_gives_zero_difference_and_sensitivity_one (test_phaseb.TestPhaseBAnalysis) ... ok
+test_raters_flipping_every_flag_give_sensitivity_zero (test_phaseb.TestPhaseBAnalysis) ... ok
+test_redaction_rule (test_phaseb.TestPhaseBAnalysis) ... ok
+test_round_half_down (test_phaseb.TestPhaseBAnalysis) ... ok
+test_xlsx_roundtrip_matches_csv (test_phaseb.TestPhaseBAnalysis) ... ok
+test_calibration_outside_sample (test_phaseb.TestPhaseBSample) ... ok
+test_columns_and_counts (test_phaseb.TestPhaseBSample) ... ok
+test_stratum_a_design (test_phaseb.TestPhaseBSample) ... ok
+test_stratum_c_and_d (test_phaseb.TestPhaseBSample) ... ok
+test_no_identity_in_raw_xlsx_parts (test_phaseb.TestRaterWorkbooks) ... ok
+test_no_identity_or_judge_output_in_any_cell (test_phaseb.TestRaterWorkbooks) ... ok
+test_scan_catches_a_planted_model_id (test_phaseb.TestRaterWorkbooks) ... ok
+test_workbooks_open_with_dropdowns_and_all_views (test_phaseb.TestRaterWorkbooks) ... ok
+test_crri_from_judge_record (test_pipeline_v0.TestCRRI) ... ok
+test_empty_raises (test_pipeline_v0.TestCRRI) ... ok
+test_known_value (test_pipeline_v0.TestCRRI) ... ok
+test_non_numeric_raises (test_pipeline_v0.TestCRRI) ... ok
+test_out_of_range_raises (test_pipeline_v0.TestCRRI) ... ok
+test_single_turn_equals_value (test_pipeline_v0.TestCRRI) ... ok
+test_turn_score (test_pipeline_v0.TestCRRI) ... ok
+test_empty_string_raises (test_pipeline_v0.TestJudgeWrapper) ... ok
+test_error_is_never_a_silent_zero (test_pipeline_v0.TestJudgeWrapper)
+Every bad input raises; nothing returns an all-zero JudgeRecord. ... ok
+test_known_critical (test_pipeline_v0.TestJudgeWrapper) ... ok
+test_known_fail (test_pipeline_v0.TestJudgeWrapper) ... ok
+test_known_safe (test_pipeline_v0.TestJudgeWrapper) ... ok
+test_malformed_json_raises (test_pipeline_v0.TestJudgeWrapper) ... ok
+test_out_of_range_and_missing_fields_raise (test_pipeline_v0.TestJudgeWrapper) ... ok
+test_deterministic (test_pipeline_v0.TestMockProvider) ... ok
+test_different_utterances_may_differ_but_are_stable (test_pipeline_v0.TestMockProvider) ... ok
+test_unknown_provider_raises (test_pipeline_v0.TestMockProvider) ... ok
+test_condition_defaults_stand_for_a_provider_declaring_nothing (test_pipeline_v0.TestRunnerAndValidation) ... ok
+test_engine_provenance_fields_are_accepted_unknown_ones_still_rejected (test_pipeline_v0.TestRunnerAndValidation)
+engine_kwargs / vllm_env are on the explicit allow-list, as dicts. ... ok
+test_generation_option_fields_are_accepted_unknown_ones_still_rejected (test_pipeline_v0.TestRunnerAndValidation)
+chat_template_kwargs / stop_token_ids are on the explicit allow-list. ... ok
+test_item_id_missing_from_outputs_is_reported (test_pipeline_v0.TestRunnerAndValidation) ... ok
+test_manifest_record_field_guard (test_pipeline_v0.TestRunnerAndValidation) ... ok
+test_manifest_records_the_mocks_own_params (test_pipeline_v0.TestRunnerAndValidation)
+Provenance: the manifest reports what the provider used, not the ... ok
+test_marker_not_written_when_validation_fails (test_pipeline_v0.TestRunnerAndValidation) ... ok
+test_mock_run_produces_marker (test_pipeline_v0.TestRunnerAndValidation) ... ok
+test_optional_provenance_fields_are_accepted_required_ones_still_guarded (test_pipeline_v0.TestRunnerAndValidation)
+The manifest guard allows the two optional provenance fields only. ... ok
+test_planted_violation_dropped_turn_inside_multi_item (test_pipeline_v0.TestRunnerAndValidation) ... ok
+test_planted_violation_missing_response_record (test_pipeline_v0.TestRunnerAndValidation)
+A run directory with one response record removed must FAIL validation. ... ok
+test_provider_error_is_labelled_and_blocks_marker (test_pipeline_v0.TestRunnerAndValidation)
+API error / timeout: status=error, no MARKER, runner-level failure. ... ok
+test_runner_cli_bad_provider_and_condition_exit_nonzero (test_pipeline_v0.TestRunnerAndValidation) ... ok
+test_runner_cli_smoke_run_exits_zero (test_pipeline_v0.TestRunnerAndValidation) ... ok
+test_runner_cli_zero_items_exits_nonzero (test_pipeline_v0.TestRunnerAndValidation) ... ok
+test_empty_file_loads_zero_items (test_pipeline_v0.TestSchema) ... ok
+test_invalid_enum_and_turn_count_raise (test_pipeline_v0.TestSchema) ... ok
+test_load_smoke_items (test_pipeline_v0.TestSchema) ... ok
+test_missing_field_raises (test_pipeline_v0.TestSchema) ... ok
+test_cluster_of (test_posthoc_v1.TestClusterBootstrap) ... ok
+test_identical_judges (test_posthoc_v1.TestClusterBootstrap) ... ok
+test_pa_na_hand_example (test_posthoc_v1.TestClusterBootstrap) ... ok
+test_views_of_one_conversation_move_together (test_posthoc_v1.TestClusterBootstrap) ... ok
+test_crude_or (test_posthoc_v1.TestRelabel) ... ok
+test_majority_strict (test_posthoc_v1.TestRelabel) ... ok
+test_non_tie_views (test_posthoc_v1.TestRelabel) ... ok
+test_tie_view (test_posthoc_v1.TestRelabel) ... ok
+test_written_runs (test_posthoc_v1.TestRelabel) ... ok
+test_classify_error (test_posthoc_v1.TestValidityCounts) ... ok
+test_consistency_detects_tampered_flag (test_posthoc_v1.TestValidityCounts) ... ok
+test_counts (test_posthoc_v1.TestValidityCounts) ... ok
+test_failing_provider_untouched (test_providers_vllm.TestGetProviderWiring) ... ok
+test_get_provider_builds_a_vllm_provider_with_options (test_providers_vllm.TestGetProviderWiring) ... ok
+test_mock_still_works_with_no_options (test_providers_vllm.TestGetProviderWiring) ... ok
+test_unknown_option_is_a_value_error (test_providers_vllm.TestGetProviderWiring) ... ok
+test_unknown_provider_still_raises_value_error (test_providers_vllm.TestGetProviderWiring) ... ok
+test_vllm_is_registered (test_providers_vllm.TestGetProviderWiring) ... ok
+test_vllm_without_model_path_is_a_value_error (test_providers_vllm.TestGetProviderWiring) ... ok
+test_manifest_carries_the_chat_template_sha256 (test_providers_vllm.TestManifestProvenance) ... ok
+test_manifest_carries_the_engine_provenance (test_providers_vllm.TestManifestProvenance)
+engine_kwargs / vllm_env reach the manifest unchanged. ... ok
+test_manifest_carries_the_engine_provenance_when_unset (test_providers_vllm.TestManifestProvenance) ... ok
+test_manifest_carries_the_generation_options (test_providers_vllm.TestManifestProvenance) ... ok
+test_manifest_carries_the_generation_options_when_unset (test_providers_vllm.TestManifestProvenance) ... ok
+test_manifest_follows_a_non_default_generation_cap (test_providers_vllm.TestManifestProvenance) ... ok
+test_manifest_max_tokens_comes_from_the_provider_not_the_condition (test_providers_vllm.TestManifestProvenance) ... ok
+test_manifest_records_the_vllm_model_id_and_api_version (test_providers_vllm.TestManifestProvenance) ... ok
+test_provider_cannot_inject_arbitrary_manifest_fields (test_providers_vllm.TestManifestProvenance) ... ok
+test_provider_effective_params_pass_the_engine_provenance_through (test_providers_vllm.TestManifestProvenance) ... ok
+test_template_provenance_is_absent_for_a_provider_without_it (test_providers_vllm.TestManifestProvenance) ... ok
+test_bad_generation_option_flags_are_value_errors (test_providers_vllm.TestRunnerWiring) ... ok
+test_generation_option_flags_parse_into_provider_options (test_providers_vllm.TestRunnerWiring) ... ok
+test_model_path_and_max_new_tokens_flags_parse (test_providers_vllm.TestRunnerWiring) ... ok
+test_no_new_flags_means_no_options_so_defaults_stand (test_providers_vllm.TestRunnerWiring) ... ok
+test_base_provider_declares_nothing (test_providers_vllm.TestVLLMEffectiveParams) ... ok
+test_effective_params_equal_the_sampling_params_actually_sent (test_providers_vllm.TestVLLMEffectiveParams) ... ok
+test_effective_params_follow_an_override (test_providers_vllm.TestVLLMEffectiveParams) ... ok
+test_effective_params_report_the_constructor_settings (test_providers_vllm.TestVLLMEffectiveParams) ... ok
+test_a_bad_payload_fails_before_any_engine_is_built (test_providers_vllm.TestVLLMEngineKwargsEnv) ... ok
+test_a_key_the_provider_sets_itself_is_a_value_error (test_providers_vllm.TestVLLMEngineKwargsEnv) ... ok
+test_a_nested_value_is_a_value_error_naming_the_key (test_providers_vllm.TestVLLMEngineKwargsEnv) ... ok
+test_a_non_object_payload_is_a_value_error (test_providers_vllm.TestVLLMEngineKwargsEnv) ... ok
+test_an_empty_key_is_a_value_error (test_providers_vllm.TestVLLMEngineKwargsEnv) ... ok
+test_attention_backend_reaches_the_engine_constructor (test_providers_vllm.TestVLLMEngineKwargsEnv) ... ok
+test_batch_invariant_env_is_recorded_as_provenance (test_providers_vllm.TestVLLMEngineKwargsEnv) ... ok
+test_blank_env_is_treated_as_unset (test_providers_vllm.TestVLLMEngineKwargsEnv) ... ok
+test_both_vllm_env_vars_are_recorded_when_set (test_providers_vllm.TestVLLMEngineKwargsEnv) ... ok
+test_effective_params_are_copies_not_the_live_dicts (test_providers_vllm.TestVLLMEngineKwargsEnv) ... ok
+test_env_is_read_at_construction_not_at_generate (test_providers_vllm.TestVLLMEngineKwargsEnv) ... ok
+test_get_provider_surfaces_the_value_error (test_providers_vllm.TestVLLMEngineKwargsEnv) ... ok
+test_invalid_json_is_a_value_error (test_providers_vllm.TestVLLMEngineKwargsEnv) ... ok
+test_scalar_values_of_every_allowed_type_pass_through (test_providers_vllm.TestVLLMEngineKwargsEnv) ... ok
+test_unset_env_leaves_the_engine_call_exactly_as_before (test_providers_vllm.TestVLLMEngineKwargsEnv) ... ok
+test_vllm_env_changes_no_behaviour (test_providers_vllm.TestVLLMEngineKwargsEnv) ... ok
+test_chat_template_kwargs_reach_apply_chat_template (test_providers_vllm.TestVLLMGenerationOptions) ... ok
+test_effective_params_are_copies_not_the_live_objects (test_providers_vllm.TestVLLMGenerationOptions) ... ok
+test_effective_params_carry_both_keys_when_set (test_providers_vllm.TestVLLMGenerationOptions) ... ok
+test_effective_params_carry_both_keys_when_unset (test_providers_vllm.TestVLLMGenerationOptions) ... ok
+test_get_provider_passes_the_options_through (test_providers_vllm.TestVLLMGenerationOptions) ... ok
+test_invalid_chat_template_kwargs_raise_value_error (test_providers_vllm.TestVLLMGenerationOptions) ... ok
+test_invalid_stop_token_ids_raise_value_error (test_providers_vllm.TestVLLMGenerationOptions) ... ok
+test_stop_token_ids_reach_the_sampling_params (test_providers_vllm.TestVLLMGenerationOptions) ... ok
+test_without_the_options_the_call_shapes_are_unchanged (test_providers_vllm.TestVLLMGenerationOptions) ... ok
+test_chat_template_provenance_is_recorded (test_providers_vllm.TestVLLMProviderChatTemplate) ... ok
+test_falls_back_to_transformers_tokenizer_when_engine_has_none (test_providers_vllm.TestVLLMProviderChatTemplate) ... ok
+test_missing_chat_template_is_an_error_not_a_hand_rolled_prompt (test_providers_vllm.TestVLLMProviderChatTemplate) ... vllm engine construction attempt 1/1 failed for 'x/y': model 'x/y' exposes no chat template; refusing to invent a prompt format
+ok
+test_prompt_is_built_with_the_models_chat_template (test_providers_vllm.TestVLLMProviderChatTemplate) ... ok
+test_engine_gets_seed_and_memory_utilisation (test_providers_vllm.TestVLLMProviderDeterminism) ... ok
+test_overrides_reach_the_sampling_params (test_providers_vllm.TestVLLMProviderDeterminism) ... ok
+test_returns_the_stripped_completion_text (test_providers_vllm.TestVLLMProviderDeterminism) ... ok
+test_sampling_params_carry_the_deterministic_settings (test_providers_vllm.TestVLLMProviderDeterminism) ... ok
+test_a_built_engine_is_never_rebuilt (test_providers_vllm.TestVLLMProviderEnsureReady) ... ok
+test_a_permanent_failure_names_the_attempt_count_and_never_generates (test_providers_vllm.TestVLLMProviderEnsureReady) ... ok
+test_bad_max_attempts_is_a_value_error (test_providers_vllm.TestVLLMProviderEnsureReady) ... ok
+test_effective_params_are_unchanged_by_ensure_ready (test_providers_vllm.TestVLLMProviderEnsureReady) ... ok
+test_ensure_ready_builds_the_engine_and_generates_nothing (test_providers_vllm.TestVLLMProviderEnsureReady) ... ok
+test_ensure_ready_is_a_no_op_for_providers_without_an_engine (test_providers_vllm.TestVLLMProviderEnsureReady) ... ok
+test_generate_many_on_an_unbuilt_engine_goes_through_ensure_ready (test_providers_vllm.TestVLLMProviderEnsureReady) ... ok
+test_generate_on_an_unbuilt_engine_goes_through_ensure_ready (test_providers_vllm.TestVLLMProviderEnsureReady)
+A transient construction failure inside generate() is retried in place: ... ok
+test_production_defaults_are_ten_attempts_thirty_seconds_apart (test_providers_vllm.TestVLLMProviderEnsureReady) ... ok
+test_succeeds_after_two_failures_in_three_attempts_waiting_thirty_seconds (test_providers_vllm.TestVLLMProviderEnsureReady) ... ok
+test_three_failures_take_four_attempts_and_three_waits (test_providers_vllm.TestVLLMProviderEnsureReady) ... ok
+test_empty_completion_is_an_error (test_providers_vllm.TestVLLMProviderErrors) ... ok
+test_engine_construction_failure_propagates_original_text (test_providers_vllm.TestVLLMProviderErrors) ... vllm engine construction attempt 1/1 failed for 'x/y': vllm engine construction failed for 'x/y' (RuntimeError: CUDA out of memory on device 0)
+ok
+test_generate_failure_propagates_original_text (test_providers_vllm.TestVLLMProviderErrors) ... ok
+test_missing_vllm_raises_rather_than_falling_back (test_providers_vllm.TestVLLMProviderErrors) ... vllm engine construction attempt 1/1 failed for 'x/y': vllm import failed (ModuleNotFoundError: import of vllm halted; None in sys.modules)
+ok
+test_no_messages_is_an_error (test_providers_vllm.TestVLLMProviderErrors) ... ok
+test_unexpected_output_shape_is_an_error (test_providers_vllm.TestVLLMProviderErrors) ... ok
+test_api_version_is_the_vllm_version_string (test_providers_vllm.TestVLLMProviderFields) ... ok
+test_api_version_marks_missing_vllm_without_raising (test_providers_vllm.TestVLLMProviderFields) ... ok
+test_defaults_match_the_preregistered_generation_settings (test_providers_vllm.TestVLLMProviderFields) ... ok
+test_empty_model_path_is_rejected (test_providers_vllm.TestVLLMProviderFields) ... ok
+test_is_a_provider_subclass (test_providers_vllm.TestVLLMProviderFields) ... ok
+test_model_id_is_basename_for_a_local_dir (test_providers_vllm.TestVLLMProviderFields) ... ok
+test_model_id_is_repo_id_when_not_a_local_dir (test_providers_vllm.TestVLLMProviderFields) ... ok
+test_provider_name_is_vllm (test_providers_vllm.TestVLLMProviderFields) ... ok
+test_constructing_the_provider_builds_no_engine (test_providers_vllm.TestVLLMProviderLaziness) ... ok
+test_engine_is_built_once_and_reused (test_providers_vllm.TestVLLMProviderLaziness) ... ok
+test_importing_the_module_does_not_import_vllm (test_providers_vllm.TestVLLMProviderLaziness) ... ok
+
+----------------------------------------------------------------------
+Ran 550 tests in 453.140s
+
+OK (skipped=1)

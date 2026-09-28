@@ -1,0 +1,17 @@
+test_cluster_of (test_posthoc_v1.TestClusterBootstrap) ... ok
+test_identical_judges (test_posthoc_v1.TestClusterBootstrap) ... ok
+test_pa_na_hand_example (test_posthoc_v1.TestClusterBootstrap) ... ok
+test_views_of_one_conversation_move_together (test_posthoc_v1.TestClusterBootstrap) ... ok
+test_crude_or (test_posthoc_v1.TestRelabel) ... ok
+test_majority_strict (test_posthoc_v1.TestRelabel) ... ok
+test_non_tie_views (test_posthoc_v1.TestRelabel) ... ok
+test_tie_view (test_posthoc_v1.TestRelabel) ... ok
+test_written_runs (test_posthoc_v1.TestRelabel) ... ok
+test_classify_error (test_posthoc_v1.TestValidityCounts) ... ok
+test_consistency_detects_tampered_flag (test_posthoc_v1.TestValidityCounts) ... ok
+test_counts (test_posthoc_v1.TestValidityCounts) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.126s
+
+OK
