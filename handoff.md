@@ -65,3 +65,5 @@ Instruction conflicts: none unresolved (the model switch is PI-directed and logg
 - Reference audit review/REFERENCE_AUDIT_v1.md (37 refs in v5); 2026 template kit research/venue/jkiice_template_2026 (abstract 140–160 words; the review copy must be HWP).
 - PI: Q1 line WITHOUT raters (auto-memory feedback_domestic_solo_q1_humans). Phase B stays parked.
 - PI to do: HWP conversion + layout check, COI (Emotionwave), fees, DBpiaOne upload.
+
+- 2026-09-28 hub: judge weights J1 (Llama-8B, ~/.cache), J2, J3, the Qwen2.5-14B weights and snapshots/phaseA_scoring_d6e7507/.cache + old scratchpad 407cdd4b DELETED (PI "do 1 and 2"); REHYDRATE.md 6011c08 (re-download J1 pinned to 0e9e39f2).
