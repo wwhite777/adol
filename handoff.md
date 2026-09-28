@@ -58,3 +58,10 @@ Instruction conflicts: none unresolved (the model switch is PI-directed and logg
 - Cleanup after the PI's answer: chmod 755 bin/score_phaseA.sh + OPS-6 function wrap; delete snapshots/phaseA_scoring_d6e7507/.cache and the old session scratchpad snapshot (/tmp/claude-1011/-home-wjeong/407cdd4b-…/scratchpad; no live PIDs now); home cleanup; REHYDRATE.md.
 
 - 2026-09-26 later: PI strategy — JKIICE done by the conductor alone. Upload deliverables/kyra_phaseA_jkiice_ko_v4_review.docx (anonymized per 심사투고양식; JPG figures; blank metadata); full version v4.docx for after acceptance. Phase B PARKED for the Q1 line (needs human raters; the conductor cannot rate); its build is being finished by a coder and is NOT to be frozen or used until the PI assigns raters. Response v15.
+
+## 2026-09-28 — review revision (session 7 cont.)
+- External pre-submission review (PI-supplied) addressed in manuscript v5: deliverables/kyra_phaseA_jkiice_ko_v5{,_review}.docx; content in manuscript/jkiice_v1/content_v5.py (build: build_docx.py [--review]); response review/RESPONSE_TO_REVIEW_v1.md; tracker review/REVISION_TRACKER_v1.md.
+- Post-hoc sensitivity: result/analysis/phaseA_T1/posthoc_20260927T2328Z (src/kyra/analysis/posthoc_v1.py, ca18576). Under tie handling S1–S3 the risk × depth interaction is significant (Holm p 0.018–0.049). The frozen verdicts are unchanged.
+- Reference audit review/REFERENCE_AUDIT_v1.md (37 refs in v5); 2026 template kit research/venue/jkiice_template_2026 (abstract 140–160 words; the review copy must be HWP).
+- PI: Q1 line WITHOUT raters (auto-memory feedback_domestic_solo_q1_humans). Phase B stays parked.
+- PI to do: HWP conversion + layout check, COI (Emotionwave), fees, DBpiaOne upload.
