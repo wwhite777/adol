@@ -1,0 +1,35 @@
+adol — JKIICE manuscript v5 after the external review (2026-09-28, conductor Opus 5.5)
+
+Files:
+- deliverables/kyra_phaseA_jkiice_ko_v5_review.docx: convert to HWP and upload (anonymized; the 2026 rules want the review copy as HWP).
+- deliverables/kyra_phaseA_jkiice_ko_v5.docx: full version (authors, ACKNOWLEDGEMENTS, bios).
+- review/RESPONSE_TO_REVIEW_v1.md: point-by-point response to the review.
+- review/REFERENCE_AUDIT_v1.md: full reference audit.
+- review/JKIICE_TEMPLATE_2026_CHECK.md: 2026 template differences.
+
+What changed:
+- New framing (title, abstract, conclusion): the procedure finding leads. 16 of the 20 benign six-turn flags came from the tie rule after a judge failure. With those handled differently (post hoc), the risk × depth interaction becomes significant (Holm p 0.018–0.049). So the conclusion about risk-specificity depends on how judge failures are aggregated. The frozen verdicts are reported unchanged.
+- Added:
+  - an endpoint table;
+  - a judge-validity table;
+  - post-hoc N1 sensitivities;
+  - cluster-bootstrap N3 with positive and negative agreement;
+  - the full statistical specification;
+  - a dated chronology (it discloses the one look at invalid N3 values);
+  - a worked non-explicit example;
+  - an availability statement;
+  - length differences between the arms;
+  - the fact that truncation at 350 tokens was not recorded.
+- Corrected:
+  - the cache comparison, verified from the logs;
+  - the 2% gate denominator;
+  - N3.2, which cannot be evaluated as written;
+  - "pre-registered", now "rules fixed before outcome inspection, local hash".
+- References: 37. Four now cite their published versions, 5 characterizations were fixed, and Gwet 2014 plus two model cards were added.
+- 2026 template: English abstract 158 words (limit 140–160), ACKNOWLEDGEMENTS heading, "Table. n" captions, JPG figures.
+- Not done, by decision: the human audit (you: no raters). The paper claims only rule-dependent flags, no false-positive rate.
+
+For you:
+1. Convert v5_review to HWP and check the page layout.
+2. COI form: the Emotionwave collaboration named in the funding text.
+3. Fees per the 2026 table: review 40,000 KRW; publication 200,000 up to 6 pages, then 30,000 per page for pages 7–8 and 40,000 from page 9, plus 100,000 for the funding acknowledgement.

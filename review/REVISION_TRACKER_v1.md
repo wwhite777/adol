@@ -13,3 +13,5 @@ R8 Inspectable benchmark: one non-explicit example (literal/localized pair; risk
 Editorial table: Fig 1 (TOST wording; T vs temperature; panel rule; remove "G6"); Fig 2 ("panel CF-flag rate"; mark tie-derived positives); Fig 3 (flag CI; axis distinction); 4.5 (240 composition; two-sided CP upper wording; transitions population; eventual vs delayed recovery; Pareto/transition shown or not promised); 3.2 repeats wording; CRRI = weighted relational-risk score, not cumulative burden, and which prefix's A scores; model rates descriptive; abstract/conclusion lead with the procedure finding; related work condensed; GO/KILL to supplement.
 Journal checks: 2026 Korean template ZIP (kiice.org/board/data/article/271327) vs our 2023 kit; DBpiaOne; visual page check.
 Literature: full audit of all 34 references (metadata + characterization; record versions consulted).
+
+## Status 2026-09-28: all items addressed in v5 except the human audit (declined per the PI: no raters), a separate hash/rubric supplement (records on request), an ethics determination (none sought; facts only), and the visual page check (PI). Details: review/RESPONSE_TO_REVIEW_v1.md.
