@@ -67,3 +67,6 @@ Instruction conflicts: none unresolved (the model switch is PI-directed and logg
 - PI to do: HWP conversion + layout check, COI (Emotionwave), fees, DBpiaOne upload.
 
 - 2026-09-28 hub: judge weights J1 (Llama-8B, ~/.cache), J2, J3, the Qwen2.5-14B weights and snapshots/phaseA_scoring_d6e7507/.cache + old scratchpad 407cdd4b DELETED (PI "do 1 and 2"); REHYDRATE.md 6011c08 (re-download J1 pinned to 0e9e39f2).
+
+## 2026-09-29 — Q1 line found: crisisref (I-22)
+PI: "we have not find a work of sci q1 level. find and develop" → second-brain mining → I-22: stale/missing/misattributed crisis referrals by Korean-capable LLMs to simulated adolescents, registry-verified, no raters (JMIR Mental Health primary; with Prof. Oh). New project /home/wjeong/crisisref (S0 done; S1 in progress: sweep, targeted readings, registry v1 (48 entries), model-cutoff survey (55 models), kill pilot on the adol transcripts = GO, exposed). adol continues only as the JKIICE paper (v6). Exploratory registry scan numbers are in DECISION_LOG 2026-09-29 (exposed).
