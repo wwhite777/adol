@@ -1,0 +1,89 @@
+adol / KYRA phase A — JKIICE manuscript v7 after the two external reviews (2026-10-01)
+Date: 2026-10-01 (UTC ~03:10). Your instruction: "approve all as recommended, continue". Conductor Opus 5.5.
+No cross-family audit (your rule for Korean domestic journals, 2026-09-11).
+
+1. FILES
+- deliverables/kyra_phaseA_jkiice_ko_v7.docx         named copy   sha256 05a080f4d798f10e46c6bc34a5a26452401fd9326573832b7bcc033c5d87f5b3
+- deliverables/kyra_phaseA_jkiice_ko_v7_review.docx  blind copy   sha256 5dbafb53f747334591bc330a302e97b5dafdd39546a2c2b2043f198dedc99e93
+- Source: manuscript/jkiice_v1/content_v7.py (builder build_docx.py; the v6 builder is kept as build_docx_v6.py).
+- Commits (adol, local only): d3e4e1f (v7), dcd72f8 and efaa2b6 (records). v6 is superseded.
+
+2. WHAT CHANGED (review item -> change)
+R1 Intervals on cells with 0-1 benign events. Post hoc, added in Section 4.2 and in a new last column of Table 7:
+   - risk differences (depth 6 minus depth 1) and their difference between arms (DiD), with the paper's scenario-cluster
+     bootstrap, which needs no regularization;
+   - exact conditional and Firth benign odds ratios;
+   - the variational Bayes prior stated in Methods (package defaults: fixed effects N(0, 2^2), log scenario SD N(0, 1));
+   - the refitted scenario SD.
+   The text now says that the VB benign and interaction odds ratios in S1-S3 depend on the prior, so they are not used as
+   evidence of significance.
+R2 Abstracts (Korean and English). "the interaction was significant" is gone. New sentence: removing these flags or
+   re-judging the failed outputs with schema-constrained decoding made the increase larger in risk scripts (by 12.5-13.3 points
+   on the risk-difference scale), but only 4-5 benign events remained and the repaired odds-ratio interaction was not
+   significant (2.18, 95% CI 0.69-12.30). The English abstract has 157 words (limit 140-160).
+R3 Limitations. The judges' Korean competence was not checked; 58 of the 87 main-run judge failures came from J1
+   (Llama-3.1-8B-Instruct), and removing J1 raises AC2 by 0.17-0.22.
+R4 Table 3 footnote. 411 = views valid in both runs of the batched J1 test, which used the judge prompt before its revision;
+   87 of 88 in the sequential J1 row.
+R5 Table 2. Adds the 12-character revision of all 8 checkpoints (taken from the run logs and the 60 judge records) and the
+   engine settings for generation and judging (judging: batch 1, prefix caching off, VLLM_BATCH_INVARIANT=1). Also states the
+   HyperCLOVAX handling.
+Also changed:
+- HyperCLOVAX plan text (new finding). Its runs stopped at <|im_end|>, which is a segment boundary. When the model wrote a
+  third-person plan and closed the segment, the plan was scored as the reply. A text rule written after the outcomes were read
+  flags 30 of 564 main-run replies (7, 10 and 0 of 116 in the repeats). The other models' main runs have 0-1. This is disclosed in
+  Section 3.2 and as Limitation 8; no rerun.
+- The repair rows R1/R2 are renamed "Repair 1/2" (수리 1/2), because R1-R6 already name the risk groups.
+- Over-refusal 0/240: the text now says the binomial bound assumes independent replies, which overstates certainty here.
+- Estimand sentence: the average over the 5 tested configurations, with no generalization to a population of models.
+- Table 5 gains a 10-01 chronology row.
+- Future work: resource linkage (D5) could be scored deterministically against an official resource list.
+Unchanged: every frozen reading (N1.1 met; N1.2 and N1 not met; N2 neither difference nor equivalence; N3 not met).
+No new runs and no human audit (as decided).
+
+3. THE NEW NUMBERS (all post hoc; result/analysis/phaseA_T1/posthoc_rd_20261001T0226Z)
+- Fixed rules, risk difference d6 - d1: risk +16.7 points (95% CI 7.5-27.5), benign +15.8 (8.3-24.2);
+  difference 0.8 (-11.7 to 14.2).
+- S1-S3 (tie flags removed in three ways): benign +3.3 to +4.1; difference 12.7-13.3 (lower limits 2.5-3.3).
+  Benign denominators at depths 1 and 6: S1 80 and 97, S2 103 and 104, S3 120 and 120. Where a depth-6 view is dropped, the
+  frozen selection also drops that conversation's depth-1 row.
+- Repair 2 (budget + JSON-schema decoding): benign +4.2 (0-9.2); difference 12.5 (2.5-24.2).
+  Repair 1 (budget only): benign +15.0; difference 1.7.
+- Benign odds ratio, exact: fixed rules 23.6 (3.6-995); S1-S3 infinite (lower limits 0.55-0.67).
+- Benign odds ratio, Firth: fixed rules 16.3 (4.1-148); S1-S3 7.7-9.3 (lower limits 0.81-0.98, upper limits 1,033-1,239).
+- Scenario SD (logit scale): risk 2.18-2.19, which largely explains the gap between the conditional OR 5.51 and the
+  marginal OR 2.99. Benign 0.89-1.19, close to the prior median of 1, so the data barely constrain it.
+- How to read this. In S1-S3 and Repair 2 the risk-difference contrasts have 95% intervals above zero. The paper reports them
+  as post hoc and does not treat them as confirming a risk-specific increase, for three reasons: removing flags is a selection;
+  the benign arm has 4-5 events; and there is no human reference.
+- Two earlier attempts of this analysis (0224Z, 0225Z) failed on code errors (a Firth singular matrix and a log-format bug).
+  They are kept as evidence; 0226Z is the run of record (posthoc_rd.json sha256 9497e89c...).
+
+4. CHECKS (commands, exit codes, logs)
+- Builds. build_docx.py and build_docx.py --review both exit 0, with 37 references cited and none unused
+  (test/logs/kyra_v7_build_{full,review}_20261001T0303Z.log).
+- Number self-check. manuscript/jkiice_v1/check_v7_numbers.py builds 29 expected strings from the result files; all 29 are in
+  content_v7.py (exit 0). A planted wrong value exits 1 (test/logs/check_v7_numbers{,_planted}_20261001T0305Z.log; the 0304Z pair is a first call
+  with a wrong script path, exit 2).
+- Plan-text count. src/kyra/analysis/posthoc_hcx_plan_v1.py: unit tests pass, including two planted failures
+  (test/logs/posthoc_hcx_plan_unit_20261001T0258Z.log). The run covered the 20 marked run directories
+  (result/analysis/phaseA_T1/hcx_plan_scan_20261001T0258Z; counts and keys only, no reply text). The earlier ad hoc count had
+  also read one unmarked, never-analysed EXAONE directory; the saved script reads marked directories only.
+- Blind copy. Zero hits for author names (Korean and English), affiliation, funders, e-mail addresses and ORCIDs.
+- PDF render. 15 pages; layout and the three edited tables checked. The Korean text could not be checked visually because the
+  converter on the server has no Korean font. Please read it in Word or 한글.
+
+5. YOUR STEPS
+- JKIICE asks for the blind review copy as a 한글 file: open kyra_phaseA_jkiice_ko_v7_review.docx in 한글, save it as HWP, and
+  check it against the 2026 template (two columns from 서론, fonts, "Table. N" captions).
+- Upload to DBpiaONE with the copyright and COI forms. The named copy's acknowledgement is unchanged from v6
+  (ANCHOR 2026-ANCHOR-01-018-04 with Emotionwave; KOCCA RS-2024-00344893).
+- If you want changes, tell me. They go into content_v8.py; v7 is never edited in place.
+
+6. RECORDS
+- DECISION_LOG: the v7 entry, the HyperCLOVAX finding, the reproducible count, and two time corrections. I had typed two
+  timestamps instead of taking them from the clock; both are fixed by appended notes. The same slip in the crisisref log is
+  corrected there.
+- handoff.md, memory.md (3 lessons), research/STATE.yaml, hub page ~/repos/wiki/projects/adol.md.
+
+CrisisRef: the Codex r007 audit (v4) is still running. I report it separately when it finishes.
