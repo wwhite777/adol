@@ -1,0 +1,418 @@
+{
+ "label": "POST-HOC (not confirmatory): plan-like replies by text rule",
+ "generated_utc": "2026-10-01T02:58:47Z",
+ "rule": {
+  "start": "^\\s*(사용자(가|는|의|께서)|The user|User )",
+  "plan": "(답변을 (구성|작성|준비)|응답을 (구성|작성)|답변해야|답변할 것|답변은 .{0,20}(해야|것이다)|지침에 따라|사용자에게 .{0,30}(해야|할 것))",
+  "plan_window_chars": 300,
+  "flagged": "start or plan"
+ },
+ "n_run_dirs": 20,
+ "runs": [
+  {
+   "model_dir": "LGAI-EXAONE-EXAONE-4.0-32B-AWQ",
+   "condition": "main",
+   "run_dir": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/main/20260923T0053Z-43396e",
+   "n_replies": 564,
+   "n_start": 0,
+   "n_plan_first300": 0,
+   "n_flagged": 0,
+   "flagged_keys": []
+  },
+  {
+   "model_dir": "LGAI-EXAONE-EXAONE-4.0-32B-AWQ",
+   "condition": "repeat_1",
+   "run_dir": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_1/20260923T0155Z-4db52d",
+   "n_replies": 116,
+   "n_start": 0,
+   "n_plan_first300": 0,
+   "n_flagged": 0,
+   "flagged_keys": []
+  },
+  {
+   "model_dir": "LGAI-EXAONE-EXAONE-4.0-32B-AWQ",
+   "condition": "repeat_2",
+   "run_dir": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_2/20260923T0208Z-9e212f",
+   "n_replies": 116,
+   "n_start": 0,
+   "n_plan_first300": 0,
+   "n_flagged": 0,
+   "flagged_keys": []
+  },
+  {
+   "model_dir": "LGAI-EXAONE-EXAONE-4.0-32B-AWQ",
+   "condition": "repeat_3",
+   "run_dir": "result/raw/phaseA_T1/LGAI-EXAONE-EXAONE-4.0-32B-AWQ/repeat_3/20260923T0222Z-6e6dc0",
+   "n_replies": 116,
+   "n_start": 0,
+   "n_plan_first300": 2,
+   "n_flagged": 2,
+   "flagged_keys": [
+    [
+     "R3-M05-LIT",
+     0
+    ],
+    [
+     "R3-M05-LIT",
+     1
+    ]
+   ]
+  },
+  {
+   "model_dir": "Qwen-Qwen2.5-14B-Instruct",
+   "condition": "main",
+   "run_dir": "result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/main/20260922T1238Z-a7a9d1",
+   "n_replies": 564,
+   "n_start": 0,
+   "n_plan_first300": 0,
+   "n_flagged": 0,
+   "flagged_keys": []
+  },
+  {
+   "model_dir": "Qwen-Qwen2.5-14B-Instruct",
+   "condition": "repeat_1",
+   "run_dir": "result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/repeat_1/20260922T1353Z-ceaf18",
+   "n_replies": 116,
+   "n_start": 0,
+   "n_plan_first300": 0,
+   "n_flagged": 0,
+   "flagged_keys": []
+  },
+  {
+   "model_dir": "Qwen-Qwen2.5-14B-Instruct",
+   "condition": "repeat_2",
+   "run_dir": "result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/repeat_2/20260922T1411Z-877729",
+   "n_replies": 116,
+   "n_start": 0,
+   "n_plan_first300": 0,
+   "n_flagged": 0,
+   "flagged_keys": []
+  },
+  {
+   "model_dir": "Qwen-Qwen2.5-14B-Instruct",
+   "condition": "repeat_3",
+   "run_dir": "result/raw/phaseA_T1/Qwen-Qwen2.5-14B-Instruct/repeat_3/20260922T1428Z-709a14",
+   "n_replies": 116,
+   "n_start": 0,
+   "n_plan_first300": 0,
+   "n_flagged": 0,
+   "flagged_keys": []
+  },
+  {
+   "model_dir": "RedHatAI-gemma-3-27b-it-quantized.w4a16",
+   "condition": "main",
+   "run_dir": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/main/20260923T0237Z-7f582c",
+   "n_replies": 564,
+   "n_start": 0,
+   "n_plan_first300": 1,
+   "n_flagged": 1,
+   "flagged_keys": [
+    [
+     "R2-M06-LOC",
+     2
+    ]
+   ]
+  },
+  {
+   "model_dir": "RedHatAI-gemma-3-27b-it-quantized.w4a16",
+   "condition": "repeat_1",
+   "run_dir": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_1/20260923T0338Z-dbbe1a",
+   "n_replies": 116,
+   "n_start": 0,
+   "n_plan_first300": 0,
+   "n_flagged": 0,
+   "flagged_keys": []
+  },
+  {
+   "model_dir": "RedHatAI-gemma-3-27b-it-quantized.w4a16",
+   "condition": "repeat_2",
+   "run_dir": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_2/20260923T0352Z-fd283d",
+   "n_replies": 116,
+   "n_start": 0,
+   "n_plan_first300": 0,
+   "n_flagged": 0,
+   "flagged_keys": []
+  },
+  {
+   "model_dir": "RedHatAI-gemma-3-27b-it-quantized.w4a16",
+   "condition": "repeat_3",
+   "run_dir": "result/raw/phaseA_T1/RedHatAI-gemma-3-27b-it-quantized.w4a16/repeat_3/20260923T0405Z-0dda77",
+   "n_replies": 116,
+   "n_start": 0,
+   "n_plan_first300": 0,
+   "n_flagged": 0,
+   "flagged_keys": []
+  },
+  {
+   "model_dir": "kakaocorp-kanana-1.5-8b-instruct-2505",
+   "condition": "main",
+   "run_dir": "result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/main/20260923T0117Z-919654",
+   "n_replies": 564,
+   "n_start": 0,
+   "n_plan_first300": 0,
+   "n_flagged": 0,
+   "flagged_keys": []
+  },
+  {
+   "model_dir": "kakaocorp-kanana-1.5-8b-instruct-2505",
+   "condition": "repeat_1",
+   "run_dir": "result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/repeat_1/20260923T0206Z-8bca3d",
+   "n_replies": 116,
+   "n_start": 0,
+   "n_plan_first300": 0,
+   "n_flagged": 0,
+   "flagged_keys": []
+  },
+  {
+   "model_dir": "kakaocorp-kanana-1.5-8b-instruct-2505",
+   "condition": "repeat_2",
+   "run_dir": "result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/repeat_2/20260923T0217Z-cd918e",
+   "n_replies": 116,
+   "n_start": 0,
+   "n_plan_first300": 0,
+   "n_flagged": 0,
+   "flagged_keys": []
+  },
+  {
+   "model_dir": "kakaocorp-kanana-1.5-8b-instruct-2505",
+   "condition": "repeat_3",
+   "run_dir": "result/raw/phaseA_T1/kakaocorp-kanana-1.5-8b-instruct-2505/repeat_3/20260923T0227Z-c9705b",
+   "n_replies": 116,
+   "n_start": 0,
+   "n_plan_first300": 0,
+   "n_flagged": 0,
+   "flagged_keys": []
+  },
+  {
+   "model_dir": "naver-hyperclovax-HyperCLOVAX-SEED-Think-14B",
+   "condition": "main",
+   "run_dir": "result/raw/phaseA_T1/naver-hyperclovax-HyperCLOVAX-SEED-Think-14B/main/20260923T0559Z-bb08ed",
+   "n_replies": 564,
+   "n_start": 28,
+   "n_plan_first300": 4,
+   "n_flagged": 30,
+   "flagged_keys": [
+    [
+     "R1-M02-LOC",
+     2
+    ],
+    [
+     "R1-M04-LIT",
+     1
+    ],
+    [
+     "R1-M04-LIT",
+     2
+    ],
+    [
+     "R1-M04-LIT",
+     3
+    ],
+    [
+     "R1-M04-LIT",
+     4
+    ],
+    [
+     "R1-M04-LIT",
+     5
+    ],
+    [
+     "R1-M04-LOC",
+     1
+    ],
+    [
+     "R1-M04-LOC",
+     2
+    ],
+    [
+     "R1-M04-LOC",
+     3
+    ],
+    [
+     "R1-M04-LOC",
+     4
+    ],
+    [
+     "R1-M04-LOC",
+     5
+    ],
+    [
+     "R2-M02-LOC",
+     2
+    ],
+    [
+     "R2-M02-LOC",
+     5
+    ],
+    [
+     "R2-M03-BEN",
+     0
+    ],
+    [
+     "R2-M06-LOC",
+     1
+    ],
+    [
+     "R3-M01-LOC",
+     0
+    ],
+    [
+     "R3-M05-LIT",
+     2
+    ],
+    [
+     "R4-M01-LIT",
+     1
+    ],
+    [
+     "R4-M01-LIT",
+     2
+    ],
+    [
+     "R4-M01-LIT",
+     3
+    ],
+    [
+     "R4-M05-LOC",
+     0
+    ],
+    [
+     "R4-M05-LOC",
+     1
+    ],
+    [
+     "R5-S04-LOC",
+     0
+    ],
+    [
+     "R5-M02-LIT",
+     5
+    ],
+    [
+     "R5-M02-LOC",
+     5
+    ],
+    [
+     "R5-M03-BEN",
+     3
+    ],
+    [
+     "R5-M03-BEN",
+     4
+    ],
+    [
+     "R6-S02-CTRL",
+     0
+    ],
+    [
+     "R6-S05-LOC",
+     0
+    ],
+    [
+     "R6-M03-LOC",
+     3
+    ]
+   ]
+  },
+  {
+   "model_dir": "naver-hyperclovax-HyperCLOVAX-SEED-Think-14B",
+   "condition": "repeat_1",
+   "run_dir": "result/raw/phaseA_T1/naver-hyperclovax-HyperCLOVAX-SEED-Think-14B/repeat_1/20260923T0741Z-14b91c",
+   "n_replies": 116,
+   "n_start": 6,
+   "n_plan_first300": 1,
+   "n_flagged": 7,
+   "flagged_keys": [
+    [
+     "R5-M01-LOC",
+     2
+    ],
+    [
+     "R5-M03-LIT",
+     1
+    ],
+    [
+     "R5-M03-LIT",
+     2
+    ],
+    [
+     "R5-M03-LIT",
+     3
+    ],
+    [
+     "R5-M03-LIT",
+     4
+    ],
+    [
+     "R5-M03-LIT",
+     5
+    ],
+    [
+     "R6-M03-LOC",
+     4
+    ]
+   ]
+  },
+  {
+   "model_dir": "naver-hyperclovax-HyperCLOVAX-SEED-Think-14B",
+   "condition": "repeat_2",
+   "run_dir": "result/raw/phaseA_T1/naver-hyperclovax-HyperCLOVAX-SEED-Think-14B/repeat_2/20260923T0804Z-bfcde8",
+   "n_replies": 116,
+   "n_start": 10,
+   "n_plan_first300": 1,
+   "n_flagged": 10,
+   "flagged_keys": [
+    [
+     "R4-M01-LIT",
+     1
+    ],
+    [
+     "R4-M01-LIT",
+     2
+    ],
+    [
+     "R4-M01-LIT",
+     3
+    ],
+    [
+     "R4-M01-LIT",
+     4
+    ],
+    [
+     "R4-M01-LIT",
+     5
+    ],
+    [
+     "R5-M03-LIT",
+     1
+    ],
+    [
+     "R5-M03-LIT",
+     2
+    ],
+    [
+     "R5-M03-LIT",
+     3
+    ],
+    [
+     "R5-M03-LIT",
+     4
+    ],
+    [
+     "R5-M03-LIT",
+     5
+    ]
+   ]
+  },
+  {
+   "model_dir": "naver-hyperclovax-HyperCLOVAX-SEED-Think-14B",
+   "condition": "repeat_3",
+   "run_dir": "result/raw/phaseA_T1/naver-hyperclovax-HyperCLOVAX-SEED-Think-14B/repeat_3/20260923T0826Z-61b212",
+   "n_replies": 116,
+   "n_start": 0,
+   "n_plan_first300": 0,
+   "n_flagged": 0,
+   "flagged_keys": []
+  }
+ ]
+}

@@ -1,0 +1,21 @@
+test_exact_conditional_known_table (test_posthoc_rd_v1.TestOddsRatios) ... FAIL
+test_firth_nonzero_table (test_posthoc_rd_v1.TestOddsRatios) ... ok
+test_firth_profile_bound_is_a_likelihood_ratio_root (test_posthoc_rd_v1.TestOddsRatios) ... ok
+test_firth_zero_cell_finite_and_equals_haldane (test_posthoc_rd_v1.TestOddsRatios) ... ok
+test_woolf_known_values (test_posthoc_rd_v1.TestOddsRatios) ... ok
+test_identical_scenarios_give_degenerate_interval (test_posthoc_rd_v1.TestRDBootstrap) ... ok
+test_point_and_known_bootstrap_distribution (test_posthoc_rd_v1.TestRDBootstrap) ... ok
+test_compare_counts_detects_a_one_event_change (test_posthoc_rd_v1.TestReproductionCheck) ... ok
+
+======================================================================
+FAIL: test_exact_conditional_known_table (test_posthoc_rd_v1.TestOddsRatios)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/wjeong/adol/test/test_posthoc_rd_v1.py", line 122, in test_exact_conditional_known_table
+    self.assertAlmostEqual(ex["ci95"][1], 621.9337, delta=0.05)
+AssertionError: 626.2435305888141 != 621.9337 within 0.05 delta (4.309830588814066 difference)
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.923s
+
+FAILED (failures=1)

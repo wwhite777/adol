@@ -1,0 +1,11 @@
+test_classify_rule (test_posthoc_hcx_plan_v1.TestRule) ... ok
+test_scan_counts_and_bad_input (test_posthoc_hcx_plan_v1.TestScan) ... ERROR: no marked run directory under /tmp/tmpx1ypx27r/raw
+ERROR: row without model_text in /tmp/tmpx1ypx27r/raw/m/main/s1
+ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.004s
+
+OK
+out=/tmp/tmpx1ypx27r/ok/hcx_plan_scan_20261001T0258Z run_dirs=1
+m                                             main      n=   3 start=  1 plan300=  1 flagged=  2

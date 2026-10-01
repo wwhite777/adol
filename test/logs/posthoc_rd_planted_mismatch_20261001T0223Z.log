@@ -1,0 +1,9 @@
+POST-HOC (not confirmatory): risk-difference contrasts and sparse-cell sensitivity
+out=/tmp/claude-1011/-home-wjeong/43b56ca5-27c1-4ab0-a2f0-c5cc41cba622/scratchpad/planted_ref/out/posthoc_rd_20261001T0223Z
+repro S0: MATCH 
+repro S1: MATCH 
+repro S2: MISMATCH ['benign.depth1.events: 0 != ref 1']
+repro S3: MATCH 
+repro R1: MATCH 
+repro R2: MATCH 
+reproduction check FAILED: nothing new computed

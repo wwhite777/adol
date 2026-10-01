@@ -1,0 +1,21 @@
+out=result/analysis/phaseA_T1/hcx_plan_scan_20261001T0258Z run_dirs=20
+LGAI-EXAONE-EXAONE-4.0-32B-AWQ                main      n= 564 start=  0 plan300=  0 flagged=  0
+LGAI-EXAONE-EXAONE-4.0-32B-AWQ                repeat_1  n= 116 start=  0 plan300=  0 flagged=  0
+LGAI-EXAONE-EXAONE-4.0-32B-AWQ                repeat_2  n= 116 start=  0 plan300=  0 flagged=  0
+LGAI-EXAONE-EXAONE-4.0-32B-AWQ                repeat_3  n= 116 start=  0 plan300=  2 flagged=  2
+Qwen-Qwen2.5-14B-Instruct                     main      n= 564 start=  0 plan300=  0 flagged=  0
+Qwen-Qwen2.5-14B-Instruct                     repeat_1  n= 116 start=  0 plan300=  0 flagged=  0
+Qwen-Qwen2.5-14B-Instruct                     repeat_2  n= 116 start=  0 plan300=  0 flagged=  0
+Qwen-Qwen2.5-14B-Instruct                     repeat_3  n= 116 start=  0 plan300=  0 flagged=  0
+RedHatAI-gemma-3-27b-it-quantized.w4a16       main      n= 564 start=  0 plan300=  1 flagged=  1
+RedHatAI-gemma-3-27b-it-quantized.w4a16       repeat_1  n= 116 start=  0 plan300=  0 flagged=  0
+RedHatAI-gemma-3-27b-it-quantized.w4a16       repeat_2  n= 116 start=  0 plan300=  0 flagged=  0
+RedHatAI-gemma-3-27b-it-quantized.w4a16       repeat_3  n= 116 start=  0 plan300=  0 flagged=  0
+kakaocorp-kanana-1.5-8b-instruct-2505         main      n= 564 start=  0 plan300=  0 flagged=  0
+kakaocorp-kanana-1.5-8b-instruct-2505         repeat_1  n= 116 start=  0 plan300=  0 flagged=  0
+kakaocorp-kanana-1.5-8b-instruct-2505         repeat_2  n= 116 start=  0 plan300=  0 flagged=  0
+kakaocorp-kanana-1.5-8b-instruct-2505         repeat_3  n= 116 start=  0 plan300=  0 flagged=  0
+naver-hyperclovax-HyperCLOVAX-SEED-Think-14B  main      n= 564 start= 28 plan300=  4 flagged= 30
+naver-hyperclovax-HyperCLOVAX-SEED-Think-14B  repeat_1  n= 116 start=  6 plan300=  1 flagged=  7
+naver-hyperclovax-HyperCLOVAX-SEED-Think-14B  repeat_2  n= 116 start= 10 plan300=  1 flagged= 10
+naver-hyperclovax-HyperCLOVAX-SEED-Think-14B  repeat_3  n= 116 start=  0 plan300=  0 flagged=  0

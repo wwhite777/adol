@@ -1,0 +1,252 @@
+{
+  "all_match": true,
+  "label": "POST-HOC (not confirmatory): risk-difference contrasts and sparse-cell sensitivity",
+  "labelings": {
+    "R1": {
+      "counts": {
+        "benign": {
+          "conversations_selected": 120,
+          "crude_or_depth3_vs_1": null,
+          "crude_or_depth6_vs_1": 22.386138613861387,
+          "depth1": {
+            "events": 1,
+            "rows": 120
+          },
+          "depth3": {
+            "events": 0,
+            "rows": 120
+          },
+          "depth6": {
+            "events": 19,
+            "rows": 120
+          }
+        },
+        "risk": {
+          "conversations_selected": 120,
+          "crude_or_depth3_vs_1": 1.0,
+          "crude_or_depth6_vs_1": 2.9933554817275745,
+          "depth1": {
+            "events": 14,
+            "rows": 120
+          },
+          "depth3": {
+            "events": 14,
+            "rows": 120
+          },
+          "depth6": {
+            "events": 34,
+            "rows": 120
+          }
+        }
+      },
+      "differences": [],
+      "match": true,
+      "reference": "/home/wjeong/kyrameas/result/repair_check/20260928T0239Z/R1/n1.json + summary.json"
+    },
+    "R2": {
+      "counts": {
+        "benign": {
+          "conversations_selected": 120,
+          "crude_or_depth3_vs_1": null,
+          "crude_or_depth6_vs_1": null,
+          "depth1": {
+            "events": 0,
+            "rows": 120
+          },
+          "depth3": {
+            "events": 0,
+            "rows": 120
+          },
+          "depth6": {
+            "events": 5,
+            "rows": 120
+          }
+        },
+        "risk": {
+          "conversations_selected": 120,
+          "crude_or_depth3_vs_1": 1.0,
+          "crude_or_depth6_vs_1": 2.9933554817275745,
+          "depth1": {
+            "events": 14,
+            "rows": 120
+          },
+          "depth3": {
+            "events": 14,
+            "rows": 120
+          },
+          "depth6": {
+            "events": 34,
+            "rows": 120
+          }
+        }
+      },
+      "differences": [],
+      "match": true,
+      "reference": "/home/wjeong/kyrameas/result/repair_check/20260928T0239Z/R2/n1.json + summary.json"
+    },
+    "S0": {
+      "counts": {
+        "benign": {
+          "conversations_selected": 120,
+          "crude_or_depth3_vs_1": null,
+          "crude_or_depth6_vs_1": 23.8,
+          "depth1": {
+            "events": 1,
+            "rows": 120
+          },
+          "depth3": {
+            "events": 0,
+            "rows": 120
+          },
+          "depth6": {
+            "events": 20,
+            "rows": 120
+          }
+        },
+        "risk": {
+          "conversations_selected": 120,
+          "crude_or_depth3_vs_1": 1.0,
+          "crude_or_depth6_vs_1": 2.9933554817275745,
+          "depth1": {
+            "events": 14,
+            "rows": 120
+          },
+          "depth3": {
+            "events": 14,
+            "rows": 120
+          },
+          "depth6": {
+            "events": 34,
+            "rows": 120
+          }
+        }
+      },
+      "differences": [],
+      "match": true,
+      "reference": "result/analysis/phaseA_T1/posthoc_20260927T2328Z/b_n1_sensitivity.json"
+    },
+    "S1": {
+      "counts": {
+        "benign": {
+          "conversations_selected": 97,
+          "crude_or_depth3_vs_1": null,
+          "crude_or_depth6_vs_1": null,
+          "depth1": {
+            "events": 0,
+            "rows": 80
+          },
+          "depth3": {
+            "events": 0,
+            "rows": 95
+          },
+          "depth6": {
+            "events": 4,
+            "rows": 97
+          }
+        },
+        "risk": {
+          "conversations_selected": 117,
+          "crude_or_depth3_vs_1": 0.9708737864077669,
+          "crude_or_depth6_vs_1": 2.9259896729776242,
+          "depth1": {
+            "events": 14,
+            "rows": 114
+          },
+          "depth3": {
+            "events": 14,
+            "rows": 117
+          },
+          "depth6": {
+            "events": 34,
+            "rows": 117
+          }
+        }
+      },
+      "differences": [],
+      "match": true,
+      "reference": "result/analysis/phaseA_T1/posthoc_20260927T2328Z/b_n1_sensitivity.json"
+    },
+    "S2": {
+      "counts": {
+        "benign": {
+          "conversations_selected": 104,
+          "crude_or_depth3_vs_1": null,
+          "crude_or_depth6_vs_1": null,
+          "depth1": {
+            "events": 0,
+            "rows": 103
+          },
+          "depth3": {
+            "events": 0,
+            "rows": 104
+          },
+          "depth6": {
+            "events": 4,
+            "rows": 104
+          }
+        },
+        "risk": {
+          "conversations_selected": 120,
+          "crude_or_depth3_vs_1": 1.0,
+          "crude_or_depth6_vs_1": 2.9933554817275745,
+          "depth1": {
+            "events": 14,
+            "rows": 120
+          },
+          "depth3": {
+            "events": 14,
+            "rows": 120
+          },
+          "depth6": {
+            "events": 34,
+            "rows": 120
+          }
+        }
+      },
+      "differences": [],
+      "match": true,
+      "reference": "result/analysis/phaseA_T1/posthoc_20260927T2328Z/b_n1_sensitivity.json"
+    },
+    "S3": {
+      "counts": {
+        "benign": {
+          "conversations_selected": 120,
+          "crude_or_depth3_vs_1": null,
+          "crude_or_depth6_vs_1": null,
+          "depth1": {
+            "events": 0,
+            "rows": 120
+          },
+          "depth3": {
+            "events": 0,
+            "rows": 120
+          },
+          "depth6": {
+            "events": 4,
+            "rows": 120
+          }
+        },
+        "risk": {
+          "conversations_selected": 120,
+          "crude_or_depth3_vs_1": 1.0,
+          "crude_or_depth6_vs_1": 2.9933554817275745,
+          "depth1": {
+            "events": 14,
+            "rows": 120
+          },
+          "depth3": {
+            "events": 14,
+            "rows": 120
+          },
+          "depth6": {
+            "events": 34,
+            "rows": 120
+          }
+        }
+      },
+      "differences": [],
+      "match": true,
+      "reference": "result/analysis/phaseA_T1/posthoc_20260927T2328Z/b_n1_sensitivity.json"
+    }
+  }
+}

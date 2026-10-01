@@ -1,0 +1,13 @@
+test_exact_conditional_known_tables (test_posthoc_rd_v1.TestOddsRatios) ... ok
+test_firth_nonzero_table (test_posthoc_rd_v1.TestOddsRatios) ... ok
+test_firth_profile_bound_is_a_likelihood_ratio_root (test_posthoc_rd_v1.TestOddsRatios) ... ok
+test_firth_zero_cell_finite_and_equals_haldane (test_posthoc_rd_v1.TestOddsRatios) ... ok
+test_woolf_known_values (test_posthoc_rd_v1.TestOddsRatios) ... ok
+test_identical_scenarios_give_degenerate_interval (test_posthoc_rd_v1.TestRDBootstrap) ... ok
+test_point_and_known_bootstrap_distribution (test_posthoc_rd_v1.TestRDBootstrap) ... ok
+test_compare_counts_detects_a_one_event_change (test_posthoc_rd_v1.TestReproductionCheck) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.767s
+
+OK

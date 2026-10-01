@@ -1,0 +1,18 @@
+POST-HOC (not confirmatory): risk-difference contrasts and sparse-cell sensitivity
+out=result/analysis/phaseA_T1/posthoc_rd_20261001T0224Z
+repro S0: MATCH 
+repro S1: MATCH 
+repro S2: MATCH 
+repro S3: MATCH 
+repro R1: MATCH 
+repro R2: MATCH 
+(a) S0 risk 14/120 -> 34/120  benign 1/120 -> 20/120  RD_risk 0.1667 [0.07499999999999998, 0.27499999999999997]  RD_benign 0.1583 [0.08333333333333333, 0.24166666666666667]  DiD 0.0083 [-0.11666666666666667, 0.14166666666666666]
+(b) S0 benign exact 23.59 [3.644368786076585, 994.5294390132124]  Firth 16.25 PL [4.050760709189573, 148.07420562303383]  Woolf-Haldane 16.25 [3.031965030592837, 87.09730217945291]
+(c) S0 risk VB scenario SD median 2.1818 [min 2.1818, max 2.1818] over 20 starts; log OR median 1.7067
+(c) S0 benign VB scenario SD median 0.8855 [min 0.8855, max 0.8855] over 20 starts; log OR median 2.2730
+(a) S1 risk 14/114 -> 34/117  benign 0/80 -> 4/97  RD_risk 0.1678 [0.07159679334690486, 0.2774508146606525]  RD_benign 0.0412 [0.0, 0.10101010101010101]  DiD 0.1266 [0.024992786735522427, 0.24157916691903839]
+(b) S1 benign exact inf [0.5502319825575196, inf]  Firth 7.749 PL [0.8081823528425228, 1032.7001283409259]  Woolf-Haldane 7.749 [0.41091066619553496, 146.11881560064526]
+(c) S1 risk VB scenario SD median 2.1878 [min 2.1878, max 2.1878] over 20 starts; log OR median 1.6814
+(c) S1 benign VB scenario SD median 1.1876 [min 1.1876, max 1.1876] over 20 starts; log OR median 0.7020
+(a) S2 risk 14/120 -> 34/120  benign 0/103 -> 4/104  RD_risk 0.1667 [0.07499999999999998, 0.27499999999999997]  RD_benign 0.0385 [0.0, 0.09523809523809523]  DiD 0.1282 [0.027830366774541548, 0.23950080515297903]
+ERROR: Singular matrix
